@@ -51,16 +51,31 @@ const HeartsCelebration = (() => {
     const queenWidth=Math.min(240,w*.52,h*.55);
     const queen=piece(cardSVG('Q','S'),'celebration-queen moon-queen',cx-queenWidth/2,cy-queenWidth*.75,queenWidth);
     queen.dataset.card='QS';
-    animate(queen,[{transform:'perspective(900px) rotateY(0deg)',opacity:1},{transform:'perspective(900px) rotateY(90deg)',opacity:0}],{delay:850,duration:450,easing:'ease-in'});
+    // AGY suggested a single edge-on handoff instead of ghosted silhouettes.
+    // Two turns slow naturally into the flip; both faces share its final axis.
+    const spinMs=1560,flipMs=300,queenFrames=[],moonFrames=[];
+    for(let step=0;step<=78;step++) {
+      const p=step/78,t=p*spinMs,flip=Math.max(0,(t-(spinMs-flipMs))/flipMs);
+      // Project the flip to 2D so WebKit paints the same edge that layout reports.
+      queenFrames.push({offset:p,transform:`rotate(${720*(2*p-p*p)}deg) scaleX(${Math.cos(Math.PI/2*flip*flip)})`});
+    }
+    for(let step=0;step<=30;step++) {
+      const p=step/30;
+      moonFrames.push({offset:p,transform:`scaleX(${Math.sin(Math.PI/2*(2*p-p*p))})`});
+    }
+    animate(queen,queenFrames,{duration:spinMs,easing:'linear'});
+    // Swap only at the narrow edge. No translucent card lies over the moon.
+    animate(queen,[{opacity:1,easing:'steps(1,end)'},{opacity:0}],{duration:spinMs});
     const orb=piece(moon(),'celebration-moon',left,top,size);
-    animate(orb,[{transform:'perspective(900px) rotateY(-90deg)'},{transform:'perspective(900px) rotateY(0deg)'}],{delay:1300,duration:450,easing:'ease-out'});
+    animate(orb,moonFrames,{delay:spinMs,duration:flipMs,easing:'linear'});
+    animate(orb,[{opacity:0,easing:'steps(1,end)'},{opacity:1}],{duration:spinMs});
     const regions=landings.map((_,i)=>`<clipPath id="landing-${serial}-${i}"><polygon points="${landingRegion(i)}"/></clipPath>`).join('');
     const patches=landings.map((_,i)=>`<g class="moon-heart-tile" clip-path="url(#landing-${serial}-${i})"><path d="${logoHeart}" transform="translate(116 105) scale(2.8)" fill="#961c18"/></g>`).join('');
     const mark=piece(`<svg viewBox="0 0 512 512" aria-hidden="true"><defs>${regions}</defs>${patches}</svg>`,'celebration-heartmark',left,top,size);
     const tiles=mark.querySelectorAll('.moon-heart-tile');
     const width=Math.min(82,w*.19,h*.30),rx=(w-width)/2-10,ry=(h-width)/2-10;
     for(let i=0;i<13;i++) {
-      const delay=1900+i*130,duration=2200;
+      const delay=1980+i*130,duration=2200;
       const target={x:left+landings[i][0]*size/512,y:top+landings[i][1]*size/512};
       const el=piece(heart,'celebration-heart',0,0,width),frames=[];
       for(let step=0;step<=64;step++) {
@@ -73,7 +88,7 @@ const HeartsCelebration = (() => {
       animate(tiles[i],[{opacity:0},{opacity:1}],{delay:delay+duration-180,duration:360,easing:'ease-out'});
     }
     // Hold the assembled heart before the moon resolves into the exact favicon.
-    animate(logo(),[{opacity:0},{opacity:1}],{delay:6050,duration:650,easing:'ease-in-out'});
+    animate(logo(),[{opacity:0},{opacity:1}],{delay:6130,duration:650,easing:'ease-in-out'});
   }
   function piece(html, className, x, y, width) {
     const el = document.createElement('div');
@@ -100,18 +115,35 @@ const HeartsCelebration = (() => {
     }
     if (kind === 'win') {
       const n = w<500 ? 7 : 9;
-      const size = Math.min(86,Math.max(38,w/(n+2)));
+      const baseSize = Math.min(86,Math.max(38,w/(n+2)));
+      if(!current.lanterns) {
+        const shuffled=()=>{
+          const order=Array.from({length:n},(_,i)=>i);
+          for(let i=n-1;i>0;i--) { const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]]; }
+          return order;
+        };
+        const sizes=shuffled(),speeds=shuffled();
+        // Shuffle independent size/speed ranges so every celebration has variety.
+        // Keep the choices when Reduced Motion redraws the same scene.
+        current.lanterns=sizes.map((rank,i)=>({
+          scale:.68+.74*(rank+Math.random())/n,
+          duration:2200+1600*(speeds[i]+Math.random())/n,
+          delay:Math.random()*500,y:.08+Math.random()*.84,sway:Math.random()*2-1
+        }));
+      }
       for(let i=0;i<n;i++) {
-        const x = (i+.5)*w/n-size/2;
-        const y = h*(.22+((i*17)%49)/100);
+        const choice=current.lanterns[i],size=Math.min(116,baseSize*choice.scale,h*.52);
+        const margin=Math.min(16,w*.025)+4;
+        const x = Math.max(margin,Math.min(w-size-margin,(i+.5)*w/n-size/2));
+        const y = Math.max(0,h-size*88/60)*choice.y;
         const el = piece(lantern(i),'celebration-lantern',x,y,size);
-        const sway = (i%2 ? 1 : -1)*Math.min(16,w*.025);
+        const sway = choice.sway*Math.min(16,w*.025);
         animate(el,[
           {transform:`translateY(${h-y+size}px) rotate(-3deg)`,opacity:0},
           {opacity:1,offset:.16},
           {transform:`translate(${sway}px,${-y-size*1.7}px) rotate(3deg)`,opacity:1,offset:.86},
           {transform:`translate(0,${-y-size*2}px) rotate(0deg)`,opacity:0}
-        ],{duration:3800,delay:i*80,easing:'linear'});
+        ],{duration:choice.duration,delay:choice.delay,easing:'linear'});
       }
     } else if (kind === 'clean') {
       const n = 5, size = Math.min(106,Math.max(50,w*.17),h*.42);

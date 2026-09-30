@@ -14,15 +14,15 @@
 .celebration-piece { position:absolute; pointer-events:none; }
 .celebration-piece svg { display:block; width:100%; height:auto; }
 .celebration-piece img { display:block; width:100%; height:auto; border-radius:20%; }
-.moon-queen { z-index:3; backface-visibility:hidden; }
-.celebration-moon { z-index:1; backface-visibility:hidden; }
+.moon-queen { z-index:3; will-change:transform,opacity; }
+.celebration-moon { z-index:1; will-change:transform,opacity; }
 .celebration-heartmark { z-index:2; }
 .celebration-heart { z-index:4; }
 .celebration-logo { z-index:3; }
 .celebration-star { opacity:.55; }
 .celebration-lantern { filter:drop-shadow(0 0 15px #ffb14d77); }
-.celebration-moon { filter:drop-shadow(0 0 24px #f9db9766); }
-.celebration-card,.celebration-queen { filter:drop-shadow(0 5px 6px #0006); }
+.celebration-moon > svg { filter:drop-shadow(0 0 24px #f9db9766); }
+.celebration-card,.moon-queen > svg { filter:drop-shadow(0 5px 6px #0006); }
 .celebration-footer { width:min(100%,570px); justify-self:center; padding:10px max(20px,env(safe-area-inset-right)) max(20px,env(safe-area-inset-bottom)); }
 #celebration-skip { width:100%; min-height:56px; padding:12px 20px; border:2px solid #efd293; border-radius:16px; background:#f7e5b9; color:#19382b; font:750 22px/1.2 system-ui,sans-serif; touch-action:pinch-zoom; }
 #celebration-skip:focus-visible { outline:3px solid white; outline-offset:4px; }
