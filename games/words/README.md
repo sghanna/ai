@@ -2,7 +2,7 @@
 
 An ad-free English word puzzle for iPhone, iPad and laptop browsers, with 1,000 levels, free hints and offline play.
 
-[Play Words](https://sghanna.github.io/ai/games/words/)
+[Play Words](https://sghanna.github.io/ai/games/words/) · [Portfolio case study](https://sghanna.github.io/ai/games/words/portfolio.html)
 
 Shawn Hanna directed the game. Claude built the original Word Wheel, including the iPad split layout Shawn selected on September 25, 2026. Codex reviewed and revised it on September 30; Antigravity (Gemini 3.8 Flash High) reviewed the responsive design plan. The original is preserved in [sghanna/claude](https://github.com/sghanna/claude/tree/39649e7/word-wheel).
 
@@ -62,3 +62,7 @@ Local canonical source: `~/codex/words/`. GitHub release: `sghanna/ai`, `games/w
 ## Word sources
 
 Grid answers and bonus words come from SCOWL, filtered with LDNOOBW and the original editorial exclusions. The levels and vocabulary were preserved in this review. See [tools/WORDS.md](tools/WORDS.md), [SCOWL permission notice](tools/sources/SCOWL-Copyright) and [editorial exclusions](tools/removed-words.txt).
+
+## Portfolio upkeep
+
+The case is published at [portfolio.html](https://sghanna.github.io/ai/games/words/portfolio.html). Its local canonical source is `../portfolio/words.md`; `PORTFOLIO.md` is the public copy. Run `uv run --script tools/build-portfolio.py` to rebuild the page and copy the referenced screenshots. In a checkout of the public repository, the builder uses `PORTFOLIO.md` as its source.

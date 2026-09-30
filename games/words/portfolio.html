@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Shawn Hanna's Words case study: device requirements, AI collaboration, responsive game design and verified fixes.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; img-src 'self'; object-src 'none'; base-uri 'none'">
+<title>Words from phone to laptop | Shawn Hanna</title>
+<link rel="canonical" href="https://sghanna.github.io/ai/games/words/portfolio.html">
+<link rel="stylesheet" href="portfolio.css"></head>
+<body><a class="skip" href="#main">Skip to case study</a>
+<header><nav aria-label="Portfolio navigation"><a class="name" href="portfolio.html">Shawn Hanna<span>Product direction and practical tools</span></a><a class="play" href="./">Play Words <span aria-hidden="true">↗</span></a></nav></header>
+<main id="main" tabindex="-1"><article><h1>Words from phone to laptop</h1>
+<p>Shawn Hanna | Product direction and review coordination | September 30, 2026</p>
+<p>I built Word Wheel with Claude as an ad-free word puzzle for my mother. The game has 1,000 English puzzles, free hints and offline play. I then asked Codex to review it, correct errors and publish the improved version as <strong>Words</strong>. I made support for iPhone, iPad and laptop browsers explicit and asked Antigravity to collaborate on visual changes.</p>
+<p><a href="https://sghanna.github.io/ai/games/words/">Play Words</a> · <a href="https://github.com/sghanna/ai/tree/main/games/words">Read the source</a> · <a href="https://github.com/sghanna/ai/blob/main/games/words/REVIEW.md">Inspect the review</a></p>
+<figure><img loading="lazy" decoding="async" alt="Words in a laptop browser with the crossword on the left and the letter wheel and controls on the right." src="assets/words-laptop-2026-09-30.png" /><figcaption>Actual game rendered in desktop WebKit at 1366 x 768, September 30, 2026. MENTAL is composed but not yet submitted. Source: the reviewed Words game; this is a browser capture.</figcaption></figure>
+<h2>My decisions</h2>
+<p>I wanted the same game to work across the devices we use. I had already selected an iPad layout that expands the phone view in portrait and puts the puzzle and controls side by side in landscape. That choice carried into this release.</p>
+<p>My standing requirements for these games also carried forward: readable letters, time to make a move, and controls that accommodate a slow press or a slightly drifting finger. Those requirements came from watching my mother use the earlier games. They gave the review concrete behaviors to check.</p>
+<p>For this review, I chose collaboration across the AI tools: Codex examined the game Claude had built, and Antigravity contributed to the responsive design plan. I authorized the corrected release in the shared <code>ai</code> repository. The existing puzzles, felt palette and save format were preserved.</p>
+<h2>Make each device usable</h2>
+<p>The original interface could cover a landscape phone or a short laptop window with a request to rotate the phone. At 320 pixels wide, it could also clip “Level 400” to “Level 4.”</p>
+<p>The revised game uses compact columns on wider landscape screens. Very small windows can scroll instead of hiding the game. Narrow headers give the level number more room while keeping the Menu and Help labels. On laptops, players can type letters, submit with Enter, and use Tab to reach the wheel and controls and Space to press them.</p>
+<figure><img loading="lazy" decoding="async" alt="The earlier game at landscape phone size, covered by a message asking the player to rotate the phone." src="assets/words-landscape-before-2026-09-30.png" /><figcaption>Before: the original Word Wheel at 844 x 390, rendered in desktop WebKit on September 30, 2026. Source: the original game copied for review.</figcaption></figure>
+<figure><img loading="lazy" decoding="async" alt="The revised Words game at the same landscape phone size, with its puzzle and controls visible in two columns." src="assets/words-landscape-2026-09-30.png" /><figcaption>After: the reviewed game at the same 844 x 390 viewport and puzzle level, captured in desktop WebKit on the same date. The word in the strip demonstrates entry; no physical phone was used for these captures.</figcaption></figure>
+<h2>Review the interactions between features</h2>
+<p>The review exposed a completion bug: moving to another level while a celebration was running could label the new, unfinished puzzle complete. The fix discards results from animations belonging to a level the player has left.</p>
+<p>Claude's independent review of the changes caught two more interactions. Advancing while zoomed could leave the old board visible. Pressing Enter on a hint square could also submit the word being composed. Both were corrected and covered by regression checks. Reintroducing either bug made its check fail.</p>
+<p>Codex also corrected cancelled touches, returning drags and keyboard focus escaping behind menus. Antigravity reviewed the layout plan using supplied measurements; Codex inspected the resulting browser renders. Claude approved the final code and independently reran the new regression suite.</p>
+<h2>What shipped</h2>
+<p>Words is published with touch, mouse and keyboard play, saved progress, free hints and offline support. The new installation uses a separate offline cache while retaining the original save keys for browsers that share the same storage.</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Verification evidence"><table>
+<thead>
+<tr>
+<th>Evidence</th>
+<th>Verified result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Puzzle definitions</td>
+<td>All 1,000 levels pass dictionary and grid checks.</td>
+</tr>
+<tr>
+<td>Original browser suite</td>
+<td>2,098 UI checks pass in WebKit.</td>
+</tr>
+<tr>
+<td>Added regression suite</td>
+<td>212 checks pass across WebKit and Chromium, including offline play and zoom behavior.</td>
+</tr>
+<tr>
+<td>Responsive review</td>
+<td>17 viewport sizes were checked in both engines; selected actual renders were inspected.</td>
+</tr>
+<tr>
+<td>Published release</td>
+<td>All 12 runtime assets matched the reviewed source. Live checks passed: phone-size play and laptop resizing in WebKit, and offline play in Chromium.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Claude built the original game. Codex implemented and tested the revisions. Antigravity contributed design recommendations, and Claude independently checked the changes. My contribution was the product direction: choosing the devices and interaction requirements, requesting the review and visual collaboration, and authorizing publication.</p>
+<h2>What comes next</h2>
+<p>The remaining check is ordinary play on real iPhone and iPad devices: slow presses, finger drift, Safari bars, rotation, pinch zoom, VoiceOver and Home Screen installation. Rotating while already zoomed can retain the earlier board dimensions until zooming out. Spanish and Vietnamese interface text also needs native-speaker review.</p>
+<p>The automated checks establish software behavior. A playtest will show whether the revised game works well for my mother in daily use.</p></article></main>
+<footer><p>Words / Word Wheel · September 30, 2026</p><p><a href="PORTFOLIO.md">Read the Markdown source</a> · <a href="https://github.com/sghanna/ai/tree/main/games/words">Source and verification</a></p></footer>
+</body></html>
