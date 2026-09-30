@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solitaire for Low Vision | Product & Design Leadership Profile</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:wght@700;900&family=Roboto+Mono:wght@500;700&display=swap">
+  
+  <style>
+    :root {
+      --paper: #F4F6F3;
+      --ink: #151D18;
+      --muted: #57635B;
+      --rule: #D4DBD5;
+      --felt: #1E4D2E;
+      --felt-dark: #0f2818;
+      --felt-ink: #1E4D2E;
+      --red: #C8102E;
+      --panel: #FFFFFF;
+      --gold: #D4AF37;
+      --gold-light: #FDE047;
+      --gold-deep: #B45309;
+      --badge-bg: #E8EFEA;
+      --callout-bg: #F0F4F1;
+    }
+    
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --paper: #0F1512;
+        --ink: #E6ECE7;
+        --muted: #9CA9A0;
+        --rule: #27312B;
+        --felt-ink: #6CC08A;
+        --red: #F0596B;
+        --panel: #161E19;
+        --gold: #FBBF24;
+        --gold-light: #FEF08A;
+        --gold-deep: #D97706;
+        --badge-bg: #1A261F;
+        --callout-bg: #131C16;
+      }
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font: 400 18px/1.6 "Atkinson Hyperlegible", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Utility Bar */
+    .top-nav {
+      border-bottom: 1px solid var(--rule);
+      background: var(--panel);
+      padding: 14px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+    .top-nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--ink);
+      font-weight: 700;
+      font-size: 16px;
+    }
+    .nav-brand-dragon {
+      width: 28px;
+      height: 28px;
+      background: var(--felt-dark);
+      border: 1.5px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      list-style: none;
+    }
+    .nav-link {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: all 0.15s ease;
+    }
+    .nav-link:hover {
+      color: var(--felt-ink);
+      background: var(--badge-bg);
+    }
+    .nav-btn-primary {
+      background: var(--felt);
+      color: #FFFFFF !important;
+      border: 1px solid var(--gold);
+      padding: 7px 16px;
+      border-radius: 9999px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+    .nav-btn-primary:hover {
+      transform: translateY(-1px);
+      background: #163B23;
+    }
+
+    /* Layout Container */
+    .page-wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 48px 24px 96px;
+      display: flex;
+      flex-direction: column;
+      gap: 72px;
+    }
+
+    /* Headings & Typography */
+    h1, h2, h3, h4 {
+      font-family: "Roboto", sans-serif;
+      font-weight: 900;
+      letter-spacing: -0.015em;
+      line-height: 1.1;
+      text-wrap: balance;
+    }
+    h1 { font-size: clamp(38px, 5.5vw, 60px); }
+    h2 { font-size: clamp(26px, 3.5vw, 36px); margin-bottom: 12px; }
+    h3 { font-size: 21px; margin-bottom: 8px; }
+    
+    .label-badge {
+      font: 700 12px/1.2 "Roboto Mono", ui-monospace, monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--felt-ink);
+      background: var(--badge-bg);
+      padding: 4px 10px;
+      border-radius: 4px;
+      display: inline-block;
+      width: fit-content;
+      margin-bottom: 12px;
+      border: 1px solid rgba(30, 77, 46, 0.2);
+    }
+    .lede {
+      font-size: clamp(20px, 2.5vw, 24px);
+      line-height: 1.45;
+      color: var(--ink);
+      max-width: 44ch;
+    }
+    p { margin-bottom: 1em; }
+    p:last-child { margin-bottom: 0; }
+    a { color: var(--felt-ink); text-underline-offset: 3px; font-weight: 700; }
+
+    /* Hero Section */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      gap: 48px;
+      align-items: center;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 56px;
+    }
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 10px;
+    }
+    .btn-main {
+      background: var(--felt);
+      color: #FFFFFF;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 16px;
+      padding: 12px 24px;
+      border-radius: 9999px;
+      border: 1.5px solid var(--gold);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(15, 40, 24, 0.25);
+      transition: all 0.15s ease;
+    }
+    .btn-main:hover {
+      background: #163B23;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(15, 40, 24, 0.35);
+    }
+    .btn-secondary {
+      background: var(--panel);
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 16px;
+      padding: 12px 22px;
+      border-radius: 9999px;
+      border: 1.5px solid var(--rule);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+    }
+    .btn-secondary:hover {
+      border-color: var(--felt-ink);
+      color: var(--felt-ink);
+      background: var(--badge-bg);
+      transform: translateY(-2px);
+    }
+
+    /* Meta Details Grid */
+    .meta-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .meta-card {
+      background: var(--panel);
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .meta-card-label {
+      font: 700 11px/1.2 "Roboto Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+    }
+    .meta-card-value {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.35;
+    }
+
+    /* Hero Visual Mockup */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+    .hero-mockup-frame {
+      width: 100%;
+      max-width: 420px;
+      background: var(--felt-dark);
+      border: 4px solid var(--gold);
+      border-radius: 28px;
+      padding: 10px;
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.35);
+      position: relative;
+    }
+    .hero-mockup-frame img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 18px;
+    }
+    .hero-badge-floating {
+      position: absolute;
+      bottom: -16px;
+      right: 16px;
+      background: #FFFFFF;
+      color: #151D18;
+      border: 2px solid var(--gold);
+      border-radius: 9999px;
+      padding: 8px 18px;
+      font: 700 13px/1 "Roboto Mono", monospace;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hero-badge-floating .dot {
+      width: 8px;
+      height: 8px;
+      background: #10B981;
+      border-radius: 50%;
+    }
+
+    /* Section Structure */
+    .section-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .section-header {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-width: 72ch;
+    }
+
+    /* Problem Cards */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+    .problem-card {
+      background: var(--panel);
+      border: 1px solid var(--rule);
+      border-radius: 14px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      border-top: 4px solid var(--red);
+    }
+    .problem-title {
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--ink);
+    }
+    .problem-desc {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* 5 Core Pillars Grid */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .pillar-card {
+      background: var(--panel);
+      border: 1px solid var(--rule);
+      border-radius: 16px;
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 80px minmax(0, 1fr) minmax(0, 1.15fr);
+      gap: 28px;
+      align-items: start;
+      transition: border-color 0.2s ease;
+    }
+    .pillar-card:hover {
+      border-color: var(--felt-ink);
+    }
+    .pillar-num {
+      font: 900 48px/1 "Roboto", sans-serif;
+      color: var(--felt-ink);
+      opacity: 0.85;
+    }
+    .pillar-main {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .pillar-evidence {
+      background: var(--callout-bg);
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+      padding: 18px;
+      font-size: 15px;
+      line-height: 1.5;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .pillar-evidence strong {
+      color: var(--felt-ink);
+      font-size: 14px;
+      font-family: "Roboto Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .pillar-evidence blockquote {
+      font-style: italic;
+      border-left: 3px solid var(--gold);
+      padding-left: 12px;
+      color: var(--ink);
+    }
+
+    /* Gallery / Visual Showcase */
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+    .showcase-item {
+      background: var(--panel);
+      border: 1px solid var(--rule);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .showcase-img-wrap {
+      background: var(--felt-dark);
+      padding: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 280px;
+    }
+    .showcase-img-wrap img {
+      max-width: 100%;
+      height: auto;
+      max-height: 380px;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .showcase-desc {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .showcase-tag {
+      font: 700 11px/1 "Roboto Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--felt-ink);
+    }
+
+    /* Dimension Matrix Table */
+    .table-wrap {
+      background: var(--panel);
+      border: 1px solid var(--rule);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 15px;
+    }
+    th {
+      background: var(--badge-bg);
+      font: 700 12px/1.3 "Roboto Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--rule);
+    }
+    td {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--rule);
+      font-variant-numeric: tabular-nums;
+    }
+    tr:last-child td { border-bottom: none; }
+    td strong { color: var(--felt-ink); }
+
+    /* Division of Labor */
+    .orchestration-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .orchestration-card {
+      background: var(--panel);
+      border: 1px solid var(--rule);
+      border-radius: 14px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .orchestration-role {
+      font: 700 13px/1.2 "Roboto Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--felt-ink);
+    }
+    .orchestration-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 14.5px;
+    }
+    .orchestration-card li {
+      padding-left: 18px;
+      position: relative;
+    }
+    .orchestration-card li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding-top: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+      text-align: center;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .footer-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    /* Responsive Queries */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-visual { order: -1; }
+      .pillar-card { grid-template-columns: 1fr; gap: 16px; }
+      .orchestration-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .meta-cards { grid-template-columns: 1fr; }
+      .page-wrap { padding-inline: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Navigation -->
+  <nav class="top-nav" aria-label="Project Navigation">
+    <div class="top-nav-inner">
+      <a href="index.html" class="nav-brand">
+        <div class="nav-brand-dragon">
+          <svg width="18" height="18" viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="20" r="16" stroke="#FBBF24" stroke-width="2"/>
+            <path d="M14 20C17 14 23 14 26 20C23 26 17 26 14 20Z" fill="#C8102E" stroke="#FBBF24" stroke-width="1.2"/>
+            <circle cx="20" cy="20" r="3" fill="#FBBF24"/>
+          </svg>
+        </div>
+        <span>Agy-Solitaire</span>
+      </a>
+      <div class="nav-links">
+        <a href="case-study.html" class="nav-link">Deep Case Study</a>
+        <a href="https://github.com/sghanna/ai/tree/main/games/solitaire" class="nav-link" target="_blank" rel="noopener">Source Code</a>
+        <a href="index.html" class="nav-btn-primary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+          </svg>
+          Play Game
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="page-wrap">
+
+    <!-- HERO SECTION -->
+    <header class="hero">
+      <div class="hero-content">
+        <div class="label-badge">Product Owner &amp; Design Lead Profile</div>
+        <h1>Solitaire for Low Vision</h1>
+        <p class="lede">
+          An ad-free, zero-friction Klondike Solitaire engineered from the sub-millimeter up for a 78-year-old player with monocular vision. Responsively scaled across iPhone 16e and iPad.
+        </p>
+
+        <div class="hero-actions">
+          <a href="index.html" class="btn-main">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+            Play Solitaire Now
+          </a>
+          <a href="case-study.html" class="btn-secondary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+            </svg>
+            Read In-Depth Case Study
+          </a>
+        </div>
+
+        <!-- Executive Meta Cards -->
+        <div class="meta-cards">
+          <div class="meta-card">
+            <span class="meta-card-label">Leadership Role</span>
+            <span class="meta-card-value">Product Owner &amp; Design Lead</span>
+          </div>
+          <div class="meta-card">
+            <span class="meta-card-label">Primary User</span>
+            <span class="meta-card-value">78yo mother (Monocular vision + floaters)</span>
+          </div>
+          <div class="meta-card">
+            <span class="meta-card-label">Multi-AI Ensemble</span>
+            <span class="meta-card-value">Google Antigravity, Claude, OpenAI Codex</span>
+          </div>
+          <div class="meta-card">
+            <span class="meta-card-label">Platforms &amp; Engine</span>
+            <span class="meta-card-value">iPhone 16e + iPad (PWA v23, Zero Dependencies)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Visual Mockup -->
+      <div class="hero-visual">
+        <div class="hero-mockup-frame">
+          <img src="assets/screenshots/ipad_portrait_768x1024.png" alt="Accessible Solitaire rendered on iPad in portrait orientation with large high-contrast cards and isolated controls">
+          <div class="hero-badge-floating">
+            <span class="dot"></span>
+            <span>v23 Live PWA &bull; 0 Ads</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- SECTION 1: THE REAL-WORLD PROBLEM -->
+    <section class="section-wrap">
+      <div class="section-header">
+        <div class="label-badge">The Problem Space</div>
+        <h2>Commercial card games are hostile to low-vision seniors</h2>
+        <p>
+          When my mother attempted to play standard App Store solitaire games on her phone, she encountered repeated friction that led to frustration and abandonment. Commercial games optimize for ad monetization and microtransactions, neglecting accessibility fundamentals.
+        </p>
+      </div>
+
+      <div class="problem-grid">
+        <div class="problem-card">
+          <h3 class="problem-title">Deceptive Full-Screen Ads</h3>
+          <p class="problem-desc">Aggressive video popups with microscopic 10px close hitboxes tricked her into accidental App Store redirects, causing anxiety and lost game states.</p>
+        </div>
+        <div class="problem-card">
+          <h3 class="problem-title">Tiny Corner Indices</h3>
+          <p class="problem-desc">Standard card faces rely on thin serif fonts and miniature corner suit symbols designed for 20/20 binocular vision, blurring into grey smudges under floaters.</p>
+        </div>
+        <div class="problem-card">
+          <h3 class="problem-title">Accidental Restart Traps</h3>
+          <p class="problem-desc">Toolbars placed <code>[New Game]</code> right next to <code>[Undo]</code>. A fast undo tap frequently mis-tapped New Game, destroying an active winning game.</p>
+        </div>
+        <div class="problem-card">
+          <h3 class="problem-title">Cognitive Overload</h3>
+          <p class="problem-desc">Ticking timers, neon score animations, and flashing hints crowded the play area, creating visual noise that overwhelmed her limited field of view.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: 5 DESIGN LEADERSHIP PILLARS -->
+    <section class="section-wrap">
+      <div class="section-header">
+        <div class="label-badge">Design Leadership &amp; AI Direction</div>
+        <h2>Five core pillars where human judgment overrode AI defaults</h2>
+        <p>
+          AI coding agents naturally produce "textbook" code that fails real-world edge cases. As Product Owner, I inspected renders on real hardware, challenged automated assumptions, and established strict ergonomic rules.
+        </p>
+      </div>
+
+      <div class="pillars-grid">
+        <!-- Pillar 1 -->
+        <article class="pillar-card">
+          <div class="pillar-num">01</div>
+          <div class="pillar-main">
+            <h3>Spatial Error Prevention (The "New Game" Isolation Rule)</h3>
+            <p>
+              AI models clustered <code>[＋ New]</code> and <code>[↶ Undo]</code> side-by-side in a 2+2 layout. Because Solitaire players spam Undo when exploring moves, proximity guarantees miss-taps.
+            </p>
+            <p>
+              <strong>The Override:</strong> Mandated absolute physical separation. <code>[＋ New]</code> is locked to the far left; <code>[↶ Undo]</code> is locked to the far right. Utility buttons (Menu and Help) are centered with a <strong>~38px physical buffer zone</strong> on mobile and 48px standalone oval pills on tablet.
+            </p>
+          </div>
+          <div class="pillar-evidence">
+            <strong>Design Principle</strong>
+            <blockquote>"Physical distance is superior to confirmation modals. If a destructive button is impossible to touch by accident, the player never suffers anxiety."</blockquote>
+            <span>Result: Zero accidental game resets across hundreds of test games.</span>
+          </div>
+        </article>
+
+        <!-- Pillar 2 -->
+        <article class="pillar-card">
+          <div class="pillar-num">02</div>
+          <div class="pillar-main">
+            <h3>Character Anatomy Under Overlap (The "Q-Tail" Formula)</h3>
+            <p>
+              AI assistants squeezed tableau cascade steps to 28px or proposed arbitrary <code>0.48 * colWidth</code> ratios. In Didone typography, the Queen's sole distinguishing mark is its downward diagonal tail.
+            </p>
+            <p>
+              <strong>The Override:</strong> In our 52×78 SVG vector card, the Queen extends to <code>y=33</code>. I enforced a strict mathematical floor: <code>minUpStep = Math.max(32, Math.ceil(colWidth * 33 / 52))</code>. At phone width (49px), the step is 32px. At iPad width (96px/129px), the step automatically expands to 61px/82px, guaranteeing the tail is never clipped.
+            </p>
+          </div>
+          <div class="pillar-evidence">
+            <strong>Geometric Proof</strong>
+            <blockquote>"Typography cannot be judged in isolation. When cards stack, the exposed sliver must carry 100% of the card's semantic identity unambiguously."</blockquote>
+            <span>Result: Queens and Tens remain instantly legible across 7-column cascades.</span>
+          </div>
+        </article>
+
+        <!-- Pillar 3 -->
+        <article class="pillar-card">
+          <div class="pillar-num">03</div>
+          <div class="pillar-main">
+            <h3>Cultural Authenticity (The Imperial Dragon Pivot)</h3>
+            <p>
+              AI models defaulted to the Double Happiness (<code>囍</code>) Chinese character on card backs. When testing with native Cantonese speakers, we caught that Double Happiness is exclusively a wedding motif in Hong Kong tradition and is culturally incongruous on playing cards.
+            </p>
+            <p>
+              <strong>The Override:</strong> Directed an exploration of 6 traditional Cantonese card motifs and selected the <strong>Imperial Golden Dragon (金龍)</strong>. Scaled the medallion to an <strong>85% card-back seal</strong> with 36 sunburst notches, a flaming ruby pearl, and 9 floating sky lanterns with auspicious blessings.
+            </p>
+          </div>
+          <div class="pillar-evidence">
+            <strong>Cultural Resonance</strong>
+            <blockquote>"Accessibility includes dignity and cultural resonance. Generative AI will happily generate stereotypes unless guided by lived cultural critique."</blockquote>
+            <span>Result: Deep emotional connection and family pride during play.</span>
+          </div>
+        </article>
+
+        <!-- Pillar 4 -->
+        <article class="pillar-card">
+          <div class="pillar-num">04</div>
+          <div class="pillar-main">
+            <h3>Peripheral Field Capture (3.4s WAAPI Descent &amp; GPU Glow)</h3>
+            <p>
+              For a player with monocular vision and vitreal floaters, static notifications anchored at screen edges (like an "Auto-Win" button at the bottom) go completely unnoticed during active play.
+            </p>
+            <p>
+              <strong>The Override:</strong> Engineered a dramatic, slow <strong>3.4-second vertical transit</strong> where the solved auto-finish banner physically descends from the very top of the display down across the tableau. Replaced choppy CSS keyframes with native <strong>Web Animations API (WAAPI)</strong> and a zero-repaint GPU compositor layer, running at 60fps/120fps.
+            </p>
+          </div>
+          <div class="pillar-evidence">
+            <strong>Visual Perception</strong>
+            <blockquote>"Low-vision eyes detect broad movement across the focal field far better than static color shifts at the perimeter."</blockquote>
+            <span>Result: 100% capture of player attention without jarring auditory alarms.</span>
+          </div>
+        </article>
+
+        <!-- Pillar 5 -->
+        <article class="pillar-card">
+          <div class="pillar-num">05</div>
+          <div class="pillar-main">
+            <h3>Multi-Device Responsive Scaling (Codex Collaboration)</h3>
+            <p>
+              Scaling from a 390pt mobile phone to a 768pt/1024pt iPad screen required more than naive CSS zoom. Tablet displays demand larger physical touch targets, deeper column scrolling, and rotation protection.
+            </p>
+            <p>
+              <strong>The Override:</strong> Partnered with Codex to implement 600px and 900px breakpoints, 48px tablet buttons, Deal-3 waste fanning (44px tablet step), momentum-scrolling deep tableau stacks with temporary card flight overlays, and debounced rotation safety. Verified with 12 automated unit tests.
+            </p>
+          </div>
+          <div class="pillar-evidence">
+            <strong>Engineering Rigor</strong>
+            <blockquote>"Responsive design for seniors is not just scaling CSS pixels; it is scaling physical touch ergonomics and protecting active cognitive state."</blockquote>
+            <span>Result: Flawless experience on iPhone 16e, iPad mini 5, iPad Air 2, and 11-inch iPad Pro.</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SECTION 3: RESPONSIVE MATRIX & VISUAL GALLERY -->
+    <section class="section-wrap">
+      <div class="section-header">
+        <div class="label-badge">Multi-Device Specifications</div>
+        <h2>Verified cross-device geometry matrix</h2>
+        <p>
+          Every dimension is mathematically checked across viewports to preserve card readability, touch clearance, and Queen-tail visibility.
+        </p>
+      </div>
+
+      <!-- Geometry Table -->
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Device &amp; Viewport</th>
+              <th>Card Width</th>
+              <th>Face-Up Cascade</th>
+              <th>Face-Down Step</th>
+              <th>HUD Button Height</th>
+              <th>Deal-3 Waste Fan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>iPhone 16e</strong> (390 &times; 844)</td>
+              <td>49.1px</td>
+              <td>32px</td>
+              <td>12px</td>
+              <td>40px</td>
+              <td>24px</td>
+            </tr>
+            <tr>
+              <td><strong>iPad Portrait</strong> (768 &times; 1024)</td>
+              <td>96.1px</td>
+              <td>61px</td>
+              <td>19px</td>
+              <td>48px</td>
+              <td>44px</td>
+            </tr>
+            <tr>
+              <td><strong>iPad Landscape</strong> (1024 &times; 768)</td>
+              <td>129.1px</td>
+              <td>82px</td>
+              <td>24px</td>
+              <td>48px</td>
+              <td>44px</td>
+            </tr>
+            <tr>
+              <td><strong>iPad 11" Pro Portrait</strong> (834 &times; 1194)</td>
+              <td>104.8px</td>
+              <td>67px</td>
+              <td>21px</td>
+              <td>48px</td>
+              <td>44px</td>
+            </tr>
+            <tr>
+              <td><strong>iPad 11" Pro Landscape</strong> (1194 &times; 834)</td>
+              <td>137.1px</td>
+              <td>88px</td>
+              <td>24px</td>
+              <td>48px</td>
+              <td>44px</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Visual Showcase Cards -->
+      <div class="showcase-grid">
+        <div class="showcase-item">
+          <div class="showcase-img-wrap">
+            <img src="assets/screenshots/iphone_16e_390x844.png" alt="Solitaire rendered on iPhone 16e viewport">
+          </div>
+          <div class="showcase-desc">
+            <span class="showcase-tag">iPhone 16e (390 &times; 844)</span>
+            <p>Compact borderless bottom HUD, 32px cascade step, and isolated far-left/far-right pill controls.</p>
+          </div>
+        </div>
+
+        <div class="showcase-item">
+          <div class="showcase-img-wrap">
+            <img src="assets/screenshots/ipad_portrait_768x1024.png" alt="Solitaire rendered on iPad portrait viewport">
+          </div>
+          <div class="showcase-desc">
+            <span class="showcase-tag">iPad Air / Mini Portrait (768 &times; 1024)</span>
+            <p>Expansive 96px cards, 61px proportional cascade, and 48px high senior touch buttons.</p>
+          </div>
+        </div>
+
+        <div class="showcase-item">
+          <div class="showcase-img-wrap">
+            <img src="assets/screenshots/ipad_landscape_1024x768.png" alt="Solitaire rendered on iPad landscape viewport">
+          </div>
+          <div class="showcase-desc">
+            <span class="showcase-tag">iPad Landscape (1024 &times; 768)</span>
+            <p>Jumbo 129px cards, 82px cascade, generous green felt borders, and wide 7-column layout.</p>
+          </div>
+        </div>
+
+        <div class="showcase-item">
+          <div class="showcase-img-wrap">
+            <img src="assets/screenshots/ipad_deep_tableau_scrolling.png" alt="Deep stack tableau momentum scrolling on iPad">
+          </div>
+          <div class="showcase-desc">
+            <span class="showcase-tag">Momentum Scrolling Tableau</span>
+            <p>Deep 10+ card stacks scroll smoothly above bottom controls with card flight overlay protection.</p>
+          </div>
+        </div>
+
+        <div class="showcase-item">
+          <div class="showcase-img-wrap">
+            <img src="assets/screenshots/ipad_settings_modal.png" alt="Settings modal on iPad">
+          </div>
+          <div class="showcase-desc">
+            <span class="showcase-tag">Accessible Settings Modal</span>
+            <p>Trilingual language switch (EN/ES/VI), Deal 1/3, guaranteed winnable deals, and synthesized sound toggles.</p>
+          </div>
+        </div>
+
+        <div class="showcase-item">
+          <div class="showcase-img-wrap">
+            <img src="assets/screenshots/ipad_help_modal.png" alt="How to Play help modal on iPad">
+          </div>
+          <div class="showcase-desc">
+            <span class="showcase-tag">Bespoke Vector Help Guide</span>
+            <p>Illustrated with hand-crafted SVG foundation crowns, dragon stock decks, and glowing lanterns (no generic emojis).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: MULTI-AI ORCHESTRATION -->
+    <section class="section-wrap">
+      <div class="section-header">
+        <div class="label-badge">Workflow Leadership</div>
+        <h2>Multi-AI orchestration: The division of labor</h2>
+        <p>
+          Rather than relying on a single AI model, I operated as strategic conductor, orchestrating three specialized AI agents to maximize quality and delivery speed.
+        </p>
+      </div>
+
+      <div class="orchestration-grid">
+        <div class="orchestration-card">
+          <span class="orchestration-role">Shawn (Product Lead)</span>
+          <ul>
+            <li>Framed problem around Mom's monocular vision &amp; floaters</li>
+            <li>Enforced Q-Tail clearance rule &amp; isolated button geometry</li>
+            <li>Rejected Double Happiness motif; directed Imperial Dragon</li>
+            <li>Challenged naive tablet scaling; mandated mathematical proof</li>
+            <li>Conducted real-device verification &amp; published releases</li>
+          </ul>
+        </div>
+
+        <div class="orchestration-card">
+          <span class="orchestration-role">Codex (Engine &amp; Layout)</span>
+          <ul>
+            <li>Implemented responsive CSS grid &amp; tablet breakpoints</li>
+            <li>Built momentum-scrolling deep tableau engine</li>
+            <li>Created 12 automated regression unit tests in Node.js</li>
+            <li>Implemented rotation debouncing &amp; flight overlay cleanup</li>
+            <li>Bumped PWA Service Worker cache to <code>agy-solitaire-v23</code></li>
+          </ul>
+        </div>
+
+        <div class="orchestration-card">
+          <span class="orchestration-role">Antigravity &amp; Claude (Visual/Rules)</span>
+          <ul>
+            <li>Traced Didone typography &amp; French Curve suit SVGs</li>
+            <li>Designed 85% Imperial Dragon medallion &amp; sky lanterns</li>
+            <li>Architected 3.4s WAAPI descent &amp; zero-repaint GPU glow</li>
+            <li>Engineered guaranteed-winnable first deal algorithmic solver</li>
+            <li>Synthesized procedural Web Audio card rustles and chords</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: DELIVERABLES & TECHNICAL SPECS -->
+    <section class="section-wrap">
+      <div class="section-header">
+        <div class="label-badge">Technical Excellence</div>
+        <h2>Production deliverables &amp; performance metrics</h2>
+      </div>
+
+      <div class="problem-grid">
+        <div class="problem-card" style="border-top-color: var(--felt-ink);">
+          <h3 class="problem-title">Zero External Dependencies</h3>
+          <p class="problem-desc">Vanilla ES6, HTML5 Canvas, and modern CSS Grid. Zero frameworks, 0 analytics trackers, 0 third-party ad SDKs. Sub-millisecond execution.</p>
+        </div>
+        <div class="problem-card" style="border-top-color: var(--felt-ink);">
+          <h3 class="problem-title">100% Offline-First PWA</h3>
+          <p class="problem-desc">Service Worker cache-first architecture (<code>agy-solitaire-v23</code>) with Apple mobile web tags, full-bleed squircle app icon, and immediate Home Screen launch.</p>
+        </div>
+        <div class="problem-card" style="border-top-color: var(--felt-ink);">
+          <h3 class="problem-title">12 Passing Unit Tests</h3>
+          <p class="problem-desc">Comprehensive Node.js test harness covering cascade math, waste fanning, rotation safety, halo preservation, and Queen SVG bounds.</p>
+        </div>
+        <div class="problem-card" style="border-top-color: var(--felt-ink);">
+          <h3 class="problem-title">Synthesized Web Audio</h3>
+          <p class="problem-desc">Procedural tactile audio clicks, card rustles, and celebratory victory chords created natively via the Web Audio API without audio asset downloads.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER / QUICK LINKS -->
+    <footer>
+      <div class="footer-actions">
+        <a href="index.html" class="btn-main">▶ Play Solitaire</a>
+        <a href="case-study.html" class="btn-secondary">📖 Full Case Study</a>
+        <a href="https://github.com/sghanna/ai/tree/main/games/solitaire" class="btn-secondary" target="_blank" rel="noopener">💻 GitHub Repository</a>
+      </div>
+      <p>
+        Designed, directed, and led by <strong>Shawn Hanna</strong>. Built collaboratively with Google Antigravity, Anthropic Claude, and OpenAI Codex.<br>
+        Deployed live on GitHub Pages under <code>sghanna/ai</code> and <code>sghanna/agy</code>.
+      </p>
+    </footer>
+
+  </main>
+
+</body>
+</html>

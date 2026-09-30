@@ -1,11 +1,12 @@
 # Solitaire for Low Vision: Product & Design Case Study
 
-**Live Web App:** [sghanna.github.io/agy/solitaire/](https://sghanna.github.io/agy/solitaire/)  
-**Repository:** [github.com/sghanna/agy](https://github.com/sghanna/agy)  
+**Live Web App:** [sghanna.github.io/ai/games/solitaire/](https://sghanna.github.io/ai/games/solitaire/) & [sghanna.github.io/agy/solitaire/](https://sghanna.github.io/agy/solitaire/)  
+**Profile Page:** [sghanna.github.io/ai/games/solitaire/profile.html](https://sghanna.github.io/ai/games/solitaire/profile.html)  
+**Repository:** [github.com/sghanna/ai](https://github.com/sghanna/ai) & [github.com/sghanna/agy](https://github.com/sghanna/agy)  
 **Role:** Product Owner & Design Lead  
 **Collaborators:** AI Coding Assistants (Google Antigravity, Anthropic Claude, OpenAI Codex)  
 **Target User:** 78-year-old player with monocular vision and vitreal floaters  
-**Platform:** Standalone Progressive Web App (PWA) for iPhone 16e (Safari "Add to Home Screen", offline-first)  
+**Platform:** Standalone Progressive Web App (PWA) for iPhone 16e & iPad (Safari "Add to Home Screen", offline-first, portrait & landscape)  
 
 ---
 
@@ -115,6 +116,20 @@ AI coding models default to "textbook" design patterns that frequently fail real
 - **The Problem**: Early AI implementations permitted the dealer or human to lead arbitrary cards on the opening trick, violating official Hearts rules.
 - **The Design Override**: I enforced rigorous compliance with official rules: the player holding the **2 of Clubs (2♣)** must lead trick 1, and no penalty cards ("blood") may be played on the first trick. To ensure bulletproof reliability before user testing, we verified the rules engine across **52,000+ automated simulated tricks**, ensuring flawless Moon Shot detection (+26 to all opponents) and trick resolution.
 
+### N. Multi-Device Responsive Scaling & The Mathematical Q-Tail Scaling Proof (The iPad Release with Codex)
+- **The Problem**: When scaling from iPhone (390pt width) up to iPad (768pt portrait, 1024pt landscape, 834pt/1194pt Pro), naive CSS scaling either left vast empty margins or compressed cascades until card indices became illegible. Furthermore, Codex initially proposed a formula `0.48 * columnWidth` with a 28px compression floor.
+- **The Human Insight & Geometric Proof**: In our bespoke 52×78 SVG vector cards, the Queen's Didone tail extends downward past `y=32` and terminates at `y=33`. Compressing face-up spacing to 28px or using a naive ratio clips the tail, making the Queen look identical to an `O` for my mother's floaters.
+- **The Design Override**:
+  - Mandated a mathematically proven clearance floor: `minUpStep = Math.max(32, Math.ceil(columnWidth * (33 / 52)))`.
+  - On iPhone 16e (390×844), column width is 49.1px, producing the locked 32px step.
+  - On iPad portrait (768×1024), column width expands to 96.1px, and the step automatically expands to **61px**.
+  - On iPad landscape (1024×768), column width expands to 129.1px, and the step expands to **82px**.
+  - On iPad 11" Pro (1194×834), column width reaches 137.1px with an **88px** step.
+  - Upgraded HUD controls on tablet: stand-alone pill buttons expand to 48px height with 17px font weight. Deal 3 waste fanning expands to 44px.
+  - Implemented **momentum-scrolling deep tableau stacks** with a temporary flight overlay element ensuring cards flying into a scrolled stack never get clipped at overflow boundaries.
+  - Added **debounced rotation safety**: device orientation changes wait for active card flights to complete before recalculating layouts and resizing celebrations.
+  - Created a 12-test automated regression suite (`solitaire/tests/responsive-layout.test.cjs`) verifying cascade math, rotation debouncing, selection retention, and Queen SVG bounds.
+
 ---
 
 ## 4. Multi-AI Orchestration & Delivery Workflow
@@ -130,28 +145,31 @@ flowchart TD
     Arch --> Engine["Solitaire Engine & Solvers"]
     Design --> Assets["Traced Glyphs & Dragon Medallions"]
     Dev --> Features["Deal 3 Modes, PWA, Web Audio"]
+    Dev --> Responsive["iPad Breakpoints & Regression Harness"]
     
-    Engine --> QA["Real-Device iPhone 16e Verification"]
+    Engine --> QA["Real-Device iPhone & iPad Verification"]
     Assets --> QA
     Features --> QA
+    Responsive --> QA
     
     QA -->|Catch Bugs & Direct Overrides| PO
 ```
 
 1. **Architecture & Specification**: Wrote explicit engineering briefs defining column dimensions, touch target math, and state machines.
 2. **Head-to-Head Multi-AI Bake-Offs**: When choosing the core card face or diagnosing complex animation frame hitches, I ran multi-AI consultations across Claude, Codex, and Antigravity, synthesizing architectural solutions directly from the CLI.
-3. **The "Never Trust CSS Arithmetic" Rule**: Automated layout math often lies on high-DPI mobile viewports. I instituted a hard policy: every sizing change must be rendered to PNG via WebKit/Chrome headless at the exact 390pt (and 375pt) viewport width and visually verified before shipping.
+3. **The "Never Trust CSS Arithmetic" Rule**: Automated layout math often lies on high-DPI mobile viewports. I instituted a hard policy: every sizing change must be rendered to PNG via WebKit/Chrome headless at the exact 390pt, 768pt, and 1024pt viewport widths and visually verified before shipping.
 
 ---
 
 ## 5. Technical Highlights & Performance
 
-- **Zero-Dependency Architecture**: Built in vanilla HTML5, CSS3, and modern ES6 JavaScript. Zero external frameworks, zero trackers, zero ad SDKs.
+- **Zero-Dependency Architecture**: Built in vanilla HTML5, CSS3, and modern ES6 JavaScript. Zero external frameworks, zero trackers, zero ad SDKs. Sub-millisecond execution.
 - **Hardware-Accelerated Web Animations API (`WAAPI`)**: 3.4-second gravitational drop animation executed via native `element.animate()` using `translate3d` and GPU compositor layers, eliminating CSS layout recalculations and guaranteeing 60fps/120fps smoothness.
 - **Zero-Repaint GPU Compositor Glow Layer**: Transferred pulsing gold aura effects to an isolated `::after` pseudo-element with `will-change: opacity`, offloading 100% of glow animation to the GPU compositor.
-- **Offline PWA**: Service Worker cache-first architecture (`CACHE_NAME = 'agy-solitaire-v22'`) allows immediate home-screen installation and full offline play with zero network latency.
+- **Multi-Device Responsive Grid & Momentum Scrolling**: Seamless scaling across 600px and 900px breakpoints, handling 390×844 phone, 768×1024 iPad portrait, and 1024×768 landscape with deep stack momentum scrolling and flight overlay clipping protection.
+- **Offline PWA (v23)**: Service Worker cache-first architecture (`CACHE_NAME = 'agy-solitaire-v23'`) with `"orientation": "any"` in manifest.json, enabling instant Home Screen launch and full offline play with zero network latency.
 - **Procedural Tactile Web Audio**: Custom Web Audio API synthesizer generating organic card rustles, snap clicks, and celebration tones with automated audio context unlocking on first touch.
-- **Automated Regression Suite**: 3 dedicated headless test suites (`test_solitaire.js`, `test_settings_features.js`, `test_ace_and_single_deal.js`) covering card moves, undo history, winnable deal generation, and HUD persistence.
+- **Automated Regression Harness**: 12 dedicated Node.js tests (`tests/responsive-layout.test.cjs`) plus 3 headless suites (`test_solitaire.js`, `test_settings_features.js`, `test_ace_and_single_deal.js`) covering card moves, undo history, winnable deal generation, HUD persistence, and SVG character bounds.
 
 ---
 
@@ -159,4 +177,4 @@ flowchart TD
 
 1. **Accessibility is not a checklist; it is an empathy engine.** Designing for an individual user with severe sensory constraints generated solutions that made the product cleaner, faster, and more delightful for everyone.
 2. **AI needs human direction, not just prompts.** AI can write thousands of lines of syntax in seconds, but it cannot feel when an Undo button is too close to New, or know that a Chinese wedding character is wrong for a card game. Product judgment, taste, and user advocacy remain uniquely human superpowers.
-3. **True ergonomics happen at the physical edge.** When software interacts with the physical world—a thumb holding a phone, an eye reading under floaters—the smallest details (4px of waste fan overlap, 4mm of button separation) dictate whether a product is loved or abandoned.
+3. **True ergonomics happen at the physical edge.** When software interacts with the physical world—a thumb holding a phone, an eye reading under floaters, a tablet resting on a lap—the smallest details (4px of waste fan overlap, 4mm of button separation, 61px vs 28px cascade step) dictate whether a product is loved or abandoned.
