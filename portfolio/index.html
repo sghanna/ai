@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Games, design decisions and open-source contributions directed by Shawn Hanna and built with Claude, Codex and Antigravity.">
+  <meta name="theme-color" content="#f6f4ee">
+  <title>Shawn Hanna | Useful things, built with AI</title>
+  <link rel="icon" href="assets/home/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/home/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header wrap">
+    <a class="brand" href="#main" aria-label="Shawn Hanna, home"><span class="monogram" aria-hidden="true">sh.</span><span>Shawn Hanna<small>Projects &amp; decisions</small></span></a>
+    <nav aria-label="Main navigation"><a href="#work">The work</a><a href="#approach">How I work</a><a href="https://github.com/sghanna/ai">GitHub <span aria-hidden="true">↗</span></a></nav>
+  </header>
+
+  <main id="main">
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="small-rule" aria-hidden="true"></span> An ongoing collection</p>
+        <h1 id="hero-title">Useful things.<br><em>Built with AI.</em></h1>
+        <p class="lead">Games that are easier to see and use. Fixes that make an existing tool work better. Each project starts with a person and a practical problem.</p>
+        <p class="hero-role">I set the direction, compare the options and decide what is ready. Claude, Codex and Antigravity help me design, build and check the work.</p>
+        <a class="button" href="#work">Explore the projects <span aria-hidden="true">↓</span></a>
+      </div>
+      <figure class="hero-figure">
+        <div class="montage" aria-hidden="true">
+          <span class="montage-note">From an idea to something you can use.</span>
+          <div class="mini-screen mini-solitaire"><img src="assets/home/solitaire.png" width="390" height="844" alt="" fetchpriority="high"><span>Solitaire</span></div>
+          <div class="mini-screen mini-words"><img src="assets/home/words.png" width="390" height="844" alt="" fetchpriority="high"><span>Words</span></div>
+          <div class="mini-screen mini-hearts"><img src="assets/home/hearts.png" width="390" height="844" alt="" fetchpriority="high"><span>Hearts</span></div>
+        </div>
+        <figcaption>Actual game screens. Desktop Chromium captures at phone size, September 30, 2026.</figcaption>
+      </figure>
+    </section>
+
+    <div class="facts wrap" aria-label="Collection at a glance">
+      <p><strong>03</strong><span>Games to play<br><small>Free and ad-free</small></span></p>
+      <p><strong>1,000</strong><span>Word puzzles<br><small>In the Words collection</small></span></p>
+      <p><strong>03</strong><span>Accepted fixes<br><small>In an open-source email tool</small></span></p>
+    </div>
+
+    <section id="work" class="work wrap section" aria-labelledby="work-title">
+      <div class="section-heading"><div><p class="eyebrow">01 / The collection</p><h2 id="work-title">Made to be used.</h2></div><p>Start a game, then look at<br class="wide-only"> the decisions behind it.</p></div>
+
+      <article class="feature project" aria-labelledby="hearts-title">
+        <figure class="game-visual hearts-visual">
+          <div class="visual-label"><span>Hearts</span><span>01</span></div>
+          <img class="phone-screen" src="assets/home/hearts.png" width="390" height="844" alt="Hearts shows all thirteen cards in rows, with a clear prompt to choose three cards and confirm the pass." loading="lazy">
+          <figcaption>Published game · Chromium · 390 × 844<br>Captured September 30, 2026</figcaption>
+        </figure>
+        <div class="project-copy">
+          <p class="eyebrow">Card game / iPhone &amp; iPad</p>
+          <h3 id="hearts-title">Hearts</h3>
+          <p class="project-deck">Make the next move clear.</p>
+          <p>Readable cards are only the start. Players also need to see whose turn it is, which cards arrived and who has collected the penalty points.</p>
+          <dl class="decisions"><div><dt>My decisions</dt><dd>Keep the cards readable, show changes before play resumes and let the player confirm a choice.</dd></div><div><dt>Built with AI</dt><dd>Codex adapted the tablet game and Claude's celebrations. The work includes browser checks for touch behavior, saved games and offline play.</dd></div></dl>
+          <div class="actions"><a class="button" href="https://sghanna.github.io/ai/games/hearts/">Play Hearts <span aria-hidden="true">↗</span></a><a class="text-link" href="https://github.com/sghanna/ai/tree/main/games/hearts">Read the project notes <span aria-hidden="true">↗</span></a></div>
+        </div>
+      </article>
+
+      <div class="project-pair">
+        <article class="project small-project" aria-labelledby="solitaire-title">
+          <figure class="game-visual solitaire-visual"><div class="visual-label"><span>Solitaire</span><span>02</span></div><img class="phone-screen" src="assets/home/solitaire.png" width="390" height="844" alt="Solitaire's opening deal, with large card ranks, a separate New button and Undo on the opposite side." loading="lazy"><figcaption>Published game · Chromium · 390 × 844<br>Captured September 30, 2026</figcaption></figure>
+          <div class="project-copy"><p class="eyebrow">Card game / iPhone &amp; iPad</p><h3 id="solitaire-title">Solitaire</h3><p class="project-deck">Every card needs to be legible.</p><p>I compared card faces at their actual display size, kept the Queen's tail visible in a stack and separated New from Undo. Those choices carried into the tablet layout.</p><p class="credit">Built across Claude, Antigravity and Codex, with visual alternatives I could inspect and choose.</p><div class="actions"><a class="button" href="https://sghanna.github.io/ai/games/solitaire/">Play Solitaire <span aria-hidden="true">↗</span></a><a class="text-link" href="https://sghanna.github.io/ai/games/solitaire/case-study.html">Read the case study <span aria-hidden="true">↗</span></a></div></div>
+        </article>
+        <article class="project small-project" aria-labelledby="words-title">
+          <figure class="game-visual words-visual"><div class="visual-label"><span>Words</span><span>03</span></div><img class="phone-screen" src="assets/home/words.png" width="390" height="844" alt="Words shows a crossword grid, free hint controls and a large letter wheel with the letters T, A and C." loading="lazy"><figcaption>Published game · Chromium · 390 × 844<br>Captured September 30, 2026</figcaption></figure>
+          <div class="project-copy"><p class="eyebrow">Word puzzle / Phone, tablet &amp; laptop</p><h3 id="words-title">Words</h3><p class="project-deck">One game. More ways to play.</p><p>A thousand puzzles with free hints, saved progress and offline play. I asked for touch and keyboard controls, and layouts that work in both portrait and landscape.</p><p class="credit">Claude built the original Word Wheel. Codex revised it, Antigravity advised on layout and Claude reviewed the changes. <a href="https://github.com/sghanna/ai/blob/main/games/words/REVIEW.md">Read the technical review.</a></p><div class="actions"><a class="button" href="https://sghanna.github.io/ai/games/words/">Play Words <span aria-hidden="true">↗</span></a><a class="text-link" href="https://sghanna.github.io/ai/games/words/portfolio.html">Read the case study <span aria-hidden="true">↗</span></a></div></div>
+        </article>
+      </div>
+
+      <aside class="celebration" aria-labelledby="celebration-title"><img src="assets/home/hearts-moon.png" width="390" height="740" alt="The final frame of the moon celebration forms the game's gold-seal heart icon." loading="lazy"><div><p class="eyebrow">A little room for delight</p><h3 id="celebration-title">A win deserves a moment.</h3><p>Lanterns rise. The queen becomes a moon. Hearts gather into the game's icon. Replay all three Hearts celebrations without playing a match.</p><a class="text-link" href="https://sghanna.github.io/ai/previews/hearts-celebrations/">Watch the celebrations <span aria-hidden="true">↗</span></a><p class="image-note">Still from the local WebKit preview, September 30, 2026.</p></div></aside>
+      <p class="collection-note">The project notes record the automated browser checks and remaining physical-device playtests.</p>
+    </section>
+
+    <section class="contribution-section" aria-labelledby="contribution-title"><div class="wrap contribution">
+      <div><p class="eyebrow">02 / Open source</p><h2 id="contribution-title">Improve what's<br>already there.</h2><p>I chose an existing Outlook command-line tool, asked for independent review and approved three focused contributions. The maintainer merged all three.</p><p class="contribution-credit">The assistants reproduced the defects, implemented the fixes and ran the technical checks. I directed the work and reviewed the proposed submissions.</p></div>
+      <div class="merge-list"><p class="merge-heading">olkcli <span>Merged September 27, 2026 · Pacific</span></p>
+        <a href="https://github.com/rlrghb/olkcli/pull/129"><span class="pr-number">#129</span><span><strong>Show reply-to addresses</strong><small>Include the address in single and batch email reads.</small></span><span aria-hidden="true">↗</span></a>
+        <a href="https://github.com/rlrghb/olkcli/pull/130"><span class="pr-number">#130</span><span><strong>Fix sorted sender searches</strong><small>Prevent a filter error when listing mail by sender.</small></span><span aria-hidden="true">↗</span></a>
+        <a href="https://github.com/rlrghb/olkcli/pull/131"><span class="pr-number">#131</span><span><strong>Explain sign-in timeouts</strong><small>Give useful retry guidance when a login expires.</small></span><span aria-hidden="true">↗</span></a>
+        <p class="merge-note">Each link opens the accepted change and its review history.</p>
+      </div>
+    </div></section>
+
+    <section id="approach" class="approach wrap section" aria-labelledby="approach-title"><div class="section-heading"><div><p class="eyebrow">03 / The working method</p><h2 id="approach-title">The decisions are part of the work.</h2></div></div>
+      <div class="method-grid"><article><span class="step">01</span><h3>Start with the person.</h3><p>A card is hard to read. A button is too easy to hit. A search fails. Turn the observed problem into a requirement the finished work can be checked against.</p></article><article><span class="step">02</span><h3>Make alternatives visible.</h3><p>Ask AI for working options. Compare them at the size and in the situation where they will be used. Keep the reasons for choosing one.</p></article><article><span class="step">03</span><h3>Check before accepting.</h3><p>Have another assistant inspect the work. Reproduce defects, test the correction and record what still needs a real user's playtest.</p></article></div>
+      <div class="attribution"><p><strong>My part</strong><span>Problem framing, requirements, design choices, review direction and the final decision.</span></p><p><strong>The AI contribution</strong><span>Research, design proposals, implementation, test execution and independent technical review.</span></p></div>
+    </section>
+
+    <section id="notebook" class="notebook wrap section" aria-labelledby="notebook-title"><div class="section-heading"><div><p class="eyebrow">04 / The design notebook</p><h2 id="notebook-title">See what changed along the way.</h2></div><p>Published studies and earlier options.<br class="wide-only"> The live games show the current choices.</p></div>
+      <div class="notebook-featured"><a href="https://sghanna.github.io/ai/games/solitaire/portfolio.html"><span class="eyebrow">Solitaire</span><strong>The project in detail</strong><span>Design choices, visuals and the path to the game. <b aria-hidden="true">↗</b></span></a><a href="https://sghanna.github.io/ai/games/solitaire/card-designs-preview.html"><span class="eyebrow">Visual comparisons</span><strong>Begin with the card</strong><span>Explore the card-face options behind the interface. <b aria-hidden="true">↗</b></span></a><a href="https://sghanna.github.io/ai/games/solitaire/controls-ui-preview.html"><span class="eyebrow">Interaction design</span><strong>Give controls some space</strong><span>Compare the placement and shape of the controls. <b aria-hidden="true">↗</b></span></a></div>
+      <details class="archive"><summary>Browse all 18 Solitaire design studies <span aria-hidden="true">+</span></summary><p>These are preserved experiments, not additional games. Some show options that were replaced.</p><ul>
+        <li><a href="https://sghanna.github.io/ai/games/solitaire/card-back-designs-preview.html">Card-back designs</a></li>
+        <li><a href="https://sghanna.github.io/ai/games/solitaire/card-designs-preview.html">Card-face designs</a></li>
+        <li><a href="https://sghanna.github.io/ai/games/solitaire/controls-ui-preview.html">Control layouts</a></li>
+        <li><a href="https://sghanna.github.io/ai/games/solitaire/deal3-options.html">Three-card draw options</a></li>
+        <li><a href="https://sghanna.github.io/ai/games/solitaire/double-happiness-backs-preview.html">Earlier card-back motifs</a></li>
+        <li><a href="https://sghanna.github.io/ai/games/solitaire/favicon-options-preview.html">App icon options</a></li>
+        <li><a href="https://sghanna.github.io/ai/games/solitaire/hud-options-preview.html">Score display options</a></li>
+        <li><a href="https://sghanna.github.io/ai/games/solitaire/icon-glow-options.html">Icon glow options</a></li>
+        <li><a href="https://sghanna.github.io/ai/games/solitaire/king-placeholder-preview.html">Empty-column markers</a></li>
+        <li><a href="https://sghanna.github.io/ai/games/solitaire/number-styles-preview.html">Number styles</a></li>
+        <li><a href="https://sghanna.github.io/ai/games/solitaire/options-preview.html">Early design options</a></li>
+        <li><a href="https://sghanna.github.io/ai/games/solitaire/sound-icon-preview.html">Sound controls</a></li>
+        <li><a href="https://sghanna.github.io/ai/games/solitaire/sound-test.html">Sound comparison</a></li>
+        <li><a href="https://sghanna.github.io/ai/games/solitaire/suit-designs-preview.html">Suit shapes</a></li>
+        <li><a href="https://sghanna.github.io/ai/games/solitaire/table-felt-preview.html">Table colors</a></li>
+        <li><a href="https://sghanna.github.io/ai/games/solitaire/top-bar-alignment-options.html">Top-bar alignment</a></li>
+        <li><a href="https://sghanna.github.io/ai/games/solitaire/ui-review-sept22.html">September 22 interface review</a></li>
+        <li><a href="https://sghanna.github.io/ai/games/solitaire/win-celebration-preview.html">Solitaire win celebration</a></li>
+      </ul></details>
+    </section>
+  </main>
+  <footer class="site-footer wrap"><div><a class="footer-name" href="#main">Shawn Hanna</a><p>Practical projects, built in collaboration with AI.</p></div><div><a href="https://github.com/sghanna/ai">Explore the source <span aria-hidden="true">↗</span></a><p>Collection checked September 30, 2026.</p><p class="build-credit">Home page: AGY design direction · Codex build</p></div></footer>
+</body>
+</html>

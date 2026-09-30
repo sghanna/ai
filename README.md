@@ -1,5 +1,7 @@
 # ai
 
+[Review the project portfolio](https://sghanna.github.io/ai/portfolio/) - games, design studies and accepted open-source contributions. Current draft for review.
+
 AI work directed by Shawn Hanna, built in collaboration with Antigravity, Claude, and Codex.
 
 [Play Hearts](https://sghanna.github.io/ai/games/hearts/) — the iPhone and iPad game with responsive win, moon, and clean-hand celebrations. [Source and checks](games/hearts/README.md).
