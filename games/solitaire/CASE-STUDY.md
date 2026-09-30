@@ -1,7 +1,7 @@
 # Solitaire for Low Vision: Product & Design Case Study
 
 **Live Web App:** [sghanna.github.io/ai/games/solitaire/](https://sghanna.github.io/ai/games/solitaire/) & [sghanna.github.io/agy/solitaire/](https://sghanna.github.io/agy/solitaire/)  
-**Profile Page:** [sghanna.github.io/ai/games/solitaire/profile.html](https://sghanna.github.io/ai/games/solitaire/profile.html)  
+**Portfolio Page:** [sghanna.github.io/ai/games/solitaire/portfolio.html](https://sghanna.github.io/ai/games/solitaire/portfolio.html)  
 **Repository:** [github.com/sghanna/ai](https://github.com/sghanna/ai) & [github.com/sghanna/agy](https://github.com/sghanna/agy)  
 **Role:** Product Owner & Design Lead  
 **Collaborators:** AI Coding Assistants (Google Antigravity, Anthropic Claude, OpenAI Codex)  
