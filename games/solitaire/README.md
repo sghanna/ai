@@ -2,9 +2,10 @@
 
 An ad-free, high-legibility, culturally authentic Klondike Solitaire progressive web app engineered for seniors with low vision.
 
-- **Live Web App:** [https://sghanna.github.io/agy-solitaire/](https://sghanna.github.io/agy-solitaire/)
-- **Interactive Web Case Study:** [https://sghanna.github.io/agy-solitaire/case-study.html](https://sghanna.github.io/agy-solitaire/case-study.html)
+- **Live Web App:** [https://sghanna.github.io/ai/games/solitaire/](https://sghanna.github.io/ai/games/solitaire/)
+- **Interactive Web Case Study:** [https://sghanna.github.io/ai/games/solitaire/case-study.html](https://sghanna.github.io/ai/games/solitaire/case-study.html)
 - **Product & Design Leadership Case Study (Markdown):** [CASE-STUDY.md](CASE-STUDY.md)
+- **Responsive iPad layout update (v23):** [Changes and verification](RESPONSIVE-LAYOUT.md). Full responsive layout supporting iPhone 16e (390×844) and iPad (768×1024 portrait, 1024×768 landscape).
 
 ---
 

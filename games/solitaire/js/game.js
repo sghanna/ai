@@ -151,7 +151,7 @@ class SolitaireGame {
 
           const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
           if (reduceMotion || !el.animate) {
-            el.style.transform = 'none';
+            el.style.removeProperty('transform');
             el.style.opacity = '1';
             el.classList.add('glowing');
             return;
@@ -160,11 +160,11 @@ class SolitaireGame {
           const startY = fromY !== null ? fromY : `-${(window.innerHeight || 800) + 50}px`;
 
           el._dropAnim = el.animate([
-            { transform: `translate3d(0, ${startY}, 0)`, opacity: 0, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' },
+            { transform: `translate3d(var(--banner-translate-x, 0px), ${startY}, 0)`, opacity: 0, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' },
             { opacity: 1, offset: 0.12 },
-            { transform: 'translate3d(0, 10px, 0)', offset: 0.80, easing: 'ease-in-out' },
-            { transform: 'translate3d(0, -4px, 0)', offset: 0.91, easing: 'ease-in-out' },
-            { transform: 'translate3d(0, 0, 0)', opacity: 1 }
+            { transform: 'translate3d(var(--banner-translate-x, 0px), 10px, 0)', offset: 0.80, easing: 'ease-in-out' },
+            { transform: 'translate3d(var(--banner-translate-x, 0px), -4px, 0)', offset: 0.91, easing: 'ease-in-out' },
+            { transform: 'translate3d(var(--banner-translate-x, 0px), 0, 0)', opacity: 1 }
           ], {
             duration: 3400,
             fill: 'forwards'
@@ -208,7 +208,7 @@ class SolitaireGame {
                 bar.style.display = 'flex';
                 bar.classList.add('visible', 'glowing');
                 bar.style.animation = 'none';
-                bar.style.transform = 'none';
+                bar.style.removeProperty('transform');
                 bar.style.opacity = '1';
               }
             }, 100);
@@ -236,12 +236,26 @@ class SolitaireGame {
   }
 
   setupEventListeners() {
-    // Auto-detect browser/screen height for responsive scrolling modals
+    // Reflow stacks after rotation settles, without interrupting a card flight.
     this.updateViewportHeight();
-    window.addEventListener('resize', () => this.updateViewportHeight());
-    window.addEventListener('orientationchange', () => {
-      setTimeout(() => this.updateViewportHeight(), 100);
-    });
+    let resizeTimeout = null;
+    const refreshLayout = () => {
+      if (this.isAnimating) {
+        resizeTimeout = setTimeout(refreshLayout, 100);
+        return;
+      }
+      this.updateViewportHeight();
+      this.render();
+      if (window.solitaireCelebration && window.solitaireCelebration.resizeCanvas) {
+        window.solitaireCelebration.resizeCanvas();
+      }
+    };
+    const scheduleLayout = (delay = 100) => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(refreshLayout, delay);
+    };
+    window.addEventListener('resize', () => scheduleLayout());
+    window.addEventListener('orientationchange', () => scheduleLayout(200));
     if (window.visualViewport) {
       window.visualViewport.addEventListener('resize', () => this.updateViewportHeight());
     }
@@ -466,13 +480,6 @@ class SolitaireGame {
 
     // Unified Board Interaction Delegation
     document.addEventListener('click', (e) => this.handleBoardClick(e));
-
-    // Window resize handler for celebration canvas
-    window.addEventListener('resize', () => {
-      if (window.solitaireCelebration) {
-        window.solitaireCelebration.resizeCanvas();
-      }
-    });
   }
 
   applySettingsUI() {
@@ -576,7 +583,7 @@ class SolitaireGame {
         autoFinishBar.style.display = 'flex';
         autoFinishBar.classList.add('visible', 'glowing');
         autoFinishBar.style.animation = 'none';
-        autoFinishBar.style.transform = 'none';
+        autoFinishBar.style.removeProperty('transform');
         autoFinishBar.style.opacity = '1';
       } else if (!window.location.search.includes('showAutoWin')) {
         if (autoFinishBar._dropAnim) {
@@ -1289,7 +1296,7 @@ class SolitaireGame {
     // 3. INVERT: Calculate delta from starting position to destination position
     const animItems = [];
     for (const id of movingCardIds) {
-      const newEl = document.getElementById(id);
+      let newEl = document.getElementById(id);
       const startRect = startRects.get(id);
       if (newEl && startRect) {
         const endRect = newEl.getBoundingClientRect();
@@ -1300,10 +1307,28 @@ class SolitaireGame {
         const parent = newEl.closest('.tableau-col, .slot');
         if (parent) parent.style.zIndex = '60';
 
+        // A deep tablet tableau is a scroll viewport. Fly a temporary copy
+        // above it so a move from a foundation is not clipped at its edge.
+        let destinationEl = null;
+        if (parent && parent.classList.contains('tableau-col') &&
+            this.boardEl.classList.contains('scrollable-tableau')) {
+          destinationEl = newEl;
+          const app = document.getElementById('app-container');
+          const appRect = app.getBoundingClientRect();
+          newEl = destinationEl.cloneNode(true);
+          newEl.removeAttribute('id');
+          newEl.style.left = `${endRect.left - appRect.left}px`;
+          newEl.style.top = `${endRect.top - appRect.top}px`;
+          newEl.style.width = `${endRect.width}px`;
+          newEl.style.height = `${endRect.height}px`;
+          destinationEl.style.visibility = 'hidden';
+          app.appendChild(newEl);
+        }
+
         newEl.style.transition = 'none';
         newEl.style.transform = `translate(${dx}px, ${dy}px) scale(1.02)`;
         newEl.classList.add('flying-card');
-        animItems.push({ el: newEl, parent });
+        animItems.push({ el: newEl, parent, destinationEl });
       }
     }
 
@@ -1325,11 +1350,15 @@ class SolitaireGame {
       });
 
       setTimeout(() => {
-        animItems.forEach(({ el, parent }) => {
+        animItems.forEach(({ el, parent, destinationEl }) => {
           el.style.transition = '';
           el.style.transform = '';
           el.classList.remove('flying-card');
           if (parent) parent.style.zIndex = '';
+          if (destinationEl) {
+            destinationEl.style.visibility = '';
+            el.remove();
+          }
         });
 
         this.isAnimating = false;
@@ -1836,6 +1865,11 @@ class SolitaireGame {
   // =========================================================================
 
   render() {
+    const boardScrollTop = this.boardEl ? this.boardEl.scrollTop : 0;
+    const isTablet = window.matchMedia('(min-width: 600px)').matches;
+    const boardHeight = this.boardEl ? this.boardEl.clientHeight : 0;
+    let tallestColumn = 0;
+
     // Render Stock
     this.stockEl.innerHTML = '';
     if (this.stock.length > 0) {
@@ -1865,7 +1899,10 @@ class SolitaireGame {
         const cardEl = window.SolitaireDeck.createCardElement(card);
 
         if (displayCount > 1) {
-          const offset = Number(this.settings.deal3Offset) || 24;
+          const baseOffset = Number(this.settings.deal3Offset) || 24;
+          const wasteWidth = this.wasteEl.clientWidth || 52;
+          const scale = wasteWidth > 70 ? Math.min(1.4, wasteWidth / 64) : 1;
+          const offset = Math.round(baseOffset * scale);
           const offsetPx = (idx - (displayCount - 1)) * offset;
           cardEl.style.left = `${offsetPx}px`;
           cardEl.style.zIndex = `${idx + 1}`;
@@ -1926,6 +1963,28 @@ class SolitaireGame {
       const colEl = this.tableauEls[c];
       colEl.innerHTML = '';
       const cards = this.tableau[c];
+      colEl.style.minHeight = '';
+
+      const colWidth = colEl.getBoundingClientRect().width || 52;
+      const cardHeight = Math.ceil(colWidth * (78 / 52));
+      // The existing Q reaches nearly y=33 in the 52x78 SVG. Scale its
+      // clearance too: the proposed 0.48-width peek would cover its tail.
+      const minUpStep = Math.max(32, Math.ceil(colWidth * (33 / 52)));
+      let upStep = Math.max(minUpStep, Math.min(60, Math.round(colWidth * 0.48)));
+      let downStep = Math.max(12, Math.min(24, Math.round(colWidth * 0.20)));
+
+      // Keep the phone baseline. On tablets compress only where ranks stay
+      // readable; columns that still exceed the board can be scrolled.
+      if (isTablet && boardHeight > 250 && cards.length > 1) {
+        const availableHeight = Math.max(0, boardHeight - cardHeight - 22);
+        const projectedHeight = cards.slice(0, -1).reduce((height, card) =>
+          height + (card.faceUp ? upStep : downStep), 0);
+        if (projectedHeight > availableHeight && projectedHeight > 0) {
+          const compression = Math.max(0.65, availableHeight / projectedHeight);
+          upStep = Math.max(minUpStep, Math.round(upStep * compression));
+          downStep = Math.max(10, Math.round(downStep * compression));
+        }
+      }
 
       // Render King placeholder slot if column is empty
       if (cards.length === 0) {
@@ -1968,15 +2027,20 @@ class SolitaireGame {
           lastSelectedCardEl = cardEl;
         }
 
-        // Generous vertical exposure: 32px for face-up cards (revealing Bodoni Q tail), 12px for face-down
+        // Preserve the full rank, including the Queen's downward tail.
         if (card.faceUp) {
-          currentTopOffset += 32;
+          currentTopOffset += upStep;
         } else {
-          currentTopOffset += 12;
+          currentTopOffset += downStep;
         }
 
         colEl.appendChild(cardEl);
       });
+
+      const lastStep = cards[cards.length - 1].faceUp ? upStep : downStep;
+      const columnHeight = currentTopOffset - lastStep + cardHeight + 16;
+      tallestColumn = Math.max(tallestColumn, columnHeight);
+      if (isTablet) colEl.style.minHeight = `${columnHeight}px`;
 
       // Append unified perimeter halo around the entire stack if selected
       if (selectedFirstTop !== null && selectedLastTop !== null) {
@@ -1999,6 +2063,11 @@ class SolitaireGame {
         halo.style.height = `${stackHeight + 2}px`;
         colEl.appendChild(halo);
       }
+    }
+
+    if (this.boardEl) {
+      this.boardEl.classList.toggle('scrollable-tableau', isTablet && tallestColumn > boardHeight - 6);
+      this.boardEl.scrollTop = isTablet ? boardScrollTop : 0;
     }
   }
 
