@@ -1,0 +1,181 @@
+{
+  "version": 1,
+  "handNumber": 1,
+  "scores": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "passOffset": 1,
+  "phase": "play",
+  "hands": [
+    [
+      "3C",
+      "QC",
+      "KC",
+      "5S",
+      "8S",
+      "KS",
+      "3H",
+      "9H"
+    ],
+    [
+      "9D",
+      "JD",
+      "QD",
+      "JS",
+      "AS",
+      "7H",
+      "10H",
+      "JH"
+    ],
+    [
+      "2D",
+      "10D",
+      "2S",
+      "2H",
+      "4H",
+      "5H",
+      "QH",
+      "AH"
+    ],
+    [
+      "10C",
+      "JC",
+      "AC",
+      "AD",
+      "7S",
+      "10S",
+      "8H"
+    ]
+  ],
+  "received": [],
+  "trick": [
+    {
+      "player": 3,
+      "card": "6H"
+    }
+  ],
+  "history": [
+    {
+      "cards": [
+        {
+          "player": 2,
+          "card": "2C"
+        },
+        {
+          "player": 3,
+          "card": "6C"
+        },
+        {
+          "player": 0,
+          "card": "5C"
+        },
+        {
+          "player": 1,
+          "card": "9C"
+        }
+      ],
+      "winner": 1,
+      "points": 0
+    },
+    {
+      "cards": [
+        {
+          "player": 1,
+          "card": "6D"
+        },
+        {
+          "player": 2,
+          "card": "5D"
+        },
+        {
+          "player": 3,
+          "card": "7D"
+        },
+        {
+          "player": 0,
+          "card": "4D"
+        }
+      ],
+      "winner": 3,
+      "points": 0
+    },
+    {
+      "cards": [
+        {
+          "player": 3,
+          "card": "3S"
+        },
+        {
+          "player": 0,
+          "card": "4S"
+        },
+        {
+          "player": 1,
+          "card": "9S"
+        },
+        {
+          "player": 2,
+          "card": "6S"
+        }
+      ],
+      "winner": 1,
+      "points": 0
+    },
+    {
+      "cards": [
+        {
+          "player": 1,
+          "card": "8C"
+        },
+        {
+          "player": 2,
+          "card": "QS"
+        },
+        {
+          "player": 3,
+          "card": "7C"
+        },
+        {
+          "player": 0,
+          "card": "4C"
+        }
+      ],
+      "winner": 1,
+      "points": 13
+    },
+    {
+      "cards": [
+        {
+          "player": 1,
+          "card": "8D"
+        },
+        {
+          "player": 2,
+          "card": "3D"
+        },
+        {
+          "player": 3,
+          "card": "KD"
+        },
+        {
+          "player": 0,
+          "card": "KH"
+        }
+      ],
+      "winner": 3,
+      "points": 1
+    }
+  ],
+  "handPoints": [
+    0,
+    13,
+    0,
+    1
+  ],
+  "heartsBroken": true,
+  "turn": 0,
+  "result": null
+}
