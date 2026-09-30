@@ -1,0 +1,297 @@
+/* Word Wheel (Claude). Every color is a variable. Three looks, chosen with ?look= (app.js sets data-look):
+   felt    = Claude Hearts' palette (pine felt, brass, navy pills, ivory tiles), so it matches her other game
+   light   = very light background, black letters, dark blue accents
+   scenery = a CSS-only landscape, with solid panels behind the grid, the word and the wheel
+   Sizes (grid squares, wheel letters, row heights) are measured and set by app.js from the real viewport.
+   --u is the iPad scale (app.js, ?ipad=): 1 on a phone, so every calc(N * var(--u)) below is exactly N there. */
+:root {
+  --u: 1;
+  --page-bg: #05130d;
+  --app-bg: radial-gradient(circle at 50% 26%, #1a4630 0%, #0f2c1f 52%, #05130d 100%);
+  --text: #ffffff;
+  --title-fg: #fff7df; --title-bg: transparent; --title-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+  --pill-bg: rgba(15, 23, 42, 0.95); --pill-fg: #fef08a; --pill-q-bg: #fbbf24; --pill-q-fg: #0f172a; --pill-border: transparent;
+  --status-fg: #fff7df; --status-bg: transparent; --status-em: #fde68a; --status-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+  --badge-bg: #fbbf24; --badge-fg: #0f172a;
+  --panel: transparent;                                   /* solid panel behind the grid (scenery only) */
+  --blank-bg: rgba(0, 0, 0, 0.3); --blank-border: #d6c38f;
+  --tile-bg: #fbf6e6; --tile-fg: #1b1208; --tile-border: #d6c38f;
+  --pick-ring: #fbbf24;
+  --flash: #fcd34d; --glow: #fcd34d;
+  --strip-bg: #fbf6e6; --strip-fg: #1b1208; --strip-border: #fbbf24;
+  --tool-bg: rgba(15, 23, 42, 0.95); --tool-fg: #ffffff; --tool-border: #fbbf24;
+  --tool-on-bg: #fbbf24; --tool-on-fg: #0f172a; --tool-on-border: #fef08a;
+  --go-bg: linear-gradient(180deg, #fcd34d 0%, #f59e0b 100%); --go-fg: #0f172a; --go-border: #fef08a;
+  --disc: #f1e9d2; --disc-rim: #fbbf24;
+  --letter-bg: #fffaf0; --letter-fg: #1b1208; --letter-ring: #8b6f2e;
+  --chosen-bg: #0f172a; --chosen-fg: #fff7df; --chosen-ring: #0f172a;
+  --line: #0f172a; --line-edge: #fbbf24;
+  --overlay: rgba(2, 8, 5, 0.74);
+  --dlg-bg: #0f2219; --dlg-border: #fbbf24; --dlg-title: #fff7df; --dlg-text: #eee9d8;
+  --dlg-btn-bg: rgba(15, 23, 42, 0.95); --dlg-btn-fg: #ffffff; --dlg-btn-border: #fbbf24;
+  --danger-bg: #8f1616; --danger-border: #fca5a5; --danger-fg: #ffffff;
+  --seg-on-bg: #fbbf24; --seg-on-fg: #0f172a;
+  --focus: #7dd3fc;
+  --safe-top: max(var(--safe-top-min, 47px), env(safe-area-inset-top, 0px));
+  --safe-bottom: max(var(--safe-bottom-min, 34px), env(safe-area-inset-bottom, 0px));
+}
+
+html[data-look="light"] {
+  --page-bg: #f7f5ef;
+  --app-bg: #f7f5ef;
+  --text: #111111;
+  --title-fg: #111111; --title-shadow: none;
+  --pill-bg: #1e3a8a; --pill-fg: #ffffff; --pill-q-bg: #ffffff; --pill-q-fg: #1e3a8a;
+  --status-fg: #111111; --status-em: #1e3a8a; --status-shadow: none;
+  --badge-bg: #1e3a8a; --badge-fg: #ffffff;
+  --blank-bg: #dde4ef; --blank-border: #1e3a8a;
+  --tile-bg: #ffffff; --tile-fg: #000000; --tile-border: #1e3a8a;
+  --pick-ring: #c2410c;
+  --flash: #fcd34d; --glow: #fcd34d;
+  --strip-bg: #ffffff; --strip-fg: #000000; --strip-border: #1e3a8a;
+  --tool-bg: #ffffff; --tool-fg: #1e3a8a; --tool-border: #1e3a8a;
+  --tool-on-bg: #1e3a8a; --tool-on-fg: #ffffff; --tool-on-border: #1e3a8a;
+  --go-bg: #1e3a8a; --go-fg: #ffffff; --go-border: #1e3a8a;
+  --disc: #e6ebf3; --disc-rim: #1e3a8a;
+  --letter-bg: #ffffff; --letter-fg: #000000; --letter-ring: #1e3a8a;
+  --chosen-bg: #1e3a8a; --chosen-fg: #ffffff; --chosen-ring: #1e3a8a;
+  --line: #1e3a8a; --line-edge: #ffffff;
+  --overlay: rgba(15, 23, 42, 0.55);
+  --dlg-bg: #ffffff; --dlg-border: #1e3a8a; --dlg-title: #111111; --dlg-text: #1f2937;
+  --dlg-btn-bg: #ffffff; --dlg-btn-fg: #1e3a8a; --dlg-btn-border: #1e3a8a;
+  --danger-bg: #9f1239; --danger-border: #9f1239;
+  --seg-on-bg: #1e3a8a; --seg-on-fg: #ffffff;
+  --focus: #c2410c;
+}
+
+html[data-look="scenery"] {
+  --page-bg: #5d8fbf;
+  /* Three hills, a low sun setting behind them on the right, and a sky: all gradients (no image files). */
+  --app-bg:
+    radial-gradient(130% 42% at 12% 104%, #2f6e3c 0 49%, transparent 50%),
+    radial-gradient(120% 40% at 92% 100%, #3f8a4a 0 49%, transparent 50%),
+    radial-gradient(170% 46% at 50% 118%, #245a2f 0 49%, transparent 50%),
+    radial-gradient(circle at 93% 79%, #fff3c4 0 30px, rgba(255, 236, 170, 0.5) 31px 50px, transparent 51px),
+    linear-gradient(180deg, #5d8fbf 0%, #8fbde3 34%, #cfe4f0 58%, #f3dcae 78%, #e9bb7c 100%);
+  --title-bg: #0f172a; --title-shadow: none;
+  --status-bg: #0f172a; --status-shadow: none;
+  --panel: #10281d;
+}
+
+/* A long press never selects text or opens a menu (Mom holds her finger down), and a double tap never zooms. */
+* {
+  box-sizing: border-box; -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; touch-action: manipulation;
+}
+html, body { margin: 0; min-height: 100%; overflow-x: hidden; overscroll-behavior-y: none; background: var(--page-bg); }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text); -webkit-text-size-adjust: 100%;
+}
+button { font: inherit; color: inherit; }
+button:focus-visible { outline: calc(4px * var(--u)) solid var(--focus); outline-offset: calc(3px * var(--u)); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Short windows may scroll; the wheel owns single-finger swipes while pinch zoom remains available. */
+.app {
+  position: relative;
+  height: 100vh; height: 100dvh;
+  max-width: 430px; margin: 0 auto;
+  display: flex; flex-direction: column;
+  padding: var(--safe-top) max(8px, env(safe-area-inset-right, 0px)) var(--safe-bottom) max(8px, env(safe-area-inset-left, 0px));
+  background: var(--app-bg);
+  overflow: hidden; touch-action: pan-y pinch-zoom;
+}
+.app * { touch-action: pan-y pinch-zoom; }
+.wheel, .wheel *, .app button, .grid.picking { touch-action: pinch-zoom; }
+/* Two columns (?ipad=split on a sideways iPad, set by app.js): the top bar across both, the grid on the left, and the
+   status line, word strip, buttons and wheel on the right. The page order stays the same. */
+.app.two-col {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: calc(24px * var(--u));
+  grid-template-rows: auto auto auto auto 1fr;
+  grid-template-areas: "top top" "grid status" "grid strip" "grid tools" "grid wheel";
+}
+.two-col .topbar { grid-area: top; }
+.two-col .grid-area { grid-area: grid; }
+.two-col .status-row { grid-area: status; }
+.two-col .strip-row { grid-area: strip; }
+.two-col .tools-row { grid-area: tools; }
+.two-col .wheel { grid-area: wheel; }
+
+/* ---------- Top bar ---------- */
+.topbar {
+  flex: 0 0 auto; height: 46px;
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: calc(6px * var(--u));
+}
+.topbar > :first-child { justify-self: start; }
+.topbar > :last-child { justify-self: end; }
+.pill {
+  height: 46px; min-width: calc(46px * var(--u)); padding: 0 calc(15px * var(--u));
+  display: inline-flex; align-items: center; gap: calc(8px * var(--u));
+  border-radius: 9999px; border: 2px solid var(--pill-border);
+  background: var(--pill-bg); color: var(--pill-fg);
+  font-size: calc(18px * var(--u)); font-weight: 800; cursor: pointer; white-space: nowrap;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.45);
+}
+.pill-icon { width: calc(20px * var(--u)); height: calc(16px * var(--u)); flex: 0 0 auto; }
+.pill-q {
+  width: calc(24px * var(--u)); height: calc(24px * var(--u)); border-radius: 50%; flex: 0 0 auto;
+  display: grid; place-items: center;
+  background: var(--pill-q-bg); color: var(--pill-q-fg);
+  font-size: calc(17px * var(--u)); font-weight: 900; line-height: 1;
+}
+.level-title {
+  justify-self: center; max-width: 100%; overflow: hidden;
+  margin: 0; padding: 0 calc(12px * var(--u)); border-radius: 9999px; white-space: nowrap;
+  font-size: calc(23px * var(--u)); font-weight: 800; line-height: calc(40px * var(--u));
+  color: var(--title-fg); background: var(--title-bg); text-shadow: var(--title-shadow);
+}
+
+/* ---------- Grid ---------- */
+.grid-area { flex: 0 0 auto; display: flex; align-items: center; justify-content: center; min-height: 0; }
+.grid { position: relative; border-radius: calc(12px * var(--u)); background: var(--panel); }
+.cell {
+  position: absolute; border-radius: calc(7px * var(--u));
+  display: flex; align-items: center; justify-content: center;
+  background: var(--blank-bg); box-shadow: inset 0 0 0 2.5px var(--blank-border);
+  color: var(--tile-fg); font-weight: 800; line-height: 1;
+}
+.cell.shown { background: var(--tile-bg); box-shadow: inset 0 0 0 2px var(--tile-border); }
+.cell.landing { color: transparent; background: var(--blank-bg); box-shadow: inset 0 0 0 2.5px var(--blank-border); }
+.grid.picking .cell:not(.shown) { box-shadow: inset 0 0 0 4px var(--pick-ring); cursor: pointer; }
+.cell.mark { box-shadow: inset 0 0 0 4px var(--flash), 0 0 0 3px var(--flash); }
+.cell.glow { box-shadow: inset 0 0 0 4px var(--glow), 0 0 14px 4px var(--glow); }
+
+/* ---------- Status line ---------- */
+.status-row { flex: 0 0 auto; position: relative; display: flex; align-items: center; justify-content: center; gap: calc(8px * var(--u)); }
+.status {
+  margin: 0; min-width: 0; max-width: 100%; padding: 0 calc(12px * var(--u)); border-radius: 9999px;
+  text-align: center; white-space: nowrap; overflow: hidden;
+  font-size: calc(20px * var(--u)); font-weight: 800;
+  color: var(--status-fg); background: var(--status-bg); text-shadow: var(--status-shadow);
+}
+.status em { font-style: normal; color: var(--status-em); }
+.bonus-badge {
+  flex: 0 0 auto; padding: 0 calc(10px * var(--u)); border-radius: 9999px;
+  font-size: calc(18px * var(--u)); font-weight: 900; line-height: calc(28px * var(--u)); white-space: nowrap;
+  background: var(--badge-bg); color: var(--badge-fg);
+}
+.bonus-badge[hidden] { display: none; }
+
+/* ---------- Word strip: Back, the word, Enter ---------- */
+.strip-row { flex: 0 0 auto; display: flex; align-items: stretch; gap: calc(6px * var(--u)); }
+.strip {
+  flex: 1 1 auto; min-width: 0; border-radius: calc(14px * var(--u));
+  display: flex; align-items: center; justify-content: center; gap: 2px; overflow: hidden;
+  background: var(--strip-bg); color: var(--strip-fg); box-shadow: inset 0 0 0 2.5px var(--strip-border);
+  font-weight: 900; line-height: 1;
+}
+.strip .sl { display: inline-block; padding: 0 1px; }
+.tool {
+  flex: 0 0 auto; min-width: calc(48px * var(--u)); padding: 0 calc(12px * var(--u)); border-radius: calc(14px * var(--u)); cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; gap: calc(6px * var(--u));
+  background: var(--tool-bg); color: var(--tool-fg); border: 2.5px solid var(--tool-border);
+  font-size: calc(19px * var(--u)); font-weight: 800; white-space: nowrap; line-height: 1.05;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
+}
+.tool.go { background: var(--go-bg); color: var(--go-fg); border-color: var(--go-border); }
+.tool[aria-pressed="true"] { background: var(--tool-on-bg); color: var(--tool-on-fg); border-color: var(--tool-on-border); }
+.tool:active { filter: brightness(1.15); }
+.tool-icon { width: calc(20px * var(--u)); height: calc(17px * var(--u)); flex: 0 0 auto; }
+.tools-row { flex: 0 0 auto; display: flex; gap: calc(8px * var(--u)); }
+.tools-row .tool { flex: 1 1 auto; }
+
+/* ---------- Wheel ---------- */
+.wheel { flex: 0 0 auto; position: relative; width: 100%; }
+.wheel-svg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.wheel-disc { fill: var(--disc); stroke: var(--disc-rim); stroke-width: 4; }
+.path-edge, .path-core { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.path-edge { stroke: var(--line-edge); }
+.path-core { stroke: var(--line); }
+.wheel-letter {
+  position: absolute; border-radius: 50%; border: 0; padding: 0; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--letter-bg); color: var(--letter-fg); box-shadow: inset 0 0 0 2.5px var(--letter-ring), 0 2px 5px rgba(0, 0, 0, 0.25);
+  font-weight: 800; line-height: 1;
+}
+.wheel-letter.on { background: var(--chosen-bg); color: var(--chosen-fg); box-shadow: inset 0 0 0 3px var(--chosen-ring), 0 2px 6px rgba(0, 0, 0, 0.35); }
+
+/* Letters flying from the strip into the grid (fx.js). */
+.flyer {
+  position: fixed; z-index: 50; pointer-events: none; border-radius: calc(7px * var(--u));
+  display: flex; align-items: center; justify-content: center;
+  background: var(--tile-bg); color: var(--tile-fg); box-shadow: inset 0 0 0 2px var(--tile-border), 0 4px 10px rgba(0, 0, 0, 0.4);
+  font-family: inherit; font-weight: 900; line-height: 1;
+}
+
+/* ---------- Dialogs: pinned title and buttons, only the middle scrolls ---------- */
+.overlay {
+  position: fixed; inset: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: center; padding: 16px;
+  background: var(--overlay);
+}
+.overlay[hidden] { display: none; }
+.dialog {
+  width: min(calc(360px * var(--u)), 100%); max-height: var(--modal-max, calc(100% - 8px));
+  display: flex; flex-direction: column;
+  background: var(--dlg-bg); border: 2px solid var(--dlg-border); border-radius: calc(22px * var(--u));
+  padding: calc(20px * var(--u)) calc(18px * var(--u)) calc(18px * var(--u)); box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6); color: var(--dlg-text);
+  outline: none;
+}
+.dialog h2 { flex: 0 0 auto; margin: 0 0 calc(10px * var(--u)); font: 700 calc(26px * var(--u))/1.15 Georgia, "Times New Roman", serif; color: var(--dlg-title); }
+.dlg-body {
+  flex: 1 1 auto; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+  touch-action: pan-y pinch-zoom;
+}
+.dlg-body * { touch-action: pan-y pinch-zoom; }
+.dlg-foot { flex: 0 0 auto; }
+.dialog p { margin: 0 0 calc(12px * var(--u)); font-size: calc(20px * var(--u)); font-weight: 700; line-height: 1.4; }
+.dialog p.big { font-size: calc(22px * var(--u)); font-weight: 800; color: var(--dlg-title); }
+.dialog p.note { font-size: calc(19px * var(--u)); }
+.rules { margin: 0 0 calc(6px * var(--u)); padding-left: calc(22px * var(--u)); font-size: calc(20px * var(--u)); font-weight: 700; line-height: 1.38; }
+.rules li { margin-bottom: calc(10px * var(--u)); }
+.dlg-btn {
+  display: block; width: 100%; min-height: calc(54px * var(--u)); margin-top: calc(12px * var(--u)); padding: calc(6px * var(--u)) calc(12px * var(--u)); border-radius: calc(27px * var(--u));
+  border: 2px solid var(--dlg-btn-border); background: var(--dlg-btn-bg); color: var(--dlg-btn-fg);
+  font-size: calc(20px * var(--u)); font-weight: 800; cursor: pointer; line-height: 1.2;
+}
+.dlg-body > .dlg-btn:first-child { margin-top: calc(2px * var(--u)); }
+.dlg-btn.primary-dlg { background: var(--go-bg); color: var(--go-fg); border-color: var(--go-border); }
+.dlg-btn.big { min-height: calc(64px * var(--u)); font-size: calc(24px * var(--u)); }
+.dlg-btn.danger { background: var(--danger-bg); border-color: var(--danger-border); color: var(--danger-fg); }
+.dlg-divider { height: calc(30px * var(--u)); }
+.setting { margin: calc(4px * var(--u)) 0 calc(16px * var(--u)); }
+.setting h3 { margin: 0 0 calc(8px * var(--u)); font-size: calc(20px * var(--u)); color: var(--dlg-title); }
+.seg { display: flex; flex-wrap: wrap; gap: calc(8px * var(--u)); }
+.seg button {
+  flex: 1 1 auto; min-height: calc(52px * var(--u)); padding: 0 calc(14px * var(--u)); border-radius: calc(26px * var(--u)); cursor: pointer;
+  border: 2px solid var(--dlg-btn-border); background: var(--dlg-btn-bg); color: var(--dlg-btn-fg); font-size: calc(19px * var(--u)); font-weight: 800;
+}
+.seg button[aria-pressed="true"] { background: var(--seg-on-bg); color: var(--seg-on-fg); }
+.stepper { display: flex; align-items: center; justify-content: center; gap: calc(14px * var(--u)); margin: calc(6px * var(--u)) 0 calc(4px * var(--u)); }
+.stepper.small { margin-top: calc(10px * var(--u)); }
+.step-btn {
+  width: calc(72px * var(--u)); height: calc(64px * var(--u)); border-radius: calc(18px * var(--u)); cursor: pointer;
+  display: grid; place-items: center;
+  border: 2px solid var(--dlg-btn-border); background: var(--dlg-btn-bg); color: var(--dlg-btn-fg);
+  font-size: calc(22px * var(--u)); font-weight: 900;
+}
+.stepper.small .step-btn { width: calc(90px * var(--u)); height: calc(52px * var(--u)); }
+.step-btn svg { width: calc(30px * var(--u)); height: calc(30px * var(--u)); }
+.step-value { min-width: calc(110px * var(--u)); text-align: center; font-size: calc(44px * var(--u)); font-weight: 900; color: var(--dlg-title); }
+.found-list { font-size: calc(20px * var(--u)); font-weight: 800; line-height: 1.4; letter-spacing: calc(0.5px * var(--u)); color: var(--dlg-title); margin: 0 0 calc(12px * var(--u)); }
+
+/* Keep text labels at narrow widths; decorative icons can yield their space. */
+@media (max-width: 360px) {
+  .pill { padding-inline: 9px; }
+  .pill-icon, .pill-q, #back .tool-icon { display: none; }
+  .level-title { padding-inline: 4px; }
+  .tool { padding-inline: 8px; }
+  .tools-row { gap: 4px; }
+}
+.cell[role="button"]:focus-visible { outline: 4px solid var(--focus); outline-offset: 3px; z-index: 1; }
+.wheel-letter:focus-visible { z-index: 2; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}

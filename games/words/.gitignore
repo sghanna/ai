@@ -1,0 +1,4 @@
+.private/
+output/
+tests/shots/
+node_modules/

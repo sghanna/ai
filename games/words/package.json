@@ -1,0 +1,10 @@
+{
+  "name": "words",
+  "private": true,
+  "scripts": {
+    "test": "node tests/levels.test.mjs",
+    "test:ui": "node tests/ui.test.mjs",
+    "test:review": "node tests/review.test.mjs"
+  },
+  "devDependencies": { "playwright": "1.63.0" }
+}

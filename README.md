@@ -9,3 +9,5 @@ AI work directed by Shawn Hanna, built in collaboration with Antigravity, Claude
 Rule (Shawn, 2026-09-29): only AI work directed by Shawn Hanna in collaboration with Antigravity, Claude, and Codex goes in this repository.
 
 [Replay the celebrations](https://sghanna.github.io/ai/previews/hearts-celebrations/) — watch the win, shoot-the-moon, and clean-hand animations without playing a match.
+
+[Play Words](https://sghanna.github.io/ai/games/words/) - Word Wheel for iPhone, iPad and laptop browsers, with 1,000 levels, keyboard play and offline support. [Source and checks](games/words/README.md).
