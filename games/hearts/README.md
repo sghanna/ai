@@ -2,7 +2,9 @@
 
 [Play Hearts](https://sghanna.github.io/ai/games/hearts/) · [Replay the celebrations](https://sghanna.github.io/ai/previews/hearts-celebrations/)
 
-September 30 update: the queen spins twice and slows into a clean flip that reveals the moon, and each win gets a fresh mix of lantern sizes and rising speeds. This release uses cache `ai-hearts-v7`. The preview page replays all three animations without changing a saved game.
+Published September 30 update: the queen spins twice and slows into a clean flip that reveals the moon, and each win gets a fresh mix of lantern sizes and rising speeds. This release uses cache `ai-hearts-v7`. The preview page replays all three animations without changing a saved game.
+
+Approved menu release (September 30): Menu, Settings, How to play, Opponent names, Last trick, and New game now share persistent headings and action buttons. Longer content scrolls inside each panel. Navigation and settings have clear arrows; rules have section headings; narrow phones show the last trick in two rows with larger cards and readable names. Shawn approved this revision for publication. It uses cache `ai-hearts-v9`.
 
 An ad-free Hearts game with readable cards, three computer opponents, English, Spanish, Vietnamese, saved progress, and offline play. There is no build step or runtime dependency.
 
@@ -16,7 +18,7 @@ Choose three cards and confirm the pass. Review the received cards, then start p
 
 Menu contains settings, rules, the last trick, and a guarded new-game action. On iPhone or iPad, open the game in Safari and use **Share → Add to Home Screen**. Load the game online once before using it offline.
 
-This version has separate saves (`ai-hearts-game-v2` and its backup), preferences (`ai-hearts-settings-v2`), and cache (`ai-hearts-v7`). Progress in earlier Codex and Claude games stays at those versions; it is not imported here.
+This version has separate saves (`ai-hearts-game-v2` and its backup), preferences (`ai-hearts-settings-v2`), and cache (`ai-hearts-v9`). Progress in earlier Codex and Claude games stays at those versions; it is not imported here.
 
 ## Sources and credit
 
@@ -36,6 +38,7 @@ npm ci
 npx playwright install chromium webkit
 npm test
 npm run test:celebrations
+npm run test:menus
 npm run test:ipad
 npm run test:browser
 ```
@@ -57,3 +60,7 @@ The spin and lantern update passed all 43 celebration checks, eleven moon-sequen
 Shawn asked for AGY's help after the spin and transition still felt awkward. Gemini 3.8 Flash High suggested matching the card and moon at their narrow edge, avoiding a transparent overlap. Codex corrected the proposed timing and implemented two turns over 1.56 seconds, slowing into the flip. The moon opens immediately over the next 0.3 seconds; hearts start 0.12 seconds later. After Shawn approved the motion design, he asked for a slightly slower spin; this timing reduces its angular speed by about 20%. A 2D projection avoids an observed WebKit discrepancy between the computed edge and its rendered image. The exact logo and 8.2-second scene duration remain.
 
 AGY reviewed the design and revised code. Its interactive browser tools were unavailable, so Codex performed the rendered checks. The sequence suite verifies an immediate spin, two turns, progressive slowdown, the opaque handoff, complete logo assembly, Reduced Motion, and cleanup at three phone/tablet sizes. Shawn approved the refined animation and authorized publication. Physical-device playtesting remains necessary.
+
+For the menu revision, AGY (Gemini 3.8 Flash High) inspected screenshots and reviewed the design and code. Codex implemented it and ran 105 menu/language/viewport checks, the existing names and responsive lifecycle suites, native Chromium touch checks, and offline loading with all 20 cache entries. The checks cover fixed return/save buttons, scrolling, focus restoration, unchanged paused saves, three languages, settings persistence, slow presses with upward drift, cancellation, and tap-through protection. Native touch exposed a conflict with vertical panning on buttons; buttons retain pinch zoom and deliberate release, while the surrounding body scrolls normally. The onscreen keyboard, Safari toolbars, VoiceOver, and Mom's natural gestures still need device testing.
+
+Local before/after screenshots and the review page are in `.artifacts/menu-refinement/review.html`; AGY review records and browser evidence share that ignored folder. Open the game through the local server to try the menus. Long panels intentionally scroll rather than reduce text size.

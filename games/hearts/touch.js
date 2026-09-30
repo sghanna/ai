@@ -78,7 +78,7 @@ const HeartsTouch = (() => {
       }
     },true);
     for (const type of ['selectstart','contextmenu','dragstart']) {
-      root.addEventListener(type,event => { if (!event.target.closest('input, textarea')) event.preventDefault(); });
+      root.addEventListener(type,event => { if (!event.target.closest('input, textarea') && !(options.selectable && event.target.closest(options.selectable))) event.preventDefault(); });
     }
     document.addEventListener('visibilitychange',() => {
       if (document.hidden) { cancel(); pointers.clear(); }

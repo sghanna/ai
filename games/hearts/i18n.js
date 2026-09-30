@@ -70,6 +70,9 @@ window.HeartsText = (() => {
     opponentLeft:'Đối thủ bên trái',opponentMiddle:'Đối thủ ở giữa',opponentRight:'Đối thủ bên phải',resetNames:'Dùng tên ban đầu',saveNames:'Lưu tên',cancelNames:'Hủy thay đổi',namesSaved:'Đã lưu tên đối thủ.',
     namesStorageProblem:'Tên và lời hứa của bạn có hiệu lực lúc này nhưng chưa lưu được. Hãy giữ thẻ này mở.'
   });
+  Object.assign(en,{lastTrickHint:'Available after the first trick.',ruleGoalTitle:'Goal and points',rulePassTitle:'Passing cards',rulePlayTitle:'Playing a trick',ruleHeartsTitle:'Leading hearts',ruleMoonTitle:'Shooting the moon',ruleControlsTitle:'Choosing and playing cards'});
+  Object.assign(es,{lastTrickHint:'Disponible después de la primera baza.',ruleGoalTitle:'Objetivo y puntos',rulePassTitle:'Pasar cartas',rulePlayTitle:'Jugar una baza',ruleHeartsTitle:'Salir con corazones',ruleMoonTitle:'Hacer pleno',ruleControlsTitle:'Elegir y jugar cartas'});
+  Object.assign(vi,{lastTrickHint:'Có sau lượt đánh đầu tiên.',ruleGoalTitle:'Mục tiêu và điểm',rulePassTitle:'Chuyển bài',rulePlayTitle:'Đánh một lượt',ruleHeartsTitle:'Đi cơ trước',ruleMoonTitle:'Ăn trọn điểm',ruleControlsTitle:'Chọn và đánh bài'});
   const languages = {en,es,vi};
   let language = 'en';
   function set(value) { language = Object.hasOwn(languages,value) ? value : 'en'; document.documentElement.lang = language; }

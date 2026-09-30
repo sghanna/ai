@@ -1,6 +1,6 @@
 'use strict';
-const CACHE = 'ai-hearts-v7';
-const FILES = ['./','./index.html','./style.css','./screens.css','./game.css','./deck.js','./engine.js','./insights.js','./i18n.js','./touch.js','./app.js','./celebration.js','./celebration.css','./manifest.json','./icons/icon.svg','./icons/icon-32.png','./icons/icon-180.png','./icons/icon-192.png','./icons/icon-512.png'];
+const CACHE = 'ai-hearts-v9';
+const FILES = ['./','./index.html','./style.css','./screens.css','./game.css','./deck.js','./engine.js','./insights.js','./i18n.js','./touch.js','./app.js','./celebration.js','./celebration.css','./menus.css','./manifest.json','./icons/icon.svg','./icons/icon-32.png','./icons/icon-180.png','./icons/icon-192.png','./icons/icon-512.png'];
 self.addEventListener('install',event => event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(FILES)).then(() => self.skipWaiting())));
 self.addEventListener('activate',event => event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key.startsWith('ai-hearts-') && key !== CACHE).map(key => caches.delete(key)))).then(() => self.clients.claim())));
 self.addEventListener('fetch',event => {

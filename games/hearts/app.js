@@ -37,11 +37,15 @@
   }
   if (forcedCard()) selected = [forcedCard()];
   document.documentElement.dataset.layout = 'overlap';
-  const touchControls = HeartsTouch.install(document.querySelector('.game'),() => [game,selected.join(','),preferences.tapToPlay]);
-  const nameTouchControls = HeartsTouch.install($('names-dialog'),() => [preferences.schoolPromise,...nameInputs().map(input => input.value)],{selector:'button',unavailable:() => !$('names-dialog').open});
+  const touchControls = HeartsTouch.install(document.querySelector('.game'),() => [game,selected.join(','),preferences.tapToPlay],{selector:'#hand .card, #primary-action, #menu-button',consumeOutsideClick:true});
+  const nameTouchControls = HeartsTouch.install($('names-dialog'),() => [preferences.schoolPromise,...nameInputs().map(input => input.value)],{selector:'button',unavailable:() => !$('names-dialog').open,consumeOutsideClick:true});
   $('names-dialog').addEventListener('close',nameTouchControls.cancel);
   const celebrationTouch = HeartsTouch.install($('celebration-dialog'),() => [game],{selector:'button',unavailable:() => !$('celebration-dialog').open,consumeOutsideClick:true});
   $('celebration-dialog').addEventListener('close',celebrationTouch.cancel);
+  document.querySelectorAll('.menu-panel:not(#names-dialog)').forEach(dialog => {
+    const controls = HeartsTouch.install(dialog,() => [game],{selector:'button,summary',unavailable:() => !dialog.open,consumeOutsideClick:true,selectable:'.rules-list'});
+    dialog.addEventListener('close',controls.cancel);
+  });
 
   function save() {
     try {
@@ -485,6 +489,9 @@
     document.querySelectorAll('[data-total-for]').forEach(node => node.textContent = game.scores[['You','Michael','Jerry','Barbara'].indexOf(node.dataset.totalFor)]);
     renderScores();
     $('last-trick-button').disabled = !currentTrick();
+    $('last-trick-hint').hidden = Boolean(currentTrick());
+    if (currentTrick()) $('last-trick-button').removeAttribute('aria-describedby');
+    else $('last-trick-button').setAttribute('aria-describedby','last-trick-hint');
     $('save-note').textContent = t(saveProblem ? 'savedProblem' : 'saveNote');
     const results = isResult();
     document.querySelector('.game').classList.toggle('showing-results',results);
@@ -519,7 +526,13 @@
     else if (game.phase === 'trick-end' && collection?.stage === 'done') commit(E.collect(game));
     else if (game.phase === 'play' && game.turn === 0 && selected.length === 1) commit(E.play(game,0,selected[0]));
   });
-  function openDialog(id) { touchControls.cancel(); stopTimer(); pauseAdvance(); pauseCollection(); pauseReceipt(); $(id).showModal(); }
+  const dialogReturnFocus = new WeakMap();
+  function openDialog(id) {
+    const active = document.activeElement;
+    dialogReturnFocus.set($(id),active !== document.body && !active?.closest('dialog') ? active : $('menu-button'));
+    touchControls.cancel(); stopTimer(); pauseAdvance(); pauseCollection(); pauseReceipt();
+    $(id).showModal(); $(id).querySelector('.dialog-heading h2')?.focus({preventScroll:true});
+  }
   function nameInputs() { return [...document.querySelectorAll('#names-form input')]; }
   function renderNames() {
     $('names-promise').hidden = preferences.schoolPromise;
@@ -556,7 +569,13 @@
   $('new-game').addEventListener('click',() => { $('menu-dialog').close(); openDialog('new-dialog'); });
   $('restart').addEventListener('click',() => { $('new-dialog').close(); commit(E.newGame(random)); });
   document.querySelectorAll('[data-close]').forEach(button => button.addEventListener('click',() => button.closest('dialog').close()));
-  document.querySelectorAll('dialog').forEach(dialog => dialog.addEventListener('close',schedule));
+  document.querySelectorAll('dialog').forEach(dialog => dialog.addEventListener('close',() => {
+    if (dialog.matches('.menu-panel') && !document.querySelector('dialog[open]')) {
+      const target = dialogReturnFocus.get(dialog);
+      (target?.isConnected && !target.disabled ? target : $('menu-button')).focus({preventScroll:true});
+    }
+    schedule();
+  }));
   $('language').addEventListener('change',() => { preferences.language = $('language').value; L.set(preferences.language); save(); render(); });
   $('pace').addEventListener('change',() => { preferences.pace = $('pace').value; save(); schedule(); });
   $('sound').addEventListener('change',() => { preferences.sound = $('sound').value === 'on'; unlockSound(); sound(); save(); });
