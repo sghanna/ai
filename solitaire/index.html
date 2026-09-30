@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>agy-solitaire: Accessible Klondike Solitaire</title>
+  
+  <!-- Apple Mobile Web App Tags for iPhone 16e PWA -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Solitaire">
+  <meta name="theme-color" content="#0c2419">
+
+  <link rel="manifest" href="manifest.json?v=c1a">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=c1a">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=c1a">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png?v=c1a">
+  <link rel="icon" type="image/png" sizes="32x32" href="apple-touch-icon.png?v=c1a">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=c1a">
+  <link rel="alternate icon" href="favicon.svg?v=c1a">
+  
+  <!-- High-Legibility Font (Option 2: Lexend for open numeral counters) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div id="app-container">
+    <!-- ================================================================= -->
+    <!-- TOP HUD: OPTION 2 TOP FLOATING BRASS PILLS                        -->
+    <!-- ================================================================= -->
+    <!-- ================================================================= -->
+    <!-- TOP HUD: OPTION 3 SENIOR HIGH-CONTRAST BAR (40px HEIGHT, CENTER MENU)-->
+    <!-- ================================================================= -->
+    <header class="top-hud">
+      <div class="hud-controls-left">
+        <button class="hud-btn new-game-btn" id="btn-new-game" title="Start a New Game" aria-label="Start a New Game" data-i18n-title="new_game_title">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+            <line x1="12" y1="5" x2="12" y2="19"/>
+            <line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          <span data-i18n="btn_new">New</span>
+        </button>
+      </div>
+
+      <div class="hud-controls-center">
+        <button class="hud-btn menu-btn" id="btn-settings-toggle" title="Game Menu & Settings" aria-label="Game Menu & Settings" data-i18n-title="settings_title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+          <span data-i18n="btn_menu">Menu</span>
+        </button>
+      </div>
+
+      <div class="hud-controls-right">
+        <button class="hud-btn undo-btn" id="btn-undo" title="Undo previous move" aria-label="Undo previous move" data-i18n-title="btn_undo">
+          <span style="font-size: 17px; line-height: 1;">&#x21BA;</span>
+          <span data-i18n="btn_undo">Undo</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ================================================================= -->
+    <!-- TOP ROW: 4 FOUNDATIONS ON LEFT, WASTE & STOCK ON RIGHT            -->
+    <!-- ================================================================= -->
+    <section class="top-row">
+      <div class="slot slot-foundation" id="foundation-S" title="Spades Foundation"></div>
+      <div class="slot slot-foundation" id="foundation-H" title="Hearts Foundation"></div>
+      <div class="slot slot-foundation" id="foundation-C" title="Clubs Foundation"></div>
+      <div class="slot slot-foundation" id="foundation-D" title="Diamonds Foundation"></div>
+      <div></div> <!-- Blank spacer between foundations and waste -->
+      <div class="slot slot-waste" id="slot-waste" title="Waste pile"></div>
+      <div class="slot slot-stock" id="slot-stock" title="Stock pile"></div>
+    </section>
+
+    <!-- Container for Ace Celebration burst effects -->
+    <div id="ace-celebration-container"></div>
+
+    <!-- ================================================================= -->
+    <!-- TABLEAU: 7 COLUMNS (GENEROUS TOUCH TARGETS & JUMBO RANKS)         -->
+    <!-- ================================================================= -->
+    <main class="tableau-area" id="game-board">
+      <div class="tableau-col" id="tableau-0" data-col="0"></div>
+      <div class="tableau-col" id="tableau-1" data-col="1"></div>
+      <div class="tableau-col" id="tableau-2" data-col="2"></div>
+      <div class="tableau-col" id="tableau-3" data-col="3"></div>
+      <div class="tableau-col" id="tableau-4" data-col="4"></div>
+      <div class="tableau-col" id="tableau-5" data-col="5"></div>
+      <div class="tableau-col" id="tableau-6" data-col="6"></div>
+    </main>
+
+    <!-- ================================================================= -->
+    <!-- AUTO-FINISH BANNER (APPEARS WHEN ALL CARDS REVEALED)             -->
+    <!-- ================================================================= -->
+    <aside id="auto-finish-banner">
+      <div class="banner-left">
+        <div class="banner-icon-badge">
+          <svg class="auto-win-icon" width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Auspicious 8-Point Starburst Filigree -->
+            <path d="M20 2 L22.8 13.5 L34 8 L27 18 L38 20 L27 22 L34 32 L22.8 26.5 L20 38 L17.2 26.5 L6 32 L13 22 L2 20 L13 18 L6 8 L17.2 13.5 Z" fill="rgba(251, 191, 36, 0.35)" stroke="#fbbf24" stroke-width="1.2" stroke-linejoin="round"/>
+            <!-- Inner Imperial Medallion Circle -->
+            <circle cx="20" cy="20" r="10.5" fill="#7f1d1d" stroke="#fde047" stroke-width="1.6"/>
+            <!-- Glowing Ruby Jewel Center -->
+            <circle cx="20" cy="20" r="5.5" fill="#ef4444" stroke="#fbbf24" stroke-width="1.2"/>
+            <circle cx="18" cy="18" r="1.5" fill="#ffffff" opacity="0.85"/>
+            <!-- Corner Gold Accent Orbs -->
+            <circle cx="20" cy="5.5" r="1.2" fill="#fde047"/>
+            <circle cx="20" cy="34.5" r="1.2" fill="#fde047"/>
+            <circle cx="5.5" cy="20" r="1.2" fill="#fde047"/>
+            <circle cx="34.5" cy="20" r="1.2" fill="#fde047"/>
+          </svg>
+        </div>
+        <span class="banner-text" data-i18n="auto_win_title">Solved!</span>
+      </div>
+      <button class="banner-btn" id="btn-auto-finish" data-i18n="auto_win_btn">Auto-Win &rarr;</button>
+    </aside>
+
+    <!-- ================================================================= -->
+    <!-- VICTORY CELEBRATION LAYER (CANVAS + LANTERNS + DRAGON MODAL)       -->
+    <!-- ================================================================= -->
+    <canvas id="victory-canvas"></canvas>
+    <div id="victory-lanterns"></div>
+
+    <div id="victory-modal-overlay">
+      <div class="opt2-seal">
+        <svg class="modal-dragon-svg" width="86" height="86" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="34" cy="34" r="30" fill="none" stroke="#fbbf24" stroke-width="1.3"/>
+          <g stroke="#fbbf24" stroke-width="0.8">
+            <line x1="61.50" y1="34.00" x2="64.00" y2="34.00"/><line x1="61.08" y1="38.78" x2="63.54" y2="39.21"/><line x1="59.84" y1="43.37" x2="62.19" y2="44.24"/><line x1="57.81" y1="47.61" x2="59.98" y2="48.81"/><line x1="55.08" y1="51.34" x2="57.06" y2="52.88"/><line x1="51.72" y1="54.43" x2="53.48" y2="56.28"/><line x1="47.81" y1="56.76" x2="49.27" y2="58.93"/><line x1="43.48" y1="58.26" x2="44.60" y2="60.67"/><line x1="38.85" y1="58.88" x2="39.73" y2="61.50"/><line x1="34.00" y1="58.60" x2="34.00" y2="61.10"/><line x1="29.15" y1="58.88" x2="28.27" y2="61.50"/><line x1="24.52" y1="58.26" x2="23.40" y2="60.67"/><line x1="20.19" y1="56.76" x2="18.73" y2="58.93"/><line x1="16.28" y1="54.43" x2="14.52" y2="56.28"/><line x1="12.92" y1="51.34" x2="10.94" y2="52.88"/><line x1="10.19" y1="47.61" x2="8.02" y2="48.81"/><line x1="8.16" y1="43.37" x2="5.81" y2="44.24"/><line x1="6.92" y1="38.78" x2="4.46" y2="39.21"/><line x1="6.50" y1="34.00" x2="4.00" y2="34.00"/><line x1="6.92" y1="29.22" x2="4.46" y2="28.79"/><line x1="8.16" y1="24.63" x2="5.81" y2="23.76"/><line x1="10.19" y1="20.39" x2="8.02" y2="19.19"/><line x1="12.92" y1="16.66" x2="10.94" y2="15.12"/><line x1="16.28" y1="13.57" x2="14.52" y2="11.72"/><line x1="20.19" y1="11.24" x2="18.73" y2="9.07"/><line x1="24.52" y1="9.74" x2="23.40" y2="7.33"/><line x1="29.15" y1="9.12" x2="28.27" y2="6.50"/><line x1="34.00" y1="9.40" x2="34.00" y2="6.90"/><line x1="38.85" y1="9.12" x2="39.73" y2="6.50"/><line x1="43.48" y1="9.74" x2="44.60" y2="7.33"/><line x1="47.81" y1="11.24" x2="49.27" y2="9.07"/><line x1="51.72" y1="13.57" x2="53.48" y2="11.72"/><line x1="55.08" y1="16.66" x2="57.06" y2="15.12"/><line x1="57.81" y1="20.39" x2="59.98" y2="19.19"/><line x1="59.84" y1="24.63" x2="62.19" y2="23.76"/><line x1="61.08" y1="29.22" x2="63.54" y2="28.79"/>
+          </g>
+          <circle cx="34" cy="34" r="27.2" fill="none" stroke="rgba(254, 240, 138, 0.7)" stroke-width="0.7"/>
+          <circle cx="34" cy="34" r="25" fill="none" stroke="rgba(254, 240, 138, 0.6)" stroke-width="0.7" stroke-dasharray="1.5,1.5"/>
+          <!-- Golden Imperial Dragon with Flaming Ruby Pearl -->
+          <g transform="translate(34, 34) scale(0.68) translate(-34, -31)" fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.5px 2px rgba(0,0,0,0.85));">
+            <path d="M 34,8 C 47,8 58,19 58,32 C 58,46 46,56 34,56 C 22,56 14,48 14,38 C 14,28 22,22 30,22 C 38,22 42,26 42,32 C 42,36 38,40 34,40 C 30,40 28,36 30,34" stroke-width="3.2"/>
+            <path d="M 50,16 L 54,12 M 58,26 L 63,24 M 58,38 L 63,40 M 50,50 L 54,54 M 40,56 L 42,61 M 26,56 L 24,61 M 16,46 L 11,48" stroke-width="1.8"/>
+            <path d="M 30,8 L 32,3 M 36,7 L 40,2" stroke-width="2"/>
+            <circle cx="30" cy="11" r="1.5" fill="#fde047"/>
+            <path d="M 26,12 C 22,12 19,14 20,17 C 21,19 25,18 28,16" stroke-width="2"/>
+            <path d="M 22,14 Q 14,12 10,16 M 24,17 Q 16,20 12,25" stroke-width="1.2"/>
+            <path d="M 48,46 L 54,50 M 50,44 L 56,46 M 46,48 L 50,54" stroke-width="1.8"/>
+            <circle cx="34" cy="32" r="4.5" fill="#ef4444" stroke="#fde047" stroke-width="1.2"/>
+            <path d="M 34,24 Q 32,27 34,27.5 Q 36,27 34,24" fill="#fde047"/>
+          </g>
+        </svg>
+      </div>
+      <div class="opt2-title" data-i18n="win1_title">VICTORY!</div>
+      <div class="opt2-sub" id="modal-sub-label" data-i18n="win1_sub">IMPERIAL GOLDEN DRAGON</div>
+      
+      <div class="opt2-stats">
+        <span><span data-i18n="stat_moves_lbl">MOVES:</span> <strong id="modal-stats-moves">0</strong></span>
+        <span>&bull;</span>
+        <span><span data-i18n="stat_score_lbl">SCORE:</span> <strong id="modal-stats-score">0</strong></span>
+      </div>
+
+      <button class="opt2-btn" id="modal-play-again-btn" data-i18n="win1_btn">PLAY NEXT DEAL &#x27F6;</button>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- WIN 2 CELEBRATION MODAL: COMPACT BANNER (DOES NOT COVER TABLEAU)  -->
+    <!-- ================================================================= -->
+    <div id="victory-banner-overlay" class="combo-banner">
+      <div class="win2-seal">
+        <svg class="modal-dragon-svg" width="38" height="38" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="34" cy="34" r="30" fill="none" stroke="#fbbf24" stroke-width="1.3"/>
+          <circle cx="34" cy="34" r="27.2" fill="none" stroke="rgba(254, 240, 138, 0.7)" stroke-width="0.7"/>
+          <circle cx="34" cy="34" r="25" fill="none" stroke="rgba(254, 240, 138, 0.6)" stroke-width="0.7" stroke-dasharray="1.5,1.5"/>
+          <g transform="translate(34, 34) scale(0.68) translate(-34, -31)" fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.2px 1.5px rgba(0,0,0,0.85));">
+            <path d="M 34,8 C 47,8 58,19 58,32 C 58,46 46,56 34,56 C 22,56 14,48 14,38 C 14,28 22,22 30,22 C 38,22 42,26 42,32 C 42,36 38,40 34,40 C 30,40 28,36 30,34" stroke-width="3.2"/>
+            <path d="M 50,16 L 54,12 M 58,26 L 63,24 M 58,38 L 63,40 M 50,50 L 54,54 M 40,56 L 42,61 M 26,56 L 24,61 M 16,46 L 11,48" stroke-width="1.8"/>
+            <path d="M 30,8 L 32,3 M 36,7 L 40,2" stroke-width="2"/>
+            <circle cx="30" cy="11" r="1.5" fill="#fde047"/>
+            <path d="M 26,12 C 22,12 19,14 20,17 C 21,19 25,18 28,16" stroke-width="2"/>
+            <path d="M 22,14 Q 14,12 10,16 M 24,17 Q 16,20 12,25" stroke-width="1.2"/>
+            <path d="M 48,46 L 54,50 M 50,44 L 56,46 M 46,48 L 50,54" stroke-width="1.8"/>
+            <circle cx="34" cy="32" r="4.5" fill="#ef4444" stroke="#fde047" stroke-width="1.2"/>
+            <path d="M 34,24 Q 32,27 34,27.5 Q 36,27 34,24" fill="#fde047"/>
+          </g>
+        </svg>
+      </div>
+      <div class="win2-title" data-i18n="win2_title">GRAND JUBILEE!</div>
+      <div class="win2-sub" data-i18n="win2_sub">Imperial Golden Dragon &bull; 9 Auspicious Lanterns</div>
+      <div class="win2-stats">
+        <span><span data-i18n="stat_moves_lbl">MOVES:</span> <strong id="banner-stats-moves">0</strong></span>
+        <span>&bull;</span>
+        <span><span data-i18n="stat_score_lbl">SCORE:</span> <strong id="banner-stats-score">0</strong></span>
+      </div>
+      <button class="opt2-btn win2-btn" id="banner-play-again-btn" data-i18n="win2_btn">Next Deal &#x27F6;</button>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- NEW GAME CONFIRMATION MODAL (STYLED TO MATCH THE GAME)            -->
+    <!-- ================================================================= -->
+    <div id="new-game-modal-overlay" class="confirm-modal-overlay">
+      <div class="confirm-modal-card">
+        <div class="confirm-modal-seal">
+          <svg class="modal-dragon-svg" width="46" height="46" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="34" cy="34" r="30" fill="none" stroke="#fbbf24" stroke-width="1.3"/>
+            <circle cx="34" cy="34" r="27.2" fill="none" stroke="rgba(254, 240, 138, 0.7)" stroke-width="0.7"/>
+            <circle cx="34" cy="34" r="25" fill="none" stroke="rgba(254, 240, 138, 0.6)" stroke-width="0.7" stroke-dasharray="1.5,1.5"/>
+            <g transform="translate(34, 34) scale(0.68) translate(-34, -31)" fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.2px 1.5px rgba(0,0,0,0.85));">
+              <path d="M 34,8 C 47,8 58,19 58,32 C 58,46 46,56 34,56 C 22,56 14,48 14,38 C 14,28 22,22 30,22 C 38,22 42,26 42,32 C 42,36 38,40 34,40 C 30,40 28,36 30,34" stroke-width="3.2"/>
+              <path d="M 50,16 L 54,12 M 58,26 L 63,24 M 58,38 L 63,40 M 50,50 L 54,54 M 40,56 L 42,61 M 26,56 L 24,61 M 16,46 L 11,48" stroke-width="1.8"/>
+              <path d="M 30,8 L 32,3 M 36,7 L 40,2" stroke-width="2"/>
+              <circle cx="30" cy="11" r="1.5" fill="#fde047"/>
+              <path d="M 26,12 C 22,12 19,14 20,17 C 21,19 25,18 28,16" stroke-width="2"/>
+              <path d="M 22,14 Q 14,12 10,16 M 24,17 Q 16,20 12,25" stroke-width="1.2"/>
+              <path d="M 48,46 L 54,50 M 50,44 L 56,46 M 46,48 L 50,54" stroke-width="1.8"/>
+              <circle cx="34" cy="32" r="4.5" fill="#ef4444" stroke="#fde047" stroke-width="1.2"/>
+              <path d="M 34,24 Q 32,27 34,27.5 Q 36,27 34,24" fill="#fde047"/>
+            </g>
+          </svg>
+        </div>
+        <div class="confirm-modal-title" data-i18n="new_game_title">Start a New Deal?</div>
+        <div class="confirm-modal-desc" data-i18n="new_game_desc">
+          Your current deal and moves will be reset.
+        </div>
+        <div class="confirm-modal-buttons">
+          <button class="confirm-btn confirm-btn-cancel" id="btn-cancel-new-game" data-i18n="new_game_cancel">Cancel</button>
+          <button class="confirm-btn confirm-btn-proceed" id="btn-confirm-new-game" data-i18n="new_game_confirm">Start New Deal</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- SETTINGS MODAL (STYLED TO MATCH THE GAME)                         -->
+    <!-- ================================================================= -->
+    <div id="settings-modal-overlay" class="confirm-modal-overlay">
+      <div class="confirm-modal-card settings-modal-card">
+        <div class="confirm-modal-title modal-title-inline">
+          <svg class="title-inline-gear" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="3" fill="rgba(251, 191, 36, 0.4)"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+          <span data-i18n="settings_title">Settings</span>
+        </div>
+        
+        <div class="settings-rows">
+          <!-- Setting 0: Language -->
+          <div class="settings-row">
+            <div class="settings-label-group">
+              <div class="settings-label" data-i18n="settings_lang_label">Language</div>
+              <div class="settings-hint" data-i18n="settings_lang_hint">Display language</div>
+            </div>
+            <div class="settings-toggle-group settings-toggle-3">
+              <button class="settings-option-btn active" id="btn-lang-en" data-setting="lang" data-val="en">English</button>
+              <button class="settings-option-btn" id="btn-lang-es" data-setting="lang" data-val="es">Español</button>
+              <button class="settings-option-btn" id="btn-lang-vi" data-setting="lang" data-val="vi">Tiếng Việt</button>
+            </div>
+          </div>
+
+          <!-- Setting 1: Move Control -->
+          <div class="settings-row">
+            <div class="settings-label-group">
+              <div class="settings-label" data-i18n="settings_move_label">Move Control</div>
+              <div class="settings-hint" data-i18n="settings_move_hint">Tap card destination or auto-move</div>
+            </div>
+            <div class="settings-toggle-group">
+              <button class="settings-option-btn active" id="btn-opt-move-manual" data-setting="moveMode" data-val="manual" data-i18n="settings_move_manual">Choose Move</button>
+              <button class="settings-option-btn" id="btn-opt-move-auto" data-setting="moveMode" data-val="auto" data-i18n="settings_move_auto">Single Tap</button>
+            </div>
+          </div>
+
+          <!-- Setting 2: Draw Cards -->
+          <div class="settings-row">
+            <div class="settings-label-group">
+              <div class="settings-label" data-i18n="settings_draw_label">Draw Mode</div>
+              <div class="settings-hint" data-i18n="settings_draw_hint">Cards dealt from stock to waste</div>
+            </div>
+            <div class="settings-toggle-group">
+              <button class="settings-option-btn active" id="btn-opt-draw-1" data-setting="drawCount" data-val="1" data-i18n="settings_draw_1">Deal 1</button>
+              <button class="settings-option-btn" id="btn-opt-draw-3" data-setting="drawCount" data-val="3" data-i18n="settings_draw_3">Deal 3</button>
+            </div>
+          </div>
+
+          <!-- Setting 3: Deal Type -->
+          <div class="settings-row">
+            <div class="settings-label-group">
+              <div class="settings-label" data-i18n="settings_deal_label">Deal Type</div>
+              <div class="settings-hint" data-i18n="settings_deal_hint">Guaranteed winnable or random deal</div>
+            </div>
+            <div class="settings-toggle-group">
+              <button class="settings-option-btn active" id="btn-opt-deal-winning" data-setting="dealType" data-val="winning" data-i18n="settings_deal_winning">Winnable</button>
+              <button class="settings-option-btn" id="btn-opt-deal-random" data-setting="dealType" data-val="random" data-i18n="settings_deal_random">Random</button>
+            </div>
+          </div>
+
+          <!-- Setting 4: Show Timer -->
+          <div class="settings-row">
+            <div class="settings-label-group">
+              <div class="settings-label" data-i18n="settings_timer_label">Show Timer</div>
+              <div class="settings-hint" data-i18n="settings_timer_hint">Display timer at bottom of screen</div>
+            </div>
+            <div class="settings-toggle-group">
+              <button class="settings-option-btn active" id="btn-opt-timer-off" data-setting="showTimer" data-val="false" data-i18n="settings_off">Off</button>
+              <button class="settings-option-btn" id="btn-opt-timer-on" data-setting="showTimer" data-val="true" data-i18n="settings_on">On</button>
+            </div>
+          </div>
+
+          <!-- Setting 5: Sound Effects -->
+          <div class="settings-row">
+            <div class="settings-label-group">
+              <div class="settings-label" data-i18n="settings_sound_label">Sound Effects</div>
+              <div class="settings-hint" data-i18n="settings_sound_hint">Tactile audio feedback on card moves</div>
+            </div>
+            <div class="settings-toggle-group">
+              <button class="settings-option-btn" id="btn-opt-sound-off" data-setting="soundMuted" data-val="true" data-i18n="settings_off">Off</button>
+              <button class="settings-option-btn active" id="btn-opt-sound-on" data-setting="soundMuted" data-val="false" data-i18n="settings_on">On</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="confirm-modal-buttons">
+          <button class="confirm-btn confirm-btn-proceed" id="btn-close-settings" style="width: 100%;" data-i18n="settings_done">Done</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- HOW TO PLAY / HELP MODAL (SENIOR FRIENDLY & ELEGANT)              -->
+    <!-- ================================================================= -->
+    <div id="help-modal-overlay" class="confirm-modal-overlay">
+      <div class="confirm-modal-card help-modal-card">
+        <div class="confirm-modal-title modal-title-inline">
+          <svg class="title-inline-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" fill="rgba(251, 191, 36, 0.25)"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          <span data-i18n="help_title">How to Play</span>
+        </div>
+        <div class="help-modal-subtitle" data-i18n="help_subtitle">Klondike Solitaire Quick Guide</div>
+        
+        <div class="help-scroll-body">
+          <div class="help-card-box">
+            <div class="help-card-header">
+              <div class="help-icon-badge">
+                <svg width="22" height="22" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="11" y="11" width="18" height="24" rx="2.5" fill="#0b2418" stroke="#fbbf24" stroke-width="1.3"/>
+                  <rect x="13" y="13" width="14" height="20" rx="1.5" fill="none" stroke="rgba(254,240,138,0.4)" stroke-width="0.6"/>
+                  <path d="M 13,11 L 13,5.5 L 16.5,8 L 20,3 L 23.5,8 L 27,5.5 L 27,11 Z" fill="rgba(251,191,36,0.4)" stroke="#fde047" stroke-width="1.2" stroke-linejoin="round"/>
+                  <circle cx="20" cy="2.5" r="1.3" fill="#ef4444" stroke="#fde047" stroke-width="0.7"/>
+                  <circle cx="13" cy="5" r="1" fill="#fde047"/>
+                  <circle cx="27" cy="5" r="1" fill="#fde047"/>
+                  <text x="20" y="27" fill="#fbbf24" font-family="Georgia, serif" font-size="14" font-weight="900" text-anchor="middle">A</text>
+                  <path d="M 20,16 L 21.2,18.5 L 20,20 L 18.8,18.5 Z" fill="#ef4444"/>
+                </svg>
+              </div>
+              <div class="help-card-heading" data-i18n="help_goal_heading">Goal of the Game</div>
+            </div>
+            <div class="help-card-desc" data-i18n="help_goal_desc">Build all 4 foundation piles at the top from <strong>Ace up to King</strong>, sorted by suit (<span class="help-suit-gold">♠</span> <span class="help-suit-red">♥</span> <span class="help-suit-gold">♣</span> <span class="help-suit-red">♦</span>).</div>
+          </div>
+
+          <div class="help-card-box">
+            <div class="help-card-header">
+              <div class="help-icon-badge">
+                <svg width="22" height="22" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Back Card (Red 8) -->
+                  <g transform="translate(7, 6)">
+                    <rect x="0" y="0" width="16" height="22" rx="2.2" fill="#143426" stroke="#ef4444" stroke-width="1.2"/>
+                    <text x="4.5" y="7.5" fill="#ef4444" font-family="sans-serif" font-size="6.5" font-weight="900" text-anchor="middle">8</text>
+                    <path d="M 4.5,9 C 3.2,9 2.5,9.8 2.5,10.6 C 2.5,12 4.5,13.2 4.5,13.2 C 4.5,13.2 6.5,12 6.5,10.6 C 6.5,9.8 5.8,9 4.5,9 Z" fill="#ef4444"/>
+                  </g>
+                  <!-- Cascading Front Card (Black 7) -->
+                  <g transform="translate(13, 13)">
+                    <rect x="0" y="0" width="16" height="22" rx="2.2" fill="#0b2418" stroke="#fbbf24" stroke-width="1.3"/>
+                    <rect x="1.2" y="1.2" width="13.6" height="19.6" rx="1.5" fill="none" stroke="rgba(254,240,138,0.3)" stroke-width="0.6"/>
+                    <text x="4.5" y="7.5" fill="#fde047" font-family="sans-serif" font-size="6.5" font-weight="900" text-anchor="middle">7</text>
+                    <path d="M 4.5,9 C 3.8,9.8 2.8,11.2 2.8,12 C 2.8,12.7 3.4,13.1 4,13.1 C 4.3,13.1 4.5,12.8 4.5,12.8 C 4.5,12.8 4.7,13.1 5,13.1 C 5.6,13.1 6.2,12.7 6.2,12 C 6.2,11.2 5.2,9.8 4.5,9 Z" fill="#fde047"/>
+                  </g>
+                  <path d="M 33,12 C 37,17 36,25 31,29" fill="none" stroke="#fde047" stroke-width="1.4" stroke-linecap="round"/>
+                  <path d="M 29,27 L 31,29.5 L 34,27.5" fill="none" stroke="#fde047" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="help-card-heading" data-i18n="help_move_heading">Moving Cards (Tableau)</div>
+            </div>
+            <div class="help-card-desc" data-i18n="help_move_desc">
+              • Stack cards downward in <strong>alternating colors</strong> (e.g. Red 8 on Black 9).<br>
+              • Empty column spaces can only be filled by a <strong>King</strong> (or a stack starting with a King).<br>
+              • You can move single cards or full sequences of face-up cards.
+            </div>
+          </div>
+
+          <div class="help-card-box">
+            <div class="help-card-header">
+              <div class="help-icon-badge">
+                <svg width="22" height="22" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Stock Card -->
+                  <g transform="translate(20, 11)">
+                    <rect x="0" y="0" width="15" height="21" rx="2" fill="#881337" stroke="#fbbf24" stroke-width="1.2"/>
+                    <circle cx="7.5" cy="10.5" r="4.5" fill="#580d23" stroke="#fde047" stroke-width="0.8"/>
+                    <path d="M 7.5,8 C 9,8 10,9 10,10.5 C 10,12 8.5,13 7.5,13 C 6.5,13 5.5,12 5.5,10.5" fill="none" stroke="#fde047" stroke-width="0.9" stroke-linecap="round"/>
+                    <circle cx="7.5" cy="10.5" r="1.1" fill="#ef4444"/>
+                  </g>
+                  <!-- Waste Card -->
+                  <g transform="translate(5, 13)">
+                    <rect x="0" y="0" width="15" height="21" rx="2" fill="#0b2418" stroke="#fbbf24" stroke-width="1.2"/>
+                    <rect x="1.2" y="1.2" width="12.6" height="18.6" rx="1.2" fill="none" stroke="rgba(254,240,138,0.3)" stroke-width="0.5"/>
+                    <text x="4.2" y="7" fill="#ef4444" font-family="sans-serif" font-size="6" font-weight="900" text-anchor="middle">K</text>
+                    <path d="M 4.2,8.5 C 3.2,8.5 2.6,9.2 2.6,9.8 C 2.6,11 4.2,12 4.2,12 C 4.2,12 5.8,11 5.8,9.8 C 5.8,9.2 5.2,8.5 4.2,8.5 Z" fill="#ef4444"/>
+                  </g>
+                  <!-- Deal Arc Arrow -->
+                  <path d="M 23,8 C 19,4 12,4 8,9" fill="none" stroke="#fde047" stroke-width="1.4" stroke-linecap="round"/>
+                  <path d="M 10,6.5 L 7.5,9 L 7.5,6" fill="none" stroke="#fde047" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  <!-- Recycle Loop -->
+                  <path d="M 12,35 C 18,37 24,36 28,33" fill="none" stroke="rgba(251,191,36,0.7)" stroke-width="1.1" stroke-linecap="round" stroke-dasharray="2,1.5"/>
+                  <path d="M 26,34.5 L 28.5,33 L 28.5,35.5" fill="none" stroke="rgba(251,191,36,0.7)" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="help-card-heading" data-i18n="help_stock_heading">Stock & Waste</div>
+            </div>
+            <div class="help-card-desc" data-i18n="help_stock_desc">Tap the top-right <strong>Stock</strong> pile to draw cards into the <strong>Waste</strong> pile. When the stock is empty, tap it again to recycle.</div>
+          </div>
+
+          <div class="help-card-box">
+            <div class="help-card-header">
+              <div class="help-icon-badge">
+                <svg width="22" height="22" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Lantern Top & Hanger -->
+                  <line x1="20" y1="2" x2="20" y2="7" stroke="#fbbf24" stroke-width="1.2"/>
+                  <circle cx="20" cy="5" r="1.5" fill="#fde047"/>
+                  <path d="M 15,8 L 25,8 L 23,10 L 17,10 Z" fill="#b45309" stroke="#fbbf24" stroke-width="0.8"/>
+                  <!-- Oval Body -->
+                  <ellipse cx="20" cy="18" rx="8" ry="9" fill="url(#help-modal-lantern)" stroke="#f59e0b" stroke-width="1.2"/>
+                  <ellipse cx="20" cy="18" rx="4.5" ry="9" fill="none" stroke="rgba(254, 240, 138, 0.6)" stroke-width="0.8"/>
+                  <line x1="20" y1="9" x2="20" y2="27" stroke="rgba(254, 240, 138, 0.8)" stroke-width="0.8"/>
+                  <!-- Bottom Cap & Tassel -->
+                  <path d="M 17,26 L 23,26 L 22,28 L 18,28 Z" fill="#b45309" stroke="#fbbf24" stroke-width="0.8"/>
+                  <line x1="20" y1="28" x2="20" y2="35" stroke="#fbbf24" stroke-width="1.4" stroke-linecap="round"/>
+                  <line x1="18.5" y1="30" x2="19" y2="36" stroke="#fde047" stroke-width="0.8"/>
+                  <line x1="21.5" y1="30" x2="21" y2="36" stroke="#fde047" stroke-width="0.8"/>
+                  <!-- Sparkles -->
+                  <path d="M 8,13 Q 9.5,13 9.5,11.5 Q 9.5,13 11,13 Q 9.5,13 9.5,14.5 Q 9.5,13 8,13 Z" fill="#fde047"/>
+                  <path d="M 29,22 Q 30.5,22 30.5,20.5 Q 30.5,22 32,22 Q 30.5,22 30.5,23.5 Q 30.5,22 29,22 Z" fill="#fde047"/>
+                  <defs>
+                    <radialGradient id="help-modal-lantern" cx="45%" cy="40%" r="55%">
+                      <stop offset="0%" stop-color="#fef08a"/>
+                      <stop offset="45%" stop-color="#f59e0b"/>
+                      <stop offset="90%" stop-color="#991b1b"/>
+                    </radialGradient>
+                  </defs>
+                </svg>
+              </div>
+              <div class="help-card-heading" data-i18n="help_tips_heading">Helpful Tips for Mom</div>
+            </div>
+            <div class="help-card-desc" data-i18n="help_tips_desc">
+              • <strong>Aces fly automatically</strong> to the foundation when tapped!<br>
+              • Tap <strong>Undo</strong> anytime if you want to rethink a move.<br>
+              • Try to uncover face-down cards as early as you can.
+            </div>
+          </div>
+        </div>
+
+        <div class="confirm-modal-buttons">
+          <button class="confirm-btn confirm-btn-proceed" id="btn-close-help" style="width: 100%;" data-i18n="help_close_btn">Got It, Let's Play!</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- BOTTOM BAR: HELP (LEFT CIRCLE) & SCORE/MOVES/TIMER CAPSULE         -->
+    <!-- ================================================================= -->
+    <footer id="bottom-hud" class="bottom-hud">
+      <button class="bottom-circle-btn help-circle-btn" id="btn-help-toggle" title="How to Play" aria-label="How to Play" data-i18n-title="btn_help_title">
+        <span class="help-circle-q">?</span>
+      </button>
+
+      <div class="bottom-status-capsule">
+        <div class="hud-stat-item">
+          <span class="hud-stat-label" data-i18n="stat_score">Score</span>
+          <span class="hud-stat-val" id="hud-score">0</span>
+        </div>
+        <div class="hud-stat-divider">&bull;</div>
+        <div class="hud-stat-item">
+          <span class="hud-stat-label" data-i18n="stat_moves">Moves</span>
+          <span class="hud-stat-val" id="hud-moves">0</span>
+        </div>
+        <div class="hud-stat-divider" id="hud-timer-divider" style="display: none;">&bull;</div>
+        <div class="hud-stat-item" id="hud-timer-item" style="display: none;">
+          <span class="hud-stat-label" data-i18n="stat_time">Time</span>
+          <span class="hud-stat-val" id="bottom-timer">00:00</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/i18n.js"></script>
+  <script src="js/deck.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/celebration.js"></script>
+  <script src="js/game.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.solitaireI18n) {
+        window.solitaireI18n.init();
+      }
+      const container = document.getElementById('app-container');
+      window.solitaireCelebration.init(container);
+      window.solitaireGame.init();
+
+      // Register PWA Service Worker if supported
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js').catch(err => {
+          console.log('SW registration note:', err);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

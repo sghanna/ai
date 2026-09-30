@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Deal 3 Card Overlap Studio - Google Antigravity Solitaire</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    :root {
+      --bg-dark: #071f12;
+      --panel-bg: rgba(14, 46, 28, 0.95);
+      --card-bg: rgba(18, 54, 34, 0.9);
+      --card-border: #1f6b40;
+      --gold-primary: #fbbf24;
+      --gold-bright: #fef08a;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
+
+    body {
+      background: radial-gradient(circle at 50% 10%, #175e35 0%, #0d3b20 50%, #051a0d 100%) !important;
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 24px 16px 80px 16px;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      box-sizing: border-box;
+      overflow-y: auto !important;
+    }
+
+    .studio-container {
+      max-width: 960px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    /* Header */
+    .studio-header {
+      text-align: center;
+      padding: 10px 0 6px 0;
+    }
+
+    .studio-title {
+      font-family: Georgia, serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--gold-bright);
+      margin: 0 0 6px 0;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .studio-sub {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* Live Interactive Sandbox */
+    .sandbox-panel {
+      background: var(--panel-bg);
+      border: 1.5px solid var(--gold-primary);
+      border-radius: 16px;
+      padding: 24px 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(251, 191, 36, 0.2);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .sandbox-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .sandbox-title {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--gold-bright);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sandbox-badge {
+      background: var(--gold-primary);
+      color: #1b0a0a;
+      font-size: 11.5px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Board Row Showcase */
+    .mock-board-container {
+      background: #134e2c;
+      border-radius: 12px;
+      border: 2px solid #256e3f;
+      padding: 16px 14px;
+      box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.4);
+      max-width: 520px;
+      width: 100%;
+      margin: 0 auto;
+      box-sizing: border-box;
+    }
+
+    .mock-top-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+      width: 100%;
+      align-items: center;
+    }
+
+    .mock-slot {
+      width: 100%;
+      aspect-ratio: 52 / 78;
+      border-radius: 3.5px;
+      border: 1.2px solid var(--slot-border, #1a5933);
+      background: var(--slot-bg, #0b331c);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+      box-sizing: border-box;
+    }
+
+    .mock-slot.waste-slot {
+      overflow: visible !important;
+    }
+
+    .mock-slot.foundation-slot {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+    }
+
+    .mock-card {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 3.5px;
+      transition: left 240ms cubic-bezier(0.2, 0.85, 0.35, 1.0), transform 240ms ease;
+      box-shadow: -1px 2px 6px rgba(0, 0, 0, 0.45);
+      user-select: none;
+    }
+
+    /* Controls Row */
+    .controls-row {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      background: rgba(10, 32, 20, 0.7);
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(251, 191, 36, 0.25);
+    }
+
+    .slider-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .slider-wrap label {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      min-width: 130px;
+    }
+
+    .slider-wrap input[type=range] {
+      flex: 1;
+      accent-color: var(--gold-primary);
+      height: 6px;
+      cursor: pointer;
+    }
+
+    .slider-val-badge {
+      background: rgba(251, 191, 36, 0.15);
+      border: 1.5px solid var(--gold-primary);
+      color: var(--gold-bright);
+      font-size: 15px;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 6px;
+      min-width: 55px;
+      text-align: center;
+    }
+
+    .preset-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-preset {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 160ms ease;
+    }
+
+    .btn-preset:hover {
+      background: rgba(251, 191, 36, 0.2);
+      border-color: var(--gold-primary);
+      color: var(--gold-bright);
+    }
+
+    .btn-preset.active {
+      background: var(--gold-primary);
+      border-color: var(--gold-primary);
+      color: #1b0a0a;
+      font-weight: 800;
+    }
+
+    .actions-bar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .btn-action-main {
+      background: linear-gradient(180deg, #fbbf24 0%, #d97706 100%);
+      border: 1.5px solid #fef08a;
+      color: #1b0a0a;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(251, 191, 36, 0.35);
+      transition: all 160ms ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-action-main:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(251, 191, 36, 0.5);
+    }
+
+    .btn-action-sec {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 160ms ease;
+    }
+
+    .btn-action-sec:hover {
+      background: rgba(255, 255, 255, 0.18);
+      border-color: #fff;
+    }
+
+    /* Options Comparison Grid */
+    .section-title {
+      font-family: Georgia, serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--gold-bright);
+      margin: 10px 0 4px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .option-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--card-border);
+      border-radius: 14px;
+      padding: 18px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: all 200ms ease;
+      position: relative;
+    }
+
+    .option-card:hover {
+      border-color: rgba(251, 191, 36, 0.6);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+
+    .option-card.active-card {
+      border-color: var(--gold-primary);
+      box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+      background: rgba(24, 68, 44, 0.95);
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #e2e8f0;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .card-badge.rec {
+      background: var(--gold-primary);
+      color: #1b0a0a;
+      font-weight: 800;
+    }
+
+    .option-tag {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .option-name {
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+      margin-top: 2px;
+    }
+
+    .option-desc {
+      font-size: 13px;
+      color: #cbd5e1;
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    .option-metrics {
+      background: rgba(10, 30, 18, 0.6);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .option-metrics strong {
+      color: #fff;
+    }
+
+    .option-preview-box {
+      background: #134e2c;
+      border: 1.5px solid #256e3f;
+      border-radius: 10px;
+      padding: 12px 10px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: auto;
+    }
+
+    .btn-apply-opt {
+      flex: 1;
+      background: rgba(251, 191, 36, 0.15);
+      border: 1px solid var(--gold-primary);
+      color: var(--gold-bright);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 160ms ease;
+    }
+
+    .btn-apply-opt:hover {
+      background: var(--gold-primary);
+      color: #1b0a0a;
+    }
+
+    /* Composite Image Banner */
+    .composite-section {
+      width: 100%;
+      background: rgba(12, 38, 24, 0.9);
+      border: 1.5px solid rgba(251, 191, 36, 0.4);
+      border-radius: 14px;
+      padding: 18px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    .composite-img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+      margin-top: 12px;
+      border: 1px solid #1f6b40;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="studio-container">
+
+    <!-- Header -->
+    <header class="studio-header">
+      <h1 class="studio-title">Deal 3 Card Overlap Studio</h1>
+      <p class="studio-sub">Compare and customize how much of each card below is exposed in the Deal 3 waste pile</p>
+    </header>
+
+    <!-- Side-by-Side Composite Image -->
+    <section class="composite-section">
+      <div style="font-size: 18px; font-weight: 700; color: var(--gold-bright);">Side-by-Side Top Row Comparison</div>
+      <div style="font-size: 13.5px; color: var(--text-muted); margin-top: 3px;">Real card artwork (10 of Spades • Queen of Diamonds • King of Hearts) across each overlap width</div>
+      <img src="assets/deal3_overlap_comparison.png" class="composite-img" alt="Deal 3 Overlap Comparison">
+    </section>
+
+    <!-- Live Interactive Sandbox -->
+    <section class="sandbox-panel">
+      <div class="sandbox-header">
+        <div class="sandbox-title">
+          <span>🎛️ Live Interactive Overlap Tester</span>
+          <span class="sandbox-badge">Real-Time</span>
+        </div>
+        <div style="font-size: 13px; color: var(--text-muted);">
+          Drag the slider or click presets to watch the waste pile dynamically adjust!
+        </div>
+      </div>
+
+      <!-- Real Solitaire Top-Row Mockup -->
+      <div class="mock-board-container">
+        <div class="mock-top-row">
+          <!-- Foundation S -->
+          <div class="mock-slot foundation-slot">
+            <svg class="foundation-empty-glyph-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="#0d381e" stroke="#256e3f" stroke-width="1.2"/>
+              <text x="26" y="47" font-family="Georgia, serif" font-size="26" font-weight="700" fill="#fbbf24" fill-opacity="0.45" text-anchor="middle">A</text>
+            </svg>
+          </div>
+          <!-- Foundation H -->
+          <div class="mock-slot foundation-slot">
+            <svg class="foundation-empty-glyph-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="#0d381e" stroke="#256e3f" stroke-width="1.2"/>
+              <text x="26" y="47" font-family="Georgia, serif" font-size="26" font-weight="700" fill="#fbbf24" fill-opacity="0.45" text-anchor="middle">A</text>
+            </svg>
+          </div>
+          <!-- Foundation C -->
+          <div class="mock-slot foundation-slot">
+            <svg class="foundation-empty-glyph-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="#0d381e" stroke="#256e3f" stroke-width="1.2"/>
+              <text x="26" y="47" font-family="Georgia, serif" font-size="26" font-weight="700" fill="#fbbf24" fill-opacity="0.45" text-anchor="middle">A</text>
+            </svg>
+          </div>
+          <!-- Foundation D -->
+          <div class="mock-slot foundation-slot">
+            <svg class="foundation-empty-glyph-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="#0d381e" stroke="#256e3f" stroke-width="1.2"/>
+              <text x="26" y="47" font-family="Georgia, serif" font-size="26" font-weight="700" fill="#fbbf24" fill-opacity="0.45" text-anchor="middle">A</text>
+            </svg>
+          </div>
+
+          <!-- Blank Spacer -->
+          <div></div>
+
+          <!-- Waste Slot (Contains 3 Fanned Cards) -->
+          <div class="mock-slot waste-slot" id="sandbox-waste">
+            <!-- Cards will be injected via JS -->
+          </div>
+
+          <!-- Stock Slot (Card Back) -->
+          <div class="mock-slot" style="background: transparent; border: none; box-shadow: none;">
+            <div class="mock-card" style="left: 0; background: #881337; border: 0.7px solid #7c8078; display:flex; align-items:center; justify-content:center;">
+              <div style="border: 0.8px solid #fbbf24; width: calc(100% - 4px); height: calc(100% - 4px); border-radius: 2px;"></div>
+              <div style="position: absolute; top: 1px; right: 1px; background: rgba(0,0,0,0.8); color: #fff; font-size: 7.5px; font-weight: 800; padding: 1px 3px; border-radius: 2px;">21</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="controls-row">
+        <div class="slider-wrap">
+          <label for="overlap-slider">Card Overlap Offset:</label>
+          <input type="range" id="overlap-slider" min="14" max="36" value="24" step="1" oninput="updateOffset(this.value)">
+          <div class="slider-val-badge" id="slider-val-badge">24px</div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div class="preset-buttons">
+            <span style="font-size: 13px; color: var(--text-muted); align-self: center; margin-right: 4px;">Presets:</span>
+            <button class="btn-preset" onclick="setPreset(16)">16px (Baseline)</button>
+            <button class="btn-preset" onclick="setPreset(20)">20px (+25%)</button>
+            <button class="btn-preset active" onclick="setPreset(24)">24px (★ Rec)</button>
+            <button class="btn-preset" onclick="setPreset(28)">28px (Half-Card)</button>
+            <button class="btn-preset" onclick="setPreset(32)">32px (Wide)</button>
+          </div>
+          <button class="btn-action-sec" onclick="dealNewHand()">🎲 Deal Different Hand</button>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="actions-bar">
+        <button class="btn-action-main" onclick="applyToGame()">
+          <span>✓ Set <span id="btn-val-label">24px</span> as Game Default & Play</span>
+        </button>
+        <a href="/" class="btn-action-sec" style="text-decoration:none;">Open Game Tab</a>
+      </div>
+    </section>
+
+    <!-- Detailed 5 Options Grid -->
+    <div class="section-title">✨ The Overlap Variations Compared</div>
+    <div class="section-desc">Select any option below to test it immediately in the live sandbox above:</div>
+
+    <section class="options-grid">
+
+      <!-- Baseline 16px -->
+      <div class="option-card" id="opt-card-16">
+        <div class="card-badge">Baseline</div>
+        <div class="option-tag">Baseline</div>
+        <div class="option-name">16px Overlap</div>
+        <p class="option-desc">
+          Current setting. Approximately 29% of each card below is visible. The rank glyph sits tight against the edge of the overlapping card; center suit emblems are hidden.
+        </p>
+        <div class="option-metrics">
+          <div>• <strong>Card Exposure:</strong> 16px (~29% of card width)</div>
+          <div>• <strong>Spacer Footprint:</strong> 32px (leaves 28px margin to Diamond)</div>
+          <div>• <strong>Rank Clearance:</strong> Snug on numbers, tight on wide '10'</div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-apply-opt" onclick="setPreset(16)">Test in Sandbox (16px)</button>
+        </div>
+      </div>
+
+      <!-- Option 1: 20px -->
+      <div class="option-card" id="opt-card-20">
+        <div class="card-badge">+25% More</div>
+        <div class="option-tag">Option 1</div>
+        <div class="option-name">20px Subtle Increase</div>
+        <p class="option-desc">
+          Adds +4px of exposure (+25% increase). Provides comfortable breathing room around the rank glyph, ensuring wide letters like '10', 'Q', and 'K' are fully revealed.
+        </p>
+        <div class="option-metrics">
+          <div>• <strong>Card Exposure:</strong> 20px (~37% of card width)</div>
+          <div>• <strong>Spacer Footprint:</strong> 40px (leaves 20px margin to Diamond)</div>
+          <div>• <strong>Rank Clearance:</strong> Complete, clean separation</div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-apply-opt" onclick="setPreset(20)">Test in Sandbox (20px)</button>
+        </div>
+      </div>
+
+      <!-- Option 2: 24px (Recommended) -->
+      <div class="option-card active-card" id="opt-card-24">
+        <div class="card-badge rec">★ Recommended</div>
+        <div class="option-tag">Option 2</div>
+        <div class="option-name">24px Balanced Fan</div>
+        <p class="option-desc">
+          The visual "sweet spot" (+50% increase). Shows the entire rank glyph with ample margin, plus the left outer lobes of the center suit emblem peek through for instant suit recognition.
+        </p>
+        <div class="option-metrics">
+          <div>• <strong>Card Exposure:</strong> 24px (~45% of card width)</div>
+          <div>• <strong>Spacer Footprint:</strong> 48px (leaves 12px margin to Diamond)</div>
+          <div>• <strong>Suit Hint:</strong> Outer curve of center suit visible</div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-apply-opt" onclick="setPreset(24)">Test in Sandbox (24px)</button>
+        </div>
+      </div>
+
+      <!-- Option 3: 28px -->
+      <div class="option-card" id="opt-card-28">
+        <div class="card-badge">Half-Card</div>
+        <div class="option-tag">Option 3</div>
+        <div class="option-name">28px Half-Card Exposure</div>
+        <p class="option-desc">
+          Exposes more than half of each card below (+75% increase). Both the rank glyph and nearly half of the big center suit emblem are clearly identifiable at a glance.
+        </p>
+        <div class="option-metrics">
+          <div>• <strong>Card Exposure:</strong> 28px (~52% of card width)</div>
+          <div>• <strong>Spacer Footprint:</strong> 56px (leaves 4px margin to Diamond)</div>
+          <div>• <strong>Suit Hint:</strong> ~45% of center emblem exposed</div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-apply-opt" onclick="setPreset(28)">Test in Sandbox (28px)</button>
+        </div>
+      </div>
+
+      <!-- Option 4: 32px -->
+      <div class="option-card" id="opt-card-32">
+        <div class="card-badge">Wide Fan</div>
+        <div class="option-tag">Option 4</div>
+        <div class="option-name">32px Generous Fan</div>
+        <p class="option-desc">
+          Double the current baseline (+100% increase). Reaches completely across the blank spacer slot, exposing 60% of each card below for maximum possible legibility.
+        </p>
+        <div class="option-metrics">
+          <div>• <strong>Card Exposure:</strong> 32px (~60% of card width)</div>
+          <div>• <strong>Spacer Footprint:</strong> 64px (touches Diamond slot edge)</div>
+          <div>• <strong>Suit Hint:</strong> Majority of center emblem exposed</div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-apply-opt" onclick="setPreset(32)">Test in Sandbox (32px)</button>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <!-- Vector Card Renderer -->
+  <script src="js/deck.js"></script>
+  <script>
+    let currentOffset = 24;
+    const SAMPLE_HANDS = [
+      [
+        { rank: 10, suit: 'S', rankLabel: '10', color: 'black' },
+        { rank: 12, suit: 'D', rankLabel: 'Q', color: 'red' },
+        { rank: 13, suit: 'H', rankLabel: 'K', color: 'red' }
+      ],
+      [
+        { rank: 4, suit: 'C', rankLabel: '4', color: 'black' },
+        { rank: 8, suit: 'H', rankLabel: '8', color: 'red' },
+        { rank: 1, suit: 'S', rankLabel: 'A', color: 'black' }
+      ],
+      [
+        { rank: 7, suit: 'D', rankLabel: '7', color: 'red' },
+        { rank: 11, suit: 'S', rankLabel: 'J', color: 'black' },
+        { rank: 2, suit: 'H', rankLabel: '2', color: 'red' }
+      ],
+      [
+        { rank: 6, suit: 'C', rankLabel: '6', color: 'black' },
+        { rank: 9, suit: 'D', rankLabel: '9', color: 'red' },
+        { rank: 12, suit: 'S', rankLabel: 'Q', color: 'black' }
+      ]
+    ];
+    let handIndex = 0;
+
+    function renderWaste(offset) {
+      const wasteEl = document.getElementById('sandbox-waste');
+      wasteEl.innerHTML = '';
+
+      const hand = SAMPLE_HANDS[handIndex];
+      const count = hand.length;
+
+      hand.forEach((cardData, idx) => {
+        const cardEl = window.SolitaireDeck.createCardElement(cardData);
+        cardEl.className = 'solitaire-card mock-card';
+        const offsetPx = (idx - (count - 1)) * offset;
+        cardEl.style.left = `${offsetPx}px`;
+        cardEl.style.zIndex = `${idx + 1}`;
+        wasteEl.appendChild(cardEl);
+      });
+    }
+
+    function updateOffset(val) {
+      currentOffset = Number(val);
+      document.getElementById('slider-val-badge').textContent = `${val}px`;
+      document.getElementById('btn-val-label').textContent = `${val}px`;
+      document.getElementById('overlap-slider').value = val;
+
+      renderWaste(currentOffset);
+
+      // Update preset active classes
+      document.querySelectorAll('.btn-preset').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = Array.from(document.querySelectorAll('.btn-preset')).find(b => b.textContent.startsWith(`${val}px`));
+      if (activeBtn) activeBtn.classList.add('active');
+
+      // Update card active classes
+      document.querySelectorAll('.option-card').forEach(card => card.classList.remove('active-card'));
+      const activeCard = document.getElementById(`opt-card-${val}`);
+      if (activeCard) activeCard.classList.add('active-card');
+    }
+
+    function setPreset(val) {
+      updateOffset(val);
+    }
+
+    function dealNewHand() {
+      handIndex = (handIndex + 1) % SAMPLE_HANDS.length;
+      renderWaste(currentOffset);
+    }
+
+    function applyToGame() {
+      try {
+        const saved = localStorage.getItem('agy-solitaire-settings');
+        let settings = saved ? JSON.parse(saved) : {};
+        settings.deal3Offset = currentOffset;
+        settings.drawCount = 3;
+        localStorage.setItem('agy-solitaire-settings', JSON.stringify(settings));
+        alert(`✓ Applied ${currentOffset}px Deal 3 overlap to game!\nRedirecting to game...`);
+        window.location.href = `/?draw3=1&offset=${currentOffset}`;
+      } catch (e) {
+        window.location.href = `/?draw3=1&offset=${currentOffset}`;
+      }
+    }
+
+    // Init
+    window.addEventListener('DOMContentLoaded', () => {
+      // Check if user already had a saved setting
+      try {
+        const saved = localStorage.getItem('agy-solitaire-settings');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (parsed.deal3Offset) currentOffset = Number(parsed.deal3Offset);
+        }
+      } catch (e) {}
+
+      updateOffset(currentOffset);
+    });
+  </script>
+</body>
+</html>

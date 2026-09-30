@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>agy-solitaire - 5 Table Felt & Board Environment Options</title>
+  <style>
+    :root {
+      --card-red: #c62828;
+      --card-black: #111111;
+      --ui-bg: #0b0f0d;
+      --panel-bg: #1e293b;
+      --border-color: #334155;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--ui-bg);
+      color: #f0f0f0;
+      padding: 24px 16px 80px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      max-width: 900px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 8px;
+      color: #4ade80;
+    }
+
+    p.subtitle {
+      font-size: 15px;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    .callout-locked {
+      background: #064e3b;
+      border: 1px solid #10b981;
+      border-left: 5px solid #10b981;
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin: 16px 0 24px 0;
+      font-size: 14px;
+      color: #ecfdf5;
+      text-align: left;
+      max-width: 860px;
+      line-height: 1.5;
+    }
+
+    .callout-locked strong { color: #6ee7b7; }
+
+    .nav-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 30px;
+      position: sticky;
+      top: 10px;
+      z-index: 100;
+      background: rgba(11, 15, 13, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 8px 12px;
+      border-radius: 30px;
+      border: 1px solid var(--border-color);
+    }
+
+    .nav-btn {
+      background: #1e293b;
+      color: #e2e8f0;
+      border: 1px solid #475569;
+      padding: 7px 14px;
+      border-radius: 18px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover, .nav-btn.active {
+      background: #22c55e;
+      color: #052e16;
+      border-color: #22c55e;
+    }
+
+    .section-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
+      max-width: 900px;
+      width: 100%;
+      margin-bottom: 36px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .option-header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+    }
+
+    .option-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .option-badge {
+      background: #0284c7;
+      color: #ffffff;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .option-badge.star {
+      background: #16a34a;
+    }
+
+    .option-desc {
+      width: 100%;
+      font-size: 14px;
+      color: #cbd5e1;
+      margin-bottom: 20px;
+      line-height: 1.5;
+      text-align: left;
+    }
+
+    /* ================================================================= */
+    /* IPHONE 16e COMPLETE BOARD (Exact 390px Viewport)                 */
+    /* ================================================================= */
+    .iphone-board-frame {
+      width: 100%;
+      max-width: 390px;
+      border-radius: 24px;
+      border: 3px solid #334155;
+      padding: 14px 10px 18px 10px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.6), inset 0 2px 12px rgba(0,0,0,0.5);
+      position: relative;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* Board Background Themes */
+    .felt-t1 {
+      background: radial-gradient(circle at 50% 30%, #0d3822 0%, #072214 70%, #03120a 100%);
+    }
+    .felt-t2 {
+      background: radial-gradient(circle at 50% 30%, #0f1f3d 0%, #091326 70%, #040812 100%);
+    }
+    .felt-t3 {
+      background: radial-gradient(circle at 50% 30%, #163827 0%, #0c2419 70%, #05130d 100%);
+    }
+    .felt-t4 {
+      background: radial-gradient(circle at 50% 30%, #202624 0%, #131716 70%, #0a0c0c 100%);
+    }
+    .felt-t5 {
+      background: radial-gradient(circle at 50% 30%, #2e0e14 0%, #1d070b 70%, #0d0205 100%);
+    }
+
+    /* Top Action Bar (Undo, Hint, New Game) */
+    .board-action-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding: 0 4px;
+    }
+
+    .action-btn-pill {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #f1f5f9;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      backdrop-filter: blur(4px);
+    }
+
+    .board-stats {
+      font-size: 11px;
+      font-weight: bold;
+      color: #94a3b8;
+      letter-spacing: 0.5px;
+    }
+
+    /* Top Row: Stock & Waste (Left) + 4 Foundations (Right) */
+    .board-top-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      margin-bottom: 14px;
+    }
+
+    /* Foundation & Empty Placeholder Slots */
+    .board-slot {
+      width: 100%;
+      height: 64px;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* Slot Themes */
+    /* T1: Emerald Gold/Mint Outlines */
+    .slot-t1 {
+      border: 1.5px dashed rgba(74, 222, 128, 0.4);
+      background: rgba(5, 24, 14, 0.4);
+      color: rgba(74, 222, 128, 0.35);
+    }
+    .slot-t1.foundation {
+      border: 1.5px solid rgba(251, 191, 36, 0.45);
+      color: rgba(251, 191, 36, 0.4);
+    }
+
+    /* T2: Midnight Cyan Outlines */
+    .slot-t2 {
+      border: 1.5px dashed rgba(56, 189, 248, 0.35);
+      background: rgba(9, 19, 38, 0.4);
+      color: rgba(56, 189, 248, 0.35);
+    }
+    .slot-t2.foundation {
+      border: 1.5px solid rgba(56, 189, 248, 0.5);
+      color: rgba(56, 189, 248, 0.45);
+    }
+
+    /* T3: Forest Pine Warm Brass Outlines */
+    .slot-t3 {
+      border: 1.5px dashed rgba(253, 224, 71, 0.35);
+      background: rgba(12, 36, 25, 0.4);
+      color: rgba(253, 224, 71, 0.35);
+    }
+    .slot-t3.foundation {
+      border: 1.5px solid rgba(251, 191, 36, 0.6);
+      color: rgba(251, 191, 36, 0.5);
+    }
+
+    /* T4: Obsidian Neutral Slate Outlines */
+    .slot-t4 {
+      border: 1.5px dashed rgba(148, 163, 184, 0.4);
+      background: rgba(19, 23, 22, 0.5);
+      color: rgba(148, 163, 184, 0.35);
+    }
+    .slot-t4.foundation {
+      border: 1.5px solid rgba(203, 213, 225, 0.5);
+      color: rgba(203, 213, 225, 0.45);
+    }
+
+    /* T5: Mahogany Rose Gold Outlines */
+    .slot-t5 {
+      border: 1.5px dashed rgba(251, 113, 133, 0.35);
+      background: rgba(29, 7, 11, 0.4);
+      color: rgba(251, 113, 133, 0.35);
+    }
+    .slot-t5.foundation {
+      border: 1.5px solid rgba(251, 146, 60, 0.5);
+      color: rgba(251, 146, 60, 0.45);
+    }
+
+    .slot-watermark {
+      width: 22px;
+      height: 22px;
+    }
+    .slot-watermark svg { width: 100%; height: 100%; }
+
+    .slot-label {
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+      text-transform: uppercase;
+    }
+
+    /* Tableau 7 Columns */
+    .board-tableau {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      min-height: 225px;
+    }
+
+    .tableau-col {
+      position: relative;
+      width: 100%;
+      height: 220px;
+    }
+
+    /* Face-Up Mini Card */
+    .mini-card {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 64px;
+      background: #ffffff;
+      border-radius: 5px;
+      border: 1.5px solid #111111;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .mini-card.red { color: var(--card-red) !important; }
+    .mini-card.black { color: var(--card-black) !important; }
+
+    .mini-card-header {
+      width: 100%;
+      height: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 4px;
+      border-bottom: 1.5px solid;
+    }
+    .mini-card.red .mini-card-header { background: #fee2e2; border-color: #f87171; }
+    .mini-card.black .mini-card-header { background: #f1f5f9; border-color: #94a3b8; }
+
+    .mini-rank {
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+
+    .mini-suit-wrap {
+      width: 13px;
+      height: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mini-suit-wrap svg { width: 100%; height: 100%; }
+
+    .mini-card-center {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mini-center-suit {
+      width: 22px;
+      height: 22px;
+    }
+    .mini-center-suit svg { width: 100%; height: 100%; }
+
+    /* Face-Down Card: 4A Double Happiness (No Border) */
+    .mini-card-back-4a {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 64px;
+      border-radius: 5px;
+      background: radial-gradient(circle at center, #b91c1c 0%, #7f1d1d 70%, #450a0a 100%);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid rgba(0,0,0,0.4);
+    }
+    .mini-glyph {
+      font-family: "PingFang SC", sans-serif;
+      font-size: 28px;
+      line-height: 1;
+      font-weight: 900;
+      color: #fbbf24;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+    }
+
+    .key-features {
+      margin-top: 14px;
+      padding-left: 18px;
+      font-size: 13px;
+      color: #94a3b8;
+      width: 100%;
+      text-align: left;
+    }
+    .key-features li { margin-bottom: 4px; }
+    .key-features strong { color: #e2e8f0; }
+
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: bold;
+      margin-right: 6px;
+    }
+    .tag.highlight { background: #065f46; color: #6ee7b7; }
+    .tag.note { background: #1e3a8a; color: #93c5fd; }
+
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: #64748b;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>agy-solitaire: 5 Table Felt & Environment Options</h1>
+    <p class="subtitle">
+      Showing the complete <strong>iPhone 16e Portrait Board</strong> with your chosen:<br>
+      <strong>Max-Fill Face Cards &bull; Slender/Concave Suits &bull; 4A Double Happiness (囍) Backs</strong>.
+    </p>
+
+    <div class="callout-locked">
+      <strong>Your Deck Elements in Action:</strong>
+      Every board below features your locked-in deck: the full-bleed crimson <strong>4A Double Happiness (囍)</strong> card backs on the draw stock and face-down stacks, paired with the <strong>Max-Fill Banner face cards</strong> featuring the <strong>slender pips and concave diamond</strong>.
+    </div>
+  </header>
+
+  <nav class="nav-bar">
+    <a href="#table1" class="nav-btn">1. Monte Carlo Emerald</a>
+    <a href="#table2" class="nav-btn">2. Midnight Slate OLED</a>
+    <a href="#table3" class="nav-btn">3. Imperial Pine & Brass</a>
+    <a href="#table4" class="nav-btn">4. Deep Obsidian Charcoal</a>
+    <a href="#table5" class="nav-btn">5. Royal Mahogany Velvet</a>
+  </nav>
+
+  <!-- ================================================================= -->
+  <!-- TABLE OPTION 1 -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="table1">
+    <div class="option-header">
+      <div class="option-title">Option 1: Monte Carlo Emerald (Classic Luxury Felt)</div>
+      <div class="option-badge star">Top Recommendation</div>
+    </div>
+    <p class="option-desc">
+      A deep casino emerald felt with subtle radial vignette. Features gold-tinted foundation frames with watermark suit indicators. Highly soothing to monocular vision while providing radiant, high-contrast separation for both the crimson 囍 backs and white face cards.
+    </p>
+
+    <div class="iphone-board-frame felt-t1">
+      <!-- Top Action Bar -->
+      <div class="board-action-bar">
+        <div class="action-btn-pill"><span>&#x21BA;</span> Undo</div>
+        <div class="board-stats">SCORE: 240 &bull; DRAW 1</div>
+        <div class="action-btn-pill">New Game</div>
+      </div>
+
+      <!-- Top Row: Stock & Waste + 4 Foundations -->
+      <div class="board-top-row">
+        <!-- Stock Pile (4A 囍 Back) -->
+        <div class="mini-card-back-4a" style="position: relative;"><span class="mini-glyph">囍</span></div>
+        <!-- Waste Pile (Dealt Card) -->
+        <div class="mini-card red" style="position: relative;">
+          <div class="mini-card-header"><span class="mini-rank">10</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+          <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+        </div>
+        <!-- Empty Spacer -->
+        <div></div>
+        <!-- Foundation 1: Spade -->
+        <div class="board-slot slot-t1 foundation">
+          <div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div>
+          <span class="slot-label">Ace</span>
+        </div>
+        <!-- Foundation 2: Heart -->
+        <div class="board-slot slot-t1 foundation">
+          <div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div>
+          <span class="slot-label">Ace</span>
+        </div>
+        <!-- Foundation 3: Club -->
+        <div class="board-slot slot-t1 foundation">
+          <div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div>
+          <span class="slot-label">Ace</span>
+        </div>
+        <!-- Foundation 4: Diamond -->
+        <div class="board-slot slot-t1 foundation">
+          <div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div>
+          <span class="slot-label">Ace</span>
+        </div>
+      </div>
+
+      <!-- Tableau 7 Columns -->
+      <div class="board-tableau">
+        <div class="tableau-col">
+          <div class="mini-card red" style="top: 0px; z-index: 1;">
+            <div class="mini-card-header"><span class="mini-rank">A</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+            <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+          </div>
+        </div>
+        <div class="tableau-col">
+          <div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div>
+          <div class="mini-card red" style="top: 10px; z-index: 2;">
+            <div class="mini-card-header"><span class="mini-rank">9</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div>
+            <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div>
+          </div>
+        </div>
+        <div class="tableau-col">
+          <div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div>
+          <div class="mini-card-back-4a" style="top: 10px; z-index: 2;"><span class="mini-glyph">囍</span></div>
+          <div class="mini-card black" style="top: 20px; z-index: 3;">
+            <div class="mini-card-header"><span class="mini-rank">8</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+            <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+          </div>
+        </div>
+        <!-- Empty Column Placeholder Demonstration -->
+        <div class="tableau-col">
+          <div class="board-slot slot-t1" style="position: absolute; top: 0; left: 0;">
+            <span style="font-size: 18px; font-weight: 900; opacity: 0.5;">K</span>
+            <span class="slot-label">Empty</span>
+          </div>
+        </div>
+        <!-- Cascade Col 5 (Active descending run) -->
+        <div class="tableau-col">
+          <div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div>
+          <div class="mini-card black" style="top: 10px; z-index: 2;">
+            <div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+          </div>
+          <div class="mini-card red" style="top: 32px; z-index: 3;">
+            <div class="mini-card-header"><span class="mini-rank">Q</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div>
+          </div>
+          <div class="mini-card black" style="top: 54px; z-index: 4;">
+            <div class="mini-card-header"><span class="mini-rank">J</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div>
+          </div>
+          <div class="mini-card red" style="top: 76px; z-index: 5;">
+            <div class="mini-card-header"><span class="mini-rank">10</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+            <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+          </div>
+        </div>
+        <div class="tableau-col">
+          <div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div>
+          <div class="mini-card black" style="top: 10px; z-index: 2;">
+            <div class="mini-card-header"><span class="mini-rank">6</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div>
+            <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div>
+          </div>
+        </div>
+        <div class="tableau-col">
+          <div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div>
+          <div class="mini-card-back-4a" style="top: 10px; z-index: 2;"><span class="mini-glyph">囍</span></div>
+          <div class="mini-card red" style="top: 20px; z-index: 3;">
+            <div class="mini-card-header"><span class="mini-rank">5</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div>
+            <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag highlight">Eye Rest</span> Deep emerald felt is universally proven to minimize optic strain in long play sessions.</li>
+      <li><span class="tag note">Contrast</span> Gold foundation outlines echo the gold 囍 glyph on the crimson card backs.</li>
+    </ul>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- TABLE OPTION 2 -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="table2">
+    <div class="option-header">
+      <div class="option-title">Option 2: Midnight Slate OLED (Cool-Tone Calm)</div>
+      <div class="option-badge">Deepest Black Depth</div>
+    </div>
+    <p class="option-desc">
+      A cool midnight-indigo slate background tuned for the iPhone 16e's OLED display. Cyan/steel hairline frames with subtle glow for foundation slots. Zero green hue.
+    </p>
+
+    <div class="iphone-board-frame felt-t2">
+      <div class="board-action-bar">
+        <div class="action-btn-pill"><span>&#x21BA;</span> Undo</div>
+        <div class="board-stats">SCORE: 240 &bull; DRAW 1</div>
+        <div class="action-btn-pill">New Game</div>
+      </div>
+
+      <div class="board-top-row">
+        <div class="mini-card-back-4a" style="position: relative;"><span class="mini-glyph">囍</span></div>
+        <div class="mini-card red" style="position: relative;">
+          <div class="mini-card-header"><span class="mini-rank">10</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+          <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+        </div>
+        <div></div>
+        <div class="board-slot slot-t2 foundation"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div><span class="slot-label">Ace</span></div>
+        <div class="board-slot slot-t2 foundation"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div><span class="slot-label">Ace</span></div>
+        <div class="board-slot slot-t2 foundation"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div><span class="slot-label">Ace</span></div>
+        <div class="board-slot slot-t2 foundation"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div><span class="slot-label">Ace</span></div>
+      </div>
+
+      <div class="board-tableau">
+        <div class="tableau-col"><div class="mini-card red" style="top: 0px; z-index: 1;"><div class="mini-card-header"><span class="mini-rank">A</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card red" style="top: 10px; z-index: 2;"><div class="mini-card-header"><span class="mini-rank">9</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card-back-4a" style="top: 10px; z-index: 2;"><span class="mini-glyph">囍</span></div><div class="mini-card black" style="top: 20px; z-index: 3;"><div class="mini-card-header"><span class="mini-rank">8</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="board-slot slot-t2" style="position: absolute; top: 0; left: 0;"><span style="font-size: 18px; font-weight: 900; opacity: 0.5;">K</span><span class="slot-label">Empty</span></div></div>
+        <div class="tableau-col">
+          <div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div>
+          <div class="mini-card black" style="top: 10px; z-index: 2;"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div></div>
+          <div class="mini-card red" style="top: 32px; z-index: 3;"><div class="mini-card-header"><span class="mini-rank">Q</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div>
+          <div class="mini-card black" style="top: 54px; z-index: 4;"><div class="mini-card-header"><span class="mini-rank">J</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div></div>
+          <div class="mini-card red" style="top: 76px; z-index: 5;"><div class="mini-card-header"><span class="mini-rank">10</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div></div>
+        </div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card black" style="top: 10px; z-index: 2;"><div class="mini-card-header"><span class="mini-rank">6</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card-back-4a" style="top: 10px; z-index: 2;"><span class="mini-glyph">囍</span></div><div class="mini-card red" style="top: 20px; z-index: 3;"><div class="mini-card-header"><span class="mini-rank">5</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div></div>
+      </div>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag highlight">OLED Black</span> Darkest background saves iPhone battery and reduces total light emission.</li>
+      <li><span class="tag note">Modern</span> Sleek digital arcade look.</li>
+    </ul>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- TABLE OPTION 3 -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="table3">
+    <div class="option-header">
+      <div class="option-title">Option 3: Imperial Pine & Brass (Cultural Harmony)</div>
+      <div class="option-badge">Warm Traditional Harmony</div>
+    </div>
+    <p class="option-desc">
+      A warm deep pine velvet felt paired with warm brass/gold foundation slot frames. Harmonizes perfectly with the crimson and gold 囍 card backs, creating a cohesive, royal aesthetic.
+    </p>
+
+    <div class="iphone-board-frame felt-t3">
+      <div class="board-action-bar">
+        <div class="action-btn-pill"><span>&#x21BA;</span> Undo</div>
+        <div class="board-stats">SCORE: 240 &bull; DRAW 1</div>
+        <div class="action-btn-pill">New Game</div>
+      </div>
+
+      <div class="board-top-row">
+        <div class="mini-card-back-4a" style="position: relative;"><span class="mini-glyph">囍</span></div>
+        <div class="mini-card red" style="position: relative;">
+          <div class="mini-card-header"><span class="mini-rank">10</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+          <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+        </div>
+        <div></div>
+        <div class="board-slot slot-t3 foundation"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div><span class="slot-label">Ace</span></div>
+        <div class="board-slot slot-t3 foundation"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div><span class="slot-label">Ace</span></div>
+        <div class="board-slot slot-t3 foundation"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div><span class="slot-label">Ace</span></div>
+        <div class="board-slot slot-t3 foundation"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div><span class="slot-label">Ace</span></div>
+      </div>
+
+      <div class="board-tableau">
+        <div class="tableau-col"><div class="mini-card red" style="top: 0px; z-index: 1;"><div class="mini-card-header"><span class="mini-rank">A</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card red" style="top: 10px; z-index: 2;"><div class="mini-card-header"><span class="mini-rank">9</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card-back-4a" style="top: 10px; z-index: 2;"><span class="mini-glyph">囍</span></div><div class="mini-card black" style="top: 20px; z-index: 3;"><div class="mini-card-header"><span class="mini-rank">8</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="board-slot slot-t3" style="position: absolute; top: 0; left: 0;"><span style="font-size: 18px; font-weight: 900; opacity: 0.6;">K</span><span class="slot-label">Empty</span></div></div>
+        <div class="tableau-col">
+          <div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div>
+          <div class="mini-card black" style="top: 10px; z-index: 2;"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div></div>
+          <div class="mini-card red" style="top: 32px; z-index: 3;"><div class="mini-card-header"><span class="mini-rank">Q</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div>
+          <div class="mini-card black" style="top: 54px; z-index: 4;"><div class="mini-card-header"><span class="mini-rank">J</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div></div>
+          <div class="mini-card red" style="top: 76px; z-index: 5;"><div class="mini-card-header"><span class="mini-rank">10</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div></div>
+        </div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card black" style="top: 10px; z-index: 2;"><div class="mini-card-header"><span class="mini-rank">6</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card-back-4a" style="top: 10px; z-index: 2;"><span class="mini-glyph">囍</span></div><div class="mini-card red" style="top: 20px; z-index: 3;"><div class="mini-card-header"><span class="mini-rank">5</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div></div>
+      </div>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag highlight">Harmony</span> Deep forest pine paired with brass outlines perfectly complements the crimson and gold deck.</li>
+      <li><span class="tag note">Comfort</span> Warm undertones prevent cold digital blue-light fatigue.</li>
+    </ul>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- TABLE OPTION 4 -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="table4">
+    <div class="option-header">
+      <div class="option-title">Option 4: Deep Obsidian Charcoal (Pure Color Isolation)</div>
+      <div class="option-badge">Maximum Neutral Contrast</div>
+    </div>
+    <p class="option-desc">
+      A warm charcoal/matte obsidian felt. Completely neutral with zero color bias, allowing the crimson red and obsidian black cards to stand out with pristine color isolation.
+    </p>
+
+    <div class="iphone-board-frame felt-t4">
+      <div class="board-action-bar">
+        <div class="action-btn-pill"><span>&#x21BA;</span> Undo</div>
+        <div class="board-stats">SCORE: 240 &bull; DRAW 1</div>
+        <div class="action-btn-pill">New Game</div>
+      </div>
+
+      <div class="board-top-row">
+        <div class="mini-card-back-4a" style="position: relative;"><span class="mini-glyph">囍</span></div>
+        <div class="mini-card red" style="position: relative;">
+          <div class="mini-card-header"><span class="mini-rank">10</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+          <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+        </div>
+        <div></div>
+        <div class="board-slot slot-t4 foundation"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div><span class="slot-label">Ace</span></div>
+        <div class="board-slot slot-t4 foundation"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div><span class="slot-label">Ace</span></div>
+        <div class="board-slot slot-t4 foundation"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div><span class="slot-label">Ace</span></div>
+        <div class="board-slot slot-t4 foundation"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div><span class="slot-label">Ace</span></div>
+      </div>
+
+      <div class="board-tableau">
+        <div class="tableau-col"><div class="mini-card red" style="top: 0px; z-index: 1;"><div class="mini-card-header"><span class="mini-rank">A</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card red" style="top: 10px; z-index: 2;"><div class="mini-card-header"><span class="mini-rank">9</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card-back-4a" style="top: 10px; z-index: 2;"><span class="mini-glyph">囍</span></div><div class="mini-card black" style="top: 20px; z-index: 3;"><div class="mini-card-header"><span class="mini-rank">8</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="board-slot slot-t4" style="position: absolute; top: 0; left: 0;"><span style="font-size: 18px; font-weight: 900; opacity: 0.5;">K</span><span class="slot-label">Empty</span></div></div>
+        <div class="tableau-col">
+          <div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div>
+          <div class="mini-card black" style="top: 10px; z-index: 2;"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div></div>
+          <div class="mini-card red" style="top: 32px; z-index: 3;"><div class="mini-card-header"><span class="mini-rank">Q</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div>
+          <div class="mini-card black" style="top: 54px; z-index: 4;"><div class="mini-card-header"><span class="mini-rank">J</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div></div>
+          <div class="mini-card red" style="top: 76px; z-index: 5;"><div class="mini-card-header"><span class="mini-rank">10</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div></div>
+        </div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card black" style="top: 10px; z-index: 2;"><div class="mini-card-header"><span class="mini-rank">6</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card-back-4a" style="top: 10px; z-index: 2;"><span class="mini-glyph">囍</span></div><div class="mini-card red" style="top: 20px; z-index: 3;"><div class="mini-card-header"><span class="mini-rank">5</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div></div>
+      </div>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag highlight">Neutrality</span> Zero color interference ensures maximum red/black contrast.</li>
+      <li><span class="tag note">Modern Dark Mode</span> Feels like a premium system dark mode theme.</li>
+    </ul>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- TABLE OPTION 5 -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="table5">
+    <div class="option-header">
+      <div class="option-title">Option 5: Royal Mahogany Velvet (Warm Parlor Opulence)</div>
+      <div class="option-badge">Warm Red Tones</div>
+    </div>
+    <p class="option-desc">
+      A deep wine/mahogany velvet background with warm rose-gold outlines for foundation slots. Creates a luxurious, intimate parlor aesthetic.
+    </p>
+
+    <div class="iphone-board-frame felt-t5">
+      <div class="board-action-bar">
+        <div class="action-btn-pill"><span>&#x21BA;</span> Undo</div>
+        <div class="board-stats">SCORE: 240 &bull; DRAW 1</div>
+        <div class="action-btn-pill">New Game</div>
+      </div>
+
+      <div class="board-top-row">
+        <div class="mini-card-back-4a" style="position: relative;"><span class="mini-glyph">囍</span></div>
+        <div class="mini-card red" style="position: relative;">
+          <div class="mini-card-header"><span class="mini-rank">10</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+          <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+        </div>
+        <div></div>
+        <div class="board-slot slot-t5 foundation"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div><span class="slot-label">Ace</span></div>
+        <div class="board-slot slot-t5 foundation"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div><span class="slot-label">Ace</span></div>
+        <div class="board-slot slot-t5 foundation"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div><span class="slot-label">Ace</span></div>
+        <div class="board-slot slot-t5 foundation"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div><span class="slot-label">Ace</span></div>
+      </div>
+
+      <div class="board-tableau">
+        <div class="tableau-col"><div class="mini-card red" style="top: 0px; z-index: 1;"><div class="mini-card-header"><span class="mini-rank">A</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card red" style="top: 10px; z-index: 2;"><div class="mini-card-header"><span class="mini-rank">9</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card-back-4a" style="top: 10px; z-index: 2;"><span class="mini-glyph">囍</span></div><div class="mini-card black" style="top: 20px; z-index: 3;"><div class="mini-card-header"><span class="mini-rank">8</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="board-slot slot-t5" style="position: absolute; top: 0; left: 0;"><span style="font-size: 18px; font-weight: 900; opacity: 0.5;">K</span><span class="slot-label">Empty</span></div></div>
+        <div class="tableau-col">
+          <div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div>
+          <div class="mini-card black" style="top: 10px; z-index: 2;"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div></div>
+          <div class="mini-card red" style="top: 32px; z-index: 3;"><div class="mini-card-header"><span class="mini-rank">Q</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div>
+          <div class="mini-card black" style="top: 54px; z-index: 4;"><div class="mini-card-header"><span class="mini-rank">J</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div></div>
+          <div class="mini-card red" style="top: 76px; z-index: 5;"><div class="mini-card-header"><span class="mini-rank">10</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div></div>
+        </div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card black" style="top: 10px; z-index: 2;"><div class="mini-card-header"><span class="mini-rank">6</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card-back-4a" style="top: 10px; z-index: 2;"><span class="mini-glyph">囍</span></div><div class="mini-card red" style="top: 20px; z-index: 3;"><div class="mini-card-header"><span class="mini-rank">5</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div></div>
+      </div>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag highlight">Warm Parlor</span> Deep wine velvet feels intimate and tactile.</li>
+      <li><span class="tag note">Red Saturation</span> Blends slightly closer with crimson backs, but white cards pop vividly.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>agy-solitaire &bull; Table Felt & Board Environment Options &bull; iPhone 16e</p>
+  </footer>
+
+</body>
+</html>

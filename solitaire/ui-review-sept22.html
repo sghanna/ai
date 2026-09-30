@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI & Multi-Language Review | agy-solitaire</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    html, body {
+      width: 100% !important;
+      height: auto !important;
+      min-height: 100vh !important;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+    body {
+      background: #030a06;
+      color: #f1f5f9;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 24px 16px 60px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
+    .review-section {
+      width: 100%;
+      max-width: 440px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .review-header {
+      border-bottom: 1.5px solid rgba(251, 191, 36, 0.3);
+      padding-bottom: 6px;
+    }
+    .review-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #fbbf24;
+      letter-spacing: 0.5px;
+    }
+    .review-desc {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+    .phone-mockup {
+      width: 100%;
+      max-width: 430px;
+      height: 720px;
+      position: relative;
+      border: 2px solid rgba(251, 191, 36, 0.4);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8);
+      background: radial-gradient(circle at 50% 30%, #163827 0%, #0c2419 70%, #05130d 100%);
+    }
+    .modal-frame {
+      position: relative;
+      width: 100%;
+      max-width: 430px;
+      min-height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid rgba(251, 191, 36, 0.3);
+      border-radius: 20px;
+      padding: 20px;
+      background: radial-gradient(circle at 50% 30%, #163827 0%, #0c2419 70%, #05130d 100%);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+    }
+  </style>
+</head>
+<body>
+
+  <header style="text-align: center; max-width: 440px;">
+    <h1 style="font-size: 20px; font-weight: 900; color: #fbbf24; margin: 0 0 6px 0;">UI, Accessibility &amp; Modal Updates</h1>
+    <p style="font-size: 13px; color: #94a3b8; margin: 0 0 12px 0;">Visual verification for enlarged typography, inline headers, and viewport-aware modals.</p>
+    <nav style="display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; font-size: 12px; font-weight: 700;">
+      <a href="#section-1" style="color: #fbbf24; text-decoration: none; background: rgba(15,23,42,0.85); border: 1px solid rgba(251,191,36,0.35); padding: 5px 9px; border-radius: 9999px;">1. English</a>
+      <a href="#section-2" style="color: #fbbf24; text-decoration: none; background: rgba(15,23,42,0.85); border: 1px solid rgba(251,191,36,0.35); padding: 5px 9px; border-radius: 9999px;">2. Español</a>
+      <a href="#section-3" style="color: #fbbf24; text-decoration: none; background: rgba(15,23,42,0.85); border: 1px solid rgba(251,191,36,0.35); padding: 5px 9px; border-radius: 9999px;">3. Tiếng Việt</a>
+      <a href="#section-4" style="color: #fbbf24; text-decoration: none; background: rgba(15,23,42,0.85); border: 1px solid rgba(251,191,36,0.35); padding: 5px 9px; border-radius: 9999px;">4. Auto-Win</a>
+      <a href="#section-5" style="color: #fbbf24; text-decoration: none; background: rgba(15,23,42,0.85); border: 1px solid rgba(251,191,36,0.35); padding: 5px 9px; border-radius: 9999px;">5. New Game</a>
+      <a href="#section-6" style="color: #fbbf24; text-decoration: none; background: rgba(15,23,42,0.85); border: 1px solid rgba(251,191,36,0.35); padding: 5px 9px; border-radius: 9999px;">6. Settings</a>
+      <a href="#section-7" style="color: #fbbf24; text-decoration: none; background: rgba(15,23,42,0.85); border: 1px solid rgba(251,191,36,0.35); padding: 5px 9px; border-radius: 9999px;">7. How to Play</a>
+      <a href="#section-8" style="color: #fbbf24; text-decoration: none; background: rgba(15,23,42,0.85); border: 1px solid rgba(251,191,36,0.35); padding: 5px 9px; border-radius: 9999px;">8. Victory</a>
+    </nav>
+  </header>
+
+  <!-- Section 1: Main Board with Bumped Fonts, Centered Menu, Bottom ? Button -->
+  <div class="review-section" id="section-1">
+    <div class="review-header">
+      <div class="review-title">1. Enhanced Layout &amp; Font Sizing (English)</div>
+      <div class="review-desc">15px/900w top buttons (New left, Menu center, Undo right), bottom-left ? circular button (42px), larger status capsule (Score 13.5px / 16px val).</div>
+    </div>
+    <div class="phone-mockup" id="mock-en">
+      <iframe id="iframe-en" src="index.html?lang=en" style="width: 100%; height: 100%; border: none;"></iframe>
+    </div>
+  </div>
+
+  <!-- Section 2: Spanish Mode (Español) -->
+  <div class="review-section" id="section-2">
+    <div class="review-header">
+      <div class="review-title">2. Spanish Mode (Español)</div>
+      <div class="review-desc">Buttons translated to "Nuevo", "Menú", "Deshacer", telemetry to "PUNTOS", "MOVIMIENTOS".</div>
+    </div>
+    <div class="phone-mockup" id="mock-es">
+      <iframe id="iframe-es" src="index.html?lang=es" style="width: 100%; height: 100%; border: none;"></iframe>
+    </div>
+  </div>
+
+  <!-- Section 3: Vietnamese Mode (Tiếng Việt) -->
+  <div class="review-section" id="section-3">
+    <div class="review-header">
+      <div class="review-title">3. Vietnamese Mode (Tiếng Việt)</div>
+      <div class="review-desc">Buttons translated to "Ván mới", "Menu", "Hoàn tác", telemetry to "ĐIỂM", "NƯỚC ĐI".</div>
+    </div>
+    <div class="phone-mockup" id="mock-vi">
+      <iframe id="iframe-vi" src="index.html?lang=vi" style="width: 100%; height: 100%; border: none;"></iframe>
+    </div>
+  </div>
+
+  <!-- Section 4: Solved Auto-Win Banner (Hong Kong Starburst & Drop-Down Animation) -->
+  <div class="review-section" id="section-4">
+    <div class="review-header">
+      <div class="review-title">4. Solved Auto-Win Banner (Hong Kong Starburst &amp; Drop-Down Animation)</div>
+      <div class="review-desc">True iPhone 16e view with the banner dropping down across the screen from top to bottom, plus interactive replay and auto-loop controls.</div>
+    </div>
+    
+    <!-- Live Phone Mockup with Solitaire Board and Drop Banner -->
+    <div class="phone-mockup" id="mock-autowin">
+      <iframe id="iframe-autowin" src="index.html?showAutoWin=drop" style="width: 100%; height: 100%; border: none;"></iframe>
+    </div>
+
+    <!-- Interactive Animation Trigger & Controls -->
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; align-items: center; margin-top: 6px;">
+      <button id="btn-replay-autowin" onclick="triggerAutoWinDrop()" style="background: linear-gradient(180deg, #b45309 0%, #78350f 100%); color: #fef08a; border: 1.5px solid #fbbf24; border-radius: 9999px; padding: 8px 18px; font-size: 13.5px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 6px;">
+        <span>▶ Replay Drop Animation</span> <span>&circlearrowright;</span>
+      </button>
+      <button id="btn-autowin-loop" onclick="toggleAutoWinLoop()" style="background: rgba(15, 23, 42, 0.85); color: #cbd5e1; border: 1px solid rgba(251, 191, 36, 0.4); border-radius: 9999px; padding: 8px 16px; font-size: 13px; font-weight: 700; cursor: pointer;">
+        <span>🔁 Auto-Loop (Off)</span>
+      </button>
+    </div>
+    <div id="autowin-status-badge" style="text-align: center; font-size: 12px; font-weight: 700; color: #86efac; min-height: 18px;">
+      ✨ Ready to drop &amp; pulse
+    </div>
+
+    <!-- Spotlight Component Stage (In-Page Animated Demo) -->
+    <div class="modal-frame" style="position: relative; overflow: hidden; height: 140px; padding: 16px 14px; margin-top: 4px; display: flex; align-items: center; justify-content: center;">
+      <aside id="standalone-autowin-banner" class="glowing" style="width: 100%; max-width: 390px; margin: 0; background: linear-gradient(135deg, #1c1917 0%, #292524 40%, #1c1917 100%); border: 2.2px solid #fbbf24; border-radius: 22px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85), 0 0 20px rgba(251, 191, 36, 0.45); cursor: pointer;" onclick="triggerAutoWinDrop()">
+        <div class="banner-left" style="display: flex; align-items: center; gap: 10px;">
+          <div class="banner-icon-badge" style="width: 34px; height: 34px; border-radius: 50%; background: #064e3b; border: 1.5px solid #fbbf24; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 10px rgba(251, 191, 36, 0.4); flex-shrink: 0;">
+            <svg class="auto-win-icon" width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <!-- Auspicious 8-Point Starburst Filigree -->
+              <path d="M20 2 L22.8 13.5 L34 8 L27 18 L38 20 L27 22 L34 32 L22.8 26.5 L20 38 L17.2 26.5 L6 32 L13 22 L2 20 L13 18 L6 8 L17.2 13.5 Z" fill="rgba(251, 191, 36, 0.35)" stroke="#fbbf24" stroke-width="1.2" stroke-linejoin="round"/>
+              <!-- Inner Imperial Medallion Circle -->
+              <circle cx="20" cy="20" r="10.5" fill="#7f1d1d" stroke="#fde047" stroke-width="1.6"/>
+              <!-- Glowing Ruby Jewel Center -->
+              <circle cx="20" cy="20" r="5.5" fill="#ef4444" stroke="#fbbf24" stroke-width="1.2"/>
+              <circle cx="18" cy="18" r="1.5" fill="#ffffff" opacity="0.85"/>
+              <!-- Corner Gold Accent Orbs -->
+              <circle cx="20" cy="5.5" r="1.2" fill="#fde047"/>
+              <circle cx="20" cy="34.5" r="1.2" fill="#fde047"/>
+              <circle cx="5.5" cy="20" r="1.2" fill="#fde047"/>
+              <circle cx="34.5" cy="20" r="1.2" fill="#fde047"/>
+            </svg>
+          </div>
+          <span class="banner-text" style="font-family: 'Lexend', -apple-system, sans-serif; font-size: 19px; font-weight: 900; color: #fef08a; letter-spacing: 0.3px; text-shadow: 0 1.5px 3px rgba(0,0,0,0.85);">Solved!</span>
+        </div>
+        <button class="banner-btn" style="background: linear-gradient(180deg, #fbbf24 0%, #d97706 100%); color: #0f172a; border: none; border-radius: 9999px; padding: 7px 15px; font-family: 'Lexend', -apple-system, sans-serif; font-size: 15px; font-weight: 900; letter-spacing: 0.2px; box-shadow: 0 3px 8px rgba(0,0,0,0.5);">Auto-Win &rarr;</button>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Section 5: New Game Confirmation Modal (Bumped Up Font) -->
+  <div class="review-section" id="section-5">
+    <div class="review-header">
+      <div class="review-title">5. New Game Modal (Large Senior Fonts)</div>
+      <div class="review-desc">Title bumped to 24px Georgia serif, description to 16px bold, action buttons to 16px font with 13px padding.</div>
+    </div>
+    <div class="modal-frame">
+      <div class="confirm-modal-card" style="margin: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.9);">
+        <div class="confirm-modal-seal">
+          <svg class="modal-dragon-svg" width="46" height="46" viewBox="0 0 68 68" fill="none">
+            <circle cx="34" cy="34" r="30" fill="none" stroke="#fbbf24" stroke-width="1.3"/>
+            <circle cx="34" cy="34" r="27.2" fill="none" stroke="rgba(254, 240, 138, 0.7)" stroke-width="0.7"/>
+            <circle cx="34" cy="34" r="25" fill="none" stroke="rgba(254, 240, 138, 0.6)" stroke-width="0.7" stroke-dasharray="1.5,1.5"/>
+            <g transform="translate(34, 34) scale(0.68) translate(-34, -31)" fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M 34,8 C 47,8 58,19 58,32 C 58,46 46,56 34,56 C 22,56 14,48 14,38 C 14,28 22,22 30,22 C 38,22 42,26 42,32 C 42,36 38,40 34,40 C 30,40 28,36 30,34" stroke-width="3.2"/>
+              <circle cx="34" cy="32" r="4.5" fill="#ef4444" stroke="#fde047" stroke-width="1.2"/>
+            </g>
+          </svg>
+        </div>
+        <div class="confirm-modal-title">Start a New Deal?</div>
+        <div class="confirm-modal-desc">
+          Your current deal and moves will be reset.
+        </div>
+        <div class="confirm-modal-buttons">
+          <button class="confirm-btn confirm-btn-cancel">Cancel</button>
+          <button class="confirm-btn confirm-btn-proceed">Start New Deal</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 6: Settings Modal with Inline Gear & Viewport Scrolling -->
+  <div class="review-section" id="section-6">
+    <div class="review-header">
+      <div class="review-title">6. Settings Modal (Inline Gear & Dynamic Viewport Height)</div>
+      <div class="review-desc">Compact inline gear beside title, flexible viewport scrolling container, and 3-language selector.</div>
+    </div>
+    <div class="modal-frame">
+      <div class="confirm-modal-card settings-modal-card" style="margin: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.9);">
+        <div class="confirm-modal-title modal-title-inline">
+          <svg class="title-inline-gear" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="3" fill="rgba(251, 191, 36, 0.4)"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+          <span>Settings</span>
+        </div>
+        <div class="settings-rows">
+          <div class="settings-row">
+            <div class="settings-label-group">
+              <div class="settings-label">Language</div>
+              <div class="settings-hint">Display language</div>
+            </div>
+            <div class="settings-toggle-group settings-toggle-3">
+              <button class="settings-option-btn active">English</button>
+              <button class="settings-option-btn">Español</button>
+              <button class="settings-option-btn">Tiếng Việt</button>
+            </div>
+          </div>
+          <div class="settings-row">
+            <div class="settings-label-group">
+              <div class="settings-label">Move Control</div>
+              <div class="settings-hint">Tap card destination or auto-move</div>
+            </div>
+            <div class="settings-toggle-group">
+              <button class="settings-option-btn active">Choose Move</button>
+              <button class="settings-option-btn">Single Tap</button>
+            </div>
+          </div>
+        </div>
+        <div class="confirm-modal-buttons" style="margin-top: 14px;">
+          <button class="confirm-btn confirm-btn-proceed" style="width: 100%;">Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 7: How to Play Modal with Inline Icon & Viewport Scrolling -->
+  <div class="review-section" id="section-7">
+    <div class="review-header">
+      <div class="review-title">7. How to Play Modal (Inline ? Icon & Viewport Scrolling)</div>
+      <div class="review-desc">Compact inline question mark icon beside title, pinned header &amp; "Got It" button, with smooth scrollable rules.</div>
+    </div>
+    <div class="modal-frame">
+      <div class="confirm-modal-card help-modal-card" style="margin: 0; max-height: 480px; box-shadow: 0 10px 30px rgba(0,0,0,0.9);">
+        <div class="confirm-modal-title modal-title-inline">
+          <svg class="title-inline-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" fill="rgba(251, 191, 36, 0.25)"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          <span>How to Play</span>
+        </div>
+        <div class="help-modal-subtitle">Klondike Solitaire Quick Guide</div>
+        <div class="help-scroll-body" style="max-height: 300px;">
+          <div class="help-card-box">
+            <div class="help-card-header">
+              <div class="help-icon-badge">
+                <svg width="20" height="20" viewBox="0 0 40 40" fill="none">
+                  <rect x="11" y="11" width="18" height="24" rx="2.5" fill="#0b2418" stroke="#fbbf24" stroke-width="1.3"/>
+                  <text x="20" y="27" fill="#fbbf24" font-family="Georgia, serif" font-size="14" font-weight="900" text-anchor="middle">A</text>
+                </svg>
+              </div>
+              <div class="help-card-heading">Goal of the Game</div>
+            </div>
+            <div class="help-card-desc">Build all 4 foundation piles from <strong>Ace up to King</strong>, sorted by suit.</div>
+          </div>
+          <div class="help-card-box">
+            <div class="help-card-header">
+              <div class="help-icon-badge">
+                <svg width="20" height="20" viewBox="0 0 40 40" fill="none">
+                  <path d="M 20,8 L 26,14 L 14,14 Z" fill="#fbbf24"/>
+                </svg>
+              </div>
+              <div class="help-card-heading">Moving Cards (Tableau)</div>
+            </div>
+            <div class="help-card-desc">Stack cards downward in <strong>alternating colors</strong> (e.g. Red 8 on Black 9). Kings fill empty columns.</div>
+          </div>
+          <div class="help-card-box">
+            <div class="help-card-header">
+              <div class="help-icon-badge">
+                <svg width="20" height="20" viewBox="0 0 40 40" fill="none">
+                  <circle cx="20" cy="20" r="10" stroke="#fbbf24" stroke-width="2"/>
+                </svg>
+              </div>
+              <div class="help-card-heading">Helpful Tips for Mom</div>
+            </div>
+            <div class="help-card-desc">• Aces fly automatically when tapped.<br>• Tap Undo anytime to rethink a move.</div>
+          </div>
+        </div>
+        <div class="confirm-modal-buttons">
+          <button class="confirm-btn confirm-btn-proceed" style="width: 100%;">Got It, Let's Play!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 8: Compact V2 Victory Screen Modal -->
+  <div class="review-section" id="section-8">
+    <div class="review-header">
+      <div class="review-title">8. Compact V2 Victory Screen Modal</div>
+      <div class="review-desc">Scaled down to 270px width (78%), 38px dragon seal, 19px title, docked lower (top: 60%) so the 9 lanterns and fireworks shine for 8.2 seconds without blockage.</div>
+    </div>
+    <div class="modal-frame">
+      <div id="victory-banner-overlay" class="combo-banner visible" style="position: static; transform: none; width: 100%; margin: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.9);">
+        <div class="win2-seal">
+          <svg class="modal-dragon-svg" width="38" height="38" viewBox="0 0 68 68" fill="none">
+            <circle cx="34" cy="34" r="30" fill="none" stroke="#fbbf24" stroke-width="1.3"/>
+            <circle cx="34" cy="34" r="27.2" fill="none" stroke="rgba(254, 240, 138, 0.7)" stroke-width="0.7"/>
+            <circle cx="34" cy="34" r="25" fill="none" stroke="rgba(254, 240, 138, 0.6)" stroke-width="0.7" stroke-dasharray="1.5,1.5"/>
+            <g transform="translate(34, 34) scale(0.68) translate(-34, -31)" fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M 34,8 C 47,8 58,19 58,32 C 58,46 46,56 34,56 C 22,56 14,48 14,38 C 14,28 22,22 30,22 C 38,22 42,26 42,32 C 42,36 38,40 34,40 C 30,40 28,36 30,34" stroke-width="3.2"/>
+              <circle cx="34" cy="32" r="4.5" fill="#ef4444" stroke="#fde047" stroke-width="1.2"/>
+            </g>
+          </svg>
+        </div>
+        <div class="win2-title">GRAND JUBILEE!</div>
+        <div class="win2-sub">Imperial Golden Dragon &bull; 9 Auspicious Lanterns</div>
+        <div class="win2-stats">
+          <span>MOVES: <strong>48</strong></span>
+          <span>&bull;</span>
+          <span>SCORE: <strong>560</strong></span>
+        </div>
+        <button class="opt2-btn win2-btn">Next Deal &#x27F6;</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('load', () => {
+      const params = new URLSearchParams(window.location.search);
+      const onlyId = params.get('only');
+      if (onlyId) {
+        document.querySelectorAll('.review-section, .nav-pills, h1, p').forEach(el => {
+          if (!el.closest('#' + onlyId) && el.id !== onlyId) {
+            el.style.display = 'none';
+          }
+        });
+      }
+      const focusId = params.get('focus') || window.location.hash.replace('#', '');
+      if (focusId) {
+        const el = document.getElementById(focusId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'instant', block: 'start' });
+          if (focusId === 'section-4') {
+            setTimeout(triggerAutoWinDrop, 450);
+          }
+        }
+      }
+
+      // IntersectionObserver: Auto-drop whenever Section 4 scrolls into view
+      const sec4 = document.getElementById('section-4');
+      if (sec4 && 'IntersectionObserver' in window) {
+        let hasDroppedOnScroll = false;
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting && !hasDroppedOnScroll) {
+              hasDroppedOnScroll = true;
+              setTimeout(triggerAutoWinDrop, 350);
+            } else if (!entry.isIntersecting) {
+              hasDroppedOnScroll = false; // Reset so scrolling away and back re-drops
+            }
+          });
+        }, { threshold: 0.25 });
+        observer.observe(sec4);
+      }
+    });
+
+    let loopInterval = null;
+
+    // Hardware-accelerated, buttery-smooth Web Animations API drop animation
+    function dropAutoWinBanner(el, fromY = '-160px') {
+      if (!el) return;
+      el.style.display = 'flex';
+      el.classList.add('visible');
+      el.classList.remove('glowing');
+
+      // Cancel any existing animation cleanly
+      if (el._dropAnim) {
+        try { el._dropAnim.cancel(); } catch (e) {}
+      }
+
+      const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduceMotion || !el.animate) {
+        el.style.transform = 'none';
+        el.style.opacity = '1';
+        el.classList.add('glowing');
+        return;
+      }
+
+      el._dropAnim = el.animate([
+        { transform: `translate3d(0, ${fromY}, 0)`, opacity: 0, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' },
+        { opacity: 1, offset: 0.12 },
+        { transform: 'translate3d(0, 10px, 0)', offset: 0.80, easing: 'ease-in-out' },
+        { transform: 'translate3d(0, -4px, 0)', offset: 0.91, easing: 'ease-in-out' },
+        { transform: 'translate3d(0, 0, 0)', opacity: 1 }
+      ], {
+        duration: 3400,
+        fill: 'forwards'
+      });
+
+      el._dropAnim.onfinish = () => {
+        el.classList.add('glowing');
+      };
+    }
+
+    function triggerAutoWinDrop() {
+      // 1. Inside iframe (Solitaire game board)
+      const frame = document.getElementById('iframe-autowin');
+      if (frame && frame.contentWindow) {
+        let directlyCalled = false;
+        try {
+          if (typeof frame.contentWindow.playAutoWinDrop === 'function') {
+            frame.contentWindow.playAutoWinDrop();
+            directlyCalled = true;
+          }
+        } catch (e) {}
+
+        if (!directlyCalled) {
+          try {
+            frame.contentWindow.postMessage({ action: 'playAutoWinDrop' }, '*');
+          } catch (e) {}
+        }
+      }
+
+      // 2. In standalone spotlight demo
+      const standalone = document.getElementById('standalone-autowin-banner');
+      if (standalone) {
+        dropAutoWinBanner(standalone, '-160px');
+      }
+
+      // 3. Status text feedback
+      const badge = document.getElementById('autowin-status-badge');
+      if (badge) {
+        badge.textContent = '⬇ Dropping gently across screen (3.4s)...';
+        badge.style.color = '#fde047';
+        setTimeout(() => {
+          badge.textContent = '✨ Settled & Pulsing Radiant Gold';
+          badge.style.color = '#86efac';
+        }, 3400);
+      }
+    }
+
+    function toggleAutoWinLoop() {
+      const loopBtn = document.getElementById('btn-autowin-loop');
+      if (loopInterval) {
+        clearInterval(loopInterval);
+        loopInterval = null;
+        if (loopBtn) {
+          loopBtn.innerHTML = '<span>🔁 Auto-Loop (Off)</span>';
+          loopBtn.style.background = 'rgba(15, 23, 42, 0.85)';
+          loopBtn.style.borderColor = 'rgba(251, 191, 36, 0.4)';
+          loopBtn.style.color = '#cbd5e1';
+        }
+      } else {
+        triggerAutoWinDrop();
+        loopInterval = setInterval(triggerAutoWinDrop, 6500);
+        if (loopBtn) {
+          loopBtn.innerHTML = '<span>⏸ Pause Loop</span>';
+          loopBtn.style.background = 'linear-gradient(180deg, #15803d 0%, #166534 100%)';
+          loopBtn.style.borderColor = '#4ade80';
+          loopBtn.style.color = '#ffffff';
+        }
+      }
+    }
+  </script>
+</body>
+</html>

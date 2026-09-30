@@ -1,0 +1,22 @@
+{
+  "name": "agy-solitaire",
+  "short_name": "Solitaire",
+  "description": "Accessible Klondike Solitaire tailored for low-vision and iPhone 16e",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0c2419",
+  "theme_color": "#0c2419",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

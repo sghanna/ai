@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>agy-solitaire — Favicon & iPhone PWA Icon Studio</title>
+  <link rel="icon" id="dynamic-favicon" type="image/svg+xml" href="favicon-kqj-crimson.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --felt-bg: #0c2419;
+      --felt-surface: #133324;
+      --felt-card: #183e2c;
+      --gold-primary: #d4af37;
+      --gold-light: #fef08a;
+      --gold-border: rgba(212, 175, 55, 0.4);
+      --gold-border-solid: #b09748;
+      --crimson: #dc2626;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--felt-bg);
+      background-image: radial-gradient(circle at 50% 20%, #15452f 0%, #0c2419 70%, #06150e 100%);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      padding: 32px 20px 60px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .badge-top {
+      display: inline-block;
+      padding: 6px 14px;
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid var(--gold-border-solid);
+      border-radius: 9999px;
+      color: var(--gold-light);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(28px, 4vw, 42px);
+      color: var(--gold-light);
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 16px;
+      max-width: 680px;
+      margin: 0 auto 20px;
+      line-height: 1.5;
+    }
+
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .btn-nav-primary {
+      background: linear-gradient(180deg, #d4af37, #aa8c2c);
+      color: #1a1a1a;
+      border: 1px solid #fef08a;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+    .btn-nav-primary:hover {
+      background: linear-gradient(180deg, #fef08a, #d4af37);
+      transform: translateY(-1px);
+    }
+
+    .btn-nav-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-main);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .btn-nav-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: var(--gold-primary);
+    }
+
+    /* Active Tab Bar Notification Banner */
+    .tab-notice-banner {
+      background: rgba(16, 50, 36, 0.9);
+      border: 1px solid var(--gold-border-solid);
+      border-radius: 12px;
+      padding: 14px 20px;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+      flex-wrap: wrap;
+    }
+
+    .tab-notice-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .active-favicon-img {
+      width: 24px;
+      height: 24px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+    }
+
+    /* Favicon Grid */
+    .favicon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 28px;
+    }
+
+    .card {
+      background: var(--felt-card);
+      border: 1px solid var(--gold-border);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--gold-primary);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55), 0 0 20px rgba(212, 175, 55, 0.2);
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text-muted);
+    }
+
+    .card.active-option .card-badge {
+      background: rgba(212, 175, 55, 0.25);
+      border-color: var(--gold-primary);
+      color: var(--gold-light);
+    }
+
+    .card-header {
+      margin-bottom: 16px;
+    }
+
+    .option-num {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 4px;
+    }
+
+    .option-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 22px;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .design-heritage {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #cbd5e1;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 3px 8px;
+      border-radius: 6px;
+      border-left: 2px solid var(--gold-primary);
+    }
+
+    /* Hero Preview Area */
+    .preview-hero {
+      background: radial-gradient(circle at 50% 50%, #1c4b35 0%, #102d20 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .hero-icon {
+      width: 80px;
+      height: 80px;
+      filter: drop-shadow(0 6px 16px rgba(0,0,0,0.5));
+      transition: transform 0.2s ease;
+    }
+    .hero-icon:hover {
+      transform: scale(1.08);
+    }
+
+    /* Scale Ladder */
+    .scale-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 16px;
+      width: 100%;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .scale-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .scale-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-family: monospace;
+    }
+
+    /* Simulated Browser Tabs */
+    .tab-sim-section {
+      margin-bottom: 20px;
+    }
+
+    .tab-sim-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: block;
+      font-weight: 600;
+    }
+
+    .mock-browser-tabs {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* Light Tab Mock */
+    .mock-tab-bar.light {
+      background: #e2e8f0;
+      border-radius: 8px;
+      padding: 6px 8px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .mock-tab.light {
+      background: #ffffff;
+      border-top-left-radius: 7px;
+      border-top-right-radius: 7px;
+      padding: 6px 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 -1px 3px rgba(0,0,0,0.06);
+      max-width: 210px;
+      border: 1px solid #cbd5e1;
+      border-bottom: none;
+    }
+
+    .mock-tab.light .tab-text {
+      color: #1e293b;
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .mock-tab.light .tab-close {
+      color: #94a3b8;
+      font-size: 11px;
+      margin-left: auto;
+    }
+
+    /* Dark Tab Mock */
+    .mock-tab-bar.dark {
+      background: #1e293b;
+      border-radius: 8px;
+      padding: 6px 8px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .mock-tab.dark {
+      background: #0f172a;
+      border-top-left-radius: 7px;
+      border-top-right-radius: 7px;
+      padding: 6px 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      max-width: 210px;
+      border: 1px solid #334155;
+      border-bottom: none;
+    }
+
+    .mock-tab.dark .tab-text {
+      color: #f1f5f9;
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .mock-tab.dark .tab-close {
+      color: #64748b;
+      font-size: 11px;
+      margin-left: auto;
+    }
+
+    .tab-favicon-16 {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    /* Description */
+    .option-desc {
+      font-size: 13px;
+      line-height: 1.5;
+      color: #cbd5e1;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+
+    /* Card Actions */
+    .card-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: auto;
+    }
+
+    .btn-card {
+      flex: 1;
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-test {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #f8fafc;
+    }
+    .btn-test:hover {
+      background: rgba(255, 255, 255, 0.16);
+      border-color: var(--gold-light);
+    }
+
+    .btn-apply {
+      background: linear-gradient(180deg, #d4af37, #b09748);
+      border: 1px solid #fef08a;
+      color: #18181b;
+    }
+    .btn-apply:hover {
+      background: linear-gradient(180deg, #fef08a, #d4af37);
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.35);
+    }
+
+    /* Quick apply modal or code snippet */
+    .cli-box {
+      margin-top: 36px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--gold-border);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .cli-box-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gold-light);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .code-block {
+      background: #091a12;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-family: monospace;
+      font-size: 13px;
+      color: #a7f3d0;
+      overflow-x: auto;
+    }
+
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #133324;
+      border: 1px solid var(--gold-primary);
+      color: var(--gold-light);
+      padding: 12px 24px;
+      border-radius: 9999px;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1000;
+      pointer-events: none;
+    }
+    #toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="badge-top">agy-solitaire Design Studio</div>
+      <h1>6 Favicon Options</h1>
+      <p class="subtitle">
+        Tailored exclusively from the game's authentic visual elements: Double Happiness Chinese card back, royal King crown, foundation Bodoni Ace, Mom's game Ace of Spades, festival red lantern, and the four vector suits.
+      </p>
+      <div class="nav-links">
+        <a href="index.html" class="btn-nav btn-nav-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+          Back to Solitaire Game
+        </a>
+      </div>
+    </header>
+
+    <!-- Real Tab Live Test Notice Banner -->
+    <div class="tab-notice-banner">
+      <div class="tab-notice-info">
+        <img id="banner-active-icon" class="active-favicon-img" src="favicon-kqj-crimson.svg" alt="Active Favicon">
+        <div>
+          <div style="font-size: 14px; font-weight: 600; color: #fff;">
+            Currently Testing in Your Real Browser Tab: <span id="banner-active-name" style="color: var(--gold-light);">Flagship Choice: K♣ + Q♥ Tableau Stack</span>
+          </div>
+          <div style="font-size: 12px; color: var(--text-muted);">
+            Click <strong>"Test in Tab"</strong> on any option card below to immediately swap this window's actual favicon icon!
+          </div>
+        </div>
+      </div>
+      <div>
+        <button onclick="applyOption(activeOptionNum, true)" class="btn-nav btn-nav-primary" style="font-size: 13px; padding: 7px 16px;">
+          Set as Default Game Favicon
+        </button>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- FLAGSHIP HERO: K♣ + Q♥ TABLEAU STACK (IPHONE PWA & FAVICON)                 -->
+    <!-- ========================================================================= -->
+    <div class="card active-option" id="card-opt-7" style="border: 2px solid var(--gold-primary); box-shadow: 0 14px 44px rgba(0,0,0,0.6), 0 0 30px rgba(212,175,55,0.25); margin-bottom: 36px; background: linear-gradient(145deg, #184230 0%, #113123 60%, #0a2016 100%);">
+      <div class="card-badge" id="badge-opt-7" style="background: rgba(212, 175, 55, 0.3); border-color: var(--gold-light); color: var(--gold-light); font-size: 12px; padding: 5px 12px;">
+        ★ Flagship Choice &bull; Active in Tab
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 32px; align-items: center;">
+        
+        <!-- Left: Large Vector Card Stack & Scale Ladder -->
+        <div style="flex: 1 1 320px; text-align: center;">
+          <div class="option-num" style="font-size: 13px; color: var(--gold-light); letter-spacing: 0.12em;">Flagship Option 7</div>
+          <h2 class="option-title" style="font-size: 28px; margin-bottom: 8px;">K♣ + Q♥ Tableau Stack</h2>
+          <div class="design-heritage" style="margin-bottom: 20px;">
+            <span>🃏</span> Authentic In-Game Cascade on Casino Felt
+          </div>
+
+          <div style="background: radial-gradient(circle at 50% 36%, #1b4e36 0%, #0f2f21 60%, #071710 100%); border: 1px solid rgba(212,175,55,0.4); border-radius: 20px; padding: 24px; box-shadow: inset 0 2px 10px rgba(0,0,0,0.5); display: inline-block;">
+            <img src="favicon-kqj-crimson.svg" style="width: 150px; height: 150px; display: block; border-radius: 32px; box-shadow: 0 12px 32px rgba(0,0,0,0.6);" alt="K♣ + Q♥ Stacked">
+          </div>
+
+          <div class="scale-row" style="margin-top: 18px; justify-content: center; gap: 20px;">
+            <div class="scale-item">
+              <img src="favicon-kqj-crimson.svg" width="16" height="16" alt="16px">
+              <span class="scale-label">16px tab</span>
+            </div>
+            <div class="scale-item">
+              <img src="favicon-kqj-crimson.svg" width="32" height="32" alt="32px">
+              <span class="scale-label">32px Retina</span>
+            </div>
+            <div class="scale-item">
+              <img src="favicon-kqj-crimson.svg" width="48" height="48" alt="48px">
+              <span class="scale-label">48px taskbar</span>
+            </div>
+            <div class="scale-item">
+              <img src="favicon-kqj-crimson.svg" width="64" height="64" alt="64px">
+              <span class="scale-label">64px PWA</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: iPhone Home Screen PWA Mockup & Browser Tabs -->
+        <div style="flex: 1 1 360px;">
+          
+          <!-- iPhone PWA Home Screen Tile Mockup -->
+          <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 18px 20px; margin-bottom: 20px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+              <span style="font-size: 11px; text-transform: uppercase; font-weight: 700; color: var(--gold-light); letter-spacing: 0.08em;">
+                📱 iPhone 16e PWA Home Screen
+              </span>
+              <span style="font-size: 11px; color: var(--text-muted); background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 6px;">iOS Squircle</span>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 50%, #022c22 100%); border-radius: 12px; padding: 20px; display: flex; align-items: center; gap: 24px; box-shadow: inset 0 2px 8px rgba(0,0,0,0.6);">
+              <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
+                <!-- Real Apple Touch Icon with authentic iOS squircle radius (~22.5%) -->
+                <img src="apple-touch-icon.png" style="width: 72px; height: 72px; border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.65), 0 0 1px rgba(255,255,255,0.4);" alt="iPhone PWA App Icon">
+                <span style="font-size: 11px; font-weight: 600; color: #f8fafc; text-shadow: 0 1px 3px rgba(0,0,0,0.8);">Solitaire</span>
+              </div>
+              <div style="font-size: 12px; color: #cbd5e1; line-height: 1.5;">
+                <strong style="color: #fff;">Solid Felt Edge-to-Edge</strong><br>
+                iOS clips the 180&times;180 icon with a smooth Apple squircle. The solid deep casino felt and gold inner border ensure zero black letterboxing or clipping artifacts when added via <em>"Add to Home Screen"</em>.
+              </div>
+            </div>
+          </div>
+
+          <!-- Browser Tab Simulations -->
+          <div class="tab-sim-section" style="margin-bottom: 20px;">
+            <span class="tab-sim-title">Desktop Browser Tab Simulation</span>
+            <div class="mock-browser-tabs">
+              <div class="mock-tab-bar light">
+                <div class="mock-tab light">
+                  <img class="tab-favicon-16" src="favicon-kqj-crimson.svg" alt="tab icon">
+                  <span class="tab-text">agy-solitaire: Klondike</span>
+                  <span class="tab-close">✕</span>
+                </div>
+              </div>
+              <div class="mock-tab-bar dark">
+                <div class="mock-tab dark">
+                  <img class="tab-favicon-16" src="favicon-kqj-crimson.svg" alt="tab icon">
+                  <span class="tab-text">agy-solitaire: Klondike</span>
+                  <span class="tab-close">✕</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p class="option-desc" style="margin-bottom: 20px;">
+            Shows the <strong>King of Clubs (K♣)</strong> with its black Bodoni K and Club pip, cascading under the <strong>Queen of Hearts (Q♥)</strong> with its vivid crimson Q and center heart emblem, exactly as stacked in live gameplay. Layered drop shadows create tactile physical depth.
+          </p>
+
+          <div class="card-actions">
+            <button class="btn-card btn-test" onclick="testInTab(7, 'favicon-kq-stacked.svg', 'K♣ + Q♥ Tableau Stack')">
+              👁 Test in Tab
+            </button>
+            <button class="btn-card btn-apply" onclick="applyOption(7)">
+              ✓ Set as Game Icon
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Additional Design Options Grid -->
+    <h3 style="font-size: 18px; color: var(--gold-light); margin-bottom: 16px; font-weight: 700; letter-spacing: -0.01em;">
+      Alternative Design Elements (Options 1 – 6)
+    </h3>
+    <div class="favicon-grid">
+
+      <!-- ================= OPTION 1 ================= -->
+      <div class="card" id="card-opt-1">
+        <div class="card-badge" id="badge-opt-1">Preview</div>
+        <div class="card-header">
+          <div class="option-num">Option 1</div>
+          <h2 class="option-title">Double Happiness (囍)</h2>
+          <div class="design-heritage">
+            <span>🎴</span> From Restored Chinese Card Back
+          </div>
+        </div>
+
+        <div class="preview-hero">
+          <img class="hero-icon" src="favicon-double-happiness.svg" alt="Option 1: Double Happiness">
+          <div class="scale-row">
+            <div class="scale-item">
+              <img src="favicon-double-happiness.svg" width="16" height="16" alt="16px">
+              <span class="scale-label">16px</span>
+            </div>
+            <div class="scale-item">
+              <img src="favicon-double-happiness.svg" width="24" height="24" alt="24px">
+              <span class="scale-label">24px</span>
+            </div>
+            <div class="scale-item">
+              <img src="favicon-double-happiness.svg" width="32" height="32" alt="32px">
+              <span class="scale-label">32px</span>
+            </div>
+            <div class="scale-item">
+              <img src="favicon-double-happiness.svg" width="48" height="48" alt="48px">
+              <span class="scale-label">48px</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-sim-section">
+          <span class="tab-sim-title">Browser Tab Simulation</span>
+          <div class="mock-browser-tabs">
+            <div class="mock-tab-bar light">
+              <div class="mock-tab light">
+                <img class="tab-favicon-16" src="favicon-double-happiness.svg" alt="tab icon">
+                <span class="tab-text">agy-solitaire</span>
+                <span class="tab-close">✕</span>
+              </div>
+            </div>
+            <div class="mock-tab-bar dark">
+              <div class="mock-tab dark">
+                <img class="tab-favicon-16" src="favicon-double-happiness.svg" alt="tab icon">
+                <span class="tab-text">agy-solitaire</span>
+                <span class="tab-close">✕</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="option-desc">
+          Imperial lacquer crimson circular disc with gold outer ring, delicate dashed inner boundary, and the bold Chinese <strong>囍</strong> (Double Happiness) character. Directly ties the browser tab to your custom card back.
+        </p>
+
+        <div class="card-actions">
+          <button class="btn-card btn-test" onclick="testInTab(1, 'favicon-double-happiness.svg', 'Option 1 (Double Happiness 囍)')">
+            👁 Test in Tab
+          </button>
+          <button class="btn-card btn-apply" onclick="applyOption(1)">
+            ✓ Set as Game Icon
+          </button>
+        </div>
+      </div>
+
+      <!-- ================= OPTION 2 ================= -->
+      <div class="card" id="card-opt-2">
+        <div class="card-badge" id="badge-opt-2">Preview</div>
+        <div class="card-header">
+          <div class="option-num">Option 2</div>
+          <h2 class="option-title">Crowned King (K 👑)</h2>
+          <div class="design-heritage">
+            <span>👑</span> From King Tableau & Slot Design
+          </div>
+        </div>
+
+        <div class="preview-hero">
+          <img class="hero-icon" src="favicon-crowned-king.svg" alt="Option 2: Crowned King">
+          <div class="scale-row">
+            <div class="scale-item">
+              <img src="favicon-crowned-king.svg" width="16" height="16" alt="16px">
+              <span class="scale-label">16px</span>
+            </div>
+            <div class="scale-item">
+              <img src="favicon-crowned-king.svg" width="24" height="24" alt="24px">
+              <span class="scale-label">24px</span>
+            </div>
+            <div class="scale-item">
+              <img src="favicon-crowned-king.svg" width="32" height="32" alt="32px">
+              <span class="scale-label">32px</span>
+            </div>
+            <div class="scale-item">
+              <img src="favicon-crowned-king.svg" width="48" height="48" alt="48px">
+              <span class="scale-label">48px</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-sim-section">
+          <span class="tab-sim-title">Browser Tab Simulation</span>
+          <div class="mock-browser-tabs">
+            <div class="mock-tab-bar light">
+              <div class="mock-tab light">
+                <img class="tab-favicon-16" src="favicon-crowned-king.svg" alt="tab icon">
+                <span class="tab-text">agy-solitaire</span>
+                <span class="tab-close">✕</span>
+              </div>
+            </div>
+            <div class="mock-tab-bar dark">
+              <div class="mock-tab dark">
+                <img class="tab-favicon-16" src="favicon-crowned-king.svg" alt="tab icon">
+                <span class="tab-text">agy-solitaire</span>
+                <span class="tab-close">✕</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="option-desc">
+          Deep pine green felt badge with a gold border, topped by the newly added 5-point royal gold crown with jewel pearls and cross, resting atop the high-contrast Bodoni serif <strong>K</strong>.
+        </p>
+
+        <div class="card-actions">
+          <button class="btn-card btn-test" onclick="testInTab(2, 'favicon-crowned-king.svg', 'Option 2 (Crowned King)')">
+            👁 Test in Tab
+          </button>
+          <button class="btn-card btn-apply" onclick="applyOption(2)">
+            ✓ Set as Game Icon
+          </button>
+        </div>
+      </div>
+
+      <!-- ================= OPTION 3 ================= -->
+      <div class="card" id="card-opt-3">
+        <div class="card-badge" id="badge-opt-3">Preview</div>
+        <div class="card-header">
+          <div class="option-num">Option 3</div>
+          <h2 class="option-title">Foundation Ace (A)</h2>
+          <div class="design-heritage">
+            <span>✨</span> From Ace Celebration & Foundation
+          </div>
+        </div>
+
+        <div class="preview-hero">
+          <img class="hero-icon" src="favicon-foundation-ace.svg" alt="Option 3: Foundation Ace">
+          <div class="scale-row">
+            <div class="scale-item">
+              <img src="favicon-foundation-ace.svg" width="16" height="16" alt="16px">
+              <span class="scale-label">16px</span>
+            </div>
+            <div class="scale-item">
+              <img src="favicon-foundation-ace.svg" width="24" height="24" alt="24px">
+              <span class="scale-label">24px</span>
+            </div>
+            <div class="scale-item">
+              <img src="favicon-foundation-ace.svg" width="32" height="32" alt="32px">
+              <span class="scale-label">32px</span>
+            </div>
+            <div class="scale-item">
+              <img src="favicon-foundation-ace.svg" width="48" height="48" alt="48px">
+              <span class="scale-label">48px</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-sim-section">
+          <span class="tab-sim-title">Browser Tab Simulation</span>
+          <div class="mock-browser-tabs">
+            <div class="mock-tab-bar light">
+              <div class="mock-tab light">
+                <img class="tab-favicon-16" src="favicon-foundation-ace.svg" alt="tab icon">
+                <span class="tab-text">agy-solitaire</span>
+                <span class="tab-close">✕</span>
+              </div>
+            </div>
+            <div class="mock-tab-bar dark">
+              <div class="mock-tab dark">
+                <img class="tab-favicon-16" src="favicon-foundation-ace.svg" alt="tab icon">
+                <span class="tab-text">agy-solitaire</span>
+                <span class="tab-close">✕</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="option-desc">
+          The signature Bodoni high-contrast gold <strong>A</strong> centered on an emerald casino felt cushion with dual brass perimeter rings. Instantly recognizable at even 16px tab scale.
+        </p>
+
+        <div class="card-actions">
+          <button class="btn-card btn-test" onclick="testInTab(3, 'favicon-foundation-ace.svg', 'Option 3 (Foundation Ace)')">
+            👁 Test in Tab
+          </button>
+          <button class="btn-card btn-apply" onclick="applyOption(3)">
+            ✓ Set as Game Icon
+          </button>
+        </div>
+      </div>
+
+      <!-- ================= OPTION 4 ================= -->
+      <div class="card" id="card-opt-4">
+        <div class="card-badge" id="badge-opt-4">Preview</div>
+        <div class="card-header">
+          <div class="option-num">Option 4</div>
+          <h2 class="option-title">Classic Ace of Spades (A♠)</h2>
+          <div class="design-heritage">
+            <span>♠️</span> From Mom's Game High-Contrast Card Face
+          </div>
+        </div>
+
+        <div class="preview-hero">
+          <img class="hero-icon" src="favicon-ace-spades.svg" alt="Option 4: Ace of Spades">
+          <div class="scale-row">
+            <div class="scale-item">
+              <img src="favicon-ace-spades.svg" width="16" height="16" alt="16px">
+              <span class="scale-label">16px</span>
+            </div>
+            <div class="scale-item">
+              <img src="favicon-ace-spades.svg" width="24" height="24" alt="24px">
+              <span class="scale-label">24px</span>
+            </div>
+            <div class="scale-item">
+              <img src="favicon-ace-spades.svg" width="32" height="32" alt="32px">
+              <span class="scale-label">32px</span>
+            </div>
+            <div class="scale-item">
+              <img src="favicon-ace-spades.svg" width="48" height="48" alt="48px">
+              <span class="scale-label">48px</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-sim-section">
+          <span class="tab-sim-title">Browser Tab Simulation</span>
+          <div class="mock-browser-tabs">
+            <div class="mock-tab-bar light">
+              <div class="mock-tab light">
+                <img class="tab-favicon-16" src="favicon-ace-spades.svg" alt="tab icon">
+                <span class="tab-text">agy-solitaire</span>
+                <span class="tab-close">✕</span>
+              </div>
+            </div>
+            <div class="mock-tab-bar dark">
+              <div class="mock-tab dark">
+                <img class="tab-favicon-16" src="favicon-ace-spades.svg" alt="tab icon">
+                <span class="tab-text">agy-solitaire</span>
+                <span class="tab-close">✕</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="option-desc">
+          A miniature rounded ivory playing card featuring the bold top-left Bodoni "A", corner spade pip, and a grand centered vector spade emblem. Stands out vividly against both dark and light browser themes.
+        </p>
+
+        <div class="card-actions">
+          <button class="btn-card btn-test" onclick="testInTab(4, 'favicon-ace-spades.svg', 'Option 4 (Ace of Spades)')">
+            👁 Test in Tab
+          </button>
+          <button class="btn-card btn-apply" onclick="applyOption(4)">
+            ✓ Set as Game Icon
+          </button>
+        </div>
+      </div>
+
+      <!-- ================= OPTION 5 ================= -->
+      <div class="card" id="card-opt-5">
+        <div class="card-badge" id="badge-opt-5">Preview</div>
+        <div class="card-header">
+          <div class="option-num">Option 5</div>
+          <h2 class="option-title">Celebration Red Lantern (🏮)</h2>
+          <div class="design-heritage">
+            <span>🏮</span> From Win Fireworks & Festival Mode
+          </div>
+        </div>
+
+        <div class="preview-hero">
+          <img class="hero-icon" src="favicon-lantern.svg" alt="Option 5: Red Lantern">
+          <div class="scale-row">
+            <div class="scale-item">
+              <img src="favicon-lantern.svg" width="16" height="16" alt="16px">
+              <span class="scale-label">16px</span>
+            </div>
+            <div class="scale-item">
+              <img src="favicon-lantern.svg" width="24" height="24" alt="24px">
+              <span class="scale-label">24px</span>
+            </div>
+            <div class="scale-item">
+              <img src="favicon-lantern.svg" width="32" height="32" alt="32px">
+              <span class="scale-label">32px</span>
+            </div>
+            <div class="scale-item">
+              <img src="favicon-lantern.svg" width="48" height="48" alt="48px">
+              <span class="scale-label">48px</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-sim-section">
+          <span class="tab-sim-title">Browser Tab Simulation</span>
+          <div class="mock-browser-tabs">
+            <div class="mock-tab-bar light">
+              <div class="mock-tab light">
+                <img class="tab-favicon-16" src="favicon-lantern.svg" alt="tab icon">
+                <span class="tab-text">agy-solitaire</span>
+                <span class="tab-close">✕</span>
+              </div>
+            </div>
+            <div class="mock-tab-bar dark">
+              <div class="mock-tab dark">
+                <img class="tab-favicon-16" src="favicon-lantern.svg" alt="tab icon">
+                <span class="tab-text">agy-solitaire</span>
+                <span class="tab-close">✕</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="option-desc">
+          A glowing traditional festival lantern with gold rim collars, delicate lantern ribs, a subtle 囍 inscription, and hanging crimson silk tassels against deep dark felt. Rich and festive.
+        </p>
+
+        <div class="card-actions">
+          <button class="btn-card btn-test" onclick="testInTab(5, 'favicon-lantern.svg', 'Option 5 (Red Lantern)')">
+            👁 Test in Tab
+          </button>
+          <button class="btn-card btn-apply" onclick="applyOption(5)">
+            ✓ Set as Game Icon
+          </button>
+        </div>
+      </div>
+
+      <!-- ================= OPTION 6 ================= -->
+      <div class="card" id="card-opt-6">
+        <div class="card-badge" id="badge-opt-6">Preview</div>
+        <div class="card-header">
+          <div class="option-num">Option 6</div>
+          <h2 class="option-title">Four Suits Crest (♠ ♥ ♣ ♦)</h2>
+          <div class="design-heritage">
+            <span>💎</span> From In-Game Vector Suit Graphics
+          </div>
+        </div>
+
+        <div class="preview-hero">
+          <img class="hero-icon" src="favicon-four-suits.svg" alt="Option 6: Four Suits Crest">
+          <div class="scale-row">
+            <div class="scale-item">
+              <img src="favicon-four-suits.svg" width="16" height="16" alt="16px">
+              <span class="scale-label">16px</span>
+            </div>
+            <div class="scale-item">
+              <img src="favicon-four-suits.svg" width="24" height="24" alt="24px">
+              <span class="scale-label">24px</span>
+            </div>
+            <div class="scale-item">
+              <img src="favicon-four-suits.svg" width="32" height="32" alt="32px">
+              <span class="scale-label">32px</span>
+            </div>
+            <div class="scale-item">
+              <img src="favicon-four-suits.svg" width="48" height="48" alt="48px">
+              <span class="scale-label">48px</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-sim-section">
+          <span class="tab-sim-title">Browser Tab Simulation</span>
+          <div class="mock-browser-tabs">
+            <div class="mock-tab-bar light">
+              <div class="mock-tab light">
+                <img class="tab-favicon-16" src="favicon-four-suits.svg" alt="tab icon">
+                <span class="tab-text">agy-solitaire</span>
+                <span class="tab-close">✕</span>
+              </div>
+            </div>
+            <div class="mock-tab-bar dark">
+              <div class="mock-tab dark">
+                <img class="tab-favicon-16" src="favicon-four-suits.svg" alt="tab icon">
+                <span class="tab-text">agy-solitaire</span>
+                <span class="tab-close">✕</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="option-desc">
+          A balanced royal medallion badge framing all four card suits arranged in cardinal compass points (White Spade at North, Crimson Heart at East, White Club at South, Crimson Diamond at West).
+        </p>
+
+        <div class="card-actions">
+          <button class="btn-card btn-test" onclick="testInTab(6, 'favicon-four-suits.svg', 'Option 6 (Four Suits Crest)')">
+            👁 Test in Tab
+          </button>
+          <button class="btn-card btn-apply" onclick="applyOption(6)">
+            ✓ Set as Game Icon
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CLI Instructions -->
+    <div class="cli-box">
+      <div class="cli-box-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+        Instant CLI Switcher
+      </div>
+      <div style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+        You can also switch the active favicon anytime in the terminal using the helper script:
+      </div>
+      <div class="code-block" id="cli-cmd-display">python3 set_favicon.py 1</div>
+    </div>
+  </div>
+
+  <div id="toast">Favicon updated!</div>
+
+  <script>
+    let activeOptionNum = 8;
+    const faviconMap = {
+      1: { file: 'favicon-double-happiness.svg', name: 'Option 1 (Double Happiness 囍)' },
+      2: { file: 'favicon-crowned-king.svg', name: 'Option 2 (Crowned King)' },
+      3: { file: 'favicon-foundation-ace.svg', name: 'Option 3 (Foundation Ace)' },
+      4: { file: 'favicon-ace-spades.svg', name: 'Option 4 (Ace of Spades)' },
+      5: { file: 'favicon-lantern.svg', name: 'Option 5 (Red Lantern)' },
+      6: { file: 'favicon-four-suits.svg', name: 'Option 6 (Four Suits Crest)' },
+      7: { file: 'favicon-kq-stacked.svg', name: 'Option 7 (K♣ + Q♥ Tableau Stack)' },
+      8: { file: 'favicon-kqj-crimson.svg', name: 'Flagship Option 8 (K♣ + Q♥ + J♠ Full-Bleed Crimson)' },
+      9: { file: 'favicon-kqj-felt-rim.svg', name: 'Option 9 (K♣ + Q♥ + J♠ Felt with Crimson Rim)' }
+    };
+
+    function testInTab(num, file, name) {
+      activeOptionNum = num;
+      // Change real document favicon
+      let link = document.getElementById('dynamic-favicon');
+      if (!link) {
+        link = document.createElement('link');
+        link.id = 'dynamic-favicon';
+        link.rel = 'icon';
+        link.type = 'image/svg+xml';
+        document.head.appendChild(link);
+      }
+      link.href = file + '?v=' + Date.now();
+
+      // Update banner
+      document.getElementById('banner-active-icon').src = file;
+      document.getElementById('banner-active-name').textContent = name;
+      document.getElementById('cli-cmd-display').textContent = 'python3 set_favicon.py ' + num;
+
+      // Update active cards styling
+      for (let i = 1; i <= 7; i++) {
+        const card = document.getElementById('card-opt-' + i);
+        const badge = document.getElementById('badge-opt-' + i);
+        if (card && badge) {
+          if (i === num) {
+            card.classList.add('active-option');
+            badge.textContent = i === 7 ? '★ Flagship Choice • Active in Tab' : 'Active in Tab';
+          } else {
+            card.classList.remove('active-option');
+            badge.textContent = i === 7 ? '★ Flagship Choice' : 'Preview';
+          }
+        }
+      }
+
+      showToast('Swapped browser tab favicon to ' + name);
+    }
+
+    function applyOption(num, fromBanner) {
+      const opt = faviconMap[num];
+      fetch('/apply-favicon?option=' + num, { method: 'POST' }).catch(() => {});
+      testInTab(num, opt.file, opt.name);
+      showToast('Selected ' + opt.name + ' as game favicon!');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+  </script>
+</body>
+</html>

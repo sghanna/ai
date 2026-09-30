@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>agy-solitaire - 5 Double Happiness (囍) Card Back Designs</title>
+  <style>
+    :root {
+      --card-red: #c62828;
+      --card-black: #111111;
+      --felt-bg: #0c2317;
+      --ui-bg: #101713;
+      --panel-bg: #1e293b;
+      --border-color: #334155;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--ui-bg);
+      color: #f0f0f0;
+      padding: 24px 16px 80px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      max-width: 900px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 8px;
+      color: #4ade80;
+    }
+
+    p.subtitle {
+      font-size: 15px;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    .callout-blessing {
+      background: #450a0a;
+      border: 1px solid #dc2626;
+      border-left: 5px solid #f59e0b;
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin: 16px 0 24px 0;
+      font-size: 14px;
+      color: #fef2f2;
+      text-align: left;
+      max-width: 860px;
+      line-height: 1.5;
+    }
+
+    .callout-blessing strong {
+      color: #fbbf24;
+    }
+
+    .nav-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 30px;
+      position: sticky;
+      top: 10px;
+      z-index: 100;
+      background: rgba(16, 23, 19, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 8px 12px;
+      border-radius: 30px;
+      border: 1px solid var(--border-color);
+    }
+
+    .nav-btn {
+      background: #1e293b;
+      color: #e2e8f0;
+      border: 1px solid #475569;
+      padding: 7px 14px;
+      border-radius: 18px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover, .nav-btn.active {
+      background: #22c55e;
+      color: #052e16;
+      border-color: #22c55e;
+    }
+
+    .section-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
+      max-width: 900px;
+      width: 100%;
+      margin-bottom: 36px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+    }
+
+    .option-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+    }
+
+    .option-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .option-badge {
+      background: #b45309;
+      color: #fef3c7;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: bold;
+      border: 1px solid #f59e0b;
+    }
+
+    .option-badge.star {
+      background: #16a34a;
+      color: #ffffff;
+      border: none;
+    }
+
+    .option-desc {
+      font-size: 14px;
+      color: #cbd5e1;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    /* Side-by-side showcase row */
+    .showcase-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+
+    /* Face Card Base */
+    .card {
+      width: 92px;
+      height: 132px;
+      background: #ffffff;
+      border-radius: 8px;
+      border: 2px solid #111111;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+      position: relative;
+      overflow: hidden;
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card.red { color: var(--card-red); }
+    .card.black { color: var(--card-black); }
+
+    .card-header-bar {
+      width: 100%;
+      height: 45px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 7px;
+      border-bottom: 2.5px solid;
+    }
+
+    .card.red .card-header-bar { background: #fee2e2; border-color: #f87171; }
+    .card.black .card-header-bar { background: #f1f5f9; border-color: #94a3b8; }
+
+    .card-rank {
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      line-height: 1;
+    }
+
+    .card-header-suit {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-header-suit svg { width: 100%; height: 100%; }
+
+    .card-center {
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 46px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .card-center-suit {
+      width: 44px;
+      height: 44px;
+    }
+    .card-center-suit svg { width: 100%; height: 100%; }
+
+    /* ================================================================= */
+    /* FULL-BLEED NO-BORDER 囍 CARD BACKS (92px x 132px)                  */
+    /* ================================================================= */
+    .card-back-bleed {
+      width: 92px;
+      height: 132px;
+      border-radius: 8px;
+      border: none; /* NO BORDER */
+      box-shadow: 0 4px 12px rgba(0,0,0,0.45);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+    }
+
+    /* Style 4A: Modern Bold Architectural 囍 */
+    .back-4a {
+      background: radial-gradient(circle at center, #b91c1c 0%, #7f1d1d 70%, #450a0a 100%);
+    }
+    .glyph-4a {
+      font-family: "PingFang SC", "Hiragino Sans GB", "Heiti SC", sans-serif;
+      font-size: 56px;
+      font-weight: 900;
+      color: #fbbf24;
+      line-height: 1;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+
+    /* Style 4B: Traditional Imperial Songti Serif 囍 */
+    .back-4b {
+      background: radial-gradient(circle at center, #dc2626 0%, #991b1b 60%, #450a0a 100%);
+    }
+    .glyph-4b {
+      font-family: "Songti SC", "STSong", "SimSun", serif;
+      font-size: 58px;
+      font-weight: 900;
+      color: #fde047;
+      line-height: 1;
+      text-shadow: 0 2px 8px rgba(69, 10, 10, 0.8);
+    }
+
+    /* Style 4C: Gold Medallion Halo 囍 (Roundel Harmony) */
+    .back-4c {
+      background: radial-gradient(circle at center, #991b1b 0%, #580d0d 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .halo-circle {
+      width: 72px;
+      height: 72px;
+      border: 2px solid #f59e0b;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle, rgba(185, 28, 28, 0.4) 0%, rgba(69, 10, 10, 0.8) 100%);
+      box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+    }
+    .glyph-4c {
+      font-family: "PingFang SC", "Heiti SC", sans-serif;
+      font-size: 46px;
+      font-weight: 900;
+      color: #fbbf24;
+      line-height: 1;
+    }
+
+    /* Style 4D: Calligraphic Brush Kaiti 囍 (Cultural Warmth) */
+    .back-4d {
+      background: radial-gradient(circle at 45% 45%, #b91c1c 0%, #6f0e0e 100%);
+    }
+    .glyph-4d {
+      font-family: "Kaiti SC", "STKaiti", "KaiTi", serif;
+      font-size: 60px;
+      font-weight: bold;
+      color: #fef08a;
+      line-height: 1;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+    }
+
+    /* Style 4E: Sunburst Radiant 囍 (Deco Blend) */
+    .back-4e {
+      background: radial-gradient(circle at center, #991b1b 0%, #450a0a 100%);
+      position: relative;
+    }
+    .back-4e-sunburst {
+      position: absolute;
+      width: 86px;
+      height: 86px;
+      color: rgba(251, 191, 36, 0.2);
+    }
+    .glyph-4e {
+      position: relative;
+      z-index: 2;
+      font-family: "PingFang SC", sans-serif;
+      font-size: 52px;
+      font-weight: 900;
+      color: #fde047;
+      line-height: 1;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    }
+
+    /* ================================================================= */
+    /* IPHONE 16e SIMULATION (390px Viewport)                           */
+    /* ================================================================= */
+    .iphone-sim-container {
+      background: var(--felt-bg);
+      border: 3px solid #334155;
+      border-radius: 20px;
+      padding: 14px 10px;
+      width: 100%;
+      max-width: 390px;
+      box-shadow: inset 0 2px 10px rgba(0,0,0,0.6);
+      margin: 10px 0 16px 0;
+    }
+
+    .iphone-sim-title {
+      font-size: 11px;
+      font-weight: bold;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .iphone-sim-title .badge-tag {
+      background: #450a0a;
+      color: #f59e0b;
+      border: 1px solid #b45309;
+      padding: 2px 7px;
+      border-radius: 10px;
+      font-size: 10px;
+    }
+
+    .iphone-sim-tableau {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      width: 100%;
+      min-height: 220px;
+    }
+
+    .tableau-col {
+      position: relative;
+      width: 100%;
+      height: 215px;
+    }
+
+    .mini-card {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 64px;
+      background: #ffffff;
+      border-radius: 5px;
+      border: 1.5px solid #111111;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mini-card.red { color: var(--card-red) !important; }
+    .mini-card.black { color: var(--card-black) !important; }
+
+    .mini-card-header {
+      width: 100%;
+      height: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 4px;
+      border-bottom: 1.5px solid;
+    }
+
+    .mini-card.red .mini-card-header { background: #fee2e2; border-color: #f87171; }
+    .mini-card.black .mini-card-header { background: #f1f5f9; border-color: #94a3b8; }
+
+    .mini-rank {
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+
+    .mini-suit-wrap {
+      width: 13px;
+      height: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mini-suit-wrap svg { width: 100%; height: 100%; }
+
+    .mini-card-center {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .mini-center-suit {
+      width: 22px;
+      height: 22px;
+    }
+    .mini-center-suit svg { width: 100%; height: 100%; }
+
+    /* Mini Facedown 囍 (No Border, Soft Shadow) */
+    .mini-facedown-bleed {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 64px;
+      border-radius: 5px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid rgba(0,0,0,0.4); /* subtle depth separator */
+    }
+
+    .mini-glyph {
+      font-size: 28px;
+      line-height: 1;
+      font-weight: 900;
+      color: #fbbf24;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+    }
+
+    .key-features {
+      margin-top: 14px;
+      padding-left: 18px;
+      font-size: 13px;
+      color: #94a3b8;
+    }
+    .key-features li { margin-bottom: 4px; }
+    .key-features strong { color: #e2e8f0; }
+
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: bold;
+      margin-right: 6px;
+    }
+    .tag.highlight { background: #065f46; color: #6ee7b7; }
+    .tag.note { background: #b45309; color: #fde68a; }
+
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: #64748b;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>agy-solitaire: 5 Double Happiness (囍) Card Backs</h1>
+    <p class="subtitle">
+      Option 4 aesthetic &bull; <strong>Full-bleed Crimson (No Border)</strong> &bull; <strong>Chinese Double Happiness (囍) Emblem</strong>.<br>
+      A classic symbol of joy, blessings, and good fortune, tailored for low vision on the iPhone 16e.
+    </p>
+
+    <div class="callout-blessing">
+      <strong>Cultural Meaning & Vision Benefits:</strong> The <strong>Double Happiness (囍 / Shuāng Xǐ)</strong> glyph is composed of two symmetrical joy (喜) characters. Its balanced, architectural symmetry provides an intuitive focal anchor for monocular vision, while the full-bleed crimson red creates high, warm contrast against the casino green felt without harsh white outline glare.
+    </div>
+  </header>
+
+  <nav class="nav-bar">
+    <a href="#opt4a" class="nav-btn">4A. Modern Bold 囍</a>
+    <a href="#opt4b" class="nav-btn">4B. Imperial Songti 囍</a>
+    <a href="#opt4c" class="nav-btn">4C. Gold Medallion Halo 囍</a>
+    <a href="#opt4d" class="nav-btn">4D. Calligraphic Brush 囍</a>
+    <a href="#opt4e" class="nav-btn">4E. Sunburst Radiant 囍</a>
+  </nav>
+
+  <!-- ================================================================= -->
+  <!-- OPTION 4A -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="opt4a">
+    <div class="option-header">
+      <div class="option-title">Option 4A: Modern Bold Architectural 囍</div>
+      <div class="option-badge star">Top Recommendation for Low Vision</div>
+    </div>
+    <p class="option-desc">
+      Full-bleed deep crimson silk gradient with bold, uniform sans-serif strokes (PingFang Heavy). The stroke weight is thick and solid, and the inner square counters are generous and open so eye floaters do not obscure the character.
+    </p>
+
+    <div class="showcase-row">
+      <!-- Full Bleed Card Back -->
+      <div class="card-back-bleed back-4a">
+        <span class="glyph-4a">囍</span>
+      </div>
+
+      <!-- Integrated Final Face Cards -->
+      <div class="card red">
+        <div class="card-header-bar">
+          <span class="card-rank">10</span>
+          <div class="card-header-suit">
+            <!-- Style 4 Concave Diamond -->
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg>
+          </div>
+        </div>
+        <div class="card-center">
+          <div class="card-center-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="card black">
+        <div class="card-header-bar">
+          <span class="card-rank">A</span>
+          <div class="card-header-suit">
+            <!-- Style 5 Featherweight Spade -->
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg>
+          </div>
+        </div>
+        <div class="card-center">
+          <div class="card-center-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="card black">
+        <div class="card-header-bar">
+          <span class="card-rank">K</span>
+          <div class="card-header-suit">
+            <!-- Style 5 Featherweight Club -->
+            <svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg>
+          </div>
+        </div>
+        <div class="card-center">K</div>
+      </div>
+
+      <div class="card red">
+        <div class="card-header-bar">
+          <span class="card-rank">Q</span>
+          <div class="card-header-suit">
+            <!-- Style 5 Featherweight Heart -->
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg>
+          </div>
+        </div>
+        <div class="card-center">Q</div>
+      </div>
+    </div>
+
+    <!-- iPhone 16e Simulation -->
+    <div class="iphone-sim-container">
+      <div class="iphone-sim-title">
+        <span>iPhone 16e (390px) Cascade View</span>
+        <span class="badge-tag">No-Border 4A In Action</span>
+      </div>
+      <div class="iphone-sim-tableau">
+        <div class="tableau-col">
+          <div class="mini-card red" style="top: 0px; z-index: 1;">
+            <div class="mini-card-header">
+              <span class="mini-rank">A</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div>
+            </div>
+            <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+          </div>
+        </div>
+        <div class="tableau-col">
+          <div class="mini-facedown-bleed back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph" style="font-family: 'PingFang SC', sans-serif;">囍</span></div>
+          <div class="mini-card red" style="top: 10px; z-index: 2;">
+            <div class="mini-card-header">
+              <span class="mini-rank">9</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div>
+            </div>
+            <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div>
+          </div>
+        </div>
+        <div class="tableau-col">
+          <div class="mini-facedown-bleed back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph" style="font-family: 'PingFang SC', sans-serif;">囍</span></div>
+          <div class="mini-facedown-bleed back-4a" style="top: 10px; z-index: 2;"><span class="mini-glyph" style="font-family: 'PingFang SC', sans-serif;">囍</span></div>
+          <div class="mini-card black" style="top: 20px; z-index: 3;">
+            <div class="mini-card-header">
+              <span class="mini-rank">8</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div>
+            </div>
+            <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+          </div>
+        </div>
+        <div class="tableau-col">
+          <div class="mini-facedown-bleed back-4a" style="top: 0px; z-index: 1;"></div>
+          <div class="mini-facedown-bleed back-4a" style="top: 10px; z-index: 2;"></div>
+          <div class="mini-facedown-bleed back-4a" style="top: 20px; z-index: 3;"><span class="mini-glyph" style="font-family: 'PingFang SC', sans-serif;">囍</span></div>
+          <div class="mini-card red" style="top: 30px; z-index: 4;">
+            <div class="mini-card-header">
+              <span class="mini-rank">7</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div>
+            </div>
+            <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+          </div>
+        </div>
+        <!-- Cascade Col 5 -->
+        <div class="tableau-col">
+          <div class="mini-facedown-bleed back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph" style="font-family: 'PingFang SC', sans-serif;">囍</span></div>
+          <div class="mini-card black" style="top: 10px; z-index: 2;">
+            <div class="mini-card-header">
+              <span class="mini-rank">K</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div>
+            </div>
+          </div>
+          <div class="mini-card red" style="top: 32px; z-index: 3;">
+            <div class="mini-card-header">
+              <span class="mini-rank">Q</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div>
+            </div>
+          </div>
+          <div class="mini-card black" style="top: 54px; z-index: 4;">
+            <div class="mini-card-header">
+              <span class="mini-rank">J</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div>
+            </div>
+          </div>
+          <div class="mini-card red" style="top: 76px; z-index: 5;">
+            <div class="mini-card-header">
+              <span class="mini-rank">10</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div>
+            </div>
+            <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+          </div>
+        </div>
+        <div class="tableau-col">
+          <div class="mini-facedown-bleed back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph" style="font-family: 'PingFang SC', sans-serif;">囍</span></div>
+          <div class="mini-card black" style="top: 10px; z-index: 2;">
+            <div class="mini-card-header">
+              <span class="mini-rank">6</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div>
+            </div>
+            <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div>
+          </div>
+        </div>
+        <div class="tableau-col">
+          <div class="mini-facedown-bleed back-4a" style="top: 0px; z-index: 1;"></div>
+          <div class="mini-facedown-bleed back-4a" style="top: 10px; z-index: 2;"><span class="mini-glyph" style="font-family: 'PingFang SC', sans-serif;">囍</span></div>
+          <div class="mini-card red" style="top: 20px; z-index: 3;">
+            <div class="mini-card-header">
+              <span class="mini-rank">5</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div>
+            </div>
+            <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag highlight">Readability</span> Bold uniform strokes provide the strongest visual weight for low vision.</li>
+      <li><span class="tag note">No Border</span> Edge-to-edge ruby crimson flows cleanly without distracting white border lines.</li>
+    </ul>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- OPTION 4B -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="opt4b">
+    <div class="option-header">
+      <div class="option-title">Option 4B: Traditional Imperial Songti 囍</div>
+      <div class="option-badge">Classic Heritage</div>
+    </div>
+    <p class="option-desc">
+      Features classic Songti woodblock serifs with subtle triangular stroke terminals in brilliant yellow-gold. Replicates the regal appearance of imperial red banners.
+    </p>
+
+    <div class="showcase-row">
+      <div class="card-back-bleed back-4b">
+        <span class="glyph-4b">囍</span>
+      </div>
+      <!-- Sample Cards -->
+      <div class="card red">
+        <div class="card-header-bar"><span class="card-rank">10</span><div class="card-header-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+        <div class="card-center"><div class="card-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+      </div>
+      <div class="card black">
+        <div class="card-header-bar"><span class="card-rank">A</span><div class="card-header-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+        <div class="card-center"><div class="card-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+      </div>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag highlight">Authentic</span> Traditional Songti serifs give a regal, timeless cultural feel.</li>
+      <li><span class="tag note">Gold Sheen</span> Bright yellow gold provides high luminance against the crimson field.</li>
+    </ul>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- OPTION 4C -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="opt4c">
+    <div class="option-header">
+      <div class="option-title">Option 4C: Gold Medallion Halo 囍 (Roundel Seal)</div>
+      <div class="option-badge">Harmony & Wholeness</div>
+    </div>
+    <p class="option-desc">
+      Encloses the 囍 glyph inside a delicate circular gold medallion ring (symbolizing wholeness 团圆 and completeness). Creates a defined focal anchor in the exact center of the card.
+    </p>
+
+    <div class="showcase-row">
+      <div class="card-back-bleed back-4c">
+        <div class="halo-circle">
+          <span class="glyph-4c">囍</span>
+        </div>
+      </div>
+      <!-- Sample Cards -->
+      <div class="card red">
+        <div class="card-header-bar"><span class="card-rank">10</span><div class="card-header-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+        <div class="card-center"><div class="card-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+      </div>
+      <div class="card black">
+        <div class="card-header-bar"><span class="card-rank">A</span><div class="card-header-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+        <div class="card-center"><div class="card-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+      </div>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag highlight">Focal Point</span> The circular halo naturally guides her single eye directly to the center.</li>
+      <li><span class="tag note">Symbolism</span> Combines Double Happiness with the classic circular emblem of familial completeness.</li>
+    </ul>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- OPTION 4D -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="opt4d">
+    <div class="option-header">
+      <div class="option-title">Option 4D: Calligraphic Brush Kaiti 囍 (Warmth of Ink)</div>
+      <div class="option-badge">Hand-Crafted Warmth</div>
+    </div>
+    <p class="option-desc">
+      Captures the organic, expressive warmth of handwritten Chinese brush calligraphy (Kaiti SC). Soft gold foil sheen on deep crimson.
+    </p>
+
+    <div class="showcase-row">
+      <div class="card-back-bleed back-4d">
+        <span class="glyph-4d">囍</span>
+      </div>
+      <!-- Sample Cards -->
+      <div class="card red">
+        <div class="card-header-bar"><span class="card-rank">10</span><div class="card-header-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+        <div class="card-center"><div class="card-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+      </div>
+      <div class="card black">
+        <div class="card-header-bar"><span class="card-rank">A</span><div class="card-header-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+        <div class="card-center"><div class="card-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+      </div>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag highlight">Organic</span> Soft brush transitions feel welcoming, personal, and nostalgic.</li>
+      <li><span class="tag note">Artistic</span> Hand-crafted feel.</li>
+    </ul>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- OPTION 4E -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="opt4e">
+    <div class="option-header">
+      <div class="option-title">Option 4E: Sunburst Radiant 囍 (Deco + Heritage Fusion)</div>
+      <div class="option-badge">Art Deco Blend</div>
+    </div>
+    <p class="option-desc">
+      Blends Option 4's original Art Deco geometric sunburst with the central 囍 glyph. The radiant gold rays sit subtly in the background behind the bold character.
+    </p>
+
+    <div class="showcase-row">
+      <div class="card-back-bleed back-4e">
+        <svg class="back-4e-sunburst" viewBox="0 0 100 100" fill="currentColor">
+          <path d="M 50,10 L 53,38 L 78,22 L 62,44 L 88,50 L 62,56 L 78,78 L 53,62 L 50,90 L 47,62 L 22,78 L 38,56 L 12,50 L 38,44 L 22,22 L 47,38 Z"/>
+        </svg>
+        <span class="glyph-4e">囍</span>
+      </div>
+      <!-- Sample Cards -->
+      <div class="card red">
+        <div class="card-header-bar"><span class="card-rank">10</span><div class="card-header-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+        <div class="card-center"><div class="card-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+      </div>
+      <div class="card black">
+        <div class="card-header-bar"><span class="card-rank">A</span><div class="card-header-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+        <div class="card-center"><div class="card-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+      </div>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag highlight">Heritage Fusion</span> Merges Option 4's architectural fan rays with the 囍 glyph.</li>
+      <li><span class="tag note">Low Contrast Rays</span> Background rays are kept soft (20% opacity) so they never confuse eye floaters.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>agy-solitaire &bull; Full-Bleed Double Happiness (囍) Card Backs &bull; iPhone 16e</p>
+  </footer>
+
+</body>
+</html>

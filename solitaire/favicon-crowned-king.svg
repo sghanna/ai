@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <radialGradient id="opt2_bg" cx="50%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#1b4d36"/>
+      <stop offset="70%" stop-color="#0e2a1d"/>
+      <stop offset="100%" stop-color="#05140e"/>
+    </radialGradient>
+  </defs>
+  <!-- Rounded Pine Felt Badge -->
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#opt2_bg)" stroke="#b09748" stroke-width="2.5"/>
+  <rect x="4.5" y="4.5" width="55" height="55" rx="11.5" fill="none" stroke="rgba(251, 191, 36, 0.25)" stroke-width="0.8"/>
+  
+  <!-- Crown (Top) -->
+  <g id="crown_opt2">
+    <path d="M 17,24 L 16.5,14 L 21.5,17.5 L 32,10 L 42.5,17.5 L 47.5,14 L 47,24 Q 32,26 17,24 Z" fill="#d4af37" stroke="#e6cf8b" stroke-width="0.6"/>
+    <circle cx="16.5" cy="13.5" r="1.4" fill="#fef08a"/>
+    <circle cx="21.5" cy="17" r="1.2" fill="#fef08a"/>
+    <circle cx="32" cy="9.5" r="1.6" fill="#fef08a"/>
+    <circle cx="42.5" cy="17" r="1.2" fill="#fef08a"/>
+    <circle cx="47.5" cy="13.5" r="1.4" fill="#fef08a"/>
+    <path d="M 32,6.5 L 32,9.5 M 30.5,8 L 33.5,8" stroke="#fef08a" stroke-width="0.9" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Bodoni Serif K (Below Crown) -->
+  <g transform="translate(15.5, 23) scale(0.20) translate(0, 186.0) scale(0.1, -0.1)">
+    <path d="M170 1618 l0 -73 67 0 68 0 0 -625 0 -625 -67 -3 -68 -3 0 -69 0 -70 301 0 c270 0 301 2 295 16 -3 9 -6 40 -6 70 l0 54 -54 0 c-92 0 -86 -17 -86 234 l0 221 69 75 c58 63 72 73 87 64 25 -15 337 -562 330 -579 -3 -9 -19 -15 -41 -15 l-35 0 0 -70 0 -70 280 0 280 0 0 70 0 70 -55 0 c-41 0 -59 5 -72 19 -10 11 -101 165 -202 343 -102 178 -204 357 -228 398 -24 41 -43 82 -43 92 0 15 202 256 306 365 l41 43 106 0 107 0 0 70 0 70 -260 0 -260 0 0 -69 0 -70 48 -3 c37 -2 47 -7 47 -20 0 -15 -111 -151 -270 -328 -27 -31 -84 -95 -125 -143 -41 -47 -83 -86 -92 -87 -17 0 -18 20 -18 284 0 321 -7 296 86 296 l54 0 0 54 c0 30 3 61 6 70 6 14 -25 16 -295 16 l-301 0 0 -72z" fill="#bca55c"/>
+  </g>
+</svg>

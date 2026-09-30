@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>agy-solitaire - Elegant Suit Design Options</title>
+  <style>
+    :root {
+      --card-red: #c62828;
+      --card-black: #111111;
+      --felt-bg: #0c2317;
+      --ui-bg: #101713;
+      --panel-bg: #1e293b;
+      --border-color: #334155;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--ui-bg);
+      color: #f0f0f0;
+      padding: 24px 16px 80px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      max-width: 900px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 8px;
+      color: #4ade80;
+    }
+
+    p.subtitle {
+      font-size: 15px;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    .callout {
+      background: #0f172a;
+      border: 1px solid #38bdf8;
+      border-left: 5px solid #38bdf8;
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin: 16px 0 24px 0;
+      font-size: 14px;
+      color: #e2e8f0;
+      text-align: left;
+      max-width: 860px;
+      line-height: 1.5;
+    }
+
+    .nav-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 30px;
+      position: sticky;
+      top: 10px;
+      z-index: 100;
+      background: rgba(16, 23, 19, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 8px 12px;
+      border-radius: 30px;
+      border: 1px solid var(--border-color);
+    }
+
+    .nav-btn {
+      background: #1e293b;
+      color: #e2e8f0;
+      border: 1px solid #475569;
+      padding: 7px 14px;
+      border-radius: 18px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover, .nav-btn.active {
+      background: #22c55e;
+      color: #052e16;
+      border-color: #22c55e;
+    }
+
+    .section-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
+      max-width: 900px;
+      width: 100%;
+      margin-bottom: 36px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+    }
+
+    .option-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+    }
+
+    .option-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .option-badge {
+      background: #0284c7;
+      color: #ffffff;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .option-badge.star {
+      background: #16a34a;
+    }
+
+    .option-desc {
+      font-size: 14px;
+      color: #cbd5e1;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    /* Suits Showcase Row */
+    .suit-pips-row {
+      display: flex;
+      gap: 16px;
+      background: #f8fafc;
+      padding: 18px 24px;
+      border-radius: 14px;
+      align-items: center;
+      justify-content: space-around;
+      margin-bottom: 24px;
+      border: 2px solid #cbd5e1;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .suit-pip-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .suit-pip-label {
+      font-size: 13px;
+      color: #334155;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .suit-svg-large {
+      width: 52px;
+      height: 52px;
+    }
+
+    /* Isolated Full Card Display */
+    .card-sample-group {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      width: 92px;
+      height: 132px;
+      background: #ffffff;
+      border-radius: 8px;
+      border: 2px solid #111111;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+      position: relative;
+      overflow: hidden;
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card.red {
+      color: var(--card-red);
+    }
+
+    .card.black {
+      color: var(--card-black);
+    }
+
+    .card-header-bar {
+      width: 100%;
+      height: 45px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 7px;
+      border-bottom: 2.5px solid;
+    }
+
+    .card.red .card-header-bar {
+      background: #fee2e2;
+      border-color: #f87171;
+    }
+
+    .card.black .card-header-bar {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+
+    .card-rank {
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      line-height: 1;
+    }
+
+    .card-header-suit {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-header-suit svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .card-center {
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 46px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .card-center-suit {
+      width: 44px;
+      height: 44px;
+    }
+
+    .card-center-suit svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* iPhone 16e Simulation */
+    .iphone-sim-container {
+      background: var(--felt-bg);
+      border: 3px solid #334155;
+      border-radius: 20px;
+      padding: 14px 10px;
+      width: 100%;
+      max-width: 390px;
+      box-shadow: inset 0 2px 10px rgba(0,0,0,0.6);
+      margin: 10px 0 16px 0;
+    }
+
+    .iphone-sim-title {
+      font-size: 11px;
+      font-weight: bold;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .iphone-sim-title .badge-tag {
+      background: #1e293b;
+      color: #38bdf8;
+      border: 1px solid #0284c7;
+      padding: 2px 7px;
+      border-radius: 10px;
+      font-size: 10px;
+    }
+
+    .iphone-sim-tableau {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      width: 100%;
+      min-height: 220px;
+    }
+
+    .tableau-col {
+      position: relative;
+      width: 100%;
+      height: 215px;
+    }
+
+    .mini-card {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 64px;
+      background: #ffffff;
+      border-radius: 5px;
+      border: 1.5px solid #111111;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mini-card.facedown {
+      background: repeating-linear-gradient(
+        45deg,
+        #1e3a8a,
+        #1e3a8a 5px,
+        #2563eb 5px,
+        #2563eb 10px
+      );
+      border: 1.5px solid #0f172a;
+    }
+
+    .mini-card.red {
+      color: var(--card-red) !important;
+    }
+    .mini-card.black {
+      color: var(--card-black) !important;
+    }
+
+    .mini-card-header {
+      width: 100%;
+      height: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 4px;
+      border-bottom: 1.5px solid;
+    }
+
+    .mini-card.red .mini-card-header {
+      background: #fee2e2;
+      border-color: #f87171;
+    }
+
+    .mini-card.black .mini-card-header {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+
+    .mini-rank {
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+
+    .mini-suit-wrap {
+      width: 13px;
+      height: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mini-suit-wrap svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .mini-card-center {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .mini-center-suit {
+      width: 22px;
+      height: 22px;
+    }
+    .mini-center-suit svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .key-features {
+      margin-top: 14px;
+      padding-left: 18px;
+      font-size: 13px;
+      color: #94a3b8;
+    }
+    .key-features li { margin-bottom: 4px; }
+    .key-features strong { color: #e2e8f0; }
+
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: bold;
+      margin-right: 6px;
+    }
+    .tag.highlight { background: #065f46; color: #6ee7b7; }
+    .tag.note { background: #1e3a8a; color: #93c5fd; }
+
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: #64748b;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Elegant Suit Designs for agy-solitaire</h1>
+    <p class="subtitle">
+      Refined, graceful suit silhouettes designed to replace generic "fat" unicode emojis.<br>
+      High clarity for monocular vision without visual bulk or ink-bloating.
+    </p>
+    <div class="callout">
+      <strong>Why custom vector suits matter:</strong> Generic system emoji characters (like ♠, ♥, ♦, ♣) are rendered by default as chunky, rounded blobs. These 5 custom vector SVG styles provide slender waists, graceful stems, and sculpted contours that look elegant while remaining unmistakable to her eyes.
+    </div>
+  </header>
+
+  <nav class="nav-bar">
+    <a href="#suit-opt1" class="nav-btn">1. Classic French Casino</a>
+    <a href="#suit-opt2" class="nav-btn">2. Modern Geometric Slim</a>
+    <a href="#suit-opt3" class="nav-btn">3. Slender Tapered (Tall)</a>
+    <a href="#suit-opt4" class="nav-btn">4. Concave Diamond & Sculpted Stem</a>
+    <a href="#suit-opt5" class="nav-btn">5. Minimalist Crisp Lineage</a>
+  </nav>
+
+  <!-- ================================================================= -->
+  <!-- STYLE 1: CLASSIC FRENCH CASINO (GRIMAUD / CARTAMUNDI REFINED)     -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="suit-opt1">
+    <div class="option-header">
+      <div class="option-title">Style 1: Classic French Casino (Refined & Balanced)</div>
+      <div class="option-badge star">Top Recommendation</div>
+    </div>
+    <p class="option-desc">
+      Modeled after fine European casino decks (Grimaud & Cartamundi). The spade has a slender tapered stem and sweeping arched wings; the heart has a gentle cleft and slender point; the diamond is a crisp slender rhombus; the club has airy, well-spaced circular trefoils on a delicate pedestal.
+    </p>
+
+    <!-- Large Pips Showcase -->
+    <div class="suit-pips-row">
+      <div class="suit-pip-item">
+        <div class="suit-svg-large" style="color: var(--card-black);">
+          <!-- Style 1 Spade -->
+          <svg viewBox="0 0 100 100" fill="currentColor">
+            <path d="M 50,8 C 45,20 33,36 21,50 C 12,61 8,70 8,78 C 8,87 15,92 24,92 C 32,92 38,87 44,79 C 45,86 42,93 33,96 L 67,96 C 58,93 55,86 56,79 C 62,87 68,92 76,92 C 85,92 92,87 92,78 C 92,70 88,61 79,50 C 67,36 55,20 50,8 Z"/>
+          </svg>
+        </div>
+        <span class="suit-pip-label">Spade</span>
+      </div>
+
+      <div class="suit-pip-item">
+        <div class="suit-svg-large" style="color: var(--card-red);">
+          <!-- Style 1 Heart -->
+          <svg viewBox="0 0 100 100" fill="currentColor">
+            <path d="M 50,90 C 22,64 8,46 8,28 C 8,13 19,5 33,5 C 41,5 47,9 50,16 C 53,9 59,5 67,5 C 81,5 92,13 92,28 C 92,46 78,64 50,90 Z"/>
+          </svg>
+        </div>
+        <span class="suit-pip-label">Heart</span>
+      </div>
+
+      <div class="suit-pip-item">
+        <div class="suit-svg-large" style="color: var(--card-black);">
+          <!-- Style 1 Club -->
+          <svg viewBox="0 0 100 100" fill="currentColor">
+            <circle cx="50" cy="27" r="19"/>
+            <circle cx="27" cy="58" r="19"/>
+            <circle cx="73" cy="58" r="19"/>
+            <path d="M 44,54 C 47,68 43,84 32,96 L 68,96 C 57,84 53,68 56,54 Z"/>
+          </svg>
+        </div>
+        <span class="suit-pip-label">Club</span>
+      </div>
+
+      <div class="suit-pip-item">
+        <div class="suit-svg-large" style="color: var(--card-red);">
+          <!-- Style 1 Diamond -->
+          <svg viewBox="0 0 100 100" fill="currentColor">
+            <path d="M 50,6 L 84,50 L 50,94 L 16,50 Z"/>
+          </svg>
+        </div>
+        <span class="suit-pip-label">Diamond</span>
+      </div>
+    </div>
+
+    <!-- Cards Showcase -->
+    <div class="card-sample-group">
+      <!-- 10 of Hearts -->
+      <div class="card red">
+        <div class="card-header-bar">
+          <span class="card-rank">10</span>
+          <div class="card-header-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,90 C 22,64 8,46 8,28 C 8,13 19,5 33,5 C 41,5 47,9 50,16 C 53,9 59,5 67,5 C 81,5 92,13 92,28 C 92,46 78,64 50,90 Z"/></svg>
+          </div>
+        </div>
+        <div class="card-center">
+          <div class="card-center-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,90 C 22,64 8,46 8,28 C 8,13 19,5 33,5 C 41,5 47,9 50,16 C 53,9 59,5 67,5 C 81,5 92,13 92,28 C 92,46 78,64 50,90 Z"/></svg>
+          </div>
+        </div>
+      </div>
+      <!-- Ace of Spades -->
+      <div class="card black">
+        <div class="card-header-bar">
+          <span class="card-rank">A</span>
+          <div class="card-header-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,8 C 45,20 33,36 21,50 C 12,61 8,70 8,78 C 8,87 15,92 24,92 C 32,92 38,87 44,79 C 45,86 42,93 33,96 L 67,96 C 58,93 55,86 56,79 C 62,87 68,92 76,92 C 85,92 92,87 92,78 C 92,70 88,61 79,50 C 67,36 55,20 50,8 Z"/></svg>
+          </div>
+        </div>
+        <div class="card-center">
+          <div class="card-center-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,8 C 45,20 33,36 21,50 C 12,61 8,70 8,78 C 8,87 15,92 24,92 C 32,92 38,87 44,79 C 45,86 42,93 33,96 L 67,96 C 58,93 55,86 56,79 C 62,87 68,92 76,92 C 85,92 92,87 92,78 C 92,70 88,61 79,50 C 67,36 55,20 50,8 Z"/></svg>
+          </div>
+        </div>
+      </div>
+      <!-- King of Clubs -->
+      <div class="card black">
+        <div class="card-header-bar">
+          <span class="card-rank">K</span>
+          <div class="card-header-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="27" r="19"/><circle cx="27" cy="58" r="19"/><circle cx="73" cy="58" r="19"/><path d="M 44,54 C 47,68 43,84 32,96 L 68,96 C 57,84 53,68 56,54 Z"/></svg>
+          </div>
+        </div>
+        <div class="card-center">K</div>
+      </div>
+      <!-- Queen of Diamonds -->
+      <div class="card red">
+        <div class="card-header-bar">
+          <span class="card-rank">Q</span>
+          <div class="card-header-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,6 L 84,50 L 50,94 L 16,50 Z"/></svg>
+          </div>
+        </div>
+        <div class="card-center">Q</div>
+      </div>
+    </div>
+
+    <!-- iPhone 16e Cascade Simulation -->
+    <div class="iphone-sim-container">
+      <div class="iphone-sim-title">
+        <span>iPhone 16e (390px) Cascade View</span>
+        <span class="badge-tag">Style 1 in Action</span>
+      </div>
+      <div class="iphone-sim-tableau">
+        <div class="tableau-col">
+          <div class="mini-card red" style="top: 0px; z-index: 1;">
+            <div class="mini-card-header">
+              <span class="mini-rank">A</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,6 L 84,50 L 50,94 L 16,50 Z"/></svg></div>
+            </div>
+            <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,6 L 84,50 L 50,94 L 16,50 Z"/></svg></div></div>
+          </div>
+        </div>
+        <div class="tableau-col">
+          <div class="mini-card facedown" style="top: 0px; z-index: 1;"></div>
+          <div class="mini-card red" style="top: 10px; z-index: 2;">
+            <div class="mini-card-header">
+              <span class="mini-rank">9</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,90 C 22,64 8,46 8,28 C 8,13 19,5 33,5 C 41,5 47,9 50,16 C 53,9 59,5 67,5 C 81,5 92,13 92,28 C 92,46 78,64 50,90 Z"/></svg></div>
+            </div>
+            <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,90 C 22,64 8,46 8,28 C 8,13 19,5 33,5 C 41,5 47,9 50,16 C 53,9 59,5 67,5 C 81,5 92,13 92,28 C 92,46 78,64 50,90 Z"/></svg></div></div>
+          </div>
+        </div>
+        <div class="tableau-col">
+          <div class="mini-card facedown" style="top: 0px; z-index: 1;"></div>
+          <div class="mini-card facedown" style="top: 10px; z-index: 2;"></div>
+          <div class="mini-card black" style="top: 20px; z-index: 3;">
+            <div class="mini-card-header">
+              <span class="mini-rank">8</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,8 C 45,20 33,36 21,50 C 12,61 8,70 8,78 C 8,87 15,92 24,92 C 32,92 38,87 44,79 C 45,86 42,93 33,96 L 67,96 C 58,93 55,86 56,79 C 62,87 68,92 76,92 C 85,92 92,87 92,78 C 92,70 88,61 79,50 C 67,36 55,20 50,8 Z"/></svg></div>
+            </div>
+            <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,8 C 45,20 33,36 21,50 C 12,61 8,70 8,78 C 8,87 15,92 24,92 C 32,92 38,87 44,79 C 45,86 42,93 33,96 L 67,96 C 58,93 55,86 56,79 C 62,87 68,92 76,92 C 85,92 92,87 92,78 C 92,70 88,61 79,50 C 67,36 55,20 50,8 Z"/></svg></div></div>
+          </div>
+        </div>
+        <div class="tableau-col">
+          <div class="mini-card facedown" style="top: 0px; z-index: 1;"></div>
+          <div class="mini-card facedown" style="top: 10px; z-index: 2;"></div>
+          <div class="mini-card facedown" style="top: 20px; z-index: 3;"></div>
+          <div class="mini-card red" style="top: 30px; z-index: 4;">
+            <div class="mini-card-header">
+              <span class="mini-rank">7</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,6 L 84,50 L 50,94 L 16,50 Z"/></svg></div>
+            </div>
+            <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,6 L 84,50 L 50,94 L 16,50 Z"/></svg></div></div>
+          </div>
+        </div>
+        <!-- Cascade Col 5 -->
+        <div class="tableau-col">
+          <div class="mini-card facedown" style="top: 0px; z-index: 1;"></div>
+          <div class="mini-card black" style="top: 10px; z-index: 2;">
+            <div class="mini-card-header">
+              <span class="mini-rank">K</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,8 C 45,20 33,36 21,50 C 12,61 8,70 8,78 C 8,87 15,92 24,92 C 32,92 38,87 44,79 C 45,86 42,93 33,96 L 67,96 C 58,93 55,86 56,79 C 62,87 68,92 76,92 C 85,92 92,87 92,78 C 92,70 88,61 79,50 C 67,36 55,20 50,8 Z"/></svg></div>
+            </div>
+          </div>
+          <div class="mini-card red" style="top: 32px; z-index: 3;">
+            <div class="mini-card-header">
+              <span class="mini-rank">Q</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,90 C 22,64 8,46 8,28 C 8,13 19,5 33,5 C 41,5 47,9 50,16 C 53,9 59,5 67,5 C 81,5 92,13 92,28 C 92,46 78,64 50,90 Z"/></svg></div>
+            </div>
+          </div>
+          <div class="mini-card black" style="top: 54px; z-index: 4;">
+            <div class="mini-card-header">
+              <span class="mini-rank">J</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="27" r="19"/><circle cx="27" cy="58" r="19"/><circle cx="73" cy="58" r="19"/><path d="M 44,54 C 47,68 43,84 32,96 L 68,96 C 57,84 53,68 56,54 Z"/></svg></div>
+            </div>
+          </div>
+          <div class="mini-card red" style="top: 76px; z-index: 5;">
+            <div class="mini-card-header">
+              <span class="mini-rank">10</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,6 L 84,50 L 50,94 L 16,50 Z"/></svg></div>
+            </div>
+            <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,6 L 84,50 L 50,94 L 16,50 Z"/></svg></div></div>
+          </div>
+        </div>
+        <div class="tableau-col">
+          <div class="mini-card facedown" style="top: 0px; z-index: 1;"></div>
+          <div class="mini-card black" style="top: 10px; z-index: 2;">
+            <div class="mini-card-header">
+              <span class="mini-rank">6</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="27" r="19"/><circle cx="27" cy="58" r="19"/><circle cx="73" cy="58" r="19"/><path d="M 44,54 C 47,68 43,84 32,96 L 68,96 C 57,84 53,68 56,54 Z"/></svg></div>
+            </div>
+            <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="27" r="19"/><circle cx="27" cy="58" r="19"/><circle cx="73" cy="58" r="19"/><path d="M 44,54 C 47,68 43,84 32,96 L 68,96 C 57,84 53,68 56,54 Z"/></svg></div></div>
+          </div>
+        </div>
+        <div class="tableau-col">
+          <div class="mini-card facedown" style="top: 0px; z-index: 1;"></div>
+          <div class="mini-card facedown" style="top: 10px; z-index: 2;"></div>
+          <div class="mini-card red" style="top: 20px; z-index: 3;">
+            <div class="mini-card-header">
+              <span class="mini-rank">5</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,90 C 22,64 8,46 8,28 C 8,13 19,5 33,5 C 41,5 47,9 50,16 C 53,9 59,5 67,5 C 81,5 92,13 92,28 C 92,46 78,64 50,90 Z"/></svg></div>
+            </div>
+            <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,90 C 22,64 8,46 8,28 C 8,13 19,5 33,5 C 41,5 47,9 50,16 C 53,9 59,5 67,5 C 81,5 92,13 92,28 C 92,46 78,64 50,90 Z"/></svg></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag highlight">Elegance</span> Slender stems eliminate the chunky "ink blob" look.</li>
+      <li><span class="tag note">Legibility</span> Clear visual distinction between Hearts and Diamonds, Spades and Clubs.</li>
+    </ul>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- STYLE 2: MODERN GEOMETRIC SLIM (SWISS TYPOGRAPHIC PRECISION)      -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="suit-opt2">
+    <div class="option-header">
+      <div class="option-title">Style 2: Modern Geometric Slim (Swiss Precision)</div>
+      <div class="option-badge">Airy & Sculpted</div>
+    </div>
+    <p class="option-desc">
+      Mathematically proportional, lightweight geometry. Narrower footprint so the suit leaves generous horizontal breathing room for the large rank numbers.
+    </p>
+
+    <!-- Large Pips Showcase -->
+    <div class="suit-pips-row">
+      <div class="suit-pip-item">
+        <div class="suit-svg-large" style="color: var(--card-black);">
+          <!-- Style 2 Spade -->
+          <svg viewBox="0 0 100 100" fill="currentColor">
+            <path d="M 50,6 C 47,18 36,36 24,48 C 15,58 11,68 11,76 C 11,84 17,90 25,90 C 33,90 39,85 46,78 L 45,95 L 55,95 L 54,78 C 61,85 67,90 75,90 C 83,90 89,84 89,76 C 89,68 85,58 76,48 C 64,36 53,18 50,6 Z"/>
+          </svg>
+        </div>
+        <span class="suit-pip-label">Spade</span>
+      </div>
+
+      <div class="suit-pip-item">
+        <div class="suit-svg-large" style="color: var(--card-red);">
+          <!-- Style 2 Heart -->
+          <svg viewBox="0 0 100 100" fill="currentColor">
+            <path d="M 50,92 C 25,66 12,47 12,29 C 12,15 22,7 35,7 C 42,7 47,11 50,17 C 53,11 58,7 65,7 C 78,7 88,15 88,29 C 88,47 75,66 50,92 Z"/>
+          </svg>
+        </div>
+        <span class="suit-pip-label">Heart</span>
+      </div>
+
+      <div class="suit-pip-item">
+        <div class="suit-svg-large" style="color: var(--card-black);">
+          <!-- Style 2 Club -->
+          <svg viewBox="0 0 100 100" fill="currentColor">
+            <circle cx="50" cy="27" r="18"/>
+            <circle cx="28" cy="57" r="18"/>
+            <circle cx="72" cy="57" r="18"/>
+            <path d="M 46,55 L 44,95 L 56,95 L 54,55 Z"/>
+          </svg>
+        </div>
+        <span class="suit-pip-label">Club</span>
+      </div>
+
+      <div class="suit-pip-item">
+        <div class="suit-svg-large" style="color: var(--card-red);">
+          <!-- Style 2 Diamond -->
+          <svg viewBox="0 0 100 100" fill="currentColor">
+            <path d="M 50,4 L 80,50 L 50,96 L 20,50 Z"/>
+          </svg>
+        </div>
+        <span class="suit-pip-label">Diamond</span>
+      </div>
+    </div>
+
+    <!-- Cards Showcase -->
+    <div class="card-sample-group">
+      <div class="card red">
+        <div class="card-header-bar">
+          <span class="card-rank">10</span>
+          <div class="card-header-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,92 C 25,66 12,47 12,29 C 12,15 22,7 35,7 C 42,7 47,11 50,17 C 53,11 58,7 65,7 C 78,7 88,15 88,29 C 88,47 75,66 50,92 Z"/></svg>
+          </div>
+        </div>
+        <div class="card-center">
+          <div class="card-center-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,92 C 25,66 12,47 12,29 C 12,15 22,7 35,7 C 42,7 47,11 50,17 C 53,11 58,7 65,7 C 78,7 88,15 88,29 C 88,47 75,66 50,92 Z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="card black">
+        <div class="card-header-bar">
+          <span class="card-rank">A</span>
+          <div class="card-header-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,6 C 47,18 36,36 24,48 C 15,58 11,68 11,76 C 11,84 17,90 25,90 C 33,90 39,85 46,78 L 45,95 L 55,95 L 54,78 C 61,85 67,90 75,90 C 83,90 89,84 89,76 C 89,68 85,58 76,48 C 64,36 53,18 50,6 Z"/></svg>
+          </div>
+        </div>
+        <div class="card-center">
+          <div class="card-center-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,6 C 47,18 36,36 24,48 C 15,58 11,68 11,76 C 11,84 17,90 25,90 C 33,90 39,85 46,78 L 45,95 L 55,95 L 54,78 C 61,85 67,90 75,90 C 83,90 89,84 89,76 C 89,68 85,58 76,48 C 64,36 53,18 50,6 Z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="card black">
+        <div class="card-header-bar">
+          <span class="card-rank">K</span>
+          <div class="card-header-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="27" r="18"/><circle cx="28" cy="57" r="18"/><circle cx="72" cy="57" r="18"/><path d="M 46,55 L 44,95 L 56,95 L 54,55 Z"/></svg>
+          </div>
+        </div>
+        <div class="card-center">K</div>
+      </div>
+      <div class="card red">
+        <div class="card-header-bar">
+          <span class="card-rank">Q</span>
+          <div class="card-header-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,4 L 80,50 L 50,96 L 20,50 Z"/></svg>
+          </div>
+        </div>
+        <div class="card-center">Q</div>
+      </div>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag highlight">Precision</span> Slim rectangular and straight-line pedestals give maximum structural clarity.</li>
+      <li><span class="tag note">Diamond Ratio</span> 1:1.4 vertical diamond ratio makes it sleek and sharp.</li>
+    </ul>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- STYLE 3: SLENDER TAPERED / TALL (VERTICAL ELONGATION)             -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="suit-opt3">
+    <div class="option-header">
+      <div class="option-title">Style 3: Slender Tapered (Tall & Elegant)</div>
+      <div class="option-badge">Narrow Footprint</div>
+    </div>
+    <p class="option-desc">
+      Suits are stretched slightly vertically and compressed horizontally. This creates an elongated, elegant silhouette that leaves maximum room in the header for the rank number without crowding.
+    </p>
+
+    <!-- Large Pips Showcase -->
+    <div class="suit-pips-row">
+      <div class="suit-pip-item">
+        <div class="suit-svg-large" style="color: var(--card-black);">
+          <!-- Style 3 Spade -->
+          <svg viewBox="0 0 100 100" fill="currentColor">
+            <path d="M 50,5 C 46,18 36,36 26,49 C 18,59 15,68 15,75 C 15,83 20,88 28,88 C 35,88 41,83 46,76 C 46,84 43,92 34,95 L 66,95 C 57,92 54,84 54,76 C 59,83 65,88 72,88 C 80,88 85,83 85,75 C 85,68 82,59 74,49 C 64,36 54,18 50,5 Z"/>
+          </svg>
+        </div>
+        <span class="suit-pip-label">Spade</span>
+      </div>
+
+      <div class="suit-pip-item">
+        <div class="suit-svg-large" style="color: var(--card-red);">
+          <!-- Style 3 Heart -->
+          <svg viewBox="0 0 100 100" fill="currentColor">
+            <path d="M 50,94 C 28,68 17,48 17,30 C 17,16 26,8 37,8 C 43,8 47,11 50,17 C 53,11 57,8 63,8 C 74,8 83,16 83,30 C 83,48 72,68 50,94 Z"/>
+          </svg>
+        </div>
+        <span class="suit-pip-label">Heart</span>
+      </div>
+
+      <div class="suit-pip-item">
+        <div class="suit-svg-large" style="color: var(--card-black);">
+          <!-- Style 3 Club -->
+          <svg viewBox="0 0 100 100" fill="currentColor">
+            <circle cx="50" cy="25" r="17"/>
+            <circle cx="30" cy="55" r="17"/>
+            <circle cx="70" cy="55" r="17"/>
+            <path d="M 45,52 C 48,66 45,82 35,95 L 65,95 C 55,82 52,66 55,52 Z"/>
+          </svg>
+        </div>
+        <span class="suit-pip-label">Club</span>
+      </div>
+
+      <div class="suit-pip-item">
+        <div class="suit-svg-large" style="color: var(--card-red);">
+          <!-- Style 3 Diamond -->
+          <svg viewBox="0 0 100 100" fill="currentColor">
+            <path d="M 50,4 L 76,50 L 50,96 L 24,50 Z"/>
+          </svg>
+        </div>
+        <span class="suit-pip-label">Diamond</span>
+      </div>
+    </div>
+
+    <!-- Cards Showcase -->
+    <div class="card-sample-group">
+      <div class="card red">
+        <div class="card-header-bar">
+          <span class="card-rank">10</span>
+          <div class="card-header-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,94 C 28,68 17,48 17,30 C 17,16 26,8 37,8 C 43,8 47,11 50,17 C 53,11 57,8 63,8 C 74,8 83,16 83,30 C 83,48 72,68 50,94 Z"/></svg>
+          </div>
+        </div>
+        <div class="card-center">
+          <div class="card-center-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,94 C 28,68 17,48 17,30 C 17,16 26,8 37,8 C 43,8 47,11 50,17 C 53,11 57,8 63,8 C 74,8 83,16 83,30 C 83,48 72,68 50,94 Z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="card black">
+        <div class="card-header-bar">
+          <span class="card-rank">A</span>
+          <div class="card-header-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 C 46,18 36,36 26,49 C 18,59 15,68 15,75 C 15,83 20,88 28,88 C 35,88 41,83 46,76 C 46,84 43,92 34,95 L 66,95 C 57,92 54,84 54,76 C 59,83 65,88 72,88 C 80,88 85,83 85,75 C 85,68 82,59 74,49 C 64,36 54,18 50,5 Z"/></svg>
+          </div>
+        </div>
+        <div class="card-center">
+          <div class="card-center-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 C 46,18 36,36 26,49 C 18,59 15,68 15,75 C 15,83 20,88 28,88 C 35,88 41,83 46,76 C 46,84 43,92 34,95 L 66,95 C 57,92 54,84 54,76 C 59,83 65,88 72,88 C 80,88 85,83 85,75 C 85,68 82,59 74,49 C 64,36 54,18 50,5 Z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="card black">
+        <div class="card-header-bar">
+          <span class="card-rank">K</span>
+          <div class="card-header-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="25" r="17"/><circle cx="30" cy="55" r="17"/><circle cx="70" cy="55" r="17"/><path d="M 45,52 C 48,66 45,82 35,95 L 65,95 C 55,82 52,66 55,52 Z"/></svg>
+          </div>
+        </div>
+        <div class="card-center">K</div>
+      </div>
+      <div class="card red">
+        <div class="card-header-bar">
+          <span class="card-rank">Q</span>
+          <div class="card-header-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,4 L 76,50 L 50,96 L 24,50 Z"/></svg>
+          </div>
+        </div>
+        <div class="card-center">Q</div>
+      </div>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag highlight">Space Saving</span> Narrow footprint avoids collision with the double-digit "10".</li>
+      <li><span class="tag note">Visual Lift</span> Gives an elegant, airy aesthetic.</li>
+    </ul>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- STYLE 4: CONCAVE DIAMOND & SCULPTED STEM (FACETED & SHARP)        -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="suit-opt4">
+    <div class="option-header">
+      <div class="option-title">Style 4: Concave Diamond & Sculpted Stem (Faceted)</div>
+      <div class="option-badge">Luxury Card Feel</div>
+    </div>
+    <p class="option-desc">
+      The diamond features gracefully pinched, concave edges like a sparkling cut gem. The spade and club feature fine arched waistlines with slender flared feet.
+    </p>
+
+    <!-- Large Pips Showcase -->
+    <div class="suit-pips-row">
+      <div class="suit-pip-item">
+        <div class="suit-svg-large" style="color: var(--card-black);">
+          <!-- Style 4 Spade -->
+          <svg viewBox="0 0 100 100" fill="currentColor">
+            <path d="M 50,6 C 44,20 32,37 20,51 C 11,62 7,71 7,79 C 7,88 15,93 25,93 C 33,93 40,87 45,80 C 46,87 43,93 33,96 L 67,96 C 57,93 54,87 55,80 C 60,87 67,93 75,93 C 85,93 93,88 93,79 C 93,71 89,62 80,51 C 68,37 56,20 50,6 Z"/>
+          </svg>
+        </div>
+        <span class="suit-pip-label">Spade</span>
+      </div>
+
+      <div class="suit-pip-item">
+        <div class="suit-svg-large" style="color: var(--card-red);">
+          <!-- Style 4 Heart -->
+          <svg viewBox="0 0 100 100" fill="currentColor">
+            <path d="M 50,91 C 24,65 10,46 10,27 C 10,12 21,5 34,5 C 42,5 47,9 50,16 C 53,9 58,5 66,5 C 79,5 90,12 90,27 C 90,46 76,65 50,91 Z"/>
+          </svg>
+        </div>
+        <span class="suit-pip-label">Heart</span>
+      </div>
+
+      <div class="suit-pip-item">
+        <div class="suit-svg-large" style="color: var(--card-black);">
+          <!-- Style 4 Club -->
+          <svg viewBox="0 0 100 100" fill="currentColor">
+            <circle cx="50" cy="27" r="18"/>
+            <circle cx="28" cy="57" r="18"/>
+            <circle cx="72" cy="57" r="18"/>
+            <path d="M 44,53 C 48,68 44,85 30,96 L 70,96 C 56,85 52,68 56,53 Z"/>
+          </svg>
+        </div>
+        <span class="suit-pip-label">Club</span>
+      </div>
+
+      <div class="suit-pip-item">
+        <div class="suit-svg-large" style="color: var(--card-red);">
+          <!-- Style 4 Concave Diamond -->
+          <svg viewBox="0 0 100 100" fill="currentColor">
+            <path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/>
+          </svg>
+        </div>
+        <span class="suit-pip-label">Diamond</span>
+      </div>
+    </div>
+
+    <!-- Cards Showcase -->
+    <div class="card-sample-group">
+      <div class="card red">
+        <div class="card-header-bar">
+          <span class="card-rank">10</span>
+          <div class="card-header-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,91 C 24,65 10,46 10,27 C 10,12 21,5 34,5 C 42,5 47,9 50,16 C 53,9 58,5 66,5 C 79,5 90,12 90,27 C 90,46 76,65 50,91 Z"/></svg>
+          </div>
+        </div>
+        <div class="card-center">
+          <div class="card-center-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,91 C 24,65 10,46 10,27 C 10,12 21,5 34,5 C 42,5 47,9 50,16 C 53,9 58,5 66,5 C 79,5 90,12 90,27 C 90,46 76,65 50,91 Z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="card black">
+        <div class="card-header-bar">
+          <span class="card-rank">A</span>
+          <div class="card-header-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,6 C 44,20 32,37 20,51 C 11,62 7,71 7,79 C 7,88 15,93 25,93 C 33,93 40,87 45,80 C 46,87 43,93 33,96 L 67,96 C 57,93 54,87 55,80 C 60,87 67,93 75,93 C 85,93 93,88 93,79 C 93,71 89,62 80,51 C 68,37 56,20 50,6 Z"/></svg>
+          </div>
+        </div>
+        <div class="card-center">
+          <div class="card-center-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,6 C 44,20 32,37 20,51 C 11,62 7,71 7,79 C 7,88 15,93 25,93 C 33,93 40,87 45,80 C 46,87 43,93 33,96 L 67,96 C 57,93 54,87 55,80 C 60,87 67,93 75,93 C 85,93 93,88 93,79 C 93,71 89,62 80,51 C 68,37 56,20 50,6 Z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="card black">
+        <div class="card-header-bar">
+          <span class="card-rank">K</span>
+          <div class="card-header-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="27" r="18"/><circle cx="28" cy="57" r="18"/><circle cx="72" cy="57" r="18"/><path d="M 44,53 C 48,68 44,85 30,96 L 70,96 C 56,85 52,68 56,53 Z"/></svg>
+          </div>
+        </div>
+        <div class="card-center">K</div>
+      </div>
+      <div class="card red">
+        <div class="card-header-bar">
+          <span class="card-rank">Q</span>
+          <div class="card-header-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg>
+          </div>
+        </div>
+        <div class="card-center">Q</div>
+      </div>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag highlight">Diamond Contrast</span> Concave waist on the diamond makes it visually distinct from both Hearts and Spades.</li>
+      <li><span class="tag note">Pedestals</span> Graceful curves add refined visual polish.</li>
+    </ul>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- STYLE 5: MINIMALIST CRISP LINEAGE (ULTRA-LIGHTWEIGHT SOLID)       -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="suit-opt5">
+    <div class="option-header">
+      <div class="option-title">Style 5: Minimalist Crisp Lineage (Featherweight)</div>
+      <div class="option-badge">Least Visual Mass</div>
+    </div>
+    <p class="option-desc">
+      Reduces the ink footprint to the absolute minimum while maintaining crisp silhouette edges. Ideal if heavy black/red shapes feel overwhelming or intrusive.
+    </p>
+
+    <!-- Large Pips Showcase -->
+    <div class="suit-pips-row">
+      <div class="suit-pip-item">
+        <div class="suit-svg-large" style="color: var(--card-black);">
+          <!-- Style 5 Spade -->
+          <svg viewBox="0 0 100 100" fill="currentColor">
+            <path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/>
+          </svg>
+        </div>
+        <span class="suit-pip-label">Spade</span>
+      </div>
+
+      <div class="suit-pip-item">
+        <div class="suit-svg-large" style="color: var(--card-red);">
+          <!-- Style 5 Heart -->
+          <svg viewBox="0 0 100 100" fill="currentColor">
+            <path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/>
+          </svg>
+        </div>
+        <span class="suit-pip-label">Heart</span>
+      </div>
+
+      <div class="suit-pip-item">
+        <div class="suit-svg-large" style="color: var(--card-black);">
+          <!-- Style 5 Club -->
+          <svg viewBox="0 0 100 100" fill="currentColor">
+            <circle cx="50" cy="28" r="16"/>
+            <circle cx="30" cy="56" r="16"/>
+            <circle cx="70" cy="56" r="16"/>
+            <path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/>
+          </svg>
+        </div>
+        <span class="suit-pip-label">Club</span>
+      </div>
+
+      <div class="suit-pip-item">
+        <div class="suit-svg-large" style="color: var(--card-red);">
+          <!-- Style 5 Diamond -->
+          <svg viewBox="0 0 100 100" fill="currentColor">
+            <path d="M 50,6 L 74,50 L 50,94 L 26,50 Z"/>
+          </svg>
+        </div>
+        <span class="suit-pip-label">Diamond</span>
+      </div>
+    </div>
+
+    <!-- Cards Showcase -->
+    <div class="card-sample-group">
+      <div class="card red">
+        <div class="card-header-bar">
+          <span class="card-rank">10</span>
+          <div class="card-header-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg>
+          </div>
+        </div>
+        <div class="card-center">
+          <div class="card-center-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="card black">
+        <div class="card-header-bar">
+          <span class="card-rank">A</span>
+          <div class="card-header-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg>
+          </div>
+        </div>
+        <div class="card-center">
+          <div class="card-center-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="card black">
+        <div class="card-header-bar">
+          <span class="card-rank">K</span>
+          <div class="card-header-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg>
+          </div>
+        </div>
+        <div class="card-center">K</div>
+      </div>
+      <div class="card red">
+        <div class="card-header-bar">
+          <span class="card-rank">Q</span>
+          <div class="card-header-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,6 L 74,50 L 50,94 L 26,50 Z"/></svg>
+          </div>
+        </div>
+        <div class="card-center">Q</div>
+      </div>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag highlight">Delicate</span> 30% less ink volume than standard pips.</li>
+      <li><span class="tag note">Modern</span> Ultra-clean, understated elegance.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>agy-solitaire &bull; Elegant Vector Suit Collection &bull; Engineered for low-vision comfort on iPhone 16e</p>
+  </footer>
+
+</body>
+</html>

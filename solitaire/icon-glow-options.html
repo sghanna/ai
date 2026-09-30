@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iOS PWA Icon Studio — Requested Combo (King 70% + Heart 80%)</title>
+  <link rel="icon" id="dynamic-favicon" type="image/svg+xml" href="assets/glow-options/option_C1_A_stopped.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --felt-bg: #0c2419;
+      --felt-surface: #133324;
+      --felt-card: #183e2c;
+      --gold-primary: #fbbf24;
+      --gold-light: #fef08a;
+      --gold-border: rgba(251, 191, 36, 0.4);
+      --gold-border-solid: #d4af37;
+      --crimson: #991b1b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--felt-bg);
+      background-image: radial-gradient(circle at 50% 20%, #15452f 0%, #0c2419 70%, #06150e 100%);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      padding: 32px 20px 60px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .badge-top {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(251, 191, 36, 0.15);
+      border: 1.2px solid var(--gold-primary);
+      border-radius: 9999px;
+      color: var(--gold-light);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(26px, 4vw, 40px);
+      color: var(--gold-light);
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+      margin-bottom: 8px;
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 15px;
+      max-width: 820px;
+      margin: 0 auto 20px;
+      line-height: 1.5;
+    }
+
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .btn-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      border-radius: 18px;
+      font-size: 12px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      cursor: pointer;
+      border: 1.5px solid var(--gold-primary);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--gold-light);
+    }
+
+    .btn-nav:hover {
+      background: var(--gold-primary);
+      color: #451a03;
+      transform: translateY(-1px);
+    }
+
+    /* Live tab notice */
+    .tab-notice-banner {
+      background: rgba(15, 23, 42, 0.95);
+      border: 1.5px solid var(--gold-primary);
+      border-radius: 12px;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 30px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+      flex-wrap: wrap;
+    }
+
+    .tab-notice-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .active-favicon-img {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--gold-primary);
+      background: #0c2419;
+    }
+
+    /* Composite Overview */
+    .composite-section {
+      background: var(--felt-surface);
+      border: 1px solid var(--gold-border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 36px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .composite-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--gold-light);
+      margin-bottom: 6px;
+    }
+
+    .composite-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .composite-img {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+    }
+
+    /* Section Headers */
+    .section-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 24px;
+      color: var(--gold-light);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    /* Options Grid */
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-bottom: 44px;
+    }
+
+    .option-card {
+      background: var(--felt-surface);
+      border: 1.5px solid var(--gold-border);
+      border-radius: 16px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .option-card:hover {
+      border-color: var(--gold-primary);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 20px rgba(251, 191, 36, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .option-card.active-card {
+      border-color: var(--gold-primary);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7), 0 0 24px rgba(251, 191, 36, 0.35);
+      background: linear-gradient(145deg, #184230 0%, #113123 60%, #0a2016 100%);
+    }
+
+    .card-badge {
+      position: absolute;
+      top: -11px;
+      right: 18px;
+      padding: 3px 10px;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1.2px solid var(--gold-primary);
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--gold-light);
+      letter-spacing: 0.05em;
+    }
+
+    .card-badge.rec {
+      background: var(--gold-primary);
+      color: #451a03;
+      border-color: #fef08a;
+    }
+
+    .option-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .option-tag {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--gold-light);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .option-name {
+      font-size: 18px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-top: 4px;
+    }
+
+    .option-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Key Metrics Pill */
+    .metrics-pill {
+      background: rgba(10, 28, 20, 0.8);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      color: #f8fafc;
+    }
+
+    /* Preview Showcase */
+    .preview-showcase {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(251, 191, 36, 0.2);
+      border-radius: 12px;
+      padding: 14px;
+      gap: 14px;
+    }
+
+    .preview-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .preview-img-large {
+      width: 100px;
+      height: 100px;
+      border-radius: 22px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+      display: block;
+    }
+
+    .preview-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* iOS Home Screen Mockup Tile */
+    .ios-tile-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .ios-app-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 13px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6), 0 0 1px rgba(255, 255, 255, 0.4);
+      display: block;
+    }
+
+    .ios-app-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: #ffffff;
+      letter-spacing: 0.1px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+    }
+
+    /* Scales row */
+    .scale-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 6px 0;
+    }
+
+    .scale-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .scale-label {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    /* Action buttons */
+    .card-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: auto;
+    }
+
+    .btn-action {
+      flex: 1;
+      padding: 8px 0;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s ease;
+      border: 1.2px solid var(--gold-primary);
+    }
+
+    .btn-test {
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--gold-light);
+    }
+
+    .btn-test:hover {
+      background: rgba(251, 191, 36, 0.25);
+    }
+
+    .btn-select {
+      background: var(--gold-primary);
+      color: #451a03;
+    }
+
+    .btn-select:hover {
+      background: #fcd34d;
+      box-shadow: 0 2px 8px rgba(251, 191, 36, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="badge-top">Custom Requested Combo &bull; Local Review</div>
+      <h1>iOS PWA Icon Studio</h1>
+      <p class="subtitle">
+        Per your exact specifications: combining <strong>5D King 70% exposure</strong> + <strong>Heart 80% scale</strong> + shifting the heart downward so it doesn't touch the tail of the Queen 'Q', letting it bleed off the bottom page.
+      </p>
+
+      <div class="nav-links">
+        <a href="index.html" class="btn-nav">♠ Return to Solitaire Game</a>
+        <a href="favicon-options-preview.html" class="btn-nav">📁 General Favicon Studio</a>
+      </div>
+    </header>
+
+    <!-- Live Tab Notification Bar -->
+    <div class="tab-notice-banner">
+      <div class="tab-notice-info">
+        <img id="banner-active-icon" class="active-favicon-img" src="assets/glow-options/option_C1_A_stopped.svg" alt="Active Icon">
+        <div>
+          <div style="font-size: 14px; font-weight: 700; color: #fff;">
+            Currently Testing in Your Real Browser Tab: <span id="banner-active-name" style="color: var(--gold-light);">Option C1-A: Flush Squircle Clip (Card Stops at Rim, Zero Card Below)</span>
+          </div>
+          <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">
+            Click <strong>"Test in Tab"</strong> on any card below to immediately preview it as this window's actual favicon!
+          </div>
+        </div>
+      </div>
+      <div>
+        <span style="font-size: 12px; color: var(--gold-light); font-weight: 700;">Select your favorite clearance level below!</span>
+      </div>
+    </div>
+
+    <!-- Winner Refinement Composite Image -->
+    <section class="composite-section">
+      <div class="composite-title">✨ Option C1 Refinement: Card Stops at Squircle (Options C1-A – C1-F)</div>
+      <div class="composite-sub">Gold Squircle on Top • Queen 'Q' Tail Clearance 8px • Heart 80% • Card Stops Immediately at Lower Rim • Zero Card Visible Below Squircle</div>
+      <img src="assets/glow-options/option_C1_stopped_comparison.png" class="composite-img" alt="C1 Stopped Variations Comparison">
+    </section>
+
+    <!-- Section 0: C1 Variations (Card Stops at Squircle) -->
+    <div class="section-title">🏆 Your Selection: Option C1 (Squircle on Top, Stopped at Rim)</div>
+    <div class="section-desc">Comparing edge finishes where the card meets the gold squircle at the bottom:</div>
+
+    <section class="options-grid">
+
+      <!-- Option C1-A -->
+      <div class="option-card active-card" id="card-opt-C1-A">
+        <div class="card-badge rec">★ Recommended</div>
+        <div class="option-header">
+          <div>
+            <div class="option-tag">Option C1-A</div>
+            <div class="option-name">Flush Squircle Clip</div>
+          </div>
+        </div>
+        <p class="option-desc">
+          Cards strictly clipped by the 480x480 squircle. Card terminates at Y=496, stopping flush under the gold stroke centerline. Below the squircle: pure crimson background, zero card visible.
+        </p>
+        <div class="metrics-pill">
+          <div>• <strong>King 'K' Visible:</strong> 70% (Y=174px)</div>
+          <div>• <strong>Heart Scale:</strong> 80% with 8px clearance below 'Q' tail</div>
+          <div>• <strong>Gold Squircle:</strong> Layered ON TOP over cards</div>
+          <div>• <strong>Lower Rim:</strong> Stops at Y=496; NO card visible below</div>
+        </div>
+        <div class="preview-showcase">
+          <div class="preview-box">
+            <img src="assets/glow-options/option_C1_A_stopped.svg" class="preview-img-large" alt="Option C1-A">
+            <span class="preview-label">180px Retina</span>
+          </div>
+          <div class="ios-tile-wrap">
+            <img src="assets/glow-options/option_C1_A_stopped.svg" class="ios-app-icon" alt="Option C1-A iOS Tile">
+            <span class="ios-app-label">Solitaire</span>
+          </div>
+          <div class="scale-row">
+            <div class="scale-item">
+              <img src="assets/glow-options/option_C1_A_stopped.svg" width="32" height="32" alt="32px">
+              <span class="scale-label">32px</span>
+            </div>
+            <div class="scale-item">
+              <img src="assets/glow-options/option_C1_A_stopped.svg" width="16" height="16" alt="16px">
+              <span class="scale-label">16px</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-action btn-test" onclick="testInTab('C1-A', 'assets/glow-options/option_C1_A_stopped.svg', 'Option C1-A: Flush Squircle Clip')">Test in Tab</button>
+          <button class="btn-action btn-select" onclick="selectWinner('C1-A', 'Option C1-A: Flush Squircle Clip')">Select Winner</button>
+        </div>
+      </div>
+
+      <!-- Option C1-B -->
+      <div class="option-card" id="card-opt-C1-B">
+        <div class="card-badge">Inner Rim</div>
+        <div class="option-header">
+          <div>
+            <div class="option-tag">Option C1-B</div>
+            <div class="option-name">Inner-Stroke Clip</div>
+          </div>
+        </div>
+        <p class="option-desc">
+          Cards clipped at Y=494.25 (the exact inner edge of the 3.5px gold stroke). The card does not pass under the gold stroke at all; the gold border frames the card with razor-sharp precision.
+        </p>
+        <div class="metrics-pill">
+          <div>• <strong>King 'K' Visible:</strong> 70% (Y=174px)</div>
+          <div>• <strong>Heart Scale:</strong> 80% with 8px clearance below 'Q' tail</div>
+          <div>• <strong>Gold Squircle:</strong> Layered ON TOP over cards</div>
+          <div>• <strong>Lower Rim:</strong> Stops at Y=494.25; zero stroke overlap</div>
+        </div>
+        <div class="preview-showcase">
+          <div class="preview-box">
+            <img src="assets/glow-options/option_C1_B_stopped.svg" class="preview-img-large" alt="Option C1-B">
+            <span class="preview-label">180px Retina</span>
+          </div>
+          <div class="ios-tile-wrap">
+            <img src="assets/glow-options/option_C1_B_stopped.svg" class="ios-app-icon" alt="Option C1-B iOS Tile">
+            <span class="ios-app-label">Solitaire</span>
+          </div>
+          <div class="scale-row">
+            <div class="scale-item">
+              <img src="assets/glow-options/option_C1_B_stopped.svg" width="32" height="32" alt="32px">
+              <span class="scale-label">32px</span>
+            </div>
+            <div class="scale-item">
+              <img src="assets/glow-options/option_C1_B_stopped.svg" width="16" height="16" alt="16px">
+              <span class="scale-label">16px</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-action btn-test" onclick="testInTab('C1-B', 'assets/glow-options/option_C1_B_stopped.svg', 'Option C1-B: Inner-Stroke Clip')">Test in Tab</button>
+          <button class="btn-action btn-select" onclick="selectWinner('C1-B', 'Option C1-B: Inner-Stroke Clip')">Select Winner</button>
+        </div>
+      </div>
+
+      <!-- Option C1-C -->
+      <div class="option-card" id="card-opt-C1-C">
+        <div class="card-badge">Authentic Border</div>
+        <div class="option-header">
+          <div>
+            <div class="option-tag">Option C1-C</div>
+            <div class="option-name">Natural Card Border</div>
+          </div>
+        </div>
+        <p class="option-desc">
+          Rather than a flat cut through the card face, Queen card height is calibrated (H=58.05) so the playing card's authentic grey outline and rounded corners rest right against the gold squircle at Y=496.
+        </p>
+        <div class="metrics-pill">
+          <div>• <strong>King 'K' Visible:</strong> 70% (Y=174px)</div>
+          <div>• <strong>Heart Scale:</strong> 80% with 8px clearance below 'Q' tail</div>
+          <div>• <strong>Gold Squircle:</strong> Layered ON TOP over cards</div>
+          <div>• <strong>Lower Rim:</strong> Finished card grey border rests at Y=496</div>
+        </div>
+        <div class="preview-showcase">
+          <div class="preview-box">
+            <img src="assets/glow-options/option_C1_C_stopped.svg" class="preview-img-large" alt="Option C1-C">
+            <span class="preview-label">180px Retina</span>
+          </div>
+          <div class="ios-tile-wrap">
+            <img src="assets/glow-options/option_C1_C_stopped.svg" class="ios-app-icon" alt="Option C1-C iOS Tile">
+            <span class="ios-app-label">Solitaire</span>
+          </div>
+          <div class="scale-row">
+            <div class="scale-item">
+              <img src="assets/glow-options/option_C1_C_stopped.svg" width="32" height="32" alt="32px">
+              <span class="scale-label">32px</span>
+            </div>
+            <div class="scale-item">
+              <img src="assets/glow-options/option_C1_C_stopped.svg" width="16" height="16" alt="16px">
+              <span class="scale-label">16px</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-action btn-test" onclick="testInTab('C1-C', 'assets/glow-options/option_C1_C_stopped.svg', 'Option C1-C: Natural Card Border')">Test in Tab</button>
+          <button class="btn-action btn-select" onclick="selectWinner('C1-C', 'Option C1-C: Natural Card Border')">Select Winner</button>
+        </div>
+      </div>
+
+      <!-- Option C1-D -->
+      <div class="option-card" id="card-opt-C1-D">
+        <div class="card-badge">Depth Bezel</div>
+        <div class="option-header">
+          <div>
+            <div class="option-tag">Option C1-D</div>
+            <div class="option-name">Gold Bezel Contact Shadow</div>
+          </div>
+        </div>
+        <p class="option-desc">
+          Card clipped to squircle with gold squircle on top, plus a subtle warm contact shadow (Y=470 to 496) giving the card tactile depth as if set into a recessed golden card tray.
+        </p>
+        <div class="metrics-pill">
+          <div>• <strong>King 'K' Visible:</strong> 70% (Y=174px)</div>
+          <div>• <strong>Heart Scale:</strong> 80% with 8px clearance below 'Q' tail</div>
+          <div>• <strong>Gold Squircle:</strong> Layered ON TOP over cards</div>
+          <div>• <strong>Lower Rim:</strong> Subtle warm gradient shadow along rim</div>
+        </div>
+        <div class="preview-showcase">
+          <div class="preview-box">
+            <img src="assets/glow-options/option_C1_D_stopped.svg" class="preview-img-large" alt="Option C1-D">
+            <span class="preview-label">180px Retina</span>
+          </div>
+          <div class="ios-tile-wrap">
+            <img src="assets/glow-options/option_C1_D_stopped.svg" class="ios-app-icon" alt="Option C1-D iOS Tile">
+            <span class="ios-app-label">Solitaire</span>
+          </div>
+          <div class="scale-row">
+            <div class="scale-item">
+              <img src="assets/glow-options/option_C1_D_stopped.svg" width="32" height="32" alt="32px">
+              <span class="scale-label">32px</span>
+            </div>
+            <div class="scale-item">
+              <img src="assets/glow-options/option_C1_D_stopped.svg" width="16" height="16" alt="16px">
+              <span class="scale-label">16px</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-action btn-test" onclick="testInTab('C1-D', 'assets/glow-options/option_C1_D_stopped.svg', 'Option C1-D: Gold Bezel Contact Shadow')">Test in Tab</button>
+          <button class="btn-action btn-select" onclick="selectWinner('C1-D', 'Option C1-D: Gold Bezel Contact Shadow')">Select Winner</button>
+        </div>
+      </div>
+
+      <!-- Option C1-E -->
+      <div class="option-card" id="card-opt-C1-E">
+        <div class="card-badge">Inset Pad</div>
+        <div class="option-header">
+          <div>
+            <div class="option-tag">Option C1-E</div>
+            <div class="option-name">Inset 2px Velvet Margin</div>
+          </div>
+        </div>
+        <p class="option-desc">
+          Cards stop with a clean 2px inset margin inside the gold stroke (clipped at 472x472, rx=90). Gives breathing room between the white card and the glowing gold line.
+        </p>
+        <div class="metrics-pill">
+          <div>• <strong>King 'K' Visible:</strong> 70% (Y=174px)</div>
+          <div>• <strong>Heart Scale:</strong> 80% with 8px clearance below 'Q' tail</div>
+          <div>• <strong>Gold Squircle:</strong> Layered ON TOP over cards</div>
+          <div>• <strong>Lower Rim:</strong> 2px inset breathing gap before gold rim</div>
+        </div>
+        <div class="preview-showcase">
+          <div class="preview-box">
+            <img src="assets/glow-options/option_C1_E_stopped.svg" class="preview-img-large" alt="Option C1-E">
+            <span class="preview-label">180px Retina</span>
+          </div>
+          <div class="ios-tile-wrap">
+            <img src="assets/glow-options/option_C1_E_stopped.svg" class="ios-app-icon" alt="Option C1-E iOS Tile">
+            <span class="ios-app-label">Solitaire</span>
+          </div>
+          <div class="scale-row">
+            <div class="scale-item">
+              <img src="assets/glow-options/option_C1_E_stopped.svg" width="32" height="32" alt="32px">
+              <span class="scale-label">32px</span>
+            </div>
+            <div class="scale-item">
+              <img src="assets/glow-options/option_C1_E_stopped.svg" width="16" height="16" alt="16px">
+              <span class="scale-label">16px</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-action btn-test" onclick="testInTab('C1-E', 'assets/glow-options/option_C1_E_stopped.svg', 'Option C1-E: Inset 2px Velvet Margin')">Test in Tab</button>
+          <button class="btn-action btn-select" onclick="selectWinner('C1-E', 'Option C1-E: Inset 2px Velvet Margin')">Select Winner</button>
+        </div>
+      </div>
+
+      <!-- Option C1-F -->
+      <div class="option-card" id="card-opt-C1-F">
+        <div class="card-badge">Arc Match</div>
+        <div class="option-header">
+          <div>
+            <div class="option-tag">Option C1-F</div>
+            <div class="option-name">Corner Arc Match</div>
+          </div>
+        </div>
+        <p class="option-desc">
+          Card stops at Y=496 with custom bottom corners tailored to blend smoothly into the squircle's rounded corner radius, eliminating sharp right angles at the card rim intersection.
+        </p>
+        <div class="metrics-pill">
+          <div>• <strong>King 'K' Visible:</strong> 70% (Y=174px)</div>
+          <div>• <strong>Heart Scale:</strong> 80% with 8px clearance below 'Q' tail</div>
+          <div>• <strong>Gold Squircle:</strong> Layered ON TOP over cards</div>
+          <div>• <strong>Lower Rim:</strong> Rounded corners blend into squircle curve</div>
+        </div>
+        <div class="preview-showcase">
+          <div class="preview-box">
+            <img src="assets/glow-options/option_C1_F_stopped.svg" class="preview-img-large" alt="Option C1-F">
+            <span class="preview-label">180px Retina</span>
+          </div>
+          <div class="ios-tile-wrap">
+            <img src="assets/glow-options/option_C1_F_stopped.svg" class="ios-app-icon" alt="Option C1-F iOS Tile">
+            <span class="ios-app-label">Solitaire</span>
+          </div>
+          <div class="scale-row">
+            <div class="scale-item">
+              <img src="assets/glow-options/option_C1_F_stopped.svg" width="32" height="32" alt="32px">
+              <span class="scale-label">32px</span>
+            </div>
+            <div class="scale-item">
+              <img src="assets/glow-options/option_C1_F_stopped.svg" width="16" height="16" alt="16px">
+              <span class="scale-label">16px</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-action btn-test" onclick="testInTab('C1-F', 'assets/glow-options/option_C1_F_stopped.svg', 'Option C1-F: Corner Arc Match')">Test in Tab</button>
+          <button class="btn-action btn-select" onclick="selectWinner('C1-F', 'Option C1-F: Corner Arc Match')">Select Winner</button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Side-by-Side Composite Image -->
+    <section class="composite-section">
+      <div class="composite-title">Requested Combo Comparison (Options C1 – C5)</div>
+      <div class="composite-sub">King 70% Visible • Heart 80% Scale • Comparing Q-Tail Clearance & Bottom Bleed</div>
+      <img src="assets/glow-options/option_5_combo_comparison.png" class="composite-img" alt="Combo Variations Comparison">
+    </section>
+
+    <!-- Section 1: Combo Variations -->
+    <div class="section-title">🔥 Requested Combo Variations (C1 – C5)</div>
+    <div class="section-desc">Comparing downward heart clearance levels below the Queen 'Q' tail:</div>
+
+    <section class="options-grid">
+
+      <!-- Option C1 -->
+      <div class="option-card" id="card-opt-C1">
+        <div class="card-badge">8px Gap</div>
+        <div class="option-header">
+          <div>
+            <div class="option-tag">Option C1</div>
+            <div class="option-name">Light Clearance (+8px)</div>
+          </div>
+        </div>
+        <p class="option-desc">
+          Heart shifted to Y=31.5. Leaves an 8px subtle gap between the Queen's tail tip and the heart lobes. Heart bottom tip touches the lower margin with minimal bleed.
+        </p>
+        <div class="metrics-pill">
+          <div>• <strong>King 'K' Visible:</strong> 70% (Y=174px)</div>
+          <div>• <strong>Heart Scale:</strong> 80% of original</div>
+          <div>• <strong>Q Tail Clearance:</strong> 8px subtle gap</div>
+          <div>• <strong>Bottom Bleed:</strong> Minimal (~2px)</div>
+        </div>
+        <div class="preview-showcase">
+          <div class="preview-box">
+            <img src="assets/glow-options/option_C1_combo.svg" class="preview-img-large" alt="Option C1">
+            <span class="preview-label">180px Retina</span>
+          </div>
+          <div class="ios-tile-wrap">
+            <img src="assets/glow-options/option_C1_combo.svg" class="ios-app-icon" alt="Option C1 iOS Tile">
+            <span class="ios-app-label">Solitaire</span>
+          </div>
+          <div class="scale-row">
+            <div class="scale-item">
+              <img src="assets/glow-options/option_C1_combo.svg" width="32" height="32" alt="32px">
+              <span class="scale-label">32px</span>
+            </div>
+            <div class="scale-item">
+              <img src="assets/glow-options/option_C1_combo.svg" width="16" height="16" alt="16px">
+              <span class="scale-label">16px</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-action btn-test" onclick="testInTab('C1', 'assets/glow-options/option_C1_combo.svg', 'Option C1: Light Clearance')">Test in Tab</button>
+          <button class="btn-action btn-select" onclick="selectWinner('C1', 'Option C1: Light Clearance')">Select Winner</button>
+        </div>
+      </div>
+
+      <!-- Option C2 (Recommended) -->
+      <div class="option-card active-card" id="card-opt-C2">
+        <div class="card-badge rec">★ Recommended</div>
+        <div class="option-header">
+          <div>
+            <div class="option-tag">Option C2</div>
+            <div class="option-name">Balanced Clearance (+19px)</div>
+          </div>
+        </div>
+        <p class="option-desc">
+          Heart shifted to Y=33.5. Provides an ideal, comfortable 19px breathing space below the Q tail. Heart bottom tip bleeds 15px past the icon edge for a bold poster style.
+        </p>
+        <div class="metrics-pill">
+          <div>• <strong>King 'K' Visible:</strong> 70% (Y=174px)</div>
+          <div>• <strong>Heart Scale:</strong> 80% of original</div>
+          <div>• <strong>Q Tail Clearance:</strong> 19px clean gap (ideal breathing room)</div>
+          <div>• <strong>Bottom Bleed:</strong> 15px confident bleed</div>
+        </div>
+        <div class="preview-showcase">
+          <div class="preview-box">
+            <img src="assets/glow-options/option_C2_combo.svg" class="preview-img-large" alt="Option C2">
+            <span class="preview-label">180px Retina</span>
+          </div>
+          <div class="ios-tile-wrap">
+            <img src="assets/glow-options/option_C2_combo.svg" class="ios-app-icon" alt="Option C2 iOS Tile">
+            <span class="ios-app-label">Solitaire</span>
+          </div>
+          <div class="scale-row">
+            <div class="scale-item">
+              <img src="assets/glow-options/option_C2_combo.svg" width="32" height="32" alt="32px">
+              <span class="scale-label">32px</span>
+            </div>
+            <div class="scale-item">
+              <img src="assets/glow-options/option_C2_combo.svg" width="16" height="16" alt="16px">
+              <span class="scale-label">16px</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-action btn-test" onclick="testInTab('C2', 'assets/glow-options/option_C2_combo.svg', 'Option C2: Balanced Clearance')">Test in Tab</button>
+          <button class="btn-action btn-select" onclick="selectWinner('C2', 'Option C2: Balanced Clearance')">Select Winner</button>
+        </div>
+      </div>
+
+      <!-- Option C3 -->
+      <div class="option-card" id="card-opt-C3">
+        <div class="card-badge">30px Gap</div>
+        <div class="option-header">
+          <div>
+            <div class="option-tag">Option C3</div>
+            <div class="option-name">Generous Clearance (+30px)</div>
+          </div>
+        </div>
+        <p class="option-desc">
+          Heart shifted to Y=35.5. Distinct 30px visual separation between the letter 'Q' and the heart emblem. Heart bottom tip bleeds 26px off the canvas.
+        </p>
+        <div class="metrics-pill">
+          <div>• <strong>King 'K' Visible:</strong> 70% (Y=174px)</div>
+          <div>• <strong>Heart Scale:</strong> 80% of original</div>
+          <div>• <strong>Q Tail Clearance:</strong> 30px clear separation</div>
+          <div>• <strong>Bottom Bleed:</strong> 26px full bleed</div>
+        </div>
+        <div class="preview-showcase">
+          <div class="preview-box">
+            <img src="assets/glow-options/option_C3_combo.svg" class="preview-img-large" alt="Option C3">
+            <span class="preview-label">180px Retina</span>
+          </div>
+          <div class="ios-tile-wrap">
+            <img src="assets/glow-options/option_C3_combo.svg" class="ios-app-icon" alt="Option C3 iOS Tile">
+            <span class="ios-app-label">Solitaire</span>
+          </div>
+          <div class="scale-row">
+            <div class="scale-item">
+              <img src="assets/glow-options/option_C3_combo.svg" width="32" height="32" alt="32px">
+              <span class="scale-label">32px</span>
+            </div>
+            <div class="scale-item">
+              <img src="assets/glow-options/option_C3_combo.svg" width="16" height="16" alt="16px">
+              <span class="scale-label">16px</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-action btn-test" onclick="testInTab('C3', 'assets/glow-options/option_C3_combo.svg', 'Option C3: Generous Clearance')">Test in Tab</button>
+          <button class="btn-action btn-select" onclick="selectWinner('C3', 'Option C3: Generous Clearance')">Select Winner</button>
+        </div>
+      </div>
+
+      <!-- Option C4 -->
+      <div class="option-card" id="card-opt-C4">
+        <div class="card-badge">44px Gap</div>
+        <div class="option-header">
+          <div>
+            <div class="option-tag">Option C4</div>
+            <div class="option-name">Maximum Bleed (+44px)</div>
+          </div>
+        </div>
+        <p class="option-desc">
+          Heart shifted to Y=38.0. Maximum clearance (44px gap), completely isolating the letter 'Q'. The heart anchors the bottom half with a generous 40px bleed.
+        </p>
+        <div class="metrics-pill">
+          <div>• <strong>King 'K' Visible:</strong> 70% (Y=174px)</div>
+          <div>• <strong>Heart Scale:</strong> 80% of original</div>
+          <div>• <strong>Q Tail Clearance:</strong> 44px maximum separation</div>
+          <div>• <strong>Bottom Bleed:</strong> 40px dramatic bleed</div>
+        </div>
+        <div class="preview-showcase">
+          <div class="preview-box">
+            <img src="assets/glow-options/option_C4_combo.svg" class="preview-img-large" alt="Option C4">
+            <span class="preview-label">180px Retina</span>
+          </div>
+          <div class="ios-tile-wrap">
+            <img src="assets/glow-options/option_C4_combo.svg" class="ios-app-icon" alt="Option C4 iOS Tile">
+            <span class="ios-app-label">Solitaire</span>
+          </div>
+          <div class="scale-row">
+            <div class="scale-item">
+              <img src="assets/glow-options/option_C4_combo.svg" width="32" height="32" alt="32px">
+              <span class="scale-label">32px</span>
+            </div>
+            <div class="scale-item">
+              <img src="assets/glow-options/option_C4_combo.svg" width="16" height="16" alt="16px">
+              <span class="scale-label">16px</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-action btn-test" onclick="testInTab('C4', 'assets/glow-options/option_C4_combo.svg', 'Option C4: Maximum Bleed')">Test in Tab</button>
+          <button class="btn-action btn-select" onclick="selectWinner('C4', 'Option C4: Maximum Bleed')">Select Winner</button>
+        </div>
+      </div>
+
+      <!-- Option C5 -->
+      <div class="option-card" id="card-opt-C5">
+        <div class="card-badge">Framed Border</div>
+        <div class="option-header">
+          <div>
+            <div class="option-tag">Option C5</div>
+            <div class="option-name">Gold Border on Top</div>
+          </div>
+        </div>
+        <p class="option-desc">
+          Same ideal 19px gap as C2 (Y=33.5), but the glowing gold squircle perimeter border is rendered on top, framing the cards cleanly inside the luminous rim.
+        </p>
+        <div class="metrics-pill">
+          <div>• <strong>King 'K' Visible:</strong> 70% (Y=174px)</div>
+          <div>• <strong>Heart Scale:</strong> 80% of original</div>
+          <div>• <strong>Q Tail Clearance:</strong> 19px clean gap</div>
+          <div>• <strong>Border:</strong> Gold squircle rendered on top</div>
+        </div>
+        <div class="preview-showcase">
+          <div class="preview-box">
+            <img src="assets/glow-options/option_C5_combo.svg" class="preview-img-large" alt="Option C5">
+            <span class="preview-label">180px Retina</span>
+          </div>
+          <div class="ios-tile-wrap">
+            <img src="assets/glow-options/option_C5_combo.svg" class="ios-app-icon" alt="Option C5 iOS Tile">
+            <span class="ios-app-label">Solitaire</span>
+          </div>
+          <div class="scale-row">
+            <div class="scale-item">
+              <img src="assets/glow-options/option_C5_combo.svg" width="32" height="32" alt="32px">
+              <span class="scale-label">32px</span>
+            </div>
+            <div class="scale-item">
+              <img src="assets/glow-options/option_C5_combo.svg" width="16" height="16" alt="16px">
+              <span class="scale-label">16px</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-action btn-test" onclick="testInTab('C5', 'assets/glow-options/option_C5_combo.svg', 'Option C5: Gold Border on Top')">Test in Tab</button>
+          <button class="btn-action btn-select" onclick="selectWinner('C5', 'Option C5: Gold Border on Top')">Select Winner</button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Section 2: Previous Step 5A-5E Variations -->
+    <div class="section-title">✨ Earlier Step: 5A – 5E Variations</div>
+    <div class="section-desc">Comparing King 'K' exposure from 52% to 70% before the heart downward shift:</div>
+
+    <section class="options-grid">
+      <!-- Option 5A -->
+      <div class="option-card" id="card-opt-5A">
+        <div class="card-badge">52% King K</div>
+        <div class="option-header">
+          <div><div class="option-tag">Option 5A</div><div class="option-name">Balanced 52% King</div></div>
+        </div>
+        <p class="option-desc">Queen Y=148, King 'K' 52% visible, Heart 80%.</p>
+        <div class="preview-showcase">
+          <img src="assets/glow-options/option_5A_squircle_crimson.svg" style="width: 80px; height: 80px; border-radius: 18px;" alt="Option 5A">
+          <div class="ios-tile-wrap"><img src="assets/glow-options/option_5A_squircle_crimson.svg" class="ios-app-icon" alt="5A"><span class="ios-app-label">Solitaire</span></div>
+        </div>
+        <div class="card-actions"><button class="btn-action btn-test" onclick="testInTab('5A', 'assets/glow-options/option_5A_squircle_crimson.svg', 'Option 5A')">Test in Tab</button></div>
+      </div>
+
+      <!-- Option 5B -->
+      <div class="option-card" id="card-opt-5B">
+        <div class="card-badge">58% King K</div>
+        <div class="option-header">
+          <div><div class="option-tag">Option 5B</div><div class="option-name">Golden Ratio 58% King</div></div>
+        </div>
+        <p class="option-desc">Queen Y=156, King 'K' 58% visible, Heart 75%.</p>
+        <div class="preview-showcase">
+          <img src="assets/glow-options/option_5B_squircle_crimson.svg" style="width: 80px; height: 80px; border-radius: 18px;" alt="Option 5B">
+          <div class="ios-tile-wrap"><img src="assets/glow-options/option_5B_squircle_crimson.svg" class="ios-app-icon" alt="5B"><span class="ios-app-label">Solitaire</span></div>
+        </div>
+        <div class="card-actions"><button class="btn-action btn-test" onclick="testInTab('5B', 'assets/glow-options/option_5B_squircle_crimson.svg', 'Option 5B')">Test in Tab</button></div>
+      </div>
+
+      <!-- Option 5D -->
+      <div class="option-card" id="card-opt-5D">
+        <div class="card-badge">70% King K</div>
+        <div class="option-header">
+          <div><div class="option-tag">Option 5D</div><div class="option-name">Maximum 70% King</div></div>
+        </div>
+        <p class="option-desc">Queen Y=174, King 'K' 70% visible, Heart 65%.</p>
+        <div class="preview-showcase">
+          <img src="assets/glow-options/option_5D_squircle_crimson.svg" style="width: 80px; height: 80px; border-radius: 18px;" alt="Option 5D">
+          <div class="ios-tile-wrap"><img src="assets/glow-options/option_5D_squircle_crimson.svg" class="ios-app-icon" alt="5D"><span class="ios-app-label">Solitaire</span></div>
+        </div>
+        <div class="card-actions"><button class="btn-action btn-test" onclick="testInTab('5D', 'assets/glow-options/option_5D_squircle_crimson.svg', 'Option 5D')">Test in Tab</button></div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    const OPTION_FILES = {
+      'C1-A': 'assets/glow-options/option_C1_A_stopped.svg',
+      'C1-B': 'assets/glow-options/option_C1_B_stopped.svg',
+      'C1-C': 'assets/glow-options/option_C1_C_stopped.svg',
+      'C1-D': 'assets/glow-options/option_C1_D_stopped.svg',
+      'C1-E': 'assets/glow-options/option_C1_E_stopped.svg',
+      'C1-F': 'assets/glow-options/option_C1_F_stopped.svg',
+      'C1': 'assets/glow-options/option_C1_combo.svg',
+      'C2': 'assets/glow-options/option_C2_combo.svg',
+      'C3': 'assets/glow-options/option_C3_combo.svg',
+      'C4': 'assets/glow-options/option_C4_combo.svg',
+      'C5': 'assets/glow-options/option_C5_combo.svg',
+      '5A': 'assets/glow-options/option_5A_squircle_crimson.svg',
+      '5B': 'assets/glow-options/option_5B_squircle_crimson.svg',
+      '5C': 'assets/glow-options/option_5C_squircle_crimson.svg',
+      '5D': 'assets/glow-options/option_5D_squircle_crimson.svg',
+      '5E': 'assets/glow-options/option_5E_squircle_crimson.svg',
+      '1': 'assets/glow-options/option_1_stack_glow_felt.svg',
+      '2': 'assets/glow-options/option_2_squircle_glow_felt.svg',
+      '3': 'assets/glow-options/option_3_dual_glow_felt.svg',
+      '4': 'assets/glow-options/option_4_stack_glow_crimson.svg',
+      '5': 'assets/glow-options/option_5_squircle_glow_crimson.svg',
+      '6': 'assets/glow-options/option_6_crimson_rim_glow.svg'
+    };
+
+    function testInTab(optId, fileUrl, name) {
+      const link = document.getElementById('dynamic-favicon');
+      if (link) link.href = fileUrl;
+
+      document.getElementById('banner-active-icon').src = fileUrl;
+      document.getElementById('banner-active-name').textContent = name;
+
+      document.querySelectorAll('.option-card').forEach(card => card.classList.remove('active-card'));
+      const activeCard = document.getElementById('card-opt-' + optId);
+      if (activeCard) activeCard.classList.add('active-card');
+    }
+
+    function selectWinner(optId, name) {
+      testInTab(optId, OPTION_FILES[optId], name);
+      alert(`You selected "${name}"! Reply with "Option ${optId}" in the chat to set this as the permanent game icon.`);
+    }
+  </script>
+</body>
+</html>

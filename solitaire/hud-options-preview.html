@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Navigation & Menu Button Studio for Mom</title>
+  <style>
+    html {
+      overflow-x: hidden;
+      overflow-y: scroll !important;
+      background-color: #071a12;
+    }
+
+    body {
+      margin: 0;
+      padding: 30px 20px 80px 20px;
+      background: radial-gradient(circle at 50% 20%, #174d36 0%, #0d2e20 60%, #071a12 100%);
+      color: #f1f5f9;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    .studio-container {
+      max-width: 900px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .studio-header {
+      text-align: center;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(251, 191, 36, 0.25);
+    }
+
+    .studio-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: #fbbf24;
+      margin: 0 0 8px 0;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+    }
+
+    .studio-subtitle {
+      font-size: 14.5px;
+      color: #94a3b8;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .summary-card {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1.5px solid rgba(251, 191, 36, 0.35);
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .summary-text {
+      font-size: 13.5px;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    .summary-text strong {
+      color: #fbbf24;
+    }
+
+    .toggle-hitboxes-btn {
+      background: rgba(251, 191, 36, 0.15);
+      border: 1px solid #fbbf24;
+      color: #fbbf24;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .toggle-hitboxes-btn:hover,
+    .toggle-hitboxes-btn.active {
+      background: #fbbf24;
+      color: #0f172a;
+    }
+
+    /* Option Cards */
+    .option-section {
+      background: rgba(10, 35, 24, 0.85);
+      border: 1.5px solid rgba(251, 191, 36, 0.25);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .option-section:hover {
+      border-color: rgba(251, 191, 36, 0.6);
+      transform: translateY(-2px);
+    }
+
+    .option-section.selected {
+      border-color: #fbbf24;
+      box-shadow: 0 0 0 2px #fbbf24, 0 10px 30px rgba(251, 191, 36, 0.25);
+      background: rgba(15, 42, 30, 0.95);
+    }
+
+    .option-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      border-bottom: 1px solid rgba(251, 191, 36, 0.2);
+      padding-bottom: 12px;
+    }
+
+    .option-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      background: rgba(251, 191, 36, 0.15);
+      color: #fbbf24;
+      border: 1px solid rgba(251, 191, 36, 0.3);
+    }
+
+    .option-section.selected .option-badge {
+      background: #fbbf24;
+      color: #0f172a;
+    }
+
+    .option-title-text {
+      font-size: 18px;
+      font-weight: 800;
+      color: #ffffff;
+      margin: 0;
+    }
+
+    .option-desc {
+      font-size: 13px;
+      color: #94a3b8;
+      line-height: 1.4;
+      margin: 0;
+    }
+
+    /* Interactive Simulation Canvas */
+    .sim-canvas {
+      background: radial-gradient(circle at 50% 30%, #154530 0%, #0d2e20 70%, #082015 100%);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* Common HUD Styles */
+    .hud-stats-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+    }
+
+    .hud-stat-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1px;
+    }
+
+    .hud-stat-label {
+      font-size: 11.5px;
+      font-weight: 800;
+      color: #fbbf24;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      line-height: 1.1;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    }
+
+    .hud-stat-val {
+      font-size: 12px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.1;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Mini slots preview under the HUD */
+    .mini-slots-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+      opacity: 0.65;
+      pointer-events: none;
+    }
+
+    .mini-slot {
+      aspect-ratio: 52 / 78;
+      border: 1px solid rgba(176, 151, 72, 0.4);
+      background: rgba(20, 62, 44, 0.4);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slot-letter {
+      font-family: serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: rgba(188, 165, 92, 0.5);
+    }
+
+    .mini-slot-blank {
+      border-color: transparent;
+      background: transparent;
+    }
+
+    .mini-card-tag {
+      font-size: 9px;
+      font-weight: 700;
+      color: #94a3b8;
+      text-transform: uppercase;
+    }
+
+    /* =========================================================================
+       STYLE OPTION 1: CLASSIC EXPANDED PILLS (36px Height, 10px Gap)
+       ========================================================================= */
+    .hud-opt1 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .btn-opt1 {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1.5px solid #fbbf24;
+      color: #fef08a;
+      height: 36px;
+      padding: 0 14px;
+      border-radius: 18px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      position: relative;
+    }
+
+    .btn-opt1:active {
+      transform: scale(0.96);
+      background: #fbbf24;
+      color: #0f172a;
+    }
+
+    .btn-opt1.new-btn {
+      background: #991b1b;
+      border-color: #f87171;
+      color: #ffffff;
+    }
+
+    .btn-opt1.new-btn:active {
+      background: #ef4444;
+    }
+
+    /* =========================================================================
+       STYLE OPTION 2: SYMMETRICAL SPLIT (New & Undo Left, Menu Right)
+       ========================================================================= */
+    .hud-opt2 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .btn-opt2 {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1.5px solid #fbbf24;
+      color: #fef08a;
+      height: 36px;
+      padding: 0 13px;
+      border-radius: 18px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      position: relative;
+    }
+
+    .btn-opt2.new-btn {
+      background: #991b1b;
+      border-color: #f87171;
+      color: #ffffff;
+    }
+
+    .btn-opt2.menu-btn {
+      background: rgba(30, 41, 59, 0.95);
+      border-color: #fde047;
+      padding: 0 16px;
+    }
+
+    /* =========================================================================
+       STYLE OPTION 3: SENIOR HIGH-CONTRAST TOUCH BAR (40px Height, 13px Font)
+       ========================================================================= */
+    .hud-opt3 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .btn-opt3 {
+      background: rgba(15, 23, 42, 0.95);
+      border: 2px solid #fbbf24;
+      color: #ffffff;
+      height: 40px;
+      padding: 0 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.15s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+
+    .btn-opt3.new-btn {
+      background: #b91c1c;
+      border-color: #fca5a5;
+      color: #ffffff;
+    }
+
+    .btn-opt3:active {
+      transform: scale(0.95);
+      background: #fbbf24;
+      color: #0f172a;
+    }
+
+    /* =========================================================================
+       STYLE OPTION 4: CLEAN CASINO ROUNDED TABS (No Icons, Clear Text Words)
+       ========================================================================= */
+    .hud-opt4 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .btn-opt4 {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1.5px solid rgba(251, 191, 36, 0.6);
+      color: #fde047;
+      height: 36px;
+      padding: 0 16px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      position: relative;
+    }
+
+    .btn-opt4.new-btn {
+      background: #881337;
+      border-color: #fb7185;
+      color: #ffffff;
+    }
+
+    .btn-opt4:active {
+      transform: scale(0.96);
+      background: #fbbf24;
+      color: #0f172a;
+    }
+
+    /* Hitbox Overlay Mode */
+    .show-hitboxes .btn-opt1::after,
+    .show-hitboxes .btn-opt2::after,
+    .show-hitboxes .btn-opt3::after,
+    .show-hitboxes .btn-opt4::after {
+      content: "44px+";
+      position: absolute;
+      top: -4px;
+      bottom: -4px;
+      left: -4px;
+      right: -4px;
+      border: 1.5px dashed #22c55e;
+      background: rgba(34, 197, 94, 0.15);
+      border-radius: inherit;
+      pointer-events: none;
+      font-size: 9px;
+      font-weight: 800;
+      color: #86efac;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 2px;
+    }
+
+    /* Bottom Selection Bar */
+    .summary-section {
+      background: rgba(15, 23, 42, 0.95);
+      border: 2px solid #fbbf24;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .summary-heading {
+      font-size: 18px;
+      font-weight: 800;
+      color: #fbbf24;
+      margin: 0;
+    }
+
+    .summary-text-box {
+      background: rgba(8, 28, 19, 0.6);
+      border: 1px solid rgba(251, 191, 36, 0.2);
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-size: 14px;
+      color: #cbd5e1;
+    }
+
+    .summary-text-box strong {
+      color: #ffffff;
+    }
+
+    .summary-text-box span {
+      color: #fbbf24;
+      font-weight: 700;
+    }
+
+    .apply-btn {
+      align-self: flex-start;
+      background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+      color: #0f172a;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 24px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .apply-btn:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="studio-container">
+    <!-- Header -->
+    <header class="studio-header">
+      <h1 class="studio-title">Top Tap Area & "Menu" Button Options for Mom</h1>
+      <p class="studio-subtitle">
+        Sound button is removed from top bar (accessible inside Settings modal).<br>
+        Review these 4 mom-friendly designs with enlarged touch hitboxes and a dedicated <strong>"Menu"</strong> button.
+      </p>
+    </header>
+
+    <!-- Controls Ribbon -->
+    <div class="summary-card">
+      <div class="summary-text">
+        <strong>Mom-Friendly Accessibility Target:</strong> All buttons expanded from 28px to <strong>36px – 40px height</strong> with generous finger margins to prevent mis-taps.
+      </div>
+      <button class="toggle-hitboxes-btn" id="btn-toggle-hitbox">Show Touch Hitboxes</button>
+    </div>
+
+    <!-- OPTION 1: CLASSIC EXPANDED PILLS -->
+    <div class="option-section selected" data-choice="opt1">
+      <div class="option-meta">
+        <div>
+          <span class="option-badge">Top Pick &bull; Natural Evolution</span>
+          <h2 class="option-title-text">Option 1: Classic Expanded Pills (36px Height)</h2>
+        </div>
+      </div>
+      <p class="option-desc">
+        Maintains the game's classic brass aesthetic while expanding button height to <strong>36px</strong> and adding <strong>"Menu"</strong> with a crisp gold gear icon. Sound is removed, leaving clean 10px breathing room between buttons.
+      </p>
+      <div class="sim-canvas">
+        <div class="hud-opt1">
+          <div><button class="btn-opt1 new-btn">New</button></div>
+          <div class="hud-stats-group">
+            <div class="hud-stat-col"><span class="hud-stat-label">Score</span><span class="hud-stat-val">240</span></div>
+            <div class="hud-stat-col"><span class="hud-stat-label">Moves</span><span class="hud-stat-val">18</span></div>
+          </div>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <button class="btn-opt1">&#x21BA; Undo</button>
+            <button class="btn-opt1"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+  <circle cx="12" cy="12" r="3" fill="rgba(251, 191, 36, 0.35)"/>
+  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+</svg> Menu</button>
+          </div>
+        </div>
+        
+<div class="mini-slots-row">
+  <div class="mini-slot"><span class="slot-letter">A</span></div>
+  <div class="mini-slot"><span class="slot-letter">A</span></div>
+  <div class="mini-slot"><span class="slot-letter">A</span></div>
+  <div class="mini-slot"><span class="slot-letter">A</span></div>
+  <div class="mini-slot mini-slot-blank"></div>
+  <div class="mini-slot mini-slot-waste"><span class="mini-card-tag">Waste</span></div>
+  <div class="mini-slot mini-slot-stock"><span class="mini-card-tag">Stock</span></div>
+</div>
+
+      </div>
+    </div>
+
+    <!-- OPTION 2: SYMMETRICAL SPLIT -->
+    <div class="option-section" data-choice="opt2">
+      <div class="option-meta">
+        <div>
+          <span class="option-badge">Ergonomic Split</span>
+          <h2 class="option-title-text">Option 2: Symmetrical Split (New & Undo Left &bull; Menu Right)</h2>
+        </div>
+      </div>
+      <p class="option-desc">
+        Groups gameplay actions (<strong>New</strong> and <strong>Undo</strong>) together on the left, leaving <strong>Menu</strong> completely isolated on the far right. Mom's right thumb will never accidentally trigger New or Undo when opening Settings!
+      </p>
+      <div class="sim-canvas">
+        <div class="hud-opt2">
+          <div style="display:flex; gap:8px; align-items:center;">
+            <button class="btn-opt2 new-btn">New</button>
+            <button class="btn-opt2">&#x21BA; Undo</button>
+          </div>
+          <div class="hud-stats-group">
+            <div class="hud-stat-col"><span class="hud-stat-label">Score</span><span class="hud-stat-val">240</span></div>
+            <div class="hud-stat-col"><span class="hud-stat-label">Moves</span><span class="hud-stat-val">18</span></div>
+          </div>
+          <div>
+            <button class="btn-opt2 menu-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+  <circle cx="12" cy="12" r="3" fill="rgba(251, 191, 36, 0.35)"/>
+  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+</svg> Menu</button>
+          </div>
+        </div>
+        
+<div class="mini-slots-row">
+  <div class="mini-slot"><span class="slot-letter">A</span></div>
+  <div class="mini-slot"><span class="slot-letter">A</span></div>
+  <div class="mini-slot"><span class="slot-letter">A</span></div>
+  <div class="mini-slot"><span class="slot-letter">A</span></div>
+  <div class="mini-slot mini-slot-blank"></div>
+  <div class="mini-slot mini-slot-waste"><span class="mini-card-tag">Waste</span></div>
+  <div class="mini-slot mini-slot-stock"><span class="mini-card-tag">Stock</span></div>
+</div>
+
+      </div>
+    </div>
+
+    <!-- OPTION 3: SENIOR HIGH-CONTRAST TOUCH BAR -->
+    <div class="option-section" data-choice="opt3">
+      <div class="option-meta">
+        <div>
+          <span class="option-badge">Maximum Ease &bull; 40px Hitbox</span>
+          <h2 class="option-title-text">Option 3: Senior High-Contrast Bar (40px Height &bull; Bold Icons)</h2>
+        </div>
+      </div>
+      <p class="option-desc">
+        Engineered specifically for older eyes and hands: <strong>40px tall buttons</strong>, 13px bold text, universal <strong>☰ Menu</strong> icon, and high-contrast gold rims with 48px+ touch hitboxes. Easiest to tap accurately without reading glasses.
+      </p>
+      <div class="sim-canvas">
+        <div class="hud-opt3">
+          <div><button class="btn-opt3 new-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+  <line x1="12" y1="5" x2="12" y2="19"/>
+  <line x1="5" y1="12" x2="19" y2="12"/>
+</svg> New</button></div>
+          <div class="hud-stats-group">
+            <div class="hud-stat-col"><span class="hud-stat-label" style="font-size:12px;">Score</span><span class="hud-stat-val" style="font-size:13px;">240</span></div>
+            <div class="hud-stat-col"><span class="hud-stat-label" style="font-size:12px;">Moves</span><span class="hud-stat-val" style="font-size:13px;">18</span></div>
+          </div>
+          <div style="display:flex; gap:12px; align-items:center;">
+            <button class="btn-opt3">&#x21BA; Undo</button>
+            <button class="btn-opt3"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+  <line x1="3" y1="6" x2="21" y2="6"/>
+  <line x1="3" y1="12" x2="21" y2="12"/>
+  <line x1="3" y1="18" x2="21" y2="18"/>
+</svg> Menu</button>
+          </div>
+        </div>
+        
+<div class="mini-slots-row">
+  <div class="mini-slot"><span class="slot-letter">A</span></div>
+  <div class="mini-slot"><span class="slot-letter">A</span></div>
+  <div class="mini-slot"><span class="slot-letter">A</span></div>
+  <div class="mini-slot"><span class="slot-letter">A</span></div>
+  <div class="mini-slot mini-slot-blank"></div>
+  <div class="mini-slot mini-slot-waste"><span class="mini-card-tag">Waste</span></div>
+  <div class="mini-slot mini-slot-stock"><span class="mini-card-tag">Stock</span></div>
+</div>
+
+      </div>
+    </div>
+
+    <!-- OPTION 4: CLEAN CASINO ROUNDED TABS -->
+    <div class="option-section" data-choice="opt4">
+      <div class="option-meta">
+        <div>
+          <span class="option-badge">Pure Typography</span>
+          <h2 class="option-title-text">Option 4: Clean Casino Tabs (Full Words &bull; No Tiny Icons)</h2>
+        </div>
+      </div>
+      <p class="option-desc">
+        Pure text typography with zero icon clutter: <strong>"New Game"</strong> on the left, <strong>"Undo"</strong> and <strong>"Menu"</strong> on the right. Styled like brass casino felt markers with subtle rounded corners (8px radius).
+      </p>
+      <div class="sim-canvas">
+        <div class="hud-opt4">
+          <div><button class="btn-opt4 new-btn">New Game</button></div>
+          <div class="hud-stats-group">
+            <div class="hud-stat-col"><span class="hud-stat-label">Score</span><span class="hud-stat-val">240</span></div>
+            <div class="hud-stat-col"><span class="hud-stat-label">Moves</span><span class="hud-stat-val">18</span></div>
+          </div>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <button class="btn-opt4">Undo</button>
+            <button class="btn-opt4">Menu</button>
+          </div>
+        </div>
+        
+<div class="mini-slots-row">
+  <div class="mini-slot"><span class="slot-letter">A</span></div>
+  <div class="mini-slot"><span class="slot-letter">A</span></div>
+  <div class="mini-slot"><span class="slot-letter">A</span></div>
+  <div class="mini-slot"><span class="slot-letter">A</span></div>
+  <div class="mini-slot mini-slot-blank"></div>
+  <div class="mini-slot mini-slot-waste"><span class="mini-card-tag">Waste</span></div>
+  <div class="mini-slot mini-slot-stock"><span class="mini-card-tag">Stock</span></div>
+</div>
+
+      </div>
+    </div>
+
+    <!-- Selection Summary -->
+    <section class="summary-section">
+      <h3 class="summary-heading">Your Selected Top Bar Style</h3>
+      <div class="summary-text-box">
+        Selected Layout: <span id="sel-choice-text">Option 1: Classic Expanded Pills (36px Height, ⚙ Menu)</span>
+      </div>
+      <button class="apply-btn" id="btn-confirm-choice">Confirm & Copy My Choice</button>
+    </section>
+  </div>
+
+  <script>
+    let selectedChoice = 'opt1';
+    const choiceLabels = {
+      opt1: 'Option 1: Classic Expanded Pills (36px Height, ⚙ Menu, Sound in Settings)',
+      opt2: 'Option 2: Symmetrical Split (New & Undo Left, ⚙ Menu Right)',
+      opt3: 'Option 3: Senior High-Contrast Bar (40px Height, ☰ Menu)',
+      opt4: 'Option 4: Clean Casino Tabs (New Game, Undo, Menu pure text)'
+    };
+
+    document.querySelectorAll('.option-section').forEach(sec => {
+      sec.addEventListener('click', () => {
+        document.querySelectorAll('.option-section').forEach(s => s.classList.remove('selected'));
+        sec.classList.add('selected');
+        selectedChoice = sec.dataset.choice;
+        document.getElementById('sel-choice-text').textContent = choiceLabels[selectedChoice];
+      });
+    });
+
+    // Hitbox toggle
+    const toggleBtn = document.getElementById('btn-toggle-hitbox');
+    toggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      document.body.classList.toggle('show-hitboxes');
+      toggleBtn.classList.toggle('active');
+      toggleBtn.textContent = document.body.classList.contains('show-hitboxes') ? 'Hide Touch Hitboxes' : 'Show Touch Hitboxes';
+    });
+
+    document.getElementById('btn-confirm-choice').addEventListener('click', () => {
+      const text = choiceLabels[selectedChoice];
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text);
+      }
+      alert("Selected style copied to clipboard:\n\n" + text + "\n\nPaste this in our chat to apply!");
+    });
+  </script>
+</body>
+</html>

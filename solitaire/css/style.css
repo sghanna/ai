@@ -1,0 +1,1345 @@
+/**
+ * agy-solitaire: Accessible Stylesheet
+ * Optimized for low-vision & iPhone 16e (6.1" display)
+ * Theme: Option 3 Imperial Pine & Brass Felt
+ */
+
+:root {
+  --pine-felt: radial-gradient(circle at 50% 30%, #163827 0%, #0c2419 70%, #05130d 100%);
+  --gold-accent: #fbbf24;
+  --gold-light: #fef08a;
+  --card-red: #c62f27;
+  --card-black: #1b0a0a;
+  --slot-border: rgba(176, 151, 72, 0.4);
+  --slot-bg: rgba(20, 62, 44, 0.5);
+  --card-width: 52px;
+  --card-height: 78px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #05130d;
+}
+
+/* App Viewport Container (Centered, iPhone 16e aspect ratio) */
+#app-container {
+  width: 100%;
+  max-width: 430px;
+  height: 100%;
+  margin: 0 auto;
+  background: var(--pine-felt);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+  padding: max(8px, env(safe-area-inset-top)) 8px max(12px, env(safe-area-inset-bottom)) 8px;
+  overflow: hidden;
+}
+
+/* =========================================================================
+   TOP HUD: OPTION 3 SENIOR HIGH-CONTRAST BAR (40px HEIGHT, CENTER MENU)
+   ========================================================================= */
+.top-hud {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 4px 6px 10px 6px;
+  z-index: 20;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.hud-controls-left {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.hud-controls-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.hud-controls-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.hud-btn {
+  background: rgba(15, 23, 42, 0.95);
+  border: 2px solid var(--gold-accent);
+  color: #ffffff;
+  height: 42px;
+  padding: 0 14px;
+  border-radius: 9999px; /* Stand-alone oval pill */
+  font-size: 15px;
+  font-weight: 900;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.hud-btn:active {
+  transform: scale(0.95);
+  background: var(--gold-accent);
+  color: #0f172a;
+}
+
+.hud-btn.new-game-btn {
+  background: #b91c1c;
+  border-color: #fca5a5;
+  color: #ffffff;
+  padding: 0 14px;
+}
+
+.hud-btn.new-game-btn:active {
+  background: #ef4444;
+}
+
+.hud-btn.menu-btn {
+  background: rgba(15, 23, 42, 0.95);
+  border-color: #fbbf24;
+  color: #fef08a;
+  padding: 0 16px;
+}
+
+.hud-btn.undo-btn {
+  padding: 0 14px;
+}
+
+/* =========================================================================
+   TOP ROW: STOCK, WASTE, & 4 FOUNDATIONS (GRID OF 7 SLOTS)
+   ========================================================================= */
+.top-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  margin-bottom: 12px;
+  z-index: 10;
+}
+
+.slot {
+  width: 100%;
+  aspect-ratio: 52 / 78;
+  border-radius: 3.2px;
+  border: 1.2px solid var(--slot-border);
+  background: var(--slot-bg);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.slot-stock.empty-stock {
+  cursor: pointer;
+}
+
+.recycle-symbol {
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--gold-accent);
+  opacity: 0.7;
+}
+
+.slot-foundation {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.foundation-empty-glyph {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: rgba(251, 191, 36, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  letter-spacing: 0.5px;
+  user-select: none;
+}
+
+.stock-count-badge {
+  position: absolute;
+  top: 0.6px;
+  right: 0.6px;
+  width: 22px;
+  height: 19px;
+  border-radius: 3.2px;
+  background: rgba(60, 60, 60, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-family: 'Bodoni 72', Didot, Georgia, 'Times New Roman', serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* =========================================================================
+   TABLEAU: 7 COLUMNS
+   ========================================================================= */
+.tableau-area {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  position: relative;
+  overflow: visible;
+  z-index: 10;
+}
+
+.tableau-col {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: 6px;
+  min-height: 220px;
+}
+
+/* Empty column King placeholder slot */
+.king-placeholder-slot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  aspect-ratio: 52 / 78;
+  border-radius: 3.5px;
+  cursor: default;
+  transition: transform 0.15s ease, filter 0.2s ease;
+}
+
+.king-placeholder-slot svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.king-placeholder-slot.valid-king-target {
+  cursor: pointer;
+  filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.85));
+  animation: kingSlotPulse 2s infinite ease-in-out;
+}
+
+@keyframes kingSlotPulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.6));
+  }
+  50% {
+    transform: scale(1.02);
+    filter: drop-shadow(0 0 14px rgba(254, 240, 138, 0.95));
+  }
+}
+
+/* =========================================================================
+   SOLITAIRE CARD STYLING (VECTOR SVG CARDS MATCHING MOM'S GAME)
+   ========================================================================= */
+.solitaire-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  aspect-ratio: 52 / 78;
+  border-radius: 3.2px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  overflow: visible;
+  transition: transform 0.1s ease;
+  will-change: transform;
+}
+
+.solitaire-card svg.card-svg,
+.slot svg.slot-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 0.8px 0.6px rgba(0, 0, 0, 0.45));
+  pointer-events: none;
+}
+
+.solitaire-card:active {
+  transform: scale(0.97);
+}
+
+.solitaire-card.hint-active {
+  animation: hintPulse 2.4s infinite ease-in-out;
+  outline: 2px solid #fbbf24;
+  outline-offset: -1px;
+  border-radius: 3.2px;
+  z-index: 25 !important;
+}
+
+@keyframes hintPulse {
+  0%, 100% {
+    box-shadow: 0 0 6px #fbbf24, 0 0 12px rgba(251, 191, 36, 0.55);
+  }
+  50% {
+    box-shadow: 0 0 10px #fef08a, 0 0 18px rgba(254, 240, 138, 0.85);
+  }
+}
+
+.solitaire-card.no-move-shake {
+  animation: cardShake 0.25s ease-in-out;
+}
+
+@keyframes cardShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+/* Cards inside a selected stack: lift together without individual dividing halos */
+.solitaire-card.selected-stack-card,
+.solitaire-card.selected-card {
+  transform: translateY(-4px) !important;
+  z-index: 45 !important;
+}
+
+/* Unified perimeter golden aura wrapping the entire selected stack */
+.stack-selection-halo {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 4px;
+  border: 2px solid #fbbf24;
+  box-shadow: 0 0 6px #fbbf24, 0 0 14px rgba(251, 191, 36, 0.55);
+  animation: hintPulse 2.4s infinite ease-in-out;
+  z-index: 48;
+  box-sizing: border-box;
+  will-change: box-shadow;
+}
+
+/* Flying Card: Fluid FLIP animation across the felt */
+.solitaire-card.flying-card {
+  z-index: 1000 !important;
+  pointer-events: none !important;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 16px rgba(251, 191, 36, 0.5)) !important;
+}
+
+/* In-place card flip rotation */
+.solitaire-card.flipping {
+  animation: cardFlipInPlace 0.22s ease-in-out !important;
+}
+
+@keyframes cardFlipInPlace {
+  0% { transform: scaleX(1); }
+  50% { transform: scaleX(0.05); }
+  100% { transform: scaleX(1); }
+}
+
+/* Slot & Column gentle shake for invalid destinations */
+.slot-shake {
+  animation: slotShake 0.25s ease-in-out !important;
+}
+
+@keyframes slotShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* =========================================================================
+   CARD BACK (OPTION 4A DOUBLE HAPPINESS 囍)
+   ========================================================================= */
+.card-back.double-happiness-back {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 35% 35%, #b91c1c 0%, #881337 65%, #4c0519 100%);
+  padding: 3px;
+  border-radius: 3.2px;
+  border: 0.6px solid #7a7c76;
+  box-shadow: 0 0.8px 0.6px rgba(0, 0, 0, 0.45);
+  box-sizing: border-box;
+}
+
+.back-inner-border {
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(251, 191, 36, 0.7);
+  border-radius: 2.4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.back-seal {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1.5px solid #fbbf24;
+  background: radial-gradient(circle at center, #991b1b 0%, #450a0a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 6px rgba(251, 191, 36, 0.4);
+  box-sizing: border-box;
+}
+
+.back-seal-inner {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px dashed rgba(254, 240, 138, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.back-seal-glyph {
+  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 14px;
+  font-weight: 900;
+  color: #fbbf24;
+  line-height: 1;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+/* =========================================================================
+   AUTO-FINISH BANNER (WHEN GAME IS GUARANTEED SOLVED)
+   DROPS DOWN FROM TOP OF SCREEN TO BOTTOM TO CATCH MOM'S ATTENTION
+   ========================================================================= */
+#auto-finish-banner {
+  position: absolute;
+  bottom: max(60px, calc(env(safe-area-inset-bottom) + 52px));
+  left: 14px;
+  right: 14px;
+  background: linear-gradient(135deg, #b45309 0%, #78350f 50%, #451a03 100%);
+  border: 2px solid #fbbf24;
+  border-radius: 22px;
+  padding: 10px 14px 10px 14px;
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85), 0 0 20px rgba(251, 191, 36, 0.45);
+  z-index: 35;
+  cursor: pointer;
+  user-select: none;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+#auto-finish-banner.visible {
+  display: flex !important;
+}
+
+/* Dedicated glow compositor layer: zero CPU repaint, only opacity pulses */
+#auto-finish-banner::after,
+#standalone-autowin-banner::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  border: 2px solid #fef08a;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.95), 0 0 32px rgba(251, 191, 36, 0.85);
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity;
+}
+
+#auto-finish-banner.glowing::after,
+#standalone-autowin-banner.glowing::after {
+  animation: autoWinGlow 2.4s ease-in-out infinite;
+}
+
+@keyframes autoWinGlow {
+  0%, 100% { opacity: 0; }
+  50%      { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #auto-finish-banner.glowing::after,
+  #standalone-autowin-banner.glowing::after {
+    animation: none;
+    opacity: 0.6;
+  }
+}
+
+#auto-finish-banner .banner-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#auto-finish-banner .banner-icon-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #1e3a29 0%, #0d281c 100%);
+  border: 1.5px solid #fbbf24;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(254, 240, 138, 0.4);
+}
+
+#auto-finish-banner .auto-win-icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  display: block;
+}
+
+#auto-finish-banner .banner-text {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: #fef08a;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+#auto-finish-banner .banner-btn {
+  background: linear-gradient(180deg, #fef08a 0%, #fbbf24 100%);
+  color: #451a03;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 16.5px;
+  font-weight: 900;
+  padding: 10px 20px;
+  border-radius: 16px;
+  border: 1.5px solid #ffffff;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  letter-spacing: 0.4px;
+  transition: transform 0.15s ease, filter 0.15s ease;
+  flex-shrink: 0;
+}
+
+#auto-finish-banner .banner-btn:active {
+  transform: scale(0.94);
+  filter: brightness(0.95);
+}
+
+/* =========================================================================
+   VICTORY CANVAS & MODAL OVERLAY
+   ========================================================================= */
+#victory-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 25;
+}
+
+#victory-lanterns {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 24;
+  overflow: hidden;
+}
+
+/* Lantern styling with off-screen parking */
+.dyn-lantern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transform: translateY(720px);
+  animation-fill-mode: both !important;
+  border-radius: 8px;
+  background: radial-gradient(circle at 40% 35%, #ef4444 0%, #991b1b 75%, #450a0a 100%);
+  border: 1.5px solid #fbbf24;
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.8), 0 0 30px rgba(251, 191, 36, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fef08a;
+  font-family: "PingFang SC", sans-serif;
+  font-weight: 900;
+  pointer-events: none;
+}
+
+.dyn-lantern::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: calc(50% - 1.5px);
+  width: 3px;
+  height: 8px;
+  background: #fbbf24;
+}
+
+.dyn-lantern.small { width: 26px; height: 36px; font-size: 11px; }
+.dyn-lantern.medium { width: 34px; height: 46px; font-size: 14px; }
+.dyn-lantern.large { width: 42px; height: 58px; font-size: 18px; border-width: 2px; }
+
+@keyframes floatUpGentle {
+  0% { transform: translateY(720px) translateX(0) rotate(0deg); opacity: 0; }
+  5% { opacity: 0.95; }
+  25% { transform: translateY(500px) translateX(10px) rotate(1.2deg); }
+  50% { transform: translateY(330px) translateX(-8px) rotate(-1deg); }
+  75% { transform: translateY(160px) translateX(12px) rotate(1.2deg); }
+  92% { opacity: 0.95; }
+  100% { transform: translateY(-110px) translateX(2px) rotate(-0.5deg); opacity: 0; }
+}
+
+@keyframes floatUpSwayLeft {
+  0% { transform: translateY(720px) translateX(0) rotate(0deg); opacity: 0; }
+  5% { opacity: 0.95; }
+  25% { transform: translateY(510px) translateX(-16px) rotate(-1.5deg); }
+  50% { transform: translateY(340px) translateX(8px) rotate(1deg); }
+  75% { transform: translateY(170px) translateX(-18px) rotate(-1.2deg); }
+  92% { opacity: 0.95; }
+  100% { transform: translateY(-110px) translateX(-4px) rotate(0.5deg); opacity: 0; }
+}
+
+@keyframes floatUpSwayRight {
+  0% { transform: translateY(720px) translateX(0) rotate(0deg); opacity: 0; }
+  5% { opacity: 0.95; }
+  25% { transform: translateY(510px) translateX(18px) rotate(1.5deg); }
+  50% { transform: translateY(340px) translateX(-10px) rotate(-1.2deg); }
+  75% { transform: translateY(170px) translateX(14px) rotate(1deg); }
+  92% { opacity: 0.95; }
+  100% { transform: translateY(-110px) translateX(6px) rotate(-0.5deg); opacity: 0; }
+}
+
+@keyframes lanternFlicker {
+  0%, 100% { box-shadow: 0 0 16px rgba(239, 68, 68, 0.75), 0 0 28px rgba(251, 191, 36, 0.45); filter: brightness(1); }
+  50% { box-shadow: 0 0 24px rgba(239, 68, 68, 0.95), 0 0 40px rgba(251, 191, 36, 0.65); filter: brightness(1.08); }
+}
+
+/* Double Happiness Modal Overlay (Option 2 Victory Modal) */
+#victory-modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, rgba(185, 28, 28, 0.45) 0%, rgba(12, 36, 25, 0.88) 75%);
+  backdrop-filter: blur(5px);
+  z-index: 35;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.92);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#victory-modal-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+.opt2-seal {
+  width: 105px;
+  height: 105px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #b91c1c 0%, #7f1d1d 70%, #450a0a 100%);
+  border: 3px solid var(--gold-accent);
+  box-shadow: 0 0 35px rgba(251, 191, 36, 0.65), inset 0 2px 10px rgba(254, 240, 138, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  animation: opt2Pulse 2.5s infinite ease-in-out;
+}
+
+@keyframes opt2Pulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 30px rgba(251, 191, 36, 0.5); }
+  50% { transform: scale(1.05); box-shadow: 0 0 45px rgba(251, 191, 36, 0.85); }
+}
+
+.opt2-glyph {
+  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 56px;
+  font-weight: 900;
+  color: var(--gold-accent);
+  line-height: 1;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+.opt2-title {
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--gold-light);
+  letter-spacing: 2px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  margin-bottom: 2px;
+}
+
+.opt2-sub {
+  font-size: 14px;
+  font-weight: 800;
+  color: #6ee7b7;
+  letter-spacing: 3px;
+  margin-bottom: 16px;
+}
+
+.opt2-stats {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(251, 191, 36, 0.4);
+  border-radius: 12px;
+  padding: 8px 16px;
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--gold-light);
+  margin-bottom: 22px;
+}
+
+.opt2-btn {
+  background: linear-gradient(180deg, #d97706 0%, #b45309 100%);
+  border: 2px solid var(--gold-light);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 900;
+  padding: 12px 28px;
+  border-radius: 25px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.opt2-btn:hover, .opt2-btn:active {
+  transform: scale(1.04);
+  box-shadow: 0 8px 25px rgba(251, 191, 36, 0.5);
+}
+
+/* Win 2 Celebration Modal: Compact Tableau Banner (Tested in Combo C) */
+#victory-banner-overlay {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.92);
+  width: min(270px, 78%);
+  box-sizing: border-box;
+  z-index: 30;
+  background: radial-gradient(circle at center, rgba(127, 29, 29, 0.94) 0%, rgba(69, 10, 10, 0.97) 100%);
+  border: 1.8px solid var(--gold-accent);
+  border-radius: 16px;
+  padding: 12px 14px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85), 0 0 20px rgba(251, 191, 36, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#victory-banner-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.win2-seal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.modal-dragon-svg {
+  display: block;
+  pointer-events: none;
+}
+
+.win2-title {
+  font-size: 19px;
+  font-weight: 900;
+  color: #fbbf24;
+  letter-spacing: 0.8px;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.85);
+  margin-bottom: 2px;
+}
+
+.win2-sub {
+  font-size: 11px;
+  font-weight: 700;
+  color: #fde68a;
+  letter-spacing: 0.3px;
+  margin-bottom: 8px;
+}
+
+.win2-stats {
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  border-radius: 8px;
+  padding: 4px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #fef08a;
+  margin-bottom: 10px;
+}
+
+.win2-btn {
+  padding: 8px 20px;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+/* =========================================================================
+   ACE FOUNDATION CELEBRATION (MATCHING MOM'S SCREENSHOT)
+   ========================================================================= */
+#ace-celebration-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 50;
+  overflow: visible;
+}
+
+.ace-particle {
+  position: absolute;
+  pointer-events: none;
+  font-size: 26px;
+  line-height: 1;
+  transform: translate(-50%, -50%) scale(0.4);
+  opacity: 0;
+  animation: aceParticleBurst 1.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6));
+  -webkit-text-stroke: 0.75px #fbbf24;
+  paint-order: stroke fill;
+}
+
+.ace-particle.red { color: #dc2626; }
+.ace-particle.black { color: #111111; }
+
+@keyframes aceParticleBurst {
+  0% {
+    transform: translate(-50%, -50%) translate(0, 0) rotate(0deg) scale(0.3);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.95;
+    transform: translate(-50%, -50%) translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(1.18);
+  }
+  70% {
+    opacity: 0.85;
+    transform: translate(-50%, -50%) translate(calc(var(--tx) * 1.15), calc(var(--ty) + 8px)) rotate(var(--rot)) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate(calc(var(--tx) * 1.25), calc(var(--ty) + 24px)) rotate(var(--rot)) scale(0.85);
+  }
+}
+
+/* =========================================================================
+   NEW GAME CONFIRMATION MODAL (MATCHING GAME AESTHETIC)
+   ========================================================================= */
+.confirm-modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(5, 19, 13, 0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 55;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
+}
+
+.confirm-modal-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.confirm-modal-card {
+  width: 88%;
+  max-width: 320px;
+  background: radial-gradient(circle at 50% 20%, #1a4d36 0%, #0d281c 70%, #06160f 100%);
+  border: 2px solid var(--gold-accent);
+  border-radius: 18px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(251, 191, 36, 0.25);
+  padding: 24px 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transform: scale(0.9);
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.confirm-modal-overlay.visible .confirm-modal-card {
+  transform: scale(1);
+}
+
+.confirm-modal-seal {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #b91c1c 0%, #7f1d1d 70%, #450a0a 100%);
+  border: 2px solid var(--gold-accent);
+  box-shadow: 0 0 18px rgba(251, 191, 36, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.confirm-modal-glyph {
+  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--gold-accent);
+  line-height: 1;
+}
+
+.confirm-modal-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--gold-light);
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.confirm-modal-desc {
+  font-size: 16px;
+  font-weight: 600;
+  color: #e2e8f0;
+  line-height: 1.45;
+  margin-bottom: 22px;
+}
+
+.confirm-modal-buttons {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.confirm-btn {
+  flex: 1;
+  padding: 13px 0;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: all 0.15s ease;
+}
+
+.confirm-btn:active {
+  transform: scale(0.96);
+}
+
+.confirm-btn-cancel {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1.5px solid rgba(251, 191, 36, 0.45);
+  color: var(--gold-light);
+}
+
+.confirm-btn-proceed {
+  background: linear-gradient(180deg, #dc2626 0%, #991b1b 100%);
+  border: 1.5px solid #f87171;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+}
+
+/* =========================================================================
+   WASTE PILE OVERLAP (DEAL 3 FAN DISPLAY)
+   ========================================================================= */
+.slot-waste {
+  overflow: visible !important;
+  position: relative !important;
+}
+
+/* =========================================================================
+   SETTINGS MODAL STYLING (VIEWPORT-AWARE SCROLLABLE BODY)
+   ========================================================================= */
+.modal-title-inline {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 9px !important;
+  margin-bottom: 6px !important;
+  font-size: 22px !important;
+  flex-shrink: 0 !important;
+}
+
+.title-inline-gear,
+.title-inline-icon {
+  width: 19px !important;
+  height: 19px !important;
+  flex-shrink: 0 !important;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.6));
+}
+
+.settings-modal-card {
+  max-width: 340px !important;
+  max-height: min(88dvh, var(--modal-max-height, 88vh)) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  padding: 18px 16px 16px 16px !important;
+  box-sizing: border-box !important;
+}
+
+.settings-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  margin-top: 8px;
+  margin-bottom: 2px;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding-right: 4px;
+}
+
+.settings-modal-card .confirm-modal-buttons {
+  flex-shrink: 0;
+  margin-top: 12px !important;
+  width: 100%;
+}
+
+.settings-row {
+  background: rgba(8, 28, 19, 0.7);
+  border: 1px solid rgba(251, 191, 36, 0.28);
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+.settings-label-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.settings-label {
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.3px;
+}
+
+.settings-hint {
+  font-size: 11.5px;
+  color: #94a3b8;
+  line-height: 1.3;
+}
+
+.settings-toggle-group {
+  display: flex;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(251, 191, 36, 0.35);
+  border-radius: 8px;
+  padding: 3px;
+  gap: 4px;
+}
+
+.settings-toggle-group.settings-toggle-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+.settings-option-btn {
+  flex: 1;
+  padding: 7px 4px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: center;
+}
+
+.settings-option-btn.active {
+  background: var(--gold-accent);
+  color: #451a03;
+  font-weight: 800;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+}
+
+.settings-option-btn:active {
+  transform: scale(0.97);
+}
+
+/* =========================================================================
+   BOTTOM STATUS BAR: SCORE, MOVES & OPTIONAL TIMER (TOGGLEABLE IN MENU)
+   ========================================================================= */
+.bottom-hud {
+  position: absolute;
+  bottom: max(8px, env(safe-area-inset-bottom));
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+  pointer-events: none;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.bottom-circle-btn {
+  position: absolute;
+  left: 10px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.95);
+  border: 2px solid #fbbf24;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+  pointer-events: auto;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+  user-select: none;
+}
+
+.bottom-circle-btn:active {
+  transform: scale(0.92);
+  background: #fbbf24;
+}
+
+.help-circle-q {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 22px;
+  font-weight: 900;
+  color: #fef08a;
+  line-height: 1;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.bottom-circle-btn:active .help-circle-q {
+  color: #0f172a;
+}
+
+.bottom-status-capsule {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 4px 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: none;
+  pointer-events: none;
+}
+
+.hud-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hud-stat-label {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #fbbf24;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  line-height: 1.1;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 2px 8px rgba(0, 0, 0, 0.85);
+}
+
+.hud-stat-val {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1.1;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 2px 8px rgba(0, 0, 0, 0.85);
+}
+
+.hud-stat-divider {
+  color: rgba(251, 191, 36, 0.65);
+  font-size: 16px;
+  user-select: none;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+/* =========================================================================
+   HOW TO PLAY / HELP MODAL STYLING (VIEWPORT-AWARE SCROLLABLE BODY)
+   ========================================================================= */
+.help-modal-card {
+  max-width: 350px !important;
+  max-height: min(88dvh, var(--modal-max-height, 88vh)) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  padding: 18px 16px 16px 16px !important;
+  box-sizing: border-box !important;
+}
+
+.help-modal-card .confirm-modal-seal,
+.help-modal-card .confirm-modal-title,
+.help-modal-card .help-modal-subtitle {
+  flex-shrink: 0;
+}
+
+.help-modal-subtitle {
+  font-size: 12px;
+  color: #94a3b8;
+  margin-top: -4px;
+  margin-bottom: 10px;
+}
+
+.help-scroll-body {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  width: 100%;
+  text-align: left;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding-right: 4px;
+}
+
+.help-modal-card .confirm-modal-buttons {
+  flex-shrink: 0;
+  margin-top: 12px !important;
+  width: 100%;
+}
+
+.help-card-box {
+  background: rgba(8, 28, 19, 0.75);
+  border: 1px solid rgba(251, 191, 36, 0.28);
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.help-card-header {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.help-icon-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #183f2e 0%, #0a2016 100%);
+  border: 1.3px solid #fbbf24;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45), inset 0 1px 2px rgba(254, 240, 138, 0.35);
+}
+
+.help-card-heading {
+  font-size: 13px;
+  font-weight: 800;
+  color: #fbbf24;
+  letter-spacing: 0.3px;
+}
+
+.help-card-desc {
+  font-size: 12px;
+  color: #cbd5e1;
+  line-height: 1.45;
+  padding-left: 41px;
+}
+
+.help-suit-gold {
+  color: #fbbf24;
+  font-weight: 800;
+}
+
+.help-suit-red {
+  color: #ef4444;
+  font-weight: 800;
+}
+
+/* =========================================================================
+   CUSTOM COMPACT SCROLLBARS FOR MODAL CONTAINERS
+   ========================================================================= */
+.settings-rows::-webkit-scrollbar,
+.help-scroll-body::-webkit-scrollbar {
+  width: 5px;
+}
+
+.settings-rows::-webkit-scrollbar-track,
+.help-scroll-body::-webkit-scrollbar-track {
+  background: rgba(5, 19, 13, 0.4);
+  border-radius: 4px;
+}
+
+.settings-rows::-webkit-scrollbar-thumb,
+.help-scroll-body::-webkit-scrollbar-thumb {
+  background: rgba(251, 191, 36, 0.4);
+  border-radius: 4px;
+}
+
+.settings-rows::-webkit-scrollbar-thumb:hover,
+.help-scroll-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(251, 191, 36, 0.7);
+}
+
+.settings-rows,
+.help-scroll-body {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(251, 191, 36, 0.4) rgba(5, 19, 13, 0.4);
+}

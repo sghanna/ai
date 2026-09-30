@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>agy-solitaire - 5 Control Bar & Button Layout Options</title>
+  <style>
+    :root {
+      --card-red: #c62828;
+      --card-black: #111111;
+      --ui-bg: #0b0f0d;
+      --panel-bg: #1e293b;
+      --border-color: #334155;
+      /* Option 3 Pine Felt */
+      --pine-felt: radial-gradient(circle at 50% 30%, #163827 0%, #0c2419 70%, #05130d 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--ui-bg);
+      color: #f0f0f0;
+      padding: 24px 16px 80px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      max-width: 900px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 8px;
+      color: #4ade80;
+    }
+
+    p.subtitle {
+      font-size: 15px;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    .callout-locked {
+      background: #064e3b;
+      border: 1px solid #10b981;
+      border-left: 5px solid #10b981;
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin: 16px 0 24px 0;
+      font-size: 14px;
+      color: #ecfdf5;
+      text-align: left;
+      max-width: 860px;
+      line-height: 1.5;
+    }
+
+    .callout-locked strong { color: #6ee7b7; }
+
+    .nav-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 30px;
+      position: sticky;
+      top: 10px;
+      z-index: 100;
+      background: rgba(11, 15, 13, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 8px 12px;
+      border-radius: 30px;
+      border: 1px solid var(--border-color);
+    }
+
+    .nav-btn {
+      background: #1e293b;
+      color: #e2e8f0;
+      border: 1px solid #475569;
+      padding: 7px 14px;
+      border-radius: 18px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover, .nav-btn.active {
+      background: #22c55e;
+      color: #052e16;
+      border-color: #22c55e;
+    }
+
+    .section-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
+      max-width: 900px;
+      width: 100%;
+      margin-bottom: 36px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .option-header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+    }
+
+    .option-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .option-badge {
+      background: #0284c7;
+      color: #ffffff;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .option-badge.star {
+      background: #16a34a;
+    }
+
+    .option-desc {
+      width: 100%;
+      font-size: 14px;
+      color: #cbd5e1;
+      margin-bottom: 20px;
+      line-height: 1.5;
+      text-align: left;
+    }
+
+    /* iPhone 16e Frame with Option 3 Pine Felt */
+    .iphone-board-frame {
+      width: 100%;
+      max-width: 390px;
+      border-radius: 24px;
+      border: 3px solid #334155;
+      padding: 14px 10px 16px 10px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.6), inset 0 2px 12px rgba(0,0,0,0.5);
+      background: var(--pine-felt);
+      position: relative;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* Top Row Layout */
+    .board-top-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      margin-bottom: 14px;
+    }
+
+    /* Foundation Slot (Option 3 Brass Frame) */
+    .board-slot {
+      width: 100%;
+      height: 64px;
+      border-radius: 5px;
+      border: 1.5px solid rgba(251, 191, 36, 0.6);
+      background: rgba(12, 36, 25, 0.4);
+      color: rgba(251, 191, 36, 0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .slot-watermark { width: 22px; height: 22px; }
+    .slot-watermark svg { width: 100%; height: 100%; }
+    .slot-label { font-size: 9px; font-weight: 800; letter-spacing: 0.5px; margin-top: 2px; text-transform: uppercase; }
+
+    /* Tableau 7 Columns */
+    .board-tableau {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      min-height: 215px;
+      margin-bottom: 12px;
+    }
+
+    .tableau-col {
+      position: relative;
+      width: 100%;
+      height: 210px;
+    }
+
+    /* Face-Up Mini Card */
+    .mini-card {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 64px;
+      background: #ffffff;
+      border-radius: 5px;
+      border: 1.5px solid #111111;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .mini-card.red { color: var(--card-red) !important; }
+    .mini-card.black { color: var(--card-black) !important; }
+
+    .mini-card-header {
+      width: 100%;
+      height: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 4px;
+      border-bottom: 1.5px solid;
+    }
+    .mini-card.red .mini-card-header { background: #fee2e2; border-color: #f87171; }
+    .mini-card.black .mini-card-header { background: #f1f5f9; border-color: #94a3b8; }
+
+    .mini-rank { font-size: 16px; font-weight: 900; letter-spacing: -0.5px; line-height: 1; }
+    .mini-suit-wrap { width: 13px; height: 13px; display: flex; align-items: center; justify-content: center; }
+    .mini-suit-wrap svg { width: 100%; height: 100%; }
+    .mini-card-center { flex: 1; display: flex; align-items: center; justify-content: center; }
+    .mini-center-suit { width: 22px; height: 22px; }
+    .mini-center-suit svg { width: 100%; height: 100%; }
+
+    /* Face-Down 4A Double Happiness Back */
+    .mini-card-back-4a {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 64px;
+      border-radius: 5px;
+      background: radial-gradient(circle at center, #b91c1c 0%, #7f1d1d 70%, #450a0a 100%);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid rgba(0,0,0,0.4);
+    }
+    .mini-glyph {
+      font-family: "PingFang SC", sans-serif;
+      font-size: 28px;
+      line-height: 1;
+      font-weight: 900;
+      color: #fbbf24;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+    }
+
+    /* ================================================================= */
+    /* UI BUTTON STYLES & LAYOUTS                                        */
+    /* ================================================================= */
+
+    /* STYLE 1: BOTTOM THUMB BAR (MAX ERGONOMICS) */
+    .ui-bottom-bar-1 {
+      width: 100%;
+      background: rgba(12, 36, 25, 0.85);
+      border: 1.5px solid rgba(251, 191, 36, 0.4);
+      border-radius: 16px;
+      padding: 8px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      backdrop-filter: blur(8px);
+    }
+    .btn-thumb-1 {
+      background: #0f172a;
+      border: 1.5px solid #fbbf24;
+      color: #fbbf24;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .btn-thumb-1.primary {
+      background: #b45309;
+      border-color: #fde68a;
+      color: #ffffff;
+    }
+
+    /* STYLE 2: TOP FLOATING BRASS PILLS */
+    .ui-top-bar-2 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding: 0 2px;
+    }
+    .btn-pill-2 {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1.5px solid #fbbf24;
+      color: #fef08a;
+      padding: 6px 14px;
+      border-radius: 16px;
+      font-size: 12px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .hud-text-2 {
+      font-size: 11px;
+      font-weight: 800;
+      color: #cbd5e1;
+      letter-spacing: 0.5px;
+    }
+
+    /* STYLE 3: LARGE-PRINT HIGH-CONTRAST TILES */
+    .ui-top-bar-3 {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .btn-tile-3 {
+      background: #0f172a;
+      border: 2px solid #ffffff;
+      color: #ffffff;
+      padding: 9px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 900;
+      text-align: center;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+    .hud-box-3 {
+      text-align: center;
+      font-size: 12px;
+      font-weight: 800;
+      color: #4ade80;
+    }
+
+    /* STYLE 4: SPLIT HUD TOP + ACTIONS BOTTOM */
+    .ui-top-hud-4 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 6px 8px 6px;
+      font-size: 11px;
+      font-weight: 800;
+      color: #cbd5e1;
+      border-bottom: 1px solid rgba(251, 191, 36, 0.25);
+      margin-bottom: 12px;
+    }
+    .ui-bottom-actions-4 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      width: 100%;
+    }
+    .btn-split-4 {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1.5px solid #fbbf24;
+      color: #fde68a;
+      padding: 10px 8px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 800;
+      text-align: center;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+    }
+    .btn-split-4.highlight {
+      background: #991b1b;
+      border-color: #f87171;
+      color: #ffffff;
+    }
+
+    /* STYLE 5: IMPERIAL SOVEREIGN CIRCULAR ICONS */
+    .ui-bottom-bar-5 {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 8px 16px;
+      background: rgba(12, 36, 25, 0.9);
+      border-radius: 20px;
+      border: 1.5px solid rgba(251, 191, 36, 0.5);
+    }
+    .btn-circle-5 {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      color: #fbbf24;
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .circle-icon-box {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #0f172a;
+      border: 1.5px solid #fbbf24;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+
+    .key-features {
+      margin-top: 14px;
+      padding-left: 18px;
+      font-size: 13px;
+      color: #94a3b8;
+      width: 100%;
+      text-align: left;
+    }
+    .key-features li { margin-bottom: 4px; }
+    .key-features strong { color: #e2e8f0; }
+
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: bold;
+      margin-right: 6px;
+    }
+    .tag.highlight { background: #065f46; color: #6ee7b7; }
+    .tag.note { background: #1e3a8a; color: #93c5fd; }
+
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: #64748b;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>agy-solitaire: 5 Control Bar & Button Options</h1>
+    <p class="subtitle">
+      Optimizing button placement and tap targets for <strong>one-handed iPhone 16e play</strong> and <strong>low-vision comfort</strong>.<br>
+      Rendered on your locked-in <strong>Option 3 (Imperial Pine Felt & Brass)</strong> board.
+    </p>
+
+    <div class="callout-locked">
+      <strong>Ergonomic Context for iPhone 16e:</strong>
+      On a 6.1" display, reaching the top corners with one hand requires awkward hand shifting. Placing primary game actions (like Undo and Hint) within natural thumb reach makes a massive difference in physical comfort and prevents fingers from obstructing cards.
+    </div>
+  </header>
+
+  <nav class="nav-bar">
+    <a href="#ui-opt1" class="nav-btn">1. Bottom Thumb Bar</a>
+    <a href="#ui-opt2" class="nav-btn">2. Top Floating Brass Pills</a>
+    <a href="#ui-opt3" class="nav-btn">3. Large-Print High-Contrast</a>
+    <a href="#ui-opt4" class="nav-btn">4. Split HUD + Action Dock</a>
+    <a href="#ui-opt5" class="nav-btn">5. Sovereign Circular Icons</a>
+  </nav>
+
+  <!-- ================================================================= -->
+  <!-- OPTION 1 -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="ui-opt1">
+    <div class="option-header">
+      <div class="option-title">Option 1: Bottom Thumb Bar (Maximum Ergonomics)</div>
+      <div class="option-badge star">Top Recommendation for iPhone</div>
+    </div>
+    <p class="option-desc">
+      Anchors large, comfortable buttons (Undo, Hint, New Game) to a frosted bottom dock right where her thumb naturally rests. Top area remains dedicated to pure, unobstructed card play.
+    </p>
+
+    <div class="iphone-board-frame">
+      <!-- Minimalist Status Line Top -->
+      <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: #cbd5e1; margin-bottom: 10px; padding: 0 4px;">
+        <span>SCORE: 240</span>
+        <span>DRAW 1</span>
+        <span>MOVES: 14</span>
+      </div>
+
+      <!-- Top Row Cards & Slots -->
+      <div class="board-top-row">
+        <div class="mini-card-back-4a" style="position: relative;"><span class="mini-glyph">囍</span></div>
+        <div class="mini-card red" style="position: relative;">
+          <div class="mini-card-header"><span class="mini-rank">10</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+          <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+        </div>
+        <div></div>
+        <div class="board-slot"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div><span class="slot-label">Ace</span></div>
+        <div class="board-slot"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div><span class="slot-label">Ace</span></div>
+        <div class="board-slot"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div><span class="slot-label">Ace</span></div>
+        <div class="board-slot"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div><span class="slot-label">Ace</span></div>
+      </div>
+
+      <!-- Tableau -->
+      <div class="board-tableau">
+        <div class="tableau-col"><div class="mini-card red" style="top: 0px; z-index: 1;"><div class="mini-card-header"><span class="mini-rank">A</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card red" style="top: 10px; z-index: 2;"><div class="mini-card-header"><span class="mini-rank">9</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card-back-4a" style="top: 10px; z-index: 2;"><span class="mini-glyph">囍</span></div><div class="mini-card black" style="top: 20px; z-index: 3;"><div class="mini-card-header"><span class="mini-rank">8</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="board-slot" style="position: absolute; top: 0; left: 0;"><span style="font-size: 18px; font-weight: 900; opacity: 0.6;">K</span><span class="slot-label">Empty</span></div></div>
+        <div class="tableau-col">
+          <div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div>
+          <div class="mini-card black" style="top: 10px; z-index: 2;"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div></div>
+          <div class="mini-card red" style="top: 32px; z-index: 3;"><div class="mini-card-header"><span class="mini-rank">Q</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div>
+          <div class="mini-card black" style="top: 54px; z-index: 4;"><div class="mini-card-header"><span class="mini-rank">J</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div></div>
+          <div class="mini-card red" style="top: 76px; z-index: 5;"><div class="mini-card-header"><span class="mini-rank">10</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div></div>
+        </div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card black" style="top: 10px; z-index: 2;"><div class="mini-card-header"><span class="mini-rank">6</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card-back-4a" style="top: 10px; z-index: 2;"><span class="mini-glyph">囍</span></div><div class="mini-card red" style="top: 20px; z-index: 3;"><div class="mini-card-header"><span class="mini-rank">5</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div></div>
+      </div>
+
+      <!-- BOTTOM THUMB BAR (STYLE 1) -->
+      <div class="ui-bottom-bar-1">
+        <button class="btn-thumb-1"><span>&#x21BA;</span> Undo</button>
+        <button class="btn-thumb-1"><span>&#x2728;</span> Hint</button>
+        <button class="btn-thumb-1 primary">New Game</button>
+      </div>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag highlight">Ergonomics</span> Zero stretching. Left and right thumbs easily reach Undo and Hint.</li>
+      <li><span class="tag note">Card Visibility</span> Hand never covers the tableau cards while playing.</li>
+    </ul>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- OPTION 2 -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="ui-opt2">
+    <div class="option-header">
+      <div class="option-title">Option 2: Top Floating Brass Pills</div>
+      <div class="option-badge">Classic Header</div>
+    </div>
+    <p class="option-desc">
+      Traditional Solitaire arrangement with buttons across the top bar. Features frosted charcoal pills with crisp gold/brass outlines matching the board theme.
+    </p>
+
+    <div class="iphone-board-frame">
+      <!-- TOP FLOATING PILLS (STYLE 2) -->
+      <div class="ui-top-bar-2">
+        <div class="btn-pill-2"><span>&#x21BA;</span> Undo</div>
+        <div class="hud-text-2">SCORE: 240</div>
+        <div class="btn-pill-2"><span>&#x2728;</span> Hint</div>
+        <div class="btn-pill-2" style="background: #b45309; border-color: #fde68a;">New</div>
+      </div>
+
+      <!-- Top Row Cards -->
+      <div class="board-top-row">
+        <div class="mini-card-back-4a" style="position: relative;"><span class="mini-glyph">囍</span></div>
+        <div class="mini-card red" style="position: relative;">
+          <div class="mini-card-header"><span class="mini-rank">10</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+          <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+        </div>
+        <div></div>
+        <div class="board-slot"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div><span class="slot-label">Ace</span></div>
+        <div class="board-slot"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div><span class="slot-label">Ace</span></div>
+        <div class="board-slot"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div><span class="slot-label">Ace</span></div>
+        <div class="board-slot"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div><span class="slot-label">Ace</span></div>
+      </div>
+
+      <!-- Tableau -->
+      <div class="board-tableau">
+        <div class="tableau-col"><div class="mini-card red" style="top: 0px; z-index: 1;"><div class="mini-card-header"><span class="mini-rank">A</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card red" style="top: 10px; z-index: 2;"><div class="mini-card-header"><span class="mini-rank">9</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card-back-4a" style="top: 10px; z-index: 2;"><span class="mini-glyph">囍</span></div><div class="mini-card black" style="top: 20px; z-index: 3;"><div class="mini-card-header"><span class="mini-rank">8</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="board-slot" style="position: absolute; top: 0; left: 0;"><span style="font-size: 18px; font-weight: 900; opacity: 0.6;">K</span><span class="slot-label">Empty</span></div></div>
+        <div class="tableau-col">
+          <div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div>
+          <div class="mini-card black" style="top: 10px; z-index: 2;"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div></div>
+          <div class="mini-card red" style="top: 32px; z-index: 3;"><div class="mini-card-header"><span class="mini-rank">Q</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div>
+          <div class="mini-card black" style="top: 54px; z-index: 4;"><div class="mini-card-header"><span class="mini-rank">J</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div></div>
+          <div class="mini-card red" style="top: 76px; z-index: 5;"><div class="mini-card-header"><span class="mini-rank">10</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div></div>
+        </div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card black" style="top: 10px; z-index: 2;"><div class="mini-card-header"><span class="mini-rank">6</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card-back-4a" style="top: 10px; z-index: 2;"><span class="mini-glyph">囍</span></div><div class="mini-card red" style="top: 20px; z-index: 3;"><div class="mini-card-header"><span class="mini-rank">5</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div></div>
+      </div>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag highlight">Familiarity</span> Standard top placement common in desktop and classic card apps.</li>
+      <li><span class="tag note">Aesthetics</span> Matches the pine and brass theme neatly.</li>
+    </ul>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- OPTION 3 -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="ui-opt3">
+    <div class="option-header">
+      <div class="option-title">Option 3: Large-Print High-Contrast Tiles</div>
+      <div class="option-badge">Maximum Readability</div>
+    </div>
+    <p class="option-desc">
+      Oversized rectangular buttons with heavy 900-weight white text on dark solid blocks and thick white borders. Delivers the absolute highest contrast and easiest tap targets for low vision.
+    </p>
+
+    <div class="iphone-board-frame">
+      <!-- HIGH CONTRAST TILES TOP (STYLE 3) -->
+      <div class="ui-top-bar-3">
+        <div class="btn-tile-3">&#x21BA; UNDO</div>
+        <div class="hud-box-3">DRAW 1<br><span style="color: #fff; font-size: 14px;">240</span></div>
+        <div class="btn-tile-3">NEW</div>
+      </div>
+
+      <!-- Top Row Cards -->
+      <div class="board-top-row">
+        <div class="mini-card-back-4a" style="position: relative;"><span class="mini-glyph">囍</span></div>
+        <div class="mini-card red" style="position: relative;">
+          <div class="mini-card-header"><span class="mini-rank">10</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+          <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+        </div>
+        <div></div>
+        <div class="board-slot"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div><span class="slot-label">Ace</span></div>
+        <div class="board-slot"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div><span class="slot-label">Ace</span></div>
+        <div class="board-slot"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div><span class="slot-label">Ace</span></div>
+        <div class="board-slot"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div><span class="slot-label">Ace</span></div>
+      </div>
+
+      <!-- Tableau -->
+      <div class="board-tableau">
+        <div class="tableau-col"><div class="mini-card red" style="top: 0px; z-index: 1;"><div class="mini-card-header"><span class="mini-rank">A</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card red" style="top: 10px; z-index: 2;"><div class="mini-card-header"><span class="mini-rank">9</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card-back-4a" style="top: 10px; z-index: 2;"><span class="mini-glyph">囍</span></div><div class="mini-card black" style="top: 20px; z-index: 3;"><div class="mini-card-header"><span class="mini-rank">8</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="board-slot" style="position: absolute; top: 0; left: 0;"><span style="font-size: 18px; font-weight: 900; opacity: 0.6;">K</span><span class="slot-label">Empty</span></div></div>
+        <div class="tableau-col">
+          <div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div>
+          <div class="mini-card black" style="top: 10px; z-index: 2;"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div></div>
+          <div class="mini-card red" style="top: 32px; z-index: 3;"><div class="mini-card-header"><span class="mini-rank">Q</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div>
+          <div class="mini-card black" style="top: 54px; z-index: 4;"><div class="mini-card-header"><span class="mini-rank">J</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div></div>
+          <div class="mini-card red" style="top: 76px; z-index: 5;"><div class="mini-card-header"><span class="mini-rank">10</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div></div>
+        </div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card black" style="top: 10px; z-index: 2;"><div class="mini-card-header"><span class="mini-rank">6</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card-back-4a" style="top: 10px; z-index: 2;"><span class="mini-glyph">囍</span></div><div class="mini-card red" style="top: 20px; z-index: 3;"><div class="mini-card-header"><span class="mini-rank">5</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div></div>
+      </div>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag highlight">Hit Target</span> Huge rectangular buttons with white borders make mis-tapping impossible.</li>
+      <li><span class="tag note">Typography</span> Bold all-caps typography for immediate recognition.</li>
+    </ul>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- OPTION 4 -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="ui-opt4">
+    <div class="option-header">
+      <div class="option-title">Option 4: Split HUD Top + Action Dock Bottom</div>
+      <div class="option-badge">Clean Division of Purpose</div>
+    </div>
+    <p class="option-desc">
+      Keeps all read-only status metrics (Score, Draw Mode, Timer) clean and small at the top, while giving the bottom area a 3-button dedicated action dock with high-contrast colored fills.
+    </p>
+
+    <div class="iphone-board-frame">
+      <!-- TOP READ-ONLY HUD (STYLE 4) -->
+      <div class="ui-top-hud-4">
+        <span>SCORE: 240</span>
+        <span>DRAW 1</span>
+        <span>TIME: 02:45</span>
+      </div>
+
+      <!-- Top Row Cards -->
+      <div class="board-top-row">
+        <div class="mini-card-back-4a" style="position: relative;"><span class="mini-glyph">囍</span></div>
+        <div class="mini-card red" style="position: relative;">
+          <div class="mini-card-header"><span class="mini-rank">10</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+          <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+        </div>
+        <div></div>
+        <div class="board-slot"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div><span class="slot-label">Ace</span></div>
+        <div class="board-slot"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div><span class="slot-label">Ace</span></div>
+        <div class="board-slot"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div><span class="slot-label">Ace</span></div>
+        <div class="board-slot"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div><span class="slot-label">Ace</span></div>
+      </div>
+
+      <!-- Tableau -->
+      <div class="board-tableau">
+        <div class="tableau-col"><div class="mini-card red" style="top: 0px; z-index: 1;"><div class="mini-card-header"><span class="mini-rank">A</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card red" style="top: 10px; z-index: 2;"><div class="mini-card-header"><span class="mini-rank">9</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card-back-4a" style="top: 10px; z-index: 2;"><span class="mini-glyph">囍</span></div><div class="mini-card black" style="top: 20px; z-index: 3;"><div class="mini-card-header"><span class="mini-rank">8</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="board-slot" style="position: absolute; top: 0; left: 0;"><span style="font-size: 18px; font-weight: 900; opacity: 0.6;">K</span><span class="slot-label">Empty</span></div></div>
+        <div class="tableau-col">
+          <div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div>
+          <div class="mini-card black" style="top: 10px; z-index: 2;"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div></div>
+          <div class="mini-card red" style="top: 32px; z-index: 3;"><div class="mini-card-header"><span class="mini-rank">Q</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div>
+          <div class="mini-card black" style="top: 54px; z-index: 4;"><div class="mini-card-header"><span class="mini-rank">J</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div></div>
+          <div class="mini-card red" style="top: 76px; z-index: 5;"><div class="mini-card-header"><span class="mini-rank">10</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div></div>
+        </div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card black" style="top: 10px; z-index: 2;"><div class="mini-card-header"><span class="mini-rank">6</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card-back-4a" style="top: 10px; z-index: 2;"><span class="mini-glyph">囍</span></div><div class="mini-card red" style="top: 20px; z-index: 3;"><div class="mini-card-header"><span class="mini-rank">5</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div></div>
+      </div>
+
+      <!-- BOTTOM ACTION DOCK (STYLE 4) -->
+      <div class="ui-bottom-actions-4">
+        <div class="btn-split-4">&#x21BA; UNDO</div>
+        <div class="btn-split-4">&#x2728; HINT</div>
+        <div class="btn-split-4 highlight">NEW GAME</div>
+      </div>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag highlight">Segregation</span> Passive info stays at the top; active touch controls live at the bottom.</li>
+      <li><span class="tag note">Red Button</span> "New Game" highlighted in crimson for instant recognition.</li>
+    </ul>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- OPTION 5 -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="ui-opt5">
+    <div class="option-header">
+      <div class="option-title">Option 5: Sovereign Circular Icons (Tactile Medallions)</div>
+      <div class="option-badge">Royal Aesthetic</div>
+    </div>
+    <p class="option-desc">
+      Features circular gold medallion buttons at the bottom matching the circular seal motifs of the deck. Highly tactile, iconic, and elegant.
+    </p>
+
+    <div class="iphone-board-frame">
+      <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: #cbd5e1; margin-bottom: 10px; padding: 0 4px;">
+        <span>SCORE: 240</span>
+        <span>DRAW 1</span>
+        <span>02:45</span>
+      </div>
+
+      <!-- Top Row Cards -->
+      <div class="board-top-row">
+        <div class="mini-card-back-4a" style="position: relative;"><span class="mini-glyph">囍</span></div>
+        <div class="mini-card red" style="position: relative;">
+          <div class="mini-card-header"><span class="mini-rank">10</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+          <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+        </div>
+        <div></div>
+        <div class="board-slot"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div><span class="slot-label">Ace</span></div>
+        <div class="board-slot"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div><span class="slot-label">Ace</span></div>
+        <div class="board-slot"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div><span class="slot-label">Ace</span></div>
+        <div class="board-slot"><div class="slot-watermark"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div><span class="slot-label">Ace</span></div>
+      </div>
+
+      <!-- Tableau -->
+      <div class="board-tableau">
+        <div class="tableau-col"><div class="mini-card red" style="top: 0px; z-index: 1;"><div class="mini-card-header"><span class="mini-rank">A</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card red" style="top: 10px; z-index: 2;"><div class="mini-card-header"><span class="mini-rank">9</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card-back-4a" style="top: 10px; z-index: 2;"><span class="mini-glyph">囍</span></div><div class="mini-card black" style="top: 20px; z-index: 3;"><div class="mini-card-header"><span class="mini-rank">8</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="board-slot" style="position: absolute; top: 0; left: 0;"><span style="font-size: 18px; font-weight: 900; opacity: 0.6;">K</span><span class="slot-label">Empty</span></div></div>
+        <div class="tableau-col">
+          <div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div>
+          <div class="mini-card black" style="top: 10px; z-index: 2;"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div></div>
+          <div class="mini-card red" style="top: 32px; z-index: 3;"><div class="mini-card-header"><span class="mini-rank">Q</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div>
+          <div class="mini-card black" style="top: 54px; z-index: 4;"><div class="mini-card-header"><span class="mini-rank">J</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div></div>
+          <div class="mini-card red" style="top: 76px; z-index: 5;"><div class="mini-card-header"><span class="mini-rank">10</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div></div>
+        </div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card black" style="top: 10px; z-index: 2;"><div class="mini-card-header"><span class="mini-rank">6</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div></div></div>
+        <div class="tableau-col"><div class="mini-card-back-4a" style="top: 0px; z-index: 1;"><span class="mini-glyph">囍</span></div><div class="mini-card-back-4a" style="top: 10px; z-index: 2;"><span class="mini-glyph">囍</span></div><div class="mini-card red" style="top: 20px; z-index: 3;"><div class="mini-card-header"><span class="mini-rank">5</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div><div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div></div>
+      </div>
+
+      <!-- CIRCULAR MEDALLION DOCK (STYLE 5) -->
+      <div class="ui-bottom-bar-5">
+        <div class="btn-circle-5">
+          <div class="circle-icon-box">&#x21BA;</div>
+          <span>Undo</span>
+        </div>
+        <div class="btn-circle-5">
+          <div class="circle-icon-box">&#x2728;</div>
+          <span>Hint</span>
+        </div>
+        <div class="btn-circle-5">
+          <div class="circle-icon-box" style="background: #b45309; border-color: #fde68a;">&#x21BB;</div>
+          <span>New</span>
+        </div>
+      </div>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag highlight">Medallion Design</span> Circular buttons match the circular seal and roundel motifs.</li>
+      <li><span class="tag note">Touch Target</span> Round touch target with distinct label below.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>agy-solitaire &bull; Control Bar & Button Options &bull; iPhone 16e</p>
+  </footer>
+
+</body>
+</html>

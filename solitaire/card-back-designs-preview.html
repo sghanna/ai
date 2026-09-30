@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>agy-solitaire - Card Back Designs & Finalized Face Pips</title>
+  <style>
+    :root {
+      --card-red: #c62828;
+      --card-black: #111111;
+      --felt-bg: #0c2317;
+      --ui-bg: #101713;
+      --panel-bg: #1e293b;
+      --border-color: #334155;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--ui-bg);
+      color: #f0f0f0;
+      padding: 24px 16px 80px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      max-width: 900px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 8px;
+      color: #4ade80;
+    }
+
+    p.subtitle {
+      font-size: 15px;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    .callout-success {
+      background: #064e3b;
+      border: 1px solid #10b981;
+      border-left: 5px solid #10b981;
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin: 16px 0 24px 0;
+      font-size: 14px;
+      color: #ecfdf5;
+      text-align: left;
+      max-width: 860px;
+      line-height: 1.5;
+    }
+
+    .callout-info {
+      background: #0f172a;
+      border: 1px solid #38bdf8;
+      border-left: 5px solid #38bdf8;
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin: 0 0 28px 0;
+      font-size: 14px;
+      color: #e2e8f0;
+      text-align: left;
+      max-width: 860px;
+      line-height: 1.5;
+    }
+
+    .nav-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 30px;
+      position: sticky;
+      top: 10px;
+      z-index: 100;
+      background: rgba(16, 23, 19, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 8px 12px;
+      border-radius: 30px;
+      border: 1px solid var(--border-color);
+    }
+
+    .nav-btn {
+      background: #1e293b;
+      color: #e2e8f0;
+      border: 1px solid #475569;
+      padding: 7px 14px;
+      border-radius: 18px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover, .nav-btn.active {
+      background: #22c55e;
+      color: #052e16;
+      border-color: #22c55e;
+    }
+
+    .section-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
+      max-width: 900px;
+      width: 100%;
+      margin-bottom: 36px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+    }
+
+    .option-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+    }
+
+    .option-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .option-badge {
+      background: #0284c7;
+      color: #ffffff;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .option-badge.star {
+      background: #16a34a;
+    }
+
+    .option-desc {
+      font-size: 14px;
+      color: #cbd5e1;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    /* Side-by-side showcase row */
+    .showcase-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+
+    /* Isolated Full Card */
+    .card {
+      width: 92px;
+      height: 132px;
+      background: #ffffff;
+      border-radius: 8px;
+      border: 2px solid #111111;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+      position: relative;
+      overflow: hidden;
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card.red { color: var(--card-red); }
+    .card.black { color: var(--card-black); }
+
+    .card-header-bar {
+      width: 100%;
+      height: 45px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 7px;
+      border-bottom: 2.5px solid;
+    }
+
+    .card.red .card-header-bar { background: #fee2e2; border-color: #f87171; }
+    .card.black .card-header-bar { background: #f1f5f9; border-color: #94a3b8; }
+
+    .card-rank {
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      line-height: 1;
+    }
+
+    .card-header-suit {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-header-suit svg { width: 100%; height: 100%; }
+
+    .card-center {
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 46px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .card-center-suit {
+      width: 44px;
+      height: 44px;
+    }
+    .card-center-suit svg { width: 100%; height: 100%; }
+
+    /* ================================================================= */
+    /* CARD BACK STYLES (92px x 132px Full, 100% x 64px Mini)           */
+    /* ================================================================= */
+    .card-back {
+      width: 92px;
+      height: 132px;
+      border-radius: 8px;
+      border: 2px solid #ffffff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Back 1: Royal Crest / Monogram (Deep Sapphire & Gold Accents) */
+    .back-b1 {
+      background: radial-gradient(circle at center, #1e3a8a 0%, #0f172a 100%);
+      border: 2px solid #ffffff;
+    }
+    .back-b1-inner {
+      width: calc(100% - 10px);
+      height: calc(100% - 10px);
+      border: 1.5px solid #fbbf24;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .back-b1-crest {
+      width: 42px;
+      height: 42px;
+      color: #fbbf24;
+    }
+
+    /* Back 2: Low-Frequency Geometric Diamond Lattice */
+    .back-b2 {
+      background-color: #1e3a8a;
+      background-image: 
+        linear-gradient(135deg, #172554 25%, transparent 25%),
+        linear-gradient(225deg, #172554 25%, transparent 25%),
+        linear-gradient(45deg, #172554 25%, transparent 25%),
+        linear-gradient(315deg, #172554 25%, #1e3a8a 25%);
+      background-position: 10px 0, 10px 0, 0 0, 0 0;
+      background-size: 20px 20px;
+      background-repeat: repeat;
+      border: 2.5px solid #ffffff;
+    }
+    .back-b2-inner {
+      width: calc(100% - 8px);
+      height: calc(100% - 8px);
+      border: 1.5px solid rgba(255,255,255,0.6);
+      border-radius: 4px;
+    }
+
+    /* Back 3: Classic Framed Wave / Concentric Arc */
+    .back-b3 {
+      background: #0f172a;
+      border: 2.5px solid #ffffff;
+    }
+    .back-b3-inner {
+      width: calc(100% - 8px);
+      height: calc(100% - 8px);
+      border: 1.5px solid #38bdf8;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle, #0284c7 10%, transparent 11%),
+                  radial-gradient(circle, #0284c7 10%, transparent 11%);
+      background-size: 16px 16px;
+      background-position: 0 0, 8px 8px;
+    }
+    .back-b3-centerpiece {
+      width: 38px;
+      height: 38px;
+      border: 2px solid #38bdf8;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0f172a;
+      color: #38bdf8;
+    }
+
+    /* Back 4: Art Deco Sovereign (Crimson & Gold Fan) */
+    .back-b4 {
+      background: radial-gradient(circle at center, #991b1b 0%, #450a0a 100%);
+      border: 2.5px solid #ffffff;
+    }
+    .back-b4-inner {
+      width: calc(100% - 10px);
+      height: calc(100% - 10px);
+      border: 1.5px solid #fde047;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .back-b4-fan {
+      width: 44px;
+      height: 44px;
+      color: #fde047;
+    }
+
+    /* Back 5: Minimalist Dual-Tone Sapphire (Zero Vibration) */
+    .back-b5 {
+      background: linear-gradient(145deg, #1e40af 0%, #1e1b4b 100%);
+      border: 3px solid #ffffff;
+      box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
+    }
+    .back-b5-inner {
+      width: calc(100% - 12px);
+      height: calc(100% - 12px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .back-b5-emblem {
+      width: 32px;
+      height: 32px;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    /* ================================================================= */
+    /* IPHONE 16e SIMULATION (390px Viewport)                           */
+    /* ================================================================= */
+    .iphone-sim-container {
+      background: var(--felt-bg);
+      border: 3px solid #334155;
+      border-radius: 20px;
+      padding: 14px 10px;
+      width: 100%;
+      max-width: 390px;
+      box-shadow: inset 0 2px 10px rgba(0,0,0,0.6);
+      margin: 10px 0 16px 0;
+    }
+
+    .iphone-sim-title {
+      font-size: 11px;
+      font-weight: bold;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .iphone-sim-title .badge-tag {
+      background: #1e293b;
+      color: #38bdf8;
+      border: 1px solid #0284c7;
+      padding: 2px 7px;
+      border-radius: 10px;
+      font-size: 10px;
+    }
+
+    .iphone-sim-tableau {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      width: 100%;
+      min-height: 220px;
+    }
+
+    .tableau-col {
+      position: relative;
+      width: 100%;
+      height: 215px;
+    }
+
+    .mini-card {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 64px;
+      background: #ffffff;
+      border-radius: 5px;
+      border: 1.5px solid #111111;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mini-card.red { color: var(--card-red) !important; }
+    .mini-card.black { color: var(--card-black) !important; }
+
+    .mini-card-header {
+      width: 100%;
+      height: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 4px;
+      border-bottom: 1.5px solid;
+    }
+
+    .mini-card.red .mini-card-header { background: #fee2e2; border-color: #f87171; }
+    .mini-card.black .mini-card-header { background: #f1f5f9; border-color: #94a3b8; }
+
+    .mini-rank {
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+
+    .mini-suit-wrap {
+      width: 13px;
+      height: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mini-suit-wrap svg { width: 100%; height: 100%; }
+
+    .mini-card-center {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .mini-center-suit {
+      width: 22px;
+      height: 22px;
+    }
+    .mini-center-suit svg { width: 100%; height: 100%; }
+
+    /* Mini Facedown Card Classes */
+    .mini-facedown {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 64px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+      overflow: hidden;
+      border: 1.5px solid #ffffff;
+    }
+
+    .mini-b1 {
+      background: radial-gradient(circle at center, #1e3a8a 0%, #0f172a 100%);
+    }
+    .mini-b2 {
+      background-color: #1e3a8a;
+      background-image: 
+        linear-gradient(135deg, #172554 25%, transparent 25%),
+        linear-gradient(225deg, #172554 25%, transparent 25%),
+        linear-gradient(45deg, #172554 25%, transparent 25%),
+        linear-gradient(315deg, #172554 25%, #1e3a8a 25%);
+      background-size: 12px 12px;
+    }
+    .mini-b3 {
+      background: #0f172a;
+      background-image: radial-gradient(#0284c7 15%, transparent 16%);
+      background-size: 8px 8px;
+    }
+    .mini-b4 {
+      background: radial-gradient(circle at center, #991b1b 0%, #450a0a 100%);
+    }
+    .mini-b5 {
+      background: linear-gradient(145deg, #1e40af 0%, #1e1b4b 100%);
+    }
+
+    .key-features {
+      margin-top: 14px;
+      padding-left: 18px;
+      font-size: 13px;
+      color: #94a3b8;
+    }
+    .key-features li { margin-bottom: 4px; }
+    .key-features strong { color: #e2e8f0; }
+
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: bold;
+      margin-right: 6px;
+    }
+    .tag.highlight { background: #065f46; color: #6ee7b7; }
+    .tag.note { background: #1e3a8a; color: #93c5fd; }
+
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: #64748b;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>agy-solitaire: Finalized Face Pips & 5 Card Back Options</h1>
+    <p class="subtitle">
+      Selected Face Pips: <strong>Style 5 (Minimalist Crisp) + Style 4 (Concave Faceted Diamond)</strong>.<br>
+      Now presenting 5 low-noise, floater-friendly <strong>Card Back</strong> options for the iPhone 16e.
+    </p>
+    
+    <div class="callout-success">
+      <strong>Your Suit Choice Locked In:</strong> The Spade, Heart, and Club are rendered with Style 5's slender, featherweight silhouette, paired with the gracefully pinched Concave Diamond from Style 4. Zero ink-bloat, maximum elegance!
+    </div>
+
+    <div class="callout-info">
+      <strong>Why Card Backs Matter for Low Vision & Floaters:</strong> In Solitaire, 75% of the initial tableau cards and the entire draw stock are face-down. Busy traditional card backs (like swirling angels or dense checkerboards) trigger visual noise and eye fatigue. These 5 options offer high-contrast white borders, soothing depth, and zero vibration.
+    </div>
+  </header>
+
+  <nav class="nav-bar">
+    <a href="#back1" class="nav-btn">1. Royal Sapphire Crest</a>
+    <a href="#back2" class="nav-btn">2. Low-Frequency Lattice</a>
+    <a href="#back3" class="nav-btn">3. Framed Celestial Wave</a>
+    <a href="#back4" class="nav-btn">4. Art Deco Sovereign (Crimson)</a>
+    <a href="#back5" class="nav-btn">5. Minimalist Beveled Sapphire</a>
+  </nav>
+
+  <!-- ================================================================= -->
+  <!-- BACK OPTION 1 -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="back1">
+    <div class="option-header">
+      <div class="option-title">Option 1: Royal Sapphire Crest (The Regal Classic)</div>
+      <div class="option-badge star">Top Recommendation</div>
+    </div>
+    <p class="option-desc">
+      Deep sapphire blue gradient with a crisp 2px white outer border, an inner gold hairline border, and a clean minimalist sovereign star emblem. Zero visual vibration for floater comfort.
+    </p>
+
+    <div class="showcase-row">
+      <!-- Card Back -->
+      <div class="card-back back-b1">
+        <div class="back-b1-inner">
+          <svg class="back-b1-crest" viewBox="0 0 100 100" fill="currentColor">
+            <polygon points="50,15 62,38 87,42 68,60 73,85 50,72 27,85 32,60 13,42 38,38"/>
+            <circle cx="50" cy="50" r="10" fill="#0f172a" stroke="#fbbf24" stroke-width="2"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Integrated Final Face Cards (with your chosen suits) -->
+      <div class="card red">
+        <div class="card-header-bar">
+          <span class="card-rank">10</span>
+          <div class="card-header-suit">
+            <!-- Style 4 Concave Diamond -->
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg>
+          </div>
+        </div>
+        <div class="card-center">
+          <div class="card-center-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="card black">
+        <div class="card-header-bar">
+          <span class="card-rank">A</span>
+          <div class="card-header-suit">
+            <!-- Style 5 Featherweight Spade -->
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg>
+          </div>
+        </div>
+        <div class="card-center">
+          <div class="card-center-suit">
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="card black">
+        <div class="card-header-bar">
+          <span class="card-rank">K</span>
+          <div class="card-header-suit">
+            <!-- Style 5 Featherweight Club -->
+            <svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg>
+          </div>
+        </div>
+        <div class="card-center">K</div>
+      </div>
+
+      <div class="card red">
+        <div class="card-header-bar">
+          <span class="card-rank">Q</span>
+          <div class="card-header-suit">
+            <!-- Style 5 Featherweight Heart -->
+            <svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg>
+          </div>
+        </div>
+        <div class="card-center">Q</div>
+      </div>
+    </div>
+
+    <!-- iPhone 16e Simulation -->
+    <div class="iphone-sim-container">
+      <div class="iphone-sim-title">
+        <span>iPhone 16e (390px) Cascade View</span>
+        <span class="badge-tag">Back 1 + Final Suits</span>
+      </div>
+      <div class="iphone-sim-tableau">
+        <div class="tableau-col">
+          <div class="mini-card red" style="top: 0px; z-index: 1;">
+            <div class="mini-card-header">
+              <span class="mini-rank">A</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div>
+            </div>
+            <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+          </div>
+        </div>
+        <div class="tableau-col">
+          <div class="mini-facedown mini-b1" style="top: 0px; z-index: 1;"></div>
+          <div class="mini-card red" style="top: 10px; z-index: 2;">
+            <div class="mini-card-header">
+              <span class="mini-rank">9</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div>
+            </div>
+            <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div>
+          </div>
+        </div>
+        <div class="tableau-col">
+          <div class="mini-facedown mini-b1" style="top: 0px; z-index: 1;"></div>
+          <div class="mini-facedown mini-b1" style="top: 10px; z-index: 2;"></div>
+          <div class="mini-card black" style="top: 20px; z-index: 3;">
+            <div class="mini-card-header">
+              <span class="mini-rank">8</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div>
+            </div>
+            <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+          </div>
+        </div>
+        <div class="tableau-col">
+          <div class="mini-facedown mini-b1" style="top: 0px; z-index: 1;"></div>
+          <div class="mini-facedown mini-b1" style="top: 10px; z-index: 2;"></div>
+          <div class="mini-facedown mini-b1" style="top: 20px; z-index: 3;"></div>
+          <div class="mini-card red" style="top: 30px; z-index: 4;">
+            <div class="mini-card-header">
+              <span class="mini-rank">7</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div>
+            </div>
+            <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+          </div>
+        </div>
+        <!-- Cascade Col 5 -->
+        <div class="tableau-col">
+          <div class="mini-facedown mini-b1" style="top: 0px; z-index: 1;"></div>
+          <div class="mini-card black" style="top: 10px; z-index: 2;">
+            <div class="mini-card-header">
+              <span class="mini-rank">K</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div>
+            </div>
+          </div>
+          <div class="mini-card red" style="top: 32px; z-index: 3;">
+            <div class="mini-card-header">
+              <span class="mini-rank">Q</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div>
+            </div>
+          </div>
+          <div class="mini-card black" style="top: 54px; z-index: 4;">
+            <div class="mini-card-header">
+              <span class="mini-rank">J</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div>
+            </div>
+          </div>
+          <div class="mini-card red" style="top: 76px; z-index: 5;">
+            <div class="mini-card-header">
+              <span class="mini-rank">10</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div>
+            </div>
+            <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+          </div>
+        </div>
+        <div class="tableau-col">
+          <div class="mini-facedown mini-b1" style="top: 0px; z-index: 1;"></div>
+          <div class="mini-card black" style="top: 10px; z-index: 2;">
+            <div class="mini-card-header">
+              <span class="mini-rank">6</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div>
+            </div>
+            <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div>
+          </div>
+        </div>
+        <div class="tableau-col">
+          <div class="mini-facedown mini-b1" style="top: 0px; z-index: 1;"></div>
+          <div class="mini-facedown mini-b1" style="top: 10px; z-index: 2;"></div>
+          <div class="mini-card red" style="top: 20px; z-index: 3;">
+            <div class="mini-card-header">
+              <span class="mini-rank">5</span>
+              <div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div>
+            </div>
+            <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag highlight">Perception</span> Crisp white border clearly separates face-down stacks from the green felt.</li>
+      <li><span class="tag note">Restful</span> Deep sapphire gradient avoids bright optic reflections.</li>
+    </ul>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- BACK OPTION 2 -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="back2">
+    <div class="option-header">
+      <div class="option-title">Option 2: Low-Frequency Lattice (Modern Geometric Weave)</div>
+      <div class="option-badge">Subtle Texture</div>
+    </div>
+    <p class="option-desc">
+      A relaxed, low-frequency geometric diamond weave. The pattern elements are deliberately scaled up so they do not create the shimmering optical vibration of fine hatch lines.
+    </p>
+
+    <div class="showcase-row">
+      <div class="card-back back-b2">
+        <div class="back-b2-inner"></div>
+      </div>
+      <!-- Sample cards -->
+      <div class="card red">
+        <div class="card-header-bar"><span class="card-rank">10</span><div class="card-header-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+        <div class="card-center"><div class="card-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+      </div>
+      <div class="card black">
+        <div class="card-header-bar"><span class="card-rank">A</span><div class="card-header-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+        <div class="card-center"><div class="card-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+      </div>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag highlight">Texture</span> Familiar playing card diamond pattern, but enlarged 2x for visual calm.</li>
+      <li><span class="tag note">Comfort</span> Zero moiré interference patterns.</li>
+    </ul>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- BACK OPTION 3 -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="back3">
+    <div class="option-header">
+      <div class="option-title">Option 3: Framed Celestial Wave (Casino Arc)</div>
+      <div class="option-badge">Airy Symmetry</div>
+    </div>
+    <p class="option-desc">
+      Features a midnight slate body with subtle cyan dot-matrix geometry, framed by a crisp double border and a central roundel. Distinctly casino-authentic without the micro-hatch noise.
+    </p>
+
+    <div class="showcase-row">
+      <div class="card-back back-b3">
+        <div class="back-b3-inner">
+          <div class="back-b3-centerpiece">
+            <svg viewBox="0 0 100 100" width="24" height="24" fill="currentColor">
+              <circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" stroke-width="6"/>
+              <circle cx="50" cy="50" r="10"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <!-- Sample cards -->
+      <div class="card red">
+        <div class="card-header-bar"><span class="card-rank">10</span><div class="card-header-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+        <div class="card-center"><div class="card-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+      </div>
+      <div class="card black">
+        <div class="card-header-bar"><span class="card-rank">A</span><div class="card-header-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+        <div class="card-center"><div class="card-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+      </div>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag highlight">Framing</span> The crisp cyan inner line makes the boundary of face-down cards pop sharply.</li>
+      <li><span class="tag note">Elegance</span> Modern casino aesthetic.</li>
+    </ul>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- BACK OPTION 4 -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="back4">
+    <div class="option-header">
+      <div class="option-title">Option 4: Art Deco Sovereign (Crimson & Gold Fan)</div>
+      <div class="option-badge">Warm Luxury</div>
+    </div>
+    <p class="option-desc">
+      Warm deep ruby crimson with gold accents and an architectural Art Deco fan/sunburst motif. Distinct contrast against the green felt table.
+    </p>
+
+    <div class="showcase-row">
+      <div class="card-back back-b4">
+        <div class="back-b4-inner">
+          <svg class="back-b4-fan" viewBox="0 0 100 100" fill="currentColor">
+            <!-- Deco Sunburst / Fan -->
+            <path d="M 50,15 L 53,40 L 75,25 L 60,45 L 85,50 L 60,55 L 75,75 L 53,60 L 50,85 L 47,60 L 25,75 L 40,55 L 15,50 L 40,45 L 25,25 L 47,40 Z"/>
+          </svg>
+        </div>
+      </div>
+      <!-- Sample cards -->
+      <div class="card red">
+        <div class="card-header-bar"><span class="card-rank">10</span><div class="card-header-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+        <div class="card-center"><div class="card-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+      </div>
+      <div class="card black">
+        <div class="card-header-bar"><span class="card-rank">A</span><div class="card-header-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+        <div class="card-center"><div class="card-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+      </div>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag highlight">Warmth</span> Crimson red cards stand out vibrantly on a deep green felt background.</li>
+      <li><span class="tag note">Art Deco</span> Clean geometric elegance.</li>
+    </ul>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- BACK OPTION 5 -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="back5">
+    <div class="option-header">
+      <div class="option-title">Option 5: Minimalist Beveled Sapphire (Zero Texture)</div>
+      <div class="option-badge">Purest Calm</div>
+    </div>
+    <p class="option-desc">
+      100% texture-free. Smooth diagonal gradient from cobalt to deep midnight navy, with a heavy 3px white border and a simple central diamond sigil. Designed for the absolute maximum reduction of visual noise.
+    </p>
+
+    <div class="showcase-row">
+      <div class="card-back back-b5">
+        <div class="back-b5-inner">
+          <svg class="back-b5-emblem" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4">
+            <polygon points="50,18 82,50 50,82 18,50"/>
+            <circle cx="50" cy="50" r="10" fill="currentColor"/>
+          </svg>
+        </div>
+      </div>
+      <!-- Sample cards -->
+      <div class="card red">
+        <div class="card-header-bar"><span class="card-rank">10</span><div class="card-header-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+        <div class="card-center"><div class="card-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+      </div>
+      <div class="card black">
+        <div class="card-header-bar"><span class="card-rank">A</span><div class="card-header-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+        <div class="card-center"><div class="card-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+      </div>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag highlight">Anti-Floater</span> Absolute zero repetitive patterns or micro-lines to trigger visual floaters.</li>
+      <li><span class="tag note">Clarity</span> Thick 3px white border makes card edges pop instantly.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>agy-solitaire &bull; Finalized Face Pips & 5 Card Back Options &bull; iPhone 16e</p>
+  </footer>
+
+</body>
+</html>

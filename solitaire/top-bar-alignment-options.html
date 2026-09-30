@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Bar Alignment & Help Icons Studio | agy-solitaire</title>
+  
+  <!-- High-Legibility Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* Ensure page is always 100% scrollable */
+    html {
+      overflow-x: hidden;
+      overflow-y: scroll !important;
+      background-color: #05130d;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: radial-gradient(circle at 50% 15%, #143f2e 0%, #0c271b 50%, #05130d 100%);
+      color: #f1f5f9;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+      padding: 30px 16px 100px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .studio-wrapper {
+      max-width: 980px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+
+    /* Studio Header */
+    .studio-header {
+      text-align: center;
+      padding-bottom: 20px;
+      border-bottom: 1.5px solid rgba(251, 191, 36, 0.25);
+    }
+
+    .studio-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #fbbf24;
+      background: rgba(251, 191, 36, 0.12);
+      border: 1px solid rgba(251, 191, 36, 0.4);
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+    }
+
+    .studio-title {
+      font-size: 28px;
+      font-weight: 900;
+      color: #fbbf24;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+    }
+
+    .studio-subtitle {
+      font-size: 15px;
+      color: #94a3b8;
+      max-width: 680px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    /* Jump Bar */
+    .jump-nav {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .jump-link {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1.5px solid rgba(251, 191, 36, 0.35);
+      color: #fde047;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      transition: all 0.2s ease;
+    }
+
+    .jump-link:hover {
+      background: #fbbf24;
+      color: #0f172a;
+      transform: translateY(-1px);
+    }
+
+    /* Section Styling */
+    .section-container {
+      background: rgba(10, 30, 21, 0.75);
+      border: 1.5px solid rgba(251, 191, 36, 0.3);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .section-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      border-bottom: 1px solid rgba(251, 191, 36, 0.2);
+      padding-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #fbbf24;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-desc {
+      font-size: 13.5px;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    /* Tool Controls */
+    .controls-bar {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      background: rgba(15, 23, 42, 0.6);
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(251, 191, 36, 0.2);
+    }
+
+    .tool-btn {
+      background: rgba(251, 191, 36, 0.15);
+      border: 1px solid #fbbf24;
+      color: #fef08a;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tool-btn:hover, .tool-btn.active {
+      background: #fbbf24;
+      color: #0f172a;
+    }
+
+    /* Grid of Alignment Options */
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    .option-card {
+      background: rgba(13, 38, 27, 0.85);
+      border: 2px solid rgba(251, 191, 36, 0.35);
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .option-card:hover {
+      border-color: #fbbf24;
+    }
+
+    .option-card.recommended {
+      border-color: #fbbf24;
+      box-shadow: 0 0 20px rgba(251, 191, 36, 0.25);
+      position: relative;
+    }
+
+    .rec-badge {
+      position: absolute;
+      top: -11px;
+      right: 20px;
+      background: #b91c1c;
+      color: #fef08a;
+      border: 1.5px solid #fbbf24;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 10px;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+
+    .option-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .option-name {
+      font-size: 17px;
+      font-weight: 800;
+      color: #fbbf24;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .option-tagline {
+      font-size: 13px;
+      color: #94a3b8;
+    }
+
+    .option-notes {
+      font-size: 13px;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    .option-notes strong {
+      color: #fde047;
+    }
+
+    /* iPhone Frame Preview Container */
+    .phone-preview-frame {
+      width: 100%;
+      max-width: 410px;
+      margin: 0 auto;
+      background: #0d2e20;
+      border: 2.5px solid rgba(251, 191, 36, 0.45);
+      border-radius: 20px;
+      padding: 14px 10px 18px 10px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .phone-tag {
+      position: absolute;
+      top: 4px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 9.5px;
+      font-weight: 700;
+      color: rgba(251, 191, 36, 0.6);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* Common Button Styling (Option 3 Senior High Contrast 40px) */
+    .hud-btn {
+      background: rgba(15, 23, 42, 0.95);
+      border: 2px solid #fbbf24;
+      color: #ffffff;
+      height: 40px;
+      padding: 0 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+      user-select: none;
+      box-sizing: border-box;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+
+    .hud-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .hud-btn.new-game-btn {
+      background: #b91c1c;
+      border-color: #fca5a5;
+      color: #ffffff;
+      padding: 0 13px;
+    }
+
+    .hud-btn.menu-btn {
+      background: rgba(15, 23, 42, 0.95);
+      border-color: #fbbf24;
+      color: #fef08a;
+      padding: 0 13px;
+    }
+
+    .hud-btn.help-btn {
+      background: rgba(15, 23, 42, 0.95);
+      border-color: #fbbf24;
+      color: #fef08a;
+      padding: 0 11px;
+    }
+
+    .hud-btn.undo-btn {
+      padding: 0 12px;
+    }
+
+    /* Hitbox Outline Overlay */
+    body.show-hitboxes .hud-btn {
+      outline: 2px dashed #38bdf8 !important;
+      outline-offset: 3px !important;
+      background: rgba(56, 189, 248, 0.25) !important;
+    }
+
+    /* Table preview below top bar */
+    .mock-table-strip {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      opacity: 0.85;
+    }
+
+    .mock-slot {
+      aspect-ratio: 52 / 76;
+      border-radius: 3px;
+      border: 1px solid rgba(251, 191, 36, 0.4);
+      background: rgba(0, 0, 0, 0.35);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: rgba(251, 191, 36, 0.6);
+      position: relative;
+    }
+
+    .mock-slot.waste-mock {
+      border-color: rgba(251, 191, 36, 0.7);
+      background: rgba(11, 36, 24, 0.8);
+      color: #fbbf24;
+    }
+
+    .mock-slot.stock-mock {
+      background: #881337;
+      border: 1.2px solid #fbbf24;
+      color: #fde047;
+    }
+
+    .mock-slot-label {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+
+    /* =========================================================================
+       SPECIFIC TOP BAR LAYOUTS
+       ========================================================================= */
+
+    /* Option 1: True Symmetrical Split (2 Left + 2 Right) */
+    .top-bar-opt1 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 4px 2px;
+    }
+    .top-bar-opt1 .btn-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Option 2: True Screen-Centered Menu (Grid 1fr auto 1fr) */
+    .top-bar-opt2 {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      width: 100%;
+      padding: 4px 2px;
+    }
+    .top-bar-opt2 .group-left {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .top-bar-opt2 .group-center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .top-bar-opt2 .group-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+
+    /* Option 3: Balanced 4-Column Uniform Grid */
+    .top-bar-opt3 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      width: 100%;
+      padding: 4px 2px;
+    }
+    .top-bar-opt3 .hud-btn {
+      width: 100%;
+      padding: 0 4px;
+    }
+
+    /* Option 4: Columns-Snapped Alignment (Directly on 7 Table Slots) */
+    .top-bar-opt4 {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      align-items: center;
+      width: 100%;
+      padding: 4px 2px;
+    }
+    .top-bar-opt4 .col-new {
+      grid-column: 1 / span 2;
+    }
+    .top-bar-opt4 .col-menu {
+      grid-column: 3 / span 3;
+      display: flex;
+      justify-content: center;
+    }
+    .top-bar-opt4 .col-help {
+      grid-column: 6;
+      display: flex;
+      justify-content: center;
+    }
+    .top-bar-opt4 .col-undo {
+      grid-column: 7;
+      display: flex;
+      justify-content: center;
+    }
+    .top-bar-opt4 .hud-btn {
+      width: 100%;
+      padding: 0 4px;
+    }
+
+    /* Option 5: Unified Brass Command Bar (Segmented Console) */
+    .top-bar-opt5 {
+      width: 100%;
+      padding: 4px 2px;
+      display: flex;
+      justify-content: center;
+    }
+    .segmented-console-bar {
+      display: flex;
+      align-items: stretch;
+      background: rgba(15, 23, 42, 0.95);
+      border: 2px solid #fbbf24;
+      border-radius: 22px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+      overflow: hidden;
+      width: 100%;
+    }
+    .console-segment {
+      flex: 1;
+      height: 40px;
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      position: relative;
+      transition: background 0.15s ease;
+    }
+    .console-segment:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 8px;
+      bottom: 8px;
+      width: 1px;
+      background: rgba(251, 191, 36, 0.35);
+    }
+    .console-segment.seg-new {
+      background: #b91c1c;
+      color: #ffffff;
+    }
+    .console-segment.seg-menu {
+      color: #fef08a;
+    }
+    .console-segment.seg-help {
+      color: #fef08a;
+    }
+    .console-segment.seg-undo {
+      color: #ffffff;
+    }
+
+    /* Option 6: Thumb-Zone Priority (Right-Hand Ergonomics) */
+    .top-bar-opt6 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 4px 2px;
+    }
+    .top-bar-opt6 .btn-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* =========================================================================
+       PART 2: HELP MENU ICONS SHOWCASE
+       ========================================================================= */
+    .help-icons-showcase {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .help-icon-card {
+      background: rgba(13, 38, 27, 0.8);
+      border: 1.5px solid rgba(251, 191, 36, 0.35);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+
+    .help-icon-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .help-icon-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #1c4b36 0%, #0a2317 100%);
+      border: 1.5px solid #fbbf24;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.5), inset 0 1px 2px rgba(254, 240, 138, 0.4);
+    }
+
+    .help-icon-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: #fbbf24;
+    }
+
+    .help-icon-subtitle {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    .help-icon-desc {
+      font-size: 12.5px;
+      color: #cbd5e1;
+      line-height: 1.45;
+    }
+
+    .compare-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-top: 4px;
+    }
+
+    .compare-pill.old {
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #fca5a5;
+    }
+
+    .compare-pill.new {
+      background: rgba(34, 197, 94, 0.2);
+      border: 1px solid rgba(34, 197, 94, 0.4);
+      color: #86efac;
+    }
+
+    /* Live Help Modal Preview Container */
+    .modal-preview-box {
+      max-width: 380px;
+      width: 100%;
+      margin: 0 auto;
+      background: rgba(15, 23, 42, 0.95);
+      border: 2px solid #fbbf24;
+      border-radius: 20px;
+      padding: 22px 18px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.8), 0 0 25px rgba(251, 191, 36, 0.2);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .modal-top-seal {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #881337 0%, #4c0519 100%);
+      border: 2px solid #fbbf24;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 4px auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    }
+
+    .modal-head-title {
+      font-size: 20px;
+      font-weight: 900;
+      color: #fbbf24;
+      letter-spacing: 0.5px;
+    }
+
+    .modal-head-sub {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: -6px;
+      margin-bottom: 6px;
+    }
+
+    .modal-card-box {
+      background: rgba(8, 28, 19, 0.75);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+      border-radius: 12px;
+      padding: 10px 12px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .modal-card-header {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .modal-card-icon-badge {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #183f2e 0%, #0a2016 100%);
+      border: 1.2px solid #fbbf24;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-card-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #fbbf24;
+      letter-spacing: 0.2px;
+    }
+
+    .modal-card-body {
+      font-size: 12px;
+      color: #cbd5e1;
+      line-height: 1.4;
+      padding-left: 39px;
+    }
+
+    .suit-badge {
+      display: inline-flex;
+      font-weight: 800;
+      padding: 0 1px;
+    }
+    .suit-badge.red { color: #ef4444; }
+    .suit-badge.gold { color: #fbbf24; }
+
+    /* Interactive live switch frame */
+    #live-interactive-frame {
+      transition: all 0.25s ease;
+    }
+
+    .selection-controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .select-opt-btn {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1.5px solid rgba(251, 191, 36, 0.4);
+      color: #cbd5e1;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .select-opt-btn:hover, .select-opt-btn.active {
+      background: #fbbf24;
+      color: #0f172a;
+      border-color: #fde047;
+      box-shadow: 0 0 12px rgba(251, 191, 36, 0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="studio-wrapper">
+
+    <!-- STUDIO HEADER -->
+    <header class="studio-header">
+      <div class="studio-tag">Executive Design Studio</div>
+      <h1 class="studio-title">Top Bar Alignment & Game-Style Help Icons</h1>
+      <p class="studio-subtitle">
+        Review 6 alignment options for the top navigation bar, plus the newly crafted Hong Kong imperial gold vector icons for the How to Play guide.
+      </p>
+    </header>
+
+    <!-- QUICK JUMP NAVIGATION -->
+    <div class="jump-nav">
+      <a href="#section-top-bar" class="jump-link">1. Top Bar Alignment Options (6 Choices)</a>
+      <a href="#section-interactive-test" class="jump-link">2. Live Interactive Switcher</a>
+      <a href="#section-help-icons" class="jump-link">3. Help Menu Game-Style Icons</a>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- SECTION 1: TOP BAR ALIGNMENT OPTIONS                                 -->
+    <!-- ===================================================================== -->
+    <section class="section-container" id="section-top-bar">
+      <div class="section-title-row">
+        <div class="section-title">
+          <span>🏛️</span>
+          <span>Part 1: Top Navigation Bar Alignment Options</span>
+        </div>
+        <div class="controls-bar">
+          <button class="tool-btn" id="btn-toggle-hitboxes" onclick="toggleHitboxes()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="3"/></svg>
+            <span>Toggle Hitboxes</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="section-desc">
+        The top bar houses 4 key controls: <strong>New</strong> (starts a game), <strong>Menu</strong> (audio, deal modes, timer), <strong>Help</strong> (instructions), and <strong>Undo</strong> (take back move). Notice how each alignment creates a different rhythm with the 7-slot card layout below.
+      </div>
+
+      <div class="options-grid">
+
+        <!-- OPTION 1: TRUE SYMMETRICAL 2 + 2 SPLIT -->
+        <div class="option-card recommended">
+          <div class="rec-badge">RECOMMENDED FOR BALANCE</div>
+          <div class="option-header">
+            <div class="option-name">
+              <span>Option 1: True Symmetrical Split (2 Left + 2 Right)</span>
+            </div>
+            <div class="option-tagline">Natural 50/50 balance across the screen</div>
+          </div>
+          <div class="option-notes">
+            • <strong>Left Flank (Game Flow):</strong> <code>[＋ New]</code> and <code>[↶ Undo]</code> grouped together.<br>
+            • <strong>Right Flank (Utility & Guidance):</strong> <code>[? Help]</code> and <code>[☰ Menu]</code> grouped together.<br>
+            • <strong>Why it works best:</strong> Creates total horizontal symmetry. Leaves the center corridor open, allowing the green felt to breathe directly over the central column (Column 3). Eliminates all awkward asymmetrical gaps.
+          </div>
+
+          <!-- Preview Phone Frame -->
+          <div class="phone-preview-frame">
+            <span class="phone-tag">iPhone 16e (390px)</span>
+            <div class="top-bar-opt1">
+              <div class="btn-group">
+                <button class="hud-btn new-game-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span>New</span></button>
+                <button class="hud-btn undo-btn"><span style="font-size:15px;line-height:1;">&#x21BA;</span><span>Undo</span></button>
+              </div>
+              <div class="btn-group">
+                <button class="hud-btn help-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Help</span></button>
+                <button class="hud-btn menu-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.4"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg><span>Menu</span></button>
+              </div>
+            </div>
+
+            <!-- Mock Table Strip for Context -->
+            <div class="mock-table-strip">
+              <div class="mock-slot">♠<span class="mock-slot-label">Found</span></div>
+              <div class="mock-slot">♥<span class="mock-slot-label">Found</span></div>
+              <div class="mock-slot">♣<span class="mock-slot-label">Found</span></div>
+              <div class="mock-slot">♦<span class="mock-slot-label">Found</span></div>
+              <div class="mock-slot" style="opacity:0.3;">•</div>
+              <div class="mock-slot waste-mock">🂡<span class="mock-slot-label">Waste</span></div>
+              <div class="mock-slot stock-mock">龍<span class="mock-slot-label">Stock</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- OPTION 2: TRUE SCREEN-CENTERED MENU (GRID 1fr auto 1fr) -->
+        <div class="option-card">
+          <div class="option-header">
+            <div class="option-name">
+              <span>Option 2: True Screen-Centered Menu (1 + Center + 2)</span>
+            </div>
+            <div class="option-tagline">Mathematical 50.0% screen-center alignment</div>
+          </div>
+          <div class="option-notes">
+            • <strong>Left:</strong> <code>[＋ New]</code> left-aligned.<br>
+            • <strong>Center:</strong> <code>[☰ Menu]</code> locked to exact 50.0% horizontal center using CSS Grid (<code>1fr auto 1fr</code>).<br>
+            • <strong>Right:</strong> <code>[? Help]</code> and <code>[↶ Undo]</code> right-aligned with 6px gap.<br>
+            • <strong>Why it works:</strong> Keeps the Menu button prominently centered as requested in previous turn, but fixes previous flexbox drift so Menu is truly centered over the entire phone screen.
+          </div>
+
+          <!-- Preview Phone Frame -->
+          <div class="phone-preview-frame">
+            <span class="phone-tag">iPhone 16e (390px)</span>
+            <div class="top-bar-opt2">
+              <div class="group-left">
+                <button class="hud-btn new-game-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span>New</span></button>
+              </div>
+              <div class="group-center">
+                <button class="hud-btn menu-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.4"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg><span>Menu</span></button>
+              </div>
+              <div class="group-right">
+                <button class="hud-btn help-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Help</span></button>
+                <button class="hud-btn undo-btn"><span style="font-size:15px;line-height:1;">&#x21BA;</span><span>Undo</span></button>
+              </div>
+            </div>
+
+            <!-- Mock Table Strip -->
+            <div class="mock-table-strip">
+              <div class="mock-slot">♠<span class="mock-slot-label">Found</span></div>
+              <div class="mock-slot">♥<span class="mock-slot-label">Found</span></div>
+              <div class="mock-slot">♣<span class="mock-slot-label">Found</span></div>
+              <div class="mock-slot">♦<span class="mock-slot-label">Found</span></div>
+              <div class="mock-slot" style="opacity:0.3;">•</div>
+              <div class="mock-slot waste-mock">🂡<span class="mock-slot-label">Waste</span></div>
+              <div class="mock-slot stock-mock">龍<span class="mock-slot-label">Stock</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- OPTION 3: BALANCED 4-COLUMN UNIFORM GRID -->
+        <div class="option-card recommended">
+          <div class="rec-badge">RECOMMENDED FOR MOM / ACCESSIBILITY</div>
+          <div class="option-header">
+            <div class="option-name">
+              <span>Option 3: Balanced 4-Column Uniform Grid (Equal Width)</span>
+            </div>
+            <div class="option-tagline">Identical 88px touch hitboxes across the bar</div>
+          </div>
+          <div class="option-notes">
+            • <strong>Layout:</strong> 4 equal-width buttons spanning the bar (<code>grid-template-columns: repeat(4, 1fr)</code>).<br>
+            • <strong>Order:</strong> <code>[＋ New]</code> | <code>[↶ Undo]</code> | <code>[? Help]</code> | <code>[☰ Menu]</code>.<br>
+            • <strong>Why it works best for Mom:</strong> Every single button has the exact same massive ~88px tap target. There are no narrow gaps or irregular widths. Clean rhythmic cadence across the top of the phone.
+          </div>
+
+          <!-- Preview Phone Frame -->
+          <div class="phone-preview-frame">
+            <span class="phone-tag">iPhone 16e (390px)</span>
+            <div class="top-bar-opt3">
+              <button class="hud-btn new-game-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span>New</span></button>
+              <button class="hud-btn undo-btn"><span style="font-size:15px;line-height:1;">&#x21BA;</span><span>Undo</span></button>
+              <button class="hud-btn help-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Help</span></button>
+              <button class="hud-btn menu-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.4"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg><span>Menu</span></button>
+            </div>
+
+            <!-- Mock Table Strip -->
+            <div class="mock-table-strip">
+              <div class="mock-slot">♠<span class="mock-slot-label">Found</span></div>
+              <div class="mock-slot">♥<span class="mock-slot-label">Found</span></div>
+              <div class="mock-slot">♣<span class="mock-slot-label">Found</span></div>
+              <div class="mock-slot">♦<span class="mock-slot-label">Found</span></div>
+              <div class="mock-slot" style="opacity:0.3;">•</div>
+              <div class="mock-slot waste-mock">🂡<span class="mock-slot-label">Waste</span></div>
+              <div class="mock-slot stock-mock">龍<span class="mock-slot-label">Stock</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- OPTION 4: COLUMNS-SNAPPED ALIGNMENT -->
+        <div class="option-card">
+          <div class="option-header">
+            <div class="option-name">
+              <span>Option 4: Columns-Snapped Alignment (Direct Table Grid Sync)</span>
+            </div>
+            <div class="option-tagline">Buttons snap to the 7 vertical card columns</div>
+          </div>
+          <div class="option-notes">
+            • <code>[＋ New]</code> spans Columns 0 & 1 (above first 2 foundations).<br>
+            • <code>[☰ Menu]</code> centered in Columns 3–5 (above diamond foundation & felt spacer).<br>
+            • <code>[? Help]</code> locked directly over Column 5 (Waste pile).<br>
+            • <code>[↶ Undo]</code> locked directly over Column 6 (Stock pile).<br>
+            • <strong>Why it works:</strong> Creates strict vertical alignment lines connecting top toolbar items directly with the card slots underneath.
+          </div>
+
+          <!-- Preview Phone Frame -->
+          <div class="phone-preview-frame">
+            <span class="phone-tag">iPhone 16e (390px)</span>
+            <div class="top-bar-opt4">
+              <div class="col-new">
+                <button class="hud-btn new-game-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span>New</span></button>
+              </div>
+              <div class="col-menu">
+                <button class="hud-btn menu-btn" style="width: auto; padding: 0 14px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.4"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg><span>Menu</span></button>
+              </div>
+              <div class="col-help">
+                <button class="hud-btn help-btn" style="width: 100%; padding: 0 2px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></button>
+              </div>
+              <div class="col-undo">
+                <button class="hud-btn undo-btn" style="width: 100%; padding: 0 2px;"><span style="font-size:15px;line-height:1;">&#x21BA;</span></button>
+              </div>
+            </div>
+
+            <!-- Mock Table Strip -->
+            <div class="mock-table-strip">
+              <div class="mock-slot">♠<span class="mock-slot-label">Found</span></div>
+              <div class="mock-slot">♥<span class="mock-slot-label">Found</span></div>
+              <div class="mock-slot">♣<span class="mock-slot-label">Found</span></div>
+              <div class="mock-slot">♦<span class="mock-slot-label">Found</span></div>
+              <div class="mock-slot" style="opacity:0.3;">•</div>
+              <div class="mock-slot waste-mock">🂡<span class="mock-slot-label">Waste</span></div>
+              <div class="mock-slot stock-mock">龍<span class="mock-slot-label">Stock</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- OPTION 5: UNIFIED BRASS COMMAND BAR -->
+        <div class="option-card">
+          <div class="option-header">
+            <div class="option-name">
+              <span>Option 5: Unified Brass Command Bar (Segmented Console)</span>
+            </div>
+            <div class="option-tagline">Single monolithic capsule with hairline gold dividers</div>
+          </div>
+          <div class="option-notes">
+            • Replaces 4 loose floating pill buttons with <strong>one cohesive brass-bordered console</strong>.<br>
+            • Segments: <code>[＋ New]</code> | <code>[☰ Menu]</code> | <code>[? Help]</code> | <code>[↶ Undo]</code>.<br>
+            • <strong>Why it works:</strong> Cleanest visual appearance with zero floating clutter. Feels like an authentic vintage gaming console plate.
+          </div>
+
+          <!-- Preview Phone Frame -->
+          <div class="phone-preview-frame">
+            <span class="phone-tag">iPhone 16e (390px)</span>
+            <div class="top-bar-opt5">
+              <div class="segmented-console-bar">
+                <button class="console-segment seg-new"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span>New</span></button>
+                <button class="console-segment seg-menu"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.4"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg><span>Menu</span></button>
+                <button class="console-segment seg-help"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Help</span></button>
+                <button class="console-segment seg-undo"><span style="font-size:15px;line-height:1;">&#x21BA;</span><span>Undo</span></button>
+              </div>
+            </div>
+
+            <!-- Mock Table Strip -->
+            <div class="mock-table-strip">
+              <div class="mock-slot">♠<span class="mock-slot-label">Found</span></div>
+              <div class="mock-slot">♥<span class="mock-slot-label">Found</span></div>
+              <div class="mock-slot">♣<span class="mock-slot-label">Found</span></div>
+              <div class="mock-slot">♦<span class="mock-slot-label">Found</span></div>
+              <div class="mock-slot" style="opacity:0.3;">•</div>
+              <div class="mock-slot waste-mock">🂡<span class="mock-slot-label">Waste</span></div>
+              <div class="mock-slot stock-mock">龍<span class="mock-slot-label">Stock</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- OPTION 6: THUMB-ZONE SENIOR PRIORITY -->
+        <div class="option-card">
+          <div class="option-header">
+            <div class="option-name">
+              <span>Option 6: Thumb-Zone Priority (Right-Hand Ergonomics)</span>
+            </div>
+            <div class="option-tagline">Most frequent gameplay actions on the right side</div>
+          </div>
+          <div class="option-notes">
+            • <strong>Left Side:</strong> <code>[☰ Menu]</code> and <code>[? Help]</code> (infrequently pressed during play).<br>
+            • <strong>Right Side:</strong> <code>[＋ New]</code> and <code>[↶ Undo]</code> (primary gameplay actions).<br>
+            • <strong>Why it works:</strong> Mom doesn't have to reach her right thumb across the entire screen to tap Undo or restart. Keeps the high-frequency taps right under the natural thumb arc.
+          </div>
+
+          <!-- Preview Phone Frame -->
+          <div class="phone-preview-frame">
+            <span class="phone-tag">iPhone 16e (390px)</span>
+            <div class="top-bar-opt6">
+              <div class="btn-group">
+                <button class="hud-btn menu-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.4"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg><span>Menu</span></button>
+                <button class="hud-btn help-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Help</span></button>
+              </div>
+              <div class="btn-group">
+                <button class="hud-btn new-game-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span>New</span></button>
+                <button class="hud-btn undo-btn"><span style="font-size:15px;line-height:1;">&#x21BA;</span><span>Undo</span></button>
+              </div>
+            </div>
+
+            <!-- Mock Table Strip -->
+            <div class="mock-table-strip">
+              <div class="mock-slot">♠<span class="mock-slot-label">Found</span></div>
+              <div class="mock-slot">♥<span class="mock-slot-label">Found</span></div>
+              <div class="mock-slot">♣<span class="mock-slot-label">Found</span></div>
+              <div class="mock-slot">♦<span class="mock-slot-label">Found</span></div>
+              <div class="mock-slot" style="opacity:0.3;">•</div>
+              <div class="mock-slot waste-mock">🂡<span class="mock-slot-label">Waste</span></div>
+              <div class="mock-slot stock-mock">龍<span class="mock-slot-label">Stock</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SECTION 2: LIVE INTERACTIVE TESTER                                    -->
+    <!-- ===================================================================== -->
+    <section class="section-container" id="section-interactive-test">
+      <div class="section-title-row">
+        <div class="section-title">
+          <span>⚡</span>
+          <span>Live Interactive Switcher</span>
+        </div>
+      </div>
+      <div class="section-desc">
+        Click any option below to instantly switch the live game header and see how it feels:
+      </div>
+
+      <div class="selection-controls">
+        <button class="select-opt-btn active" onclick="setLiveOption(1, this)">Option 1: 2+2 Symmetrical</button>
+        <button class="select-opt-btn" onclick="setLiveOption(2, this)">Option 2: True Center Menu</button>
+        <button class="select-opt-btn" onclick="setLiveOption(3, this)">Option 3: 4-Column Uniform Grid</button>
+        <button class="select-opt-btn" onclick="setLiveOption(4, this)">Option 4: Column-Snapped</button>
+        <button class="select-opt-btn" onclick="setLiveOption(5, this)">Option 5: Brass Command Console</button>
+        <button class="select-opt-btn" onclick="setLiveOption(6, this)">Option 6: Thumb-Zone Priority</button>
+      </div>
+
+      <div class="phone-preview-frame" style="max-width: 420px; padding: 18px 12px 24px 12px;">
+        <span class="phone-tag">Interactive Preview Frame</span>
+        
+        <div id="live-header-container" style="min-height: 48px;">
+          <!-- Dynamically swapped via JS -->
+        </div>
+
+        <!-- Table Mock -->
+        <div class="mock-table-strip" style="margin-top: 4px;">
+          <div class="mock-slot">♠<span class="mock-slot-label">Found</span></div>
+          <div class="mock-slot">♥<span class="mock-slot-label">Found</span></div>
+          <div class="mock-slot">♣<span class="mock-slot-label">Found</span></div>
+          <div class="mock-slot">♦<span class="mock-slot-label">Found</span></div>
+          <div class="mock-slot" style="opacity:0.3;">•</div>
+          <div class="mock-slot waste-mock">🂡<span class="mock-slot-label">Waste</span></div>
+          <div class="mock-slot stock-mock">龍<span class="mock-slot-label">Stock</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SECTION 3: GAME-STYLE HELP MENU ICONS                                 -->
+    <!-- ===================================================================== -->
+    <section class="section-container" id="section-help-icons">
+      <div class="section-title-row">
+        <div class="section-title">
+          <span>🏮</span>
+          <span>Part 2: Visual Style Help Menu Icons</span>
+        </div>
+      </div>
+
+      <div class="section-desc">
+        We replaced the generic Unicode emojis (<code>🎯</code>, <code>🃏</code>, <code>📦</code>, <code>💡</code>) with <strong>bespoke Hong Kong Imperial Gold vector SVG icons</strong> matching the card back medallion and victory lanterns:
+      </div>
+
+      <!-- 4 Icons Showcase Cards -->
+      <div class="help-icons-showcase">
+
+        <!-- ICON 1: GOAL -->
+        <div class="help-icon-card">
+          <div class="help-icon-header">
+            <div class="help-icon-badge">
+              <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="11" y="11" width="18" height="24" rx="2.5" fill="#0b2418" stroke="#fbbf24" stroke-width="1.3"/>
+                <rect x="13" y="13" width="14" height="20" rx="1.5" fill="none" stroke="rgba(254,240,138,0.4)" stroke-width="0.6"/>
+                <path d="M 13,11 L 13,5.5 L 16.5,8 L 20,3 L 23.5,8 L 27,5.5 L 27,11 Z" fill="rgba(251,191,36,0.4)" stroke="#fde047" stroke-width="1.2" stroke-linejoin="round"/>
+                <circle cx="20" cy="2.5" r="1.3" fill="#ef4444" stroke="#fde047" stroke-width="0.7"/>
+                <circle cx="13" cy="5" r="1" fill="#fde047"/>
+                <circle cx="27" cy="5" r="1" fill="#fde047"/>
+                <text x="20" y="27" fill="#fbbf24" font-family="Georgia, serif" font-size="14" font-weight="900" text-anchor="middle">A</text>
+                <path d="M 20,16 L 21.2,18.5 L 20,20 L 18.8,18.5 Z" fill="#ef4444"/>
+              </svg>
+            </div>
+            <div>
+              <div class="help-icon-title">Goal of the Game</div>
+              <div class="help-icon-subtitle">Crowned Foundation Ace</div>
+            </div>
+          </div>
+          <div class="help-icon-desc">
+            A golden Imperial playing card crowned with jewels and the <strong>Ace</strong> foundation crest. Represents building from Ace up to King.
+          </div>
+          <div>
+            <span class="compare-pill old">Replaces: 🎯 generic target emoji</span>
+          </div>
+        </div>
+
+        <!-- ICON 2: MOVING CARDS -->
+        <div class="help-icon-card">
+          <div class="help-icon-header">
+            <div class="help-icon-badge">
+              <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Back Card (Red 8) -->
+                <g transform="translate(7, 6)">
+                  <rect x="0" y="0" width="16" height="22" rx="2.2" fill="#143426" stroke="#ef4444" stroke-width="1.2"/>
+                  <text x="4.5" y="7.5" fill="#ef4444" font-family="sans-serif" font-size="6.5" font-weight="900" text-anchor="middle">8</text>
+                  <path d="M 4.5,9 C 3.2,9 2.5,9.8 2.5,10.6 C 2.5,12 4.5,13.2 4.5,13.2 C 4.5,13.2 6.5,12 6.5,10.6 C 6.5,9.8 5.8,9 4.5,9 Z" fill="#ef4444"/>
+                </g>
+                <!-- Cascading Front Card (Black 7) -->
+                <g transform="translate(13, 13)">
+                  <rect x="0" y="0" width="16" height="22" rx="2.2" fill="#0b2418" stroke="#fbbf24" stroke-width="1.3"/>
+                  <rect x="1.2" y="1.2" width="13.6" height="19.6" rx="1.5" fill="none" stroke="rgba(254,240,138,0.3)" stroke-width="0.6"/>
+                  <text x="4.5" y="7.5" fill="#fde047" font-family="sans-serif" font-size="6.5" font-weight="900" text-anchor="middle">7</text>
+                  <path d="M 4.5,9 C 3.8,9.8 2.8,11.2 2.8,12 C 2.8,12.7 3.4,13.1 4,13.1 C 4.3,13.1 4.5,12.8 4.5,12.8 C 4.5,12.8 4.7,13.1 5,13.1 C 5.6,13.1 6.2,12.7 6.2,12 C 6.2,11.2 5.2,9.8 4.5,9 Z" fill="#fde047"/>
+                </g>
+                <!-- Cascade arc -->
+                <path d="M 33,12 C 37,17 36,25 31,29" fill="none" stroke="#fde047" stroke-width="1.4" stroke-linecap="round"/>
+                <path d="M 29,27 L 31,29.5 L 34,27.5" fill="none" stroke="#fde047" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="help-icon-title">Moving Cards (Tableau)</div>
+              <div class="help-icon-subtitle">Alternating Cascading Cards</div>
+            </div>
+          </div>
+          <div class="help-icon-desc">
+            Two cascading cards in alternating Red and Gold suits with a graceful descending sequence arrow.
+          </div>
+          <div>
+            <span class="compare-pill old">Replaces: 🃏 generic joker emoji</span>
+          </div>
+        </div>
+
+        <!-- ICON 3: STOCK & WASTE -->
+        <div class="help-icon-card">
+          <div class="help-icon-header">
+            <div class="help-icon-badge">
+              <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Stock Card -->
+                <g transform="translate(20, 11)">
+                  <rect x="0" y="0" width="15" height="21" rx="2" fill="#881337" stroke="#fbbf24" stroke-width="1.2"/>
+                  <circle cx="7.5" cy="10.5" r="4.5" fill="#580d23" stroke="#fde047" stroke-width="0.8"/>
+                  <path d="M 7.5,8 C 9,8 10,9 10,10.5 C 10,12 8.5,13 7.5,13 C 6.5,13 5.5,12 5.5,10.5" fill="none" stroke="#fde047" stroke-width="0.9" stroke-linecap="round"/>
+                  <circle cx="7.5" cy="10.5" r="1.1" fill="#ef4444"/>
+                </g>
+                <!-- Waste Card -->
+                <g transform="translate(5, 13)">
+                  <rect x="0" y="0" width="15" height="21" rx="2" fill="#0b2418" stroke="#fbbf24" stroke-width="1.2"/>
+                  <rect x="1.2" y="1.2" width="12.6" height="18.6" rx="1.2" fill="none" stroke="rgba(254,240,138,0.3)" stroke-width="0.5"/>
+                  <text x="4.2" y="7" fill="#ef4444" font-family="sans-serif" font-size="6" font-weight="900" text-anchor="middle">K</text>
+                  <path d="M 4.2,8.5 C 3.2,8.5 2.6,9.2 2.6,9.8 C 2.6,11 4.2,12 4.2,12 C 4.2,12 5.8,11 5.8,9.8 C 5.8,9.2 5.2,8.5 4.2,8.5 Z" fill="#ef4444"/>
+                </g>
+                <!-- Deal Arc Arrow -->
+                <path d="M 23,8 C 19,4 12,4 8,9" fill="none" stroke="#fde047" stroke-width="1.4" stroke-linecap="round"/>
+                <path d="M 10,6.5 L 7.5,9 L 7.5,6" fill="none" stroke="#fde047" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                <!-- Recycle Arc -->
+                <path d="M 12,35 C 18,37 24,36 28,33" fill="none" stroke="rgba(251,191,36,0.7)" stroke-width="1.1" stroke-linecap="round" stroke-dasharray="2,1.5"/>
+                <path d="M 26,34.5 L 28.5,33 L 28.5,35.5" fill="none" stroke="rgba(251,191,36,0.7)" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="help-icon-title">Stock & Waste</div>
+              <div class="help-icon-subtitle">Dragon Stock to Waste Arc</div>
+            </div>
+          </div>
+          <div class="help-icon-desc">
+            A facedown Dragon Stock deck drawing into a faceup Waste card, complete with the golden recycle loop below.
+          </div>
+          <div>
+            <span class="compare-pill old">Replaces: 📦 cardboard box emoji</span>
+          </div>
+        </div>
+
+        <!-- ICON 4: TIPS FOR MOM -->
+        <div class="help-icon-card">
+          <div class="help-icon-header">
+            <div class="help-icon-badge">
+              <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Lantern Hanger -->
+                <line x1="20" y1="2" x2="20" y2="7" stroke="#fbbf24" stroke-width="1.2"/>
+                <circle cx="20" cy="5" r="1.5" fill="#fde047"/>
+                <path d="M 15,8 L 25,8 L 23,10 L 17,10 Z" fill="#b45309" stroke="#fbbf24" stroke-width="0.8"/>
+                <!-- Oval Body -->
+                <ellipse cx="20" cy="18" rx="8" ry="9" fill="url(#prev-lantern-glow)" stroke="#f59e0b" stroke-width="1.2"/>
+                <defs>
+                  <radialGradient id="prev-lantern-glow" cx="45%" cy="40%" r="55%">
+                    <stop offset="0%" stop-color="#fef08a"/>
+                    <stop offset="45%" stop-color="#f59e0b"/>
+                    <stop offset="90%" stop-color="#991b1b"/>
+                  </radialGradient>
+                </defs>
+                <ellipse cx="20" cy="18" rx="4.5" ry="9" fill="none" stroke="rgba(254, 240, 138, 0.6)" stroke-width="0.8"/>
+                <line x1="20" y1="9" x2="20" y2="27" stroke="rgba(254, 240, 138, 0.8)" stroke-width="0.8"/>
+                <path d="M 17,26 L 23,26 L 22,28 L 18,28 Z" fill="#b45309" stroke="#fbbf24" stroke-width="0.8"/>
+                <!-- Tassel -->
+                <line x1="20" y1="28" x2="20" y2="35" stroke="#fbbf24" stroke-width="1.4" stroke-linecap="round"/>
+                <line x1="18.5" y1="30" x2="19" y2="36" stroke="#fde047" stroke-width="0.8"/>
+                <line x1="21.5" y1="30" x2="21" y2="36" stroke="#fde047" stroke-width="0.8"/>
+                <!-- Sparkles -->
+                <path d="M 8,13 Q 9.5,13 9.5,11.5 Q 9.5,13 11,13 Q 9.5,13 9.5,14.5 Q 9.5,13 8,13 Z" fill="#fde047"/>
+                <path d="M 29,22 Q 30.5,22 30.5,20.5 Q 30.5,22 32,22 Q 30.5,22 30.5,23.5 Q 30.5,22 29,22 Z" fill="#fde047"/>
+              </svg>
+            </div>
+            <div>
+              <div class="help-icon-title">Helpful Tips for Mom</div>
+              <div class="help-icon-subtitle">Auspicious Sky Lantern & Spark</div>
+            </div>
+          </div>
+          <div class="help-icon-desc">
+            A warm Hong Kong auspicious sky lantern with golden tassels and wisdom sparks, matching the celebration lanterns.
+          </div>
+          <div>
+            <span class="compare-pill old">Replaces: 💡 generic lightbulb emoji</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- FULL LIVE MODAL PREVIEW -->
+      <div style="text-align: center; margin-top: 10px;">
+        <h3 style="font-size: 16px; font-weight: 800; color: #fbbf24; margin-bottom: 14px;">Full Live Help Modal Preview (In-Game Look)</h3>
+      </div>
+
+      <div class="modal-preview-box">
+        <div class="modal-top-seal">
+          <!-- Stylized Gold Question Mark Medallion with Sunburst -->
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
+
+        <div class="modal-head-title">How to Play</div>
+        <div class="modal-head-sub">Klondike Solitaire Quick Guide</div>
+
+        <!-- Box 1 -->
+        <div class="modal-card-box">
+          <div class="modal-card-header">
+            <div class="modal-card-icon-badge">
+              <svg width="20" height="20" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="11" y="11" width="18" height="24" rx="2.5" fill="#0b2418" stroke="#fbbf24" stroke-width="1.3"/>
+                <path d="M 13,11 L 13,5.5 L 16.5,8 L 20,3 L 23.5,8 L 27,5.5 L 27,11 Z" fill="rgba(251,191,36,0.4)" stroke="#fde047" stroke-width="1.2" stroke-linejoin="round"/>
+                <text x="20" y="27" fill="#fbbf24" font-family="Georgia, serif" font-size="14" font-weight="900" text-anchor="middle">A</text>
+              </svg>
+            </div>
+            <div class="modal-card-title">Goal of the Game</div>
+          </div>
+          <div class="modal-card-body">
+            Build all 4 foundation piles at the top from <strong>Ace up to King</strong>, sorted by suit (<span class="suit-badge gold">♠</span> <span class="suit-badge red">♥</span> <span class="suit-badge gold">♣</span> <span class="suit-badge red">♦</span>).
+          </div>
+        </div>
+
+        <!-- Box 2 -->
+        <div class="modal-card-box">
+          <div class="modal-card-header">
+            <div class="modal-card-icon-badge">
+              <svg width="20" height="20" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="8" y="7" width="15" height="20" rx="2" fill="#143426" stroke="#ef4444" stroke-width="1.2"/>
+                <rect x="15" y="14" width="15" height="20" rx="2" fill="#0b2418" stroke="#fbbf24" stroke-width="1.2"/>
+                <path d="M 34,14 C 37,18 36,25 32,28" fill="none" stroke="#fde047" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="modal-card-title">Moving Cards (Tableau)</div>
+          </div>
+          <div class="modal-card-body">
+            • Stack cards downward in <strong>alternating colors</strong> (e.g. Red 8 on Black 9).<br>
+            • Empty column spaces can only be filled by a <strong>King</strong>.<br>
+            • You can move single cards or full sequences of face-up cards.
+          </div>
+        </div>
+
+        <!-- Box 3 -->
+        <div class="modal-card-box">
+          <div class="modal-card-header">
+            <div class="modal-card-icon-badge">
+              <svg width="20" height="20" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="20" y="11" width="14" height="20" rx="2" fill="#881337" stroke="#fbbf24" stroke-width="1.1"/>
+                <rect x="6" y="13" width="14" height="20" rx="2" fill="#0b2418" stroke="#fbbf24" stroke-width="1.1"/>
+                <path d="M 22,8 C 18,5 12,5 8,9" fill="none" stroke="#fde047" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="modal-card-title">Stock & Waste</div>
+          </div>
+          <div class="modal-card-body">
+            Tap the top-right <strong>Stock</strong> pile to draw cards into the <strong>Waste</strong> pile. When empty, tap it again to recycle.
+          </div>
+        </div>
+
+        <!-- Box 4 -->
+        <div class="modal-card-box">
+          <div class="modal-card-header">
+            <div class="modal-card-icon-badge">
+              <svg width="20" height="20" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="20" cy="18" rx="7" ry="8" fill="#f59e0b" stroke="#fde047" stroke-width="1"/>
+                <line x1="20" y1="26" x2="20" y2="34" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/>
+                <circle cx="20" cy="18" r="2.5" fill="#fef08a"/>
+              </svg>
+            </div>
+            <div class="modal-card-title">Helpful Tips for Mom</div>
+          </div>
+          <div class="modal-card-body">
+            • <strong>Aces fly automatically</strong> to the foundation when tapped!<br>
+            • Tap <strong>Undo</strong> anytime if you want to rethink a move.<br>
+            • Try to uncover face-down cards as early as you can.
+          </div>
+        </div>
+
+        <button style="margin-top: 6px; background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%); border: 1.5px solid #fde047; color: #0f172a; font-size: 13.5px; font-weight: 900; padding: 10px; border-radius: 12px; cursor: pointer;">
+          Got It, Let's Play!
+        </button>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // Templates for the interactive frame
+    const optionTemplates = {
+      1: `<div class="top-bar-opt1">
+            <div class="btn-group">
+              <button class="hud-btn new-game-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span>New</span></button>
+              <button class="hud-btn undo-btn"><span style="font-size:15px;line-height:1;">&#x21BA;</span><span>Undo</span></button>
+            </div>
+            <div class="btn-group">
+              <button class="hud-btn help-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Help</span></button>
+              <button class="hud-btn menu-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.4"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg><span>Menu</span></button>
+            </div>
+          </div>`,
+      2: `<div class="top-bar-opt2">
+            <div class="group-left">
+              <button class="hud-btn new-game-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span>New</span></button>
+            </div>
+            <div class="group-center">
+              <button class="hud-btn menu-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.4"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg><span>Menu</span></button>
+            </div>
+            <div class="group-right">
+              <button class="hud-btn help-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Help</span></button>
+              <button class="hud-btn undo-btn"><span style="font-size:15px;line-height:1;">&#x21BA;</span><span>Undo</span></button>
+            </div>
+          </div>`,
+      3: `<div class="top-bar-opt3">
+            <button class="hud-btn new-game-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span>New</span></button>
+            <button class="hud-btn undo-btn"><span style="font-size:15px;line-height:1;">&#x21BA;</span><span>Undo</span></button>
+            <button class="hud-btn help-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Help</span></button>
+            <button class="hud-btn menu-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.4"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg><span>Menu</span></button>
+          </div>`,
+      4: `<div class="top-bar-opt4">
+            <div class="col-new">
+              <button class="hud-btn new-game-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span>New</span></button>
+            </div>
+            <div class="col-menu">
+              <button class="hud-btn menu-btn" style="width: auto; padding: 0 14px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.4"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg><span>Menu</span></button>
+            </div>
+            <div class="col-help">
+              <button class="hud-btn help-btn" style="width: 100%; padding: 0 2px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></button>
+            </div>
+            <div class="col-undo">
+              <button class="hud-btn undo-btn" style="width: 100%; padding: 0 2px;"><span style="font-size:15px;line-height:1;">&#x21BA;</span></button>
+            </div>
+          </div>`,
+      5: `<div class="top-bar-opt5">
+            <div class="segmented-console-bar">
+              <button class="console-segment seg-new"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span>New</span></button>
+              <button class="console-segment seg-menu"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.4"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg><span>Menu</span></button>
+              <button class="console-segment seg-help"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Help</span></button>
+              <button class="console-segment seg-undo"><span style="font-size:15px;line-height:1;">&#x21BA;</span><span>Undo</span></button>
+            </div>
+          </div>`,
+      6: `<div class="top-bar-opt6">
+            <div class="btn-group">
+              <button class="hud-btn menu-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.4"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg><span>Menu</span></button>
+              <button class="hud-btn help-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Help</span></button>
+            </div>
+            <div class="btn-group">
+              <button class="hud-btn new-game-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span>New</span></button>
+              <button class="hud-btn undo-btn"><span style="font-size:15px;line-height:1;">&#x21BA;</span><span>Undo</span></button>
+            </div>
+          </div>`
+    };
+
+    function setLiveOption(num, btn) {
+      document.querySelectorAll('.select-opt-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      const container = document.getElementById('live-header-container');
+      container.innerHTML = optionTemplates[num] || optionTemplates[1];
+    }
+
+    function toggleHitboxes() {
+      document.body.classList.toggle('show-hitboxes');
+      const btn = document.getElementById('btn-toggle-hitboxes');
+      btn.classList.toggle('active');
+    }
+
+    // Initialize with Option 1
+    window.addEventListener('DOMContentLoaded', () => {
+      setLiveOption(1, document.querySelector('.select-opt-btn'));
+    });
+  </script>
+
+</body>
+</html>

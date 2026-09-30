@@ -1,0 +1,2575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Imperial Golden Dragon (金龍) Card Back Studio</title>
+  <style>
+    html {
+      overflow-x: hidden;
+      overflow-y: scroll !important;
+      height: auto !important;
+      background-color: #071a12;
+    }
+
+    body {
+      margin: 0;
+      padding: 30px 20px 100px 20px;
+      background: radial-gradient(circle at 50% 20%, #174d36 0%, #0d2e20 60%, #071a12 100%);
+      color: #f1f5f9;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+      height: auto !important;
+      overflow-y: visible !important;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .studio-container {
+      max-width: 1080px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+      position: relative;
+    }
+
+    .studio-header {
+      text-align: center;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(251, 191, 36, 0.25);
+    }
+
+    .studio-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: #fbbf24;
+      margin: 0 0 8px 0;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+    }
+
+    .studio-subtitle {
+      font-size: 15px;
+      color: #94a3b8;
+      margin: 0;
+    }
+
+    /* Decision Confirmation Ribbon */
+    .decision-ribbon {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1.5px solid rgba(251, 191, 36, 0.4);
+      border-radius: 12px;
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .decision-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13.5px;
+    }
+
+    .decision-label {
+      color: #94a3b8;
+      font-weight: 600;
+    }
+
+    .decision-val {
+      color: #fbbf24;
+      font-weight: 800;
+      background: rgba(251, 191, 36, 0.15);
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(251, 191, 36, 0.3);
+    }
+
+    .studio-section {
+      background: rgba(10, 35, 24, 0.85);
+      border: 1px solid rgba(251, 191, 36, 0.35);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .studio-section.hero-section {
+      border: 2px solid #fbbf24;
+      box-shadow: 0 0 30px rgba(251, 191, 36, 0.2);
+    }
+
+    .section-title-bar {
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(251, 191, 36, 0.2);
+      padding-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #fde047;
+      margin: 0 0 6px 0;
+    }
+
+    .section-hint {
+      font-size: 13px;
+      color: #cbd5e1;
+      line-height: 1.4;
+    }
+
+    /* View Mode Switcher for Section 3 */
+    .scale-toggle-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+      border-radius: 8px;
+      padding: 4px 6px;
+    }
+
+    .scale-toggle-label {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #94a3b8;
+      padding: 0 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .scale-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: #cbd5e1;
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .scale-btn:hover {
+      color: #fbbf24;
+      background: rgba(251, 191, 36, 0.1);
+    }
+
+    .scale-btn.active {
+      background: #fbbf24;
+      color: #0f172a;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+
+    /* Grids */
+    .options-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .waste-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .tableau-grid {
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+
+    .hk-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    @media (max-width: 900px) {
+      .waste-grid { grid-template-columns: repeat(2, 1fr); }
+      .tableau-grid { grid-template-columns: repeat(3, 1fr); }
+      .hk-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 600px) {
+      .waste-grid { grid-template-columns: 1fr; }
+      .tableau-grid { grid-template-columns: repeat(2, 1fr); }
+      .hk-grid { grid-template-columns: 1fr; }
+    }
+
+    .option-card {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1.5px solid rgba(251, 191, 36, 0.25);
+      border-radius: 12px;
+      padding: 16px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      box-sizing: border-box;
+      height: 100%;
+    }
+
+    .option-card:hover {
+      border-color: rgba(251, 191, 36, 0.7);
+      background: rgba(15, 23, 42, 0.9);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .option-card.selected {
+      border-color: #fbbf24;
+      background: rgba(30, 41, 59, 0.95);
+      box-shadow: 0 0 0 2px #fbbf24, 0 8px 25px rgba(251, 191, 36, 0.25);
+    }
+
+    .option-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+      background: rgba(251, 191, 36, 0.15);
+      color: #fbbf24;
+      border: 1px solid rgba(251, 191, 36, 0.3);
+      height: 22px;
+      line-height: 14px;
+      box-sizing: border-box;
+    }
+
+    .option-card.selected .option-badge {
+      background: #fbbf24;
+      color: #0f172a;
+    }
+
+    .option-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 6px;
+      text-align: center;
+      width: 100%;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .option-desc {
+      font-size: 12px;
+      color: #94a3b8;
+      text-align: center;
+      margin-bottom: 14px;
+      line-height: 1.4;
+      height: 38px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .option-desc span {
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+
+    .preview-box {
+      width: 100%;
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at center, #14442f 0%, #0b261a 100%);
+      border: 1px solid rgba(251, 191, 36, 0.2);
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+      margin-top: auto;
+      box-sizing: border-box;
+    }
+
+    .tall-preview-box {
+      height: 250px;
+    }
+
+    .hk-preview-box {
+      height: 200px;
+      padding: 8px 4px;
+    }
+
+    /* Section 3 Card View Modes */
+    .card-view-mode {
+      display: none;
+      width: 100%;
+      height: 100%;
+    }
+
+    .view-mode-showcase .view-showcase {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .view-mode-ingame .view-ingame {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .view-mode-dual .view-dual {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 22px;
+      padding-bottom: 8px;
+      box-sizing: border-box;
+    }
+
+    .card-display-100 {
+      width: 100px;
+      height: 150px;
+      border-radius: 6px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .card-display-52 {
+      width: 52px;
+      height: 78px;
+      border-radius: 3.2px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .dual-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .dual-label {
+      font-size: 11px;
+      color: #94a3b8;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 8px;
+      line-height: 1;
+    }
+
+    /* Summary Bar */
+    .summary-section {
+      background: rgba(15, 23, 42, 0.95);
+      border: 2px solid #fbbf24;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-sizing: border-box;
+      margin-top: 10px;
+    }
+
+    .summary-heading {
+      font-size: 18px;
+      font-weight: 800;
+      color: #fbbf24;
+      margin: 0;
+    }
+
+    .summary-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: rgba(8, 28, 19, 0.6);
+      border: 1px solid rgba(251, 191, 36, 0.2);
+      border-radius: 10px;
+      padding: 14px 18px;
+    }
+
+    .summary-row {
+      font-size: 14px;
+      color: #cbd5e1;
+    }
+
+    .summary-row strong {
+      color: #ffffff;
+    }
+
+    .summary-row span {
+      color: #fbbf24;
+      font-weight: 700;
+    }
+
+    .apply-btn {
+      align-self: flex-start;
+      background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+      color: #0f172a;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 24px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .apply-btn:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+<body class="view-mode-showcase">
+
+  <!-- Permanent Global SVG Defs so gradients never fail regardless of active mode -->
+  <svg width="0" height="0" style="position: absolute; pointer-events: none;" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="hk_global_bg" cx="35%" cy="35%" r="70%">
+        <stop offset="0%" stop-color="#b91c1c"/>
+        <stop offset="65%" stop-color="#881337"/>
+        <stop offset="100%" stop-color="#4c0519"/>
+      </radialGradient>
+      <radialGradient id="hk_global_seal" cx="50%" cy="50%" r="60%">
+        <stop offset="0%" stop-color="#991b1b"/>
+        <stop offset="100%" stop-color="#450a0a"/>
+      </radialGradient>
+    </defs>
+  </svg>
+
+  <div class="studio-container">
+    <!-- Header -->
+    <header class="studio-header">
+      <h1 class="studio-title">Imperial Golden Dragon (金龍) Card Back Studio</h1>
+      <p class="studio-subtitle">Choose from 6 enlarged size & layout options for the Imperial Dragon symbol to fill the card back</p>
+    </header>
+
+    <!-- Confirmed Alignment Decisions Ribbon -->
+    <div class="decision-ribbon">
+      <div class="decision-item">
+        <span class="decision-label">1. Waste Pile Fan Width:</span>
+        <span class="decision-val">&#x2714; 24px (Option W1 - Confirmed)</span>
+      </div>
+      <div class="decision-item">
+        <span class="decision-label">2. Tableau Queen Spacing:</span>
+        <span class="decision-val">&#x2714; 32px (Option T2 - Confirmed)</span>
+      </div>
+      <div class="decision-item">
+        <span class="decision-label">3. Card Theme:</span>
+        <span class="decision-val">&#x2714; 金龍 Imperial Golden Dragon</span>
+      </div>
+    </div>
+
+    <!-- SECTION 3 (NOW HERO): 6 BIGGER IMPERIAL DRAGON OPTIONS -->
+    <section class="studio-section hero-section">
+      <div class="section-title-bar">
+        <div>
+          <h2 class="section-title">Enlarged Imperial Dragon (金龍) Card Back Options</h2>
+          <div class="section-hint">Select how you would like the golden dragon scaled and framed to fill more of the card back.</div>
+        </div>
+        <div class="scale-toggle-group">
+          <span class="scale-toggle-label">View:</span>
+          <button class="scale-btn active" data-mode="showcase">Showcase (100×150)</button>
+          <button class="scale-btn" data-mode="ingame">In-Game (52×78)</button>
+          <button class="scale-btn" data-mode="dual">Side-by-Side</button>
+        </div>
+      </div>
+
+      <div class="options-grid hk-grid" id="dragon-options-grid">
+        
+        <div class="option-card selected" data-group="dragon" data-val="d1">
+          <span class="option-badge" style="background:#fbbf24; color:#0f172a;">Balanced</span>
+          <div class="option-title">Option D1: 72% Medallion</div>
+          <div class="option-desc"><span>Classic gold fretwork seal enlarged from 56% to 72% card width. Dignified and clean.</span></div>
+          <div class="preview-box hk-preview-box">
+            <!-- Showcase mode (single 100x150) -->
+            <div class="card-view-mode view-showcase">
+              <div class="card-display-100"><svg viewBox="0 0 100 150" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      
+      <rect x="0" y="0" width="100" height="150" rx="6" fill="#ffffff" stroke="#7a7c76" stroke-width="1"/>
+      <rect x="4" y="4" width="92" height="142" rx="4.5" fill="url(#hk_global_bg)"/>
+      <rect x="7" y="7" width="86" height="136" rx="3" fill="none" stroke="rgba(251, 191, 36, 0.8)" stroke-width="0.9"/>
+      <rect x="9.5" y="9.5" width="81" height="131" rx="2" fill="none" stroke="rgba(251, 191, 36, 0.35)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <circle cx="11.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="11.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+    
+      <circle cx="50" cy="75" r="36" fill="none" stroke="#fbbf24" stroke-width="1.6"/>
+      <circle cx="50" cy="75" r="32" fill="url(#hk_global_seal)" stroke="rgba(254, 240, 138, 0.5)" stroke-width="0.8" stroke-dasharray="2.5,2.5"/>
+      
+      <g transform="translate(50, 75) scale(0.86) translate(-34, -31)" fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.5px 2px rgba(0,0,0,0.85));">
+        <!-- Main Serpentine Coiled Body -->
+        <path d="M 34,8 C 47,8 58,19 58,32 C 58,46 46,56 34,56 C 22,56 14,48 14,38 C 14,28 22,22 30,22 C 38,22 42,26 42,32 C 42,36 38,40 34,40 C 30,40 28,36 30,34" stroke-width="3.2"/>
+        <!-- Dorsal Spines & Flame Fins -->
+        <path d="M 50,16 L 54,12 M 58,26 L 63,24 M 58,38 L 63,40 M 50,50 L 54,54 M 40,56 L 42,61 M 26,56 L 24,61 M 16,46 L 11,48" stroke-width="1.8"/>
+        <!-- Dragon Antlers / Horns -->
+        <path d="M 30,8 L 32,3 M 36,7 L 40,2" stroke-width="2"/>
+        <!-- Eye -->
+        <circle cx="30" cy="11" r="1.5" fill="#fde047"/>
+        <!-- Dragon Snout & Whiskers -->
+        <path d="M 26,12 C 22,12 19,14 20,17 C 21,19 25,18 28,16" stroke-width="2"/>
+        <path d="M 22,14 Q 14,12 10,16 M 24,17 Q 16,20 12,25" stroke-width="1.2"/>
+        <!-- Claws & Talons -->
+        <path d="M 48,46 L 54,50 M 50,44 L 56,46 M 46,48 L 50,54" stroke-width="1.8"/>
+        <!-- Flaming Pearl in Center -->
+        <circle cx="34" cy="32" r="4.5" fill="#ef4444" stroke="#fde047" stroke-width="1.2"/>
+        <!-- Pearl Flame Tongue -->
+        <path d="M 34,24 Q 32,27 34,27.5 Q 36,27 34,24" fill="#fde047"/>
+      </g>
+    
+    </svg></div>
+            </div>
+            <!-- In-game mode (single 52x78) -->
+            <div class="card-view-mode view-ingame">
+              <div class="card-display-52"><svg viewBox="0 0 100 150" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      
+      <rect x="0" y="0" width="100" height="150" rx="6" fill="#ffffff" stroke="#7a7c76" stroke-width="1"/>
+      <rect x="4" y="4" width="92" height="142" rx="4.5" fill="url(#hk_global_bg)"/>
+      <rect x="7" y="7" width="86" height="136" rx="3" fill="none" stroke="rgba(251, 191, 36, 0.8)" stroke-width="0.9"/>
+      <rect x="9.5" y="9.5" width="81" height="131" rx="2" fill="none" stroke="rgba(251, 191, 36, 0.35)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <circle cx="11.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="11.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+    
+      <circle cx="50" cy="75" r="36" fill="none" stroke="#fbbf24" stroke-width="1.6"/>
+      <circle cx="50" cy="75" r="32" fill="url(#hk_global_seal)" stroke="rgba(254, 240, 138, 0.5)" stroke-width="0.8" stroke-dasharray="2.5,2.5"/>
+      
+      <g transform="translate(50, 75) scale(0.86) translate(-34, -31)" fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.5px 2px rgba(0,0,0,0.85));">
+        <!-- Main Serpentine Coiled Body -->
+        <path d="M 34,8 C 47,8 58,19 58,32 C 58,46 46,56 34,56 C 22,56 14,48 14,38 C 14,28 22,22 30,22 C 38,22 42,26 42,32 C 42,36 38,40 34,40 C 30,40 28,36 30,34" stroke-width="3.2"/>
+        <!-- Dorsal Spines & Flame Fins -->
+        <path d="M 50,16 L 54,12 M 58,26 L 63,24 M 58,38 L 63,40 M 50,50 L 54,54 M 40,56 L 42,61 M 26,56 L 24,61 M 16,46 L 11,48" stroke-width="1.8"/>
+        <!-- Dragon Antlers / Horns -->
+        <path d="M 30,8 L 32,3 M 36,7 L 40,2" stroke-width="2"/>
+        <!-- Eye -->
+        <circle cx="30" cy="11" r="1.5" fill="#fde047"/>
+        <!-- Dragon Snout & Whiskers -->
+        <path d="M 26,12 C 22,12 19,14 20,17 C 21,19 25,18 28,16" stroke-width="2"/>
+        <path d="M 22,14 Q 14,12 10,16 M 24,17 Q 16,20 12,25" stroke-width="1.2"/>
+        <!-- Claws & Talons -->
+        <path d="M 48,46 L 54,50 M 50,44 L 56,46 M 46,48 L 50,54" stroke-width="1.8"/>
+        <!-- Flaming Pearl in Center -->
+        <circle cx="34" cy="32" r="4.5" fill="#ef4444" stroke="#fde047" stroke-width="1.2"/>
+        <!-- Pearl Flame Tongue -->
+        <path d="M 34,24 Q 32,27 34,27.5 Q 36,27 34,24" fill="#fde047"/>
+      </g>
+    
+    </svg></div>
+            </div>
+            <!-- Dual mode (side-by-side bottom-aligned) -->
+            <div class="card-view-mode view-dual">
+              <div class="dual-col">
+                <div class="card-display-100"><svg viewBox="0 0 100 150" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      
+      <rect x="0" y="0" width="100" height="150" rx="6" fill="#ffffff" stroke="#7a7c76" stroke-width="1"/>
+      <rect x="4" y="4" width="92" height="142" rx="4.5" fill="url(#hk_global_bg)"/>
+      <rect x="7" y="7" width="86" height="136" rx="3" fill="none" stroke="rgba(251, 191, 36, 0.8)" stroke-width="0.9"/>
+      <rect x="9.5" y="9.5" width="81" height="131" rx="2" fill="none" stroke="rgba(251, 191, 36, 0.35)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <circle cx="11.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="11.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+    
+      <circle cx="50" cy="75" r="36" fill="none" stroke="#fbbf24" stroke-width="1.6"/>
+      <circle cx="50" cy="75" r="32" fill="url(#hk_global_seal)" stroke="rgba(254, 240, 138, 0.5)" stroke-width="0.8" stroke-dasharray="2.5,2.5"/>
+      
+      <g transform="translate(50, 75) scale(0.86) translate(-34, -31)" fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.5px 2px rgba(0,0,0,0.85));">
+        <!-- Main Serpentine Coiled Body -->
+        <path d="M 34,8 C 47,8 58,19 58,32 C 58,46 46,56 34,56 C 22,56 14,48 14,38 C 14,28 22,22 30,22 C 38,22 42,26 42,32 C 42,36 38,40 34,40 C 30,40 28,36 30,34" stroke-width="3.2"/>
+        <!-- Dorsal Spines & Flame Fins -->
+        <path d="M 50,16 L 54,12 M 58,26 L 63,24 M 58,38 L 63,40 M 50,50 L 54,54 M 40,56 L 42,61 M 26,56 L 24,61 M 16,46 L 11,48" stroke-width="1.8"/>
+        <!-- Dragon Antlers / Horns -->
+        <path d="M 30,8 L 32,3 M 36,7 L 40,2" stroke-width="2"/>
+        <!-- Eye -->
+        <circle cx="30" cy="11" r="1.5" fill="#fde047"/>
+        <!-- Dragon Snout & Whiskers -->
+        <path d="M 26,12 C 22,12 19,14 20,17 C 21,19 25,18 28,16" stroke-width="2"/>
+        <path d="M 22,14 Q 14,12 10,16 M 24,17 Q 16,20 12,25" stroke-width="1.2"/>
+        <!-- Claws & Talons -->
+        <path d="M 48,46 L 54,50 M 50,44 L 56,46 M 46,48 L 50,54" stroke-width="1.8"/>
+        <!-- Flaming Pearl in Center -->
+        <circle cx="34" cy="32" r="4.5" fill="#ef4444" stroke="#fde047" stroke-width="1.2"/>
+        <!-- Pearl Flame Tongue -->
+        <path d="M 34,24 Q 32,27 34,27.5 Q 36,27 34,24" fill="#fde047"/>
+      </g>
+    
+    </svg></div>
+                <span class="dual-label">Showcase</span>
+              </div>
+              <div class="dual-col">
+                <div class="card-display-52"><svg viewBox="0 0 100 150" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      
+      <rect x="0" y="0" width="100" height="150" rx="6" fill="#ffffff" stroke="#7a7c76" stroke-width="1"/>
+      <rect x="4" y="4" width="92" height="142" rx="4.5" fill="url(#hk_global_bg)"/>
+      <rect x="7" y="7" width="86" height="136" rx="3" fill="none" stroke="rgba(251, 191, 36, 0.8)" stroke-width="0.9"/>
+      <rect x="9.5" y="9.5" width="81" height="131" rx="2" fill="none" stroke="rgba(251, 191, 36, 0.35)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <circle cx="11.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="11.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+    
+      <circle cx="50" cy="75" r="36" fill="none" stroke="#fbbf24" stroke-width="1.6"/>
+      <circle cx="50" cy="75" r="32" fill="url(#hk_global_seal)" stroke="rgba(254, 240, 138, 0.5)" stroke-width="0.8" stroke-dasharray="2.5,2.5"/>
+      
+      <g transform="translate(50, 75) scale(0.86) translate(-34, -31)" fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.5px 2px rgba(0,0,0,0.85));">
+        <!-- Main Serpentine Coiled Body -->
+        <path d="M 34,8 C 47,8 58,19 58,32 C 58,46 46,56 34,56 C 22,56 14,48 14,38 C 14,28 22,22 30,22 C 38,22 42,26 42,32 C 42,36 38,40 34,40 C 30,40 28,36 30,34" stroke-width="3.2"/>
+        <!-- Dorsal Spines & Flame Fins -->
+        <path d="M 50,16 L 54,12 M 58,26 L 63,24 M 58,38 L 63,40 M 50,50 L 54,54 M 40,56 L 42,61 M 26,56 L 24,61 M 16,46 L 11,48" stroke-width="1.8"/>
+        <!-- Dragon Antlers / Horns -->
+        <path d="M 30,8 L 32,3 M 36,7 L 40,2" stroke-width="2"/>
+        <!-- Eye -->
+        <circle cx="30" cy="11" r="1.5" fill="#fde047"/>
+        <!-- Dragon Snout & Whiskers -->
+        <path d="M 26,12 C 22,12 19,14 20,17 C 21,19 25,18 28,16" stroke-width="2"/>
+        <path d="M 22,14 Q 14,12 10,16 M 24,17 Q 16,20 12,25" stroke-width="1.2"/>
+        <!-- Claws & Talons -->
+        <path d="M 48,46 L 54,50 M 50,44 L 56,46 M 46,48 L 50,54" stroke-width="1.8"/>
+        <!-- Flaming Pearl in Center -->
+        <circle cx="34" cy="32" r="4.5" fill="#ef4444" stroke="#fde047" stroke-width="1.2"/>
+        <!-- Pearl Flame Tongue -->
+        <path d="M 34,24 Q 32,27 34,27.5 Q 36,27 34,24" fill="#fde047"/>
+      </g>
+    
+    </svg></div>
+                <span class="dual-label">In-Game</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="option-card" data-group="dragon" data-val="d2">
+          <span class="option-badge">Maximum Width</span>
+          <div class="option-title">Option D2: 85% Grand Seal</div>
+          <div class="option-desc"><span>Grand 85% width medallion touching inner borders, ringed with 36-ray sunburst notches.</span></div>
+          <div class="preview-box hk-preview-box">
+            <!-- Showcase mode (single 100x150) -->
+            <div class="card-view-mode view-showcase">
+              <div class="card-display-100"><svg viewBox="0 0 100 150" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      
+      <rect x="0" y="0" width="100" height="150" rx="6" fill="#ffffff" stroke="#7a7c76" stroke-width="1"/>
+      <rect x="4" y="4" width="92" height="142" rx="4.5" fill="url(#hk_global_bg)"/>
+      <rect x="7" y="7" width="86" height="136" rx="3" fill="none" stroke="rgba(251, 191, 36, 0.8)" stroke-width="0.9"/>
+      <rect x="9.5" y="9.5" width="81" height="131" rx="2" fill="none" stroke="rgba(251, 191, 36, 0.35)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <circle cx="11.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="11.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+    
+      <circle cx="50" cy="75" r="42.5" fill="none" stroke="#fbbf24" stroke-width="1.8"/>
+      <line x1="89.00" y1="75.00" x2="92.50" y2="75.00" stroke="#fbbf24" stroke-width="0.9"/><line x1="88.41" y1="81.77" x2="91.85" y2="82.38" stroke="#fbbf24" stroke-width="0.9"/><line x1="86.65" y1="88.34" x2="89.94" y2="89.54" stroke="#fbbf24" stroke-width="0.9"/><line x1="83.77" y1="94.50" x2="86.81" y2="96.25" stroke="#fbbf24" stroke-width="0.9"/><line x1="79.88" y1="100.07" x2="82.56" y2="102.32" stroke="#fbbf24" stroke-width="0.9"/><line x1="75.07" y1="104.88" x2="77.32" y2="107.56" stroke="#fbbf24" stroke-width="0.9"/><line x1="69.50" y1="108.77" x2="71.25" y2="111.81" stroke="#fbbf24" stroke-width="0.9"/><line x1="63.34" y1="111.65" x2="64.54" y2="114.94" stroke="#fbbf24" stroke-width="0.9"/><line x1="56.77" y1="113.41" x2="57.38" y2="116.85" stroke="#fbbf24" stroke-width="0.9"/><line x1="50.00" y1="114.00" x2="50.00" y2="117.50" stroke="#fbbf24" stroke-width="0.9"/><line x1="43.23" y1="113.41" x2="42.62" y2="116.85" stroke="#fbbf24" stroke-width="0.9"/><line x1="36.66" y1="111.65" x2="35.46" y2="114.94" stroke="#fbbf24" stroke-width="0.9"/><line x1="30.50" y1="108.77" x2="28.75" y2="111.81" stroke="#fbbf24" stroke-width="0.9"/><line x1="24.93" y1="104.88" x2="22.68" y2="107.56" stroke="#fbbf24" stroke-width="0.9"/><line x1="20.12" y1="100.07" x2="17.44" y2="102.32" stroke="#fbbf24" stroke-width="0.9"/><line x1="16.23" y1="94.50" x2="13.19" y2="96.25" stroke="#fbbf24" stroke-width="0.9"/><line x1="13.35" y1="88.34" x2="10.06" y2="89.54" stroke="#fbbf24" stroke-width="0.9"/><line x1="11.59" y1="81.77" x2="8.15" y2="82.38" stroke="#fbbf24" stroke-width="0.9"/><line x1="11.00" y1="75.00" x2="7.50" y2="75.00" stroke="#fbbf24" stroke-width="0.9"/><line x1="11.59" y1="68.23" x2="8.15" y2="67.62" stroke="#fbbf24" stroke-width="0.9"/><line x1="13.35" y1="61.66" x2="10.06" y2="60.46" stroke="#fbbf24" stroke-width="0.9"/><line x1="16.23" y1="55.50" x2="13.19" y2="53.75" stroke="#fbbf24" stroke-width="0.9"/><line x1="20.12" y1="49.93" x2="17.44" y2="47.68" stroke="#fbbf24" stroke-width="0.9"/><line x1="24.93" y1="45.12" x2="22.68" y2="42.44" stroke="#fbbf24" stroke-width="0.9"/><line x1="30.50" y1="41.23" x2="28.75" y2="38.19" stroke="#fbbf24" stroke-width="0.9"/><line x1="36.66" y1="38.35" x2="35.46" y2="35.06" stroke="#fbbf24" stroke-width="0.9"/><line x1="43.23" y1="36.59" x2="42.62" y2="33.15" stroke="#fbbf24" stroke-width="0.9"/><line x1="50.00" y1="36.00" x2="50.00" y2="32.50" stroke="#fbbf24" stroke-width="0.9"/><line x1="56.77" y1="36.59" x2="57.38" y2="33.15" stroke="#fbbf24" stroke-width="0.9"/><line x1="63.34" y1="38.35" x2="64.54" y2="35.06" stroke="#fbbf24" stroke-width="0.9"/><line x1="69.50" y1="41.23" x2="71.25" y2="38.19" stroke="#fbbf24" stroke-width="0.9"/><line x1="75.07" y1="45.12" x2="77.32" y2="42.44" stroke="#fbbf24" stroke-width="0.9"/><line x1="79.88" y1="49.93" x2="82.56" y2="47.68" stroke="#fbbf24" stroke-width="0.9"/><line x1="83.77" y1="55.50" x2="86.81" y2="53.75" stroke="#fbbf24" stroke-width="0.9"/><line x1="86.65" y1="61.66" x2="89.94" y2="60.46" stroke="#fbbf24" stroke-width="0.9"/><line x1="88.41" y1="68.23" x2="91.85" y2="67.62" stroke="#fbbf24" stroke-width="0.9"/>
+      <circle cx="50" cy="75" r="38.5" fill="none" stroke="rgba(254, 240, 138, 0.6)" stroke-width="0.8"/>
+      <circle cx="50" cy="75" r="37.5" fill="url(#hk_global_seal)" stroke="rgba(254, 240, 138, 0.5)" stroke-width="0.8" stroke-dasharray="2,2"/>
+      
+      <g transform="translate(50, 75) scale(1.02) translate(-34, -31)" fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.5px 2px rgba(0,0,0,0.85));">
+        <!-- Main Serpentine Coiled Body -->
+        <path d="M 34,8 C 47,8 58,19 58,32 C 58,46 46,56 34,56 C 22,56 14,48 14,38 C 14,28 22,22 30,22 C 38,22 42,26 42,32 C 42,36 38,40 34,40 C 30,40 28,36 30,34" stroke-width="3.2"/>
+        <!-- Dorsal Spines & Flame Fins -->
+        <path d="M 50,16 L 54,12 M 58,26 L 63,24 M 58,38 L 63,40 M 50,50 L 54,54 M 40,56 L 42,61 M 26,56 L 24,61 M 16,46 L 11,48" stroke-width="1.8"/>
+        <!-- Dragon Antlers / Horns -->
+        <path d="M 30,8 L 32,3 M 36,7 L 40,2" stroke-width="2"/>
+        <!-- Eye -->
+        <circle cx="30" cy="11" r="1.5" fill="#fde047"/>
+        <!-- Dragon Snout & Whiskers -->
+        <path d="M 26,12 C 22,12 19,14 20,17 C 21,19 25,18 28,16" stroke-width="2"/>
+        <path d="M 22,14 Q 14,12 10,16 M 24,17 Q 16,20 12,25" stroke-width="1.2"/>
+        <!-- Claws & Talons -->
+        <path d="M 48,46 L 54,50 M 50,44 L 56,46 M 46,48 L 50,54" stroke-width="1.8"/>
+        <!-- Flaming Pearl in Center -->
+        <circle cx="34" cy="32" r="4.5" fill="#ef4444" stroke="#fde047" stroke-width="1.2"/>
+        <!-- Pearl Flame Tongue -->
+        <path d="M 34,24 Q 32,27 34,27.5 Q 36,27 34,24" fill="#fde047"/>
+      </g>
+    
+    </svg></div>
+            </div>
+            <!-- In-game mode (single 52x78) -->
+            <div class="card-view-mode view-ingame">
+              <div class="card-display-52"><svg viewBox="0 0 100 150" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      
+      <rect x="0" y="0" width="100" height="150" rx="6" fill="#ffffff" stroke="#7a7c76" stroke-width="1"/>
+      <rect x="4" y="4" width="92" height="142" rx="4.5" fill="url(#hk_global_bg)"/>
+      <rect x="7" y="7" width="86" height="136" rx="3" fill="none" stroke="rgba(251, 191, 36, 0.8)" stroke-width="0.9"/>
+      <rect x="9.5" y="9.5" width="81" height="131" rx="2" fill="none" stroke="rgba(251, 191, 36, 0.35)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <circle cx="11.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="11.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+    
+      <circle cx="50" cy="75" r="42.5" fill="none" stroke="#fbbf24" stroke-width="1.8"/>
+      <line x1="89.00" y1="75.00" x2="92.50" y2="75.00" stroke="#fbbf24" stroke-width="0.9"/><line x1="88.41" y1="81.77" x2="91.85" y2="82.38" stroke="#fbbf24" stroke-width="0.9"/><line x1="86.65" y1="88.34" x2="89.94" y2="89.54" stroke="#fbbf24" stroke-width="0.9"/><line x1="83.77" y1="94.50" x2="86.81" y2="96.25" stroke="#fbbf24" stroke-width="0.9"/><line x1="79.88" y1="100.07" x2="82.56" y2="102.32" stroke="#fbbf24" stroke-width="0.9"/><line x1="75.07" y1="104.88" x2="77.32" y2="107.56" stroke="#fbbf24" stroke-width="0.9"/><line x1="69.50" y1="108.77" x2="71.25" y2="111.81" stroke="#fbbf24" stroke-width="0.9"/><line x1="63.34" y1="111.65" x2="64.54" y2="114.94" stroke="#fbbf24" stroke-width="0.9"/><line x1="56.77" y1="113.41" x2="57.38" y2="116.85" stroke="#fbbf24" stroke-width="0.9"/><line x1="50.00" y1="114.00" x2="50.00" y2="117.50" stroke="#fbbf24" stroke-width="0.9"/><line x1="43.23" y1="113.41" x2="42.62" y2="116.85" stroke="#fbbf24" stroke-width="0.9"/><line x1="36.66" y1="111.65" x2="35.46" y2="114.94" stroke="#fbbf24" stroke-width="0.9"/><line x1="30.50" y1="108.77" x2="28.75" y2="111.81" stroke="#fbbf24" stroke-width="0.9"/><line x1="24.93" y1="104.88" x2="22.68" y2="107.56" stroke="#fbbf24" stroke-width="0.9"/><line x1="20.12" y1="100.07" x2="17.44" y2="102.32" stroke="#fbbf24" stroke-width="0.9"/><line x1="16.23" y1="94.50" x2="13.19" y2="96.25" stroke="#fbbf24" stroke-width="0.9"/><line x1="13.35" y1="88.34" x2="10.06" y2="89.54" stroke="#fbbf24" stroke-width="0.9"/><line x1="11.59" y1="81.77" x2="8.15" y2="82.38" stroke="#fbbf24" stroke-width="0.9"/><line x1="11.00" y1="75.00" x2="7.50" y2="75.00" stroke="#fbbf24" stroke-width="0.9"/><line x1="11.59" y1="68.23" x2="8.15" y2="67.62" stroke="#fbbf24" stroke-width="0.9"/><line x1="13.35" y1="61.66" x2="10.06" y2="60.46" stroke="#fbbf24" stroke-width="0.9"/><line x1="16.23" y1="55.50" x2="13.19" y2="53.75" stroke="#fbbf24" stroke-width="0.9"/><line x1="20.12" y1="49.93" x2="17.44" y2="47.68" stroke="#fbbf24" stroke-width="0.9"/><line x1="24.93" y1="45.12" x2="22.68" y2="42.44" stroke="#fbbf24" stroke-width="0.9"/><line x1="30.50" y1="41.23" x2="28.75" y2="38.19" stroke="#fbbf24" stroke-width="0.9"/><line x1="36.66" y1="38.35" x2="35.46" y2="35.06" stroke="#fbbf24" stroke-width="0.9"/><line x1="43.23" y1="36.59" x2="42.62" y2="33.15" stroke="#fbbf24" stroke-width="0.9"/><line x1="50.00" y1="36.00" x2="50.00" y2="32.50" stroke="#fbbf24" stroke-width="0.9"/><line x1="56.77" y1="36.59" x2="57.38" y2="33.15" stroke="#fbbf24" stroke-width="0.9"/><line x1="63.34" y1="38.35" x2="64.54" y2="35.06" stroke="#fbbf24" stroke-width="0.9"/><line x1="69.50" y1="41.23" x2="71.25" y2="38.19" stroke="#fbbf24" stroke-width="0.9"/><line x1="75.07" y1="45.12" x2="77.32" y2="42.44" stroke="#fbbf24" stroke-width="0.9"/><line x1="79.88" y1="49.93" x2="82.56" y2="47.68" stroke="#fbbf24" stroke-width="0.9"/><line x1="83.77" y1="55.50" x2="86.81" y2="53.75" stroke="#fbbf24" stroke-width="0.9"/><line x1="86.65" y1="61.66" x2="89.94" y2="60.46" stroke="#fbbf24" stroke-width="0.9"/><line x1="88.41" y1="68.23" x2="91.85" y2="67.62" stroke="#fbbf24" stroke-width="0.9"/>
+      <circle cx="50" cy="75" r="38.5" fill="none" stroke="rgba(254, 240, 138, 0.6)" stroke-width="0.8"/>
+      <circle cx="50" cy="75" r="37.5" fill="url(#hk_global_seal)" stroke="rgba(254, 240, 138, 0.5)" stroke-width="0.8" stroke-dasharray="2,2"/>
+      
+      <g transform="translate(50, 75) scale(1.02) translate(-34, -31)" fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.5px 2px rgba(0,0,0,0.85));">
+        <!-- Main Serpentine Coiled Body -->
+        <path d="M 34,8 C 47,8 58,19 58,32 C 58,46 46,56 34,56 C 22,56 14,48 14,38 C 14,28 22,22 30,22 C 38,22 42,26 42,32 C 42,36 38,40 34,40 C 30,40 28,36 30,34" stroke-width="3.2"/>
+        <!-- Dorsal Spines & Flame Fins -->
+        <path d="M 50,16 L 54,12 M 58,26 L 63,24 M 58,38 L 63,40 M 50,50 L 54,54 M 40,56 L 42,61 M 26,56 L 24,61 M 16,46 L 11,48" stroke-width="1.8"/>
+        <!-- Dragon Antlers / Horns -->
+        <path d="M 30,8 L 32,3 M 36,7 L 40,2" stroke-width="2"/>
+        <!-- Eye -->
+        <circle cx="30" cy="11" r="1.5" fill="#fde047"/>
+        <!-- Dragon Snout & Whiskers -->
+        <path d="M 26,12 C 22,12 19,14 20,17 C 21,19 25,18 28,16" stroke-width="2"/>
+        <path d="M 22,14 Q 14,12 10,16 M 24,17 Q 16,20 12,25" stroke-width="1.2"/>
+        <!-- Claws & Talons -->
+        <path d="M 48,46 L 54,50 M 50,44 L 56,46 M 46,48 L 50,54" stroke-width="1.8"/>
+        <!-- Flaming Pearl in Center -->
+        <circle cx="34" cy="32" r="4.5" fill="#ef4444" stroke="#fde047" stroke-width="1.2"/>
+        <!-- Pearl Flame Tongue -->
+        <path d="M 34,24 Q 32,27 34,27.5 Q 36,27 34,24" fill="#fde047"/>
+      </g>
+    
+    </svg></div>
+            </div>
+            <!-- Dual mode (side-by-side bottom-aligned) -->
+            <div class="card-view-mode view-dual">
+              <div class="dual-col">
+                <div class="card-display-100"><svg viewBox="0 0 100 150" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      
+      <rect x="0" y="0" width="100" height="150" rx="6" fill="#ffffff" stroke="#7a7c76" stroke-width="1"/>
+      <rect x="4" y="4" width="92" height="142" rx="4.5" fill="url(#hk_global_bg)"/>
+      <rect x="7" y="7" width="86" height="136" rx="3" fill="none" stroke="rgba(251, 191, 36, 0.8)" stroke-width="0.9"/>
+      <rect x="9.5" y="9.5" width="81" height="131" rx="2" fill="none" stroke="rgba(251, 191, 36, 0.35)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <circle cx="11.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="11.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+    
+      <circle cx="50" cy="75" r="42.5" fill="none" stroke="#fbbf24" stroke-width="1.8"/>
+      <line x1="89.00" y1="75.00" x2="92.50" y2="75.00" stroke="#fbbf24" stroke-width="0.9"/><line x1="88.41" y1="81.77" x2="91.85" y2="82.38" stroke="#fbbf24" stroke-width="0.9"/><line x1="86.65" y1="88.34" x2="89.94" y2="89.54" stroke="#fbbf24" stroke-width="0.9"/><line x1="83.77" y1="94.50" x2="86.81" y2="96.25" stroke="#fbbf24" stroke-width="0.9"/><line x1="79.88" y1="100.07" x2="82.56" y2="102.32" stroke="#fbbf24" stroke-width="0.9"/><line x1="75.07" y1="104.88" x2="77.32" y2="107.56" stroke="#fbbf24" stroke-width="0.9"/><line x1="69.50" y1="108.77" x2="71.25" y2="111.81" stroke="#fbbf24" stroke-width="0.9"/><line x1="63.34" y1="111.65" x2="64.54" y2="114.94" stroke="#fbbf24" stroke-width="0.9"/><line x1="56.77" y1="113.41" x2="57.38" y2="116.85" stroke="#fbbf24" stroke-width="0.9"/><line x1="50.00" y1="114.00" x2="50.00" y2="117.50" stroke="#fbbf24" stroke-width="0.9"/><line x1="43.23" y1="113.41" x2="42.62" y2="116.85" stroke="#fbbf24" stroke-width="0.9"/><line x1="36.66" y1="111.65" x2="35.46" y2="114.94" stroke="#fbbf24" stroke-width="0.9"/><line x1="30.50" y1="108.77" x2="28.75" y2="111.81" stroke="#fbbf24" stroke-width="0.9"/><line x1="24.93" y1="104.88" x2="22.68" y2="107.56" stroke="#fbbf24" stroke-width="0.9"/><line x1="20.12" y1="100.07" x2="17.44" y2="102.32" stroke="#fbbf24" stroke-width="0.9"/><line x1="16.23" y1="94.50" x2="13.19" y2="96.25" stroke="#fbbf24" stroke-width="0.9"/><line x1="13.35" y1="88.34" x2="10.06" y2="89.54" stroke="#fbbf24" stroke-width="0.9"/><line x1="11.59" y1="81.77" x2="8.15" y2="82.38" stroke="#fbbf24" stroke-width="0.9"/><line x1="11.00" y1="75.00" x2="7.50" y2="75.00" stroke="#fbbf24" stroke-width="0.9"/><line x1="11.59" y1="68.23" x2="8.15" y2="67.62" stroke="#fbbf24" stroke-width="0.9"/><line x1="13.35" y1="61.66" x2="10.06" y2="60.46" stroke="#fbbf24" stroke-width="0.9"/><line x1="16.23" y1="55.50" x2="13.19" y2="53.75" stroke="#fbbf24" stroke-width="0.9"/><line x1="20.12" y1="49.93" x2="17.44" y2="47.68" stroke="#fbbf24" stroke-width="0.9"/><line x1="24.93" y1="45.12" x2="22.68" y2="42.44" stroke="#fbbf24" stroke-width="0.9"/><line x1="30.50" y1="41.23" x2="28.75" y2="38.19" stroke="#fbbf24" stroke-width="0.9"/><line x1="36.66" y1="38.35" x2="35.46" y2="35.06" stroke="#fbbf24" stroke-width="0.9"/><line x1="43.23" y1="36.59" x2="42.62" y2="33.15" stroke="#fbbf24" stroke-width="0.9"/><line x1="50.00" y1="36.00" x2="50.00" y2="32.50" stroke="#fbbf24" stroke-width="0.9"/><line x1="56.77" y1="36.59" x2="57.38" y2="33.15" stroke="#fbbf24" stroke-width="0.9"/><line x1="63.34" y1="38.35" x2="64.54" y2="35.06" stroke="#fbbf24" stroke-width="0.9"/><line x1="69.50" y1="41.23" x2="71.25" y2="38.19" stroke="#fbbf24" stroke-width="0.9"/><line x1="75.07" y1="45.12" x2="77.32" y2="42.44" stroke="#fbbf24" stroke-width="0.9"/><line x1="79.88" y1="49.93" x2="82.56" y2="47.68" stroke="#fbbf24" stroke-width="0.9"/><line x1="83.77" y1="55.50" x2="86.81" y2="53.75" stroke="#fbbf24" stroke-width="0.9"/><line x1="86.65" y1="61.66" x2="89.94" y2="60.46" stroke="#fbbf24" stroke-width="0.9"/><line x1="88.41" y1="68.23" x2="91.85" y2="67.62" stroke="#fbbf24" stroke-width="0.9"/>
+      <circle cx="50" cy="75" r="38.5" fill="none" stroke="rgba(254, 240, 138, 0.6)" stroke-width="0.8"/>
+      <circle cx="50" cy="75" r="37.5" fill="url(#hk_global_seal)" stroke="rgba(254, 240, 138, 0.5)" stroke-width="0.8" stroke-dasharray="2,2"/>
+      
+      <g transform="translate(50, 75) scale(1.02) translate(-34, -31)" fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.5px 2px rgba(0,0,0,0.85));">
+        <!-- Main Serpentine Coiled Body -->
+        <path d="M 34,8 C 47,8 58,19 58,32 C 58,46 46,56 34,56 C 22,56 14,48 14,38 C 14,28 22,22 30,22 C 38,22 42,26 42,32 C 42,36 38,40 34,40 C 30,40 28,36 30,34" stroke-width="3.2"/>
+        <!-- Dorsal Spines & Flame Fins -->
+        <path d="M 50,16 L 54,12 M 58,26 L 63,24 M 58,38 L 63,40 M 50,50 L 54,54 M 40,56 L 42,61 M 26,56 L 24,61 M 16,46 L 11,48" stroke-width="1.8"/>
+        <!-- Dragon Antlers / Horns -->
+        <path d="M 30,8 L 32,3 M 36,7 L 40,2" stroke-width="2"/>
+        <!-- Eye -->
+        <circle cx="30" cy="11" r="1.5" fill="#fde047"/>
+        <!-- Dragon Snout & Whiskers -->
+        <path d="M 26,12 C 22,12 19,14 20,17 C 21,19 25,18 28,16" stroke-width="2"/>
+        <path d="M 22,14 Q 14,12 10,16 M 24,17 Q 16,20 12,25" stroke-width="1.2"/>
+        <!-- Claws & Talons -->
+        <path d="M 48,46 L 54,50 M 50,44 L 56,46 M 46,48 L 50,54" stroke-width="1.8"/>
+        <!-- Flaming Pearl in Center -->
+        <circle cx="34" cy="32" r="4.5" fill="#ef4444" stroke="#fde047" stroke-width="1.2"/>
+        <!-- Pearl Flame Tongue -->
+        <path d="M 34,24 Q 32,27 34,27.5 Q 36,27 34,24" fill="#fde047"/>
+      </g>
+    
+    </svg></div>
+                <span class="dual-label">Showcase</span>
+              </div>
+              <div class="dual-col">
+                <div class="card-display-52"><svg viewBox="0 0 100 150" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      
+      <rect x="0" y="0" width="100" height="150" rx="6" fill="#ffffff" stroke="#7a7c76" stroke-width="1"/>
+      <rect x="4" y="4" width="92" height="142" rx="4.5" fill="url(#hk_global_bg)"/>
+      <rect x="7" y="7" width="86" height="136" rx="3" fill="none" stroke="rgba(251, 191, 36, 0.8)" stroke-width="0.9"/>
+      <rect x="9.5" y="9.5" width="81" height="131" rx="2" fill="none" stroke="rgba(251, 191, 36, 0.35)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <circle cx="11.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="11.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+    
+      <circle cx="50" cy="75" r="42.5" fill="none" stroke="#fbbf24" stroke-width="1.8"/>
+      <line x1="89.00" y1="75.00" x2="92.50" y2="75.00" stroke="#fbbf24" stroke-width="0.9"/><line x1="88.41" y1="81.77" x2="91.85" y2="82.38" stroke="#fbbf24" stroke-width="0.9"/><line x1="86.65" y1="88.34" x2="89.94" y2="89.54" stroke="#fbbf24" stroke-width="0.9"/><line x1="83.77" y1="94.50" x2="86.81" y2="96.25" stroke="#fbbf24" stroke-width="0.9"/><line x1="79.88" y1="100.07" x2="82.56" y2="102.32" stroke="#fbbf24" stroke-width="0.9"/><line x1="75.07" y1="104.88" x2="77.32" y2="107.56" stroke="#fbbf24" stroke-width="0.9"/><line x1="69.50" y1="108.77" x2="71.25" y2="111.81" stroke="#fbbf24" stroke-width="0.9"/><line x1="63.34" y1="111.65" x2="64.54" y2="114.94" stroke="#fbbf24" stroke-width="0.9"/><line x1="56.77" y1="113.41" x2="57.38" y2="116.85" stroke="#fbbf24" stroke-width="0.9"/><line x1="50.00" y1="114.00" x2="50.00" y2="117.50" stroke="#fbbf24" stroke-width="0.9"/><line x1="43.23" y1="113.41" x2="42.62" y2="116.85" stroke="#fbbf24" stroke-width="0.9"/><line x1="36.66" y1="111.65" x2="35.46" y2="114.94" stroke="#fbbf24" stroke-width="0.9"/><line x1="30.50" y1="108.77" x2="28.75" y2="111.81" stroke="#fbbf24" stroke-width="0.9"/><line x1="24.93" y1="104.88" x2="22.68" y2="107.56" stroke="#fbbf24" stroke-width="0.9"/><line x1="20.12" y1="100.07" x2="17.44" y2="102.32" stroke="#fbbf24" stroke-width="0.9"/><line x1="16.23" y1="94.50" x2="13.19" y2="96.25" stroke="#fbbf24" stroke-width="0.9"/><line x1="13.35" y1="88.34" x2="10.06" y2="89.54" stroke="#fbbf24" stroke-width="0.9"/><line x1="11.59" y1="81.77" x2="8.15" y2="82.38" stroke="#fbbf24" stroke-width="0.9"/><line x1="11.00" y1="75.00" x2="7.50" y2="75.00" stroke="#fbbf24" stroke-width="0.9"/><line x1="11.59" y1="68.23" x2="8.15" y2="67.62" stroke="#fbbf24" stroke-width="0.9"/><line x1="13.35" y1="61.66" x2="10.06" y2="60.46" stroke="#fbbf24" stroke-width="0.9"/><line x1="16.23" y1="55.50" x2="13.19" y2="53.75" stroke="#fbbf24" stroke-width="0.9"/><line x1="20.12" y1="49.93" x2="17.44" y2="47.68" stroke="#fbbf24" stroke-width="0.9"/><line x1="24.93" y1="45.12" x2="22.68" y2="42.44" stroke="#fbbf24" stroke-width="0.9"/><line x1="30.50" y1="41.23" x2="28.75" y2="38.19" stroke="#fbbf24" stroke-width="0.9"/><line x1="36.66" y1="38.35" x2="35.46" y2="35.06" stroke="#fbbf24" stroke-width="0.9"/><line x1="43.23" y1="36.59" x2="42.62" y2="33.15" stroke="#fbbf24" stroke-width="0.9"/><line x1="50.00" y1="36.00" x2="50.00" y2="32.50" stroke="#fbbf24" stroke-width="0.9"/><line x1="56.77" y1="36.59" x2="57.38" y2="33.15" stroke="#fbbf24" stroke-width="0.9"/><line x1="63.34" y1="38.35" x2="64.54" y2="35.06" stroke="#fbbf24" stroke-width="0.9"/><line x1="69.50" y1="41.23" x2="71.25" y2="38.19" stroke="#fbbf24" stroke-width="0.9"/><line x1="75.07" y1="45.12" x2="77.32" y2="42.44" stroke="#fbbf24" stroke-width="0.9"/><line x1="79.88" y1="49.93" x2="82.56" y2="47.68" stroke="#fbbf24" stroke-width="0.9"/><line x1="83.77" y1="55.50" x2="86.81" y2="53.75" stroke="#fbbf24" stroke-width="0.9"/><line x1="86.65" y1="61.66" x2="89.94" y2="60.46" stroke="#fbbf24" stroke-width="0.9"/><line x1="88.41" y1="68.23" x2="91.85" y2="67.62" stroke="#fbbf24" stroke-width="0.9"/>
+      <circle cx="50" cy="75" r="38.5" fill="none" stroke="rgba(254, 240, 138, 0.6)" stroke-width="0.8"/>
+      <circle cx="50" cy="75" r="37.5" fill="url(#hk_global_seal)" stroke="rgba(254, 240, 138, 0.5)" stroke-width="0.8" stroke-dasharray="2,2"/>
+      
+      <g transform="translate(50, 75) scale(1.02) translate(-34, -31)" fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.5px 2px rgba(0,0,0,0.85));">
+        <!-- Main Serpentine Coiled Body -->
+        <path d="M 34,8 C 47,8 58,19 58,32 C 58,46 46,56 34,56 C 22,56 14,48 14,38 C 14,28 22,22 30,22 C 38,22 42,26 42,32 C 42,36 38,40 34,40 C 30,40 28,36 30,34" stroke-width="3.2"/>
+        <!-- Dorsal Spines & Flame Fins -->
+        <path d="M 50,16 L 54,12 M 58,26 L 63,24 M 58,38 L 63,40 M 50,50 L 54,54 M 40,56 L 42,61 M 26,56 L 24,61 M 16,46 L 11,48" stroke-width="1.8"/>
+        <!-- Dragon Antlers / Horns -->
+        <path d="M 30,8 L 32,3 M 36,7 L 40,2" stroke-width="2"/>
+        <!-- Eye -->
+        <circle cx="30" cy="11" r="1.5" fill="#fde047"/>
+        <!-- Dragon Snout & Whiskers -->
+        <path d="M 26,12 C 22,12 19,14 20,17 C 21,19 25,18 28,16" stroke-width="2"/>
+        <path d="M 22,14 Q 14,12 10,16 M 24,17 Q 16,20 12,25" stroke-width="1.2"/>
+        <!-- Claws & Talons -->
+        <path d="M 48,46 L 54,50 M 50,44 L 56,46 M 46,48 L 50,54" stroke-width="1.8"/>
+        <!-- Flaming Pearl in Center -->
+        <circle cx="34" cy="32" r="4.5" fill="#ef4444" stroke="#fde047" stroke-width="1.2"/>
+        <!-- Pearl Flame Tongue -->
+        <path d="M 34,24 Q 32,27 34,27.5 Q 36,27 34,24" fill="#fde047"/>
+      </g>
+    
+    </svg></div>
+                <span class="dual-label">In-Game</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="option-card" data-group="dragon" data-val="d3">
+          <span class="option-badge">Proportionate</span>
+          <div class="option-title">Option D3: Oval Cartouche</div>
+          <div class="option-desc"><span>2:3 vertical oval medallion (72×108px) form-fitted to card ratio, with clouds inside & out.</span></div>
+          <div class="preview-box hk-preview-box">
+            <!-- Showcase mode (single 100x150) -->
+            <div class="card-view-mode view-showcase">
+              <div class="card-display-100"><svg viewBox="0 0 100 150" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      
+      <rect x="0" y="0" width="100" height="150" rx="6" fill="#ffffff" stroke="#7a7c76" stroke-width="1"/>
+      <rect x="4" y="4" width="92" height="142" rx="4.5" fill="url(#hk_global_bg)"/>
+      <rect x="7" y="7" width="86" height="136" rx="3" fill="none" stroke="rgba(251, 191, 36, 0.8)" stroke-width="0.9"/>
+      <rect x="9.5" y="9.5" width="81" height="131" rx="2" fill="none" stroke="rgba(251, 191, 36, 0.35)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <circle cx="11.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="11.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+    
+      
+      <g stroke="#fbbf24" stroke-width="0.8" fill="none" opacity="0.85">
+        <!-- Top Cloud inside oval -->
+        <path d="M 40,36 Q 50,30 60,36 Q 56,32 50,32 Q 44,32 40,36" stroke-width="1.0" fill="rgba(251, 191, 36, 0.15)"/>
+        <!-- Bottom Cloud inside oval -->
+        <path d="M 40,114 Q 50,120 60,114 Q 56,118 50,118 Q 44,118 40,114" stroke-width="1.0" fill="rgba(251, 191, 36, 0.15)"/>
+        <!-- Corner spandrels -->
+        <path d="M 16,22 Q 22,18 24,24 Q 28,20 30,26" />
+        <path d="M 84,22 Q 78,18 76,24 Q 72,20 70,26" />
+        <path d="M 16,128 Q 22,132 24,126 Q 28,130 30,124" />
+        <path d="M 84,128 Q 78,132 76,126 Q 72,130 70,124" />
+      </g>
+    
+      <ellipse cx="50" cy="75" rx="36" ry="54" fill="none" stroke="#fbbf24" stroke-width="1.6"/>
+      <ellipse cx="50" cy="75" rx="32.5" ry="49.5" fill="url(#hk_global_seal)" stroke="rgba(254, 240, 138, 0.5)" stroke-width="0.8" stroke-dasharray="2.5,2.5"/>
+      
+      <g transform="translate(50, 75) scale(1.05) translate(-34, -31)" fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.5px 2px rgba(0,0,0,0.85));">
+        <!-- Main Serpentine Coiled Body -->
+        <path d="M 34,8 C 47,8 58,19 58,32 C 58,46 46,56 34,56 C 22,56 14,48 14,38 C 14,28 22,22 30,22 C 38,22 42,26 42,32 C 42,36 38,40 34,40 C 30,40 28,36 30,34" stroke-width="3.2"/>
+        <!-- Dorsal Spines & Flame Fins -->
+        <path d="M 50,16 L 54,12 M 58,26 L 63,24 M 58,38 L 63,40 M 50,50 L 54,54 M 40,56 L 42,61 M 26,56 L 24,61 M 16,46 L 11,48" stroke-width="1.8"/>
+        <!-- Dragon Antlers / Horns -->
+        <path d="M 30,8 L 32,3 M 36,7 L 40,2" stroke-width="2"/>
+        <!-- Eye -->
+        <circle cx="30" cy="11" r="1.5" fill="#fde047"/>
+        <!-- Dragon Snout & Whiskers -->
+        <path d="M 26,12 C 22,12 19,14 20,17 C 21,19 25,18 28,16" stroke-width="2"/>
+        <path d="M 22,14 Q 14,12 10,16 M 24,17 Q 16,20 12,25" stroke-width="1.2"/>
+        <!-- Claws & Talons -->
+        <path d="M 48,46 L 54,50 M 50,44 L 56,46 M 46,48 L 50,54" stroke-width="1.8"/>
+        <!-- Flaming Pearl in Center -->
+        <circle cx="34" cy="32" r="4.5" fill="#ef4444" stroke="#fde047" stroke-width="1.2"/>
+        <!-- Pearl Flame Tongue -->
+        <path d="M 34,24 Q 32,27 34,27.5 Q 36,27 34,24" fill="#fde047"/>
+      </g>
+    
+    </svg></div>
+            </div>
+            <!-- In-game mode (single 52x78) -->
+            <div class="card-view-mode view-ingame">
+              <div class="card-display-52"><svg viewBox="0 0 100 150" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      
+      <rect x="0" y="0" width="100" height="150" rx="6" fill="#ffffff" stroke="#7a7c76" stroke-width="1"/>
+      <rect x="4" y="4" width="92" height="142" rx="4.5" fill="url(#hk_global_bg)"/>
+      <rect x="7" y="7" width="86" height="136" rx="3" fill="none" stroke="rgba(251, 191, 36, 0.8)" stroke-width="0.9"/>
+      <rect x="9.5" y="9.5" width="81" height="131" rx="2" fill="none" stroke="rgba(251, 191, 36, 0.35)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <circle cx="11.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="11.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+    
+      
+      <g stroke="#fbbf24" stroke-width="0.8" fill="none" opacity="0.85">
+        <!-- Top Cloud inside oval -->
+        <path d="M 40,36 Q 50,30 60,36 Q 56,32 50,32 Q 44,32 40,36" stroke-width="1.0" fill="rgba(251, 191, 36, 0.15)"/>
+        <!-- Bottom Cloud inside oval -->
+        <path d="M 40,114 Q 50,120 60,114 Q 56,118 50,118 Q 44,118 40,114" stroke-width="1.0" fill="rgba(251, 191, 36, 0.15)"/>
+        <!-- Corner spandrels -->
+        <path d="M 16,22 Q 22,18 24,24 Q 28,20 30,26" />
+        <path d="M 84,22 Q 78,18 76,24 Q 72,20 70,26" />
+        <path d="M 16,128 Q 22,132 24,126 Q 28,130 30,124" />
+        <path d="M 84,128 Q 78,132 76,126 Q 72,130 70,124" />
+      </g>
+    
+      <ellipse cx="50" cy="75" rx="36" ry="54" fill="none" stroke="#fbbf24" stroke-width="1.6"/>
+      <ellipse cx="50" cy="75" rx="32.5" ry="49.5" fill="url(#hk_global_seal)" stroke="rgba(254, 240, 138, 0.5)" stroke-width="0.8" stroke-dasharray="2.5,2.5"/>
+      
+      <g transform="translate(50, 75) scale(1.05) translate(-34, -31)" fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.5px 2px rgba(0,0,0,0.85));">
+        <!-- Main Serpentine Coiled Body -->
+        <path d="M 34,8 C 47,8 58,19 58,32 C 58,46 46,56 34,56 C 22,56 14,48 14,38 C 14,28 22,22 30,22 C 38,22 42,26 42,32 C 42,36 38,40 34,40 C 30,40 28,36 30,34" stroke-width="3.2"/>
+        <!-- Dorsal Spines & Flame Fins -->
+        <path d="M 50,16 L 54,12 M 58,26 L 63,24 M 58,38 L 63,40 M 50,50 L 54,54 M 40,56 L 42,61 M 26,56 L 24,61 M 16,46 L 11,48" stroke-width="1.8"/>
+        <!-- Dragon Antlers / Horns -->
+        <path d="M 30,8 L 32,3 M 36,7 L 40,2" stroke-width="2"/>
+        <!-- Eye -->
+        <circle cx="30" cy="11" r="1.5" fill="#fde047"/>
+        <!-- Dragon Snout & Whiskers -->
+        <path d="M 26,12 C 22,12 19,14 20,17 C 21,19 25,18 28,16" stroke-width="2"/>
+        <path d="M 22,14 Q 14,12 10,16 M 24,17 Q 16,20 12,25" stroke-width="1.2"/>
+        <!-- Claws & Talons -->
+        <path d="M 48,46 L 54,50 M 50,44 L 56,46 M 46,48 L 50,54" stroke-width="1.8"/>
+        <!-- Flaming Pearl in Center -->
+        <circle cx="34" cy="32" r="4.5" fill="#ef4444" stroke="#fde047" stroke-width="1.2"/>
+        <!-- Pearl Flame Tongue -->
+        <path d="M 34,24 Q 32,27 34,27.5 Q 36,27 34,24" fill="#fde047"/>
+      </g>
+    
+    </svg></div>
+            </div>
+            <!-- Dual mode (side-by-side bottom-aligned) -->
+            <div class="card-view-mode view-dual">
+              <div class="dual-col">
+                <div class="card-display-100"><svg viewBox="0 0 100 150" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      
+      <rect x="0" y="0" width="100" height="150" rx="6" fill="#ffffff" stroke="#7a7c76" stroke-width="1"/>
+      <rect x="4" y="4" width="92" height="142" rx="4.5" fill="url(#hk_global_bg)"/>
+      <rect x="7" y="7" width="86" height="136" rx="3" fill="none" stroke="rgba(251, 191, 36, 0.8)" stroke-width="0.9"/>
+      <rect x="9.5" y="9.5" width="81" height="131" rx="2" fill="none" stroke="rgba(251, 191, 36, 0.35)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <circle cx="11.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="11.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+    
+      
+      <g stroke="#fbbf24" stroke-width="0.8" fill="none" opacity="0.85">
+        <!-- Top Cloud inside oval -->
+        <path d="M 40,36 Q 50,30 60,36 Q 56,32 50,32 Q 44,32 40,36" stroke-width="1.0" fill="rgba(251, 191, 36, 0.15)"/>
+        <!-- Bottom Cloud inside oval -->
+        <path d="M 40,114 Q 50,120 60,114 Q 56,118 50,118 Q 44,118 40,114" stroke-width="1.0" fill="rgba(251, 191, 36, 0.15)"/>
+        <!-- Corner spandrels -->
+        <path d="M 16,22 Q 22,18 24,24 Q 28,20 30,26" />
+        <path d="M 84,22 Q 78,18 76,24 Q 72,20 70,26" />
+        <path d="M 16,128 Q 22,132 24,126 Q 28,130 30,124" />
+        <path d="M 84,128 Q 78,132 76,126 Q 72,130 70,124" />
+      </g>
+    
+      <ellipse cx="50" cy="75" rx="36" ry="54" fill="none" stroke="#fbbf24" stroke-width="1.6"/>
+      <ellipse cx="50" cy="75" rx="32.5" ry="49.5" fill="url(#hk_global_seal)" stroke="rgba(254, 240, 138, 0.5)" stroke-width="0.8" stroke-dasharray="2.5,2.5"/>
+      
+      <g transform="translate(50, 75) scale(1.05) translate(-34, -31)" fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.5px 2px rgba(0,0,0,0.85));">
+        <!-- Main Serpentine Coiled Body -->
+        <path d="M 34,8 C 47,8 58,19 58,32 C 58,46 46,56 34,56 C 22,56 14,48 14,38 C 14,28 22,22 30,22 C 38,22 42,26 42,32 C 42,36 38,40 34,40 C 30,40 28,36 30,34" stroke-width="3.2"/>
+        <!-- Dorsal Spines & Flame Fins -->
+        <path d="M 50,16 L 54,12 M 58,26 L 63,24 M 58,38 L 63,40 M 50,50 L 54,54 M 40,56 L 42,61 M 26,56 L 24,61 M 16,46 L 11,48" stroke-width="1.8"/>
+        <!-- Dragon Antlers / Horns -->
+        <path d="M 30,8 L 32,3 M 36,7 L 40,2" stroke-width="2"/>
+        <!-- Eye -->
+        <circle cx="30" cy="11" r="1.5" fill="#fde047"/>
+        <!-- Dragon Snout & Whiskers -->
+        <path d="M 26,12 C 22,12 19,14 20,17 C 21,19 25,18 28,16" stroke-width="2"/>
+        <path d="M 22,14 Q 14,12 10,16 M 24,17 Q 16,20 12,25" stroke-width="1.2"/>
+        <!-- Claws & Talons -->
+        <path d="M 48,46 L 54,50 M 50,44 L 56,46 M 46,48 L 50,54" stroke-width="1.8"/>
+        <!-- Flaming Pearl in Center -->
+        <circle cx="34" cy="32" r="4.5" fill="#ef4444" stroke="#fde047" stroke-width="1.2"/>
+        <!-- Pearl Flame Tongue -->
+        <path d="M 34,24 Q 32,27 34,27.5 Q 36,27 34,24" fill="#fde047"/>
+      </g>
+    
+    </svg></div>
+                <span class="dual-label">Showcase</span>
+              </div>
+              <div class="dual-col">
+                <div class="card-display-52"><svg viewBox="0 0 100 150" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      
+      <rect x="0" y="0" width="100" height="150" rx="6" fill="#ffffff" stroke="#7a7c76" stroke-width="1"/>
+      <rect x="4" y="4" width="92" height="142" rx="4.5" fill="url(#hk_global_bg)"/>
+      <rect x="7" y="7" width="86" height="136" rx="3" fill="none" stroke="rgba(251, 191, 36, 0.8)" stroke-width="0.9"/>
+      <rect x="9.5" y="9.5" width="81" height="131" rx="2" fill="none" stroke="rgba(251, 191, 36, 0.35)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <circle cx="11.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="11.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+    
+      
+      <g stroke="#fbbf24" stroke-width="0.8" fill="none" opacity="0.85">
+        <!-- Top Cloud inside oval -->
+        <path d="M 40,36 Q 50,30 60,36 Q 56,32 50,32 Q 44,32 40,36" stroke-width="1.0" fill="rgba(251, 191, 36, 0.15)"/>
+        <!-- Bottom Cloud inside oval -->
+        <path d="M 40,114 Q 50,120 60,114 Q 56,118 50,118 Q 44,118 40,114" stroke-width="1.0" fill="rgba(251, 191, 36, 0.15)"/>
+        <!-- Corner spandrels -->
+        <path d="M 16,22 Q 22,18 24,24 Q 28,20 30,26" />
+        <path d="M 84,22 Q 78,18 76,24 Q 72,20 70,26" />
+        <path d="M 16,128 Q 22,132 24,126 Q 28,130 30,124" />
+        <path d="M 84,128 Q 78,132 76,126 Q 72,130 70,124" />
+      </g>
+    
+      <ellipse cx="50" cy="75" rx="36" ry="54" fill="none" stroke="#fbbf24" stroke-width="1.6"/>
+      <ellipse cx="50" cy="75" rx="32.5" ry="49.5" fill="url(#hk_global_seal)" stroke="rgba(254, 240, 138, 0.5)" stroke-width="0.8" stroke-dasharray="2.5,2.5"/>
+      
+      <g transform="translate(50, 75) scale(1.05) translate(-34, -31)" fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.5px 2px rgba(0,0,0,0.85));">
+        <!-- Main Serpentine Coiled Body -->
+        <path d="M 34,8 C 47,8 58,19 58,32 C 58,46 46,56 34,56 C 22,56 14,48 14,38 C 14,28 22,22 30,22 C 38,22 42,26 42,32 C 42,36 38,40 34,40 C 30,40 28,36 30,34" stroke-width="3.2"/>
+        <!-- Dorsal Spines & Flame Fins -->
+        <path d="M 50,16 L 54,12 M 58,26 L 63,24 M 58,38 L 63,40 M 50,50 L 54,54 M 40,56 L 42,61 M 26,56 L 24,61 M 16,46 L 11,48" stroke-width="1.8"/>
+        <!-- Dragon Antlers / Horns -->
+        <path d="M 30,8 L 32,3 M 36,7 L 40,2" stroke-width="2"/>
+        <!-- Eye -->
+        <circle cx="30" cy="11" r="1.5" fill="#fde047"/>
+        <!-- Dragon Snout & Whiskers -->
+        <path d="M 26,12 C 22,12 19,14 20,17 C 21,19 25,18 28,16" stroke-width="2"/>
+        <path d="M 22,14 Q 14,12 10,16 M 24,17 Q 16,20 12,25" stroke-width="1.2"/>
+        <!-- Claws & Talons -->
+        <path d="M 48,46 L 54,50 M 50,44 L 56,46 M 46,48 L 50,54" stroke-width="1.8"/>
+        <!-- Flaming Pearl in Center -->
+        <circle cx="34" cy="32" r="4.5" fill="#ef4444" stroke="#fde047" stroke-width="1.2"/>
+        <!-- Pearl Flame Tongue -->
+        <path d="M 34,24 Q 32,27 34,27.5 Q 36,27 34,24" fill="#fde047"/>
+      </g>
+    
+    </svg></div>
+                <span class="dual-label">In-Game</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="option-card" data-group="dragon" data-val="d4">
+          <span class="option-badge">Bold & Dynamic</span>
+          <div class="option-title">Option D4: Frameless Dragon</div>
+          <div class="option-desc"><span>Giant 80×120px coiled dragon breaking free of the circle with golden corner clouds.</span></div>
+          <div class="preview-box hk-preview-box">
+            <!-- Showcase mode (single 100x150) -->
+            <div class="card-view-mode view-showcase">
+              <div class="card-display-100"><svg viewBox="0 0 100 150" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      
+      <rect x="0" y="0" width="100" height="150" rx="6" fill="#ffffff" stroke="#7a7c76" stroke-width="1"/>
+      <rect x="4" y="4" width="92" height="142" rx="4.5" fill="url(#hk_global_bg)"/>
+      <rect x="7" y="7" width="86" height="136" rx="3" fill="none" stroke="rgba(251, 191, 36, 0.8)" stroke-width="0.9"/>
+      <rect x="9.5" y="9.5" width="81" height="131" rx="2" fill="none" stroke="rgba(251, 191, 36, 0.35)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <circle cx="11.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="11.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+    
+      
+      <g stroke="#fbbf24" stroke-width="0.9" fill="none" opacity="0.65">
+        <path d="M 15,20 Q 24,15 26,24 Q 32,20 34,28" />
+        <path d="M 85,20 Q 76,15 74,24 Q 68,20 66,28" />
+        <path d="M 15,130 Q 24,135 26,126 Q 32,130 34,122" />
+        <path d="M 85,130 Q 76,135 74,126 Q 68,130 66,122" />
+      </g>
+    
+      
+      <circle cx="50" cy="75" r="40" fill="url(#hk_global_seal)" opacity="0.9"/>
+      <circle cx="50" cy="75" r="42" fill="none" stroke="rgba(251, 191, 36, 0.4)" stroke-width="0.7" stroke-dasharray="3,3"/>
+    
+      
+      <g transform="translate(50, 75) scale(1.32) translate(-34, -31)" fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.5px 2px rgba(0,0,0,0.85));">
+        <!-- Main Serpentine Coiled Body -->
+        <path d="M 34,8 C 47,8 58,19 58,32 C 58,46 46,56 34,56 C 22,56 14,48 14,38 C 14,28 22,22 30,22 C 38,22 42,26 42,32 C 42,36 38,40 34,40 C 30,40 28,36 30,34" stroke-width="3.2"/>
+        <!-- Dorsal Spines & Flame Fins -->
+        <path d="M 50,16 L 54,12 M 58,26 L 63,24 M 58,38 L 63,40 M 50,50 L 54,54 M 40,56 L 42,61 M 26,56 L 24,61 M 16,46 L 11,48" stroke-width="1.8"/>
+        <!-- Dragon Antlers / Horns -->
+        <path d="M 30,8 L 32,3 M 36,7 L 40,2" stroke-width="2"/>
+        <!-- Eye -->
+        <circle cx="30" cy="11" r="1.5" fill="#fde047"/>
+        <!-- Dragon Snout & Whiskers -->
+        <path d="M 26,12 C 22,12 19,14 20,17 C 21,19 25,18 28,16" stroke-width="2"/>
+        <path d="M 22,14 Q 14,12 10,16 M 24,17 Q 16,20 12,25" stroke-width="1.2"/>
+        <!-- Claws & Talons -->
+        <path d="M 48,46 L 54,50 M 50,44 L 56,46 M 46,48 L 50,54" stroke-width="1.8"/>
+        <!-- Flaming Pearl in Center -->
+        <circle cx="34" cy="32" r="4.5" fill="#ef4444" stroke="#fde047" stroke-width="1.2"/>
+        <!-- Pearl Flame Tongue -->
+        <path d="M 34,24 Q 32,27 34,27.5 Q 36,27 34,24" fill="#fde047"/>
+      </g>
+    
+    </svg></div>
+            </div>
+            <!-- In-game mode (single 52x78) -->
+            <div class="card-view-mode view-ingame">
+              <div class="card-display-52"><svg viewBox="0 0 100 150" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      
+      <rect x="0" y="0" width="100" height="150" rx="6" fill="#ffffff" stroke="#7a7c76" stroke-width="1"/>
+      <rect x="4" y="4" width="92" height="142" rx="4.5" fill="url(#hk_global_bg)"/>
+      <rect x="7" y="7" width="86" height="136" rx="3" fill="none" stroke="rgba(251, 191, 36, 0.8)" stroke-width="0.9"/>
+      <rect x="9.5" y="9.5" width="81" height="131" rx="2" fill="none" stroke="rgba(251, 191, 36, 0.35)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <circle cx="11.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="11.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+    
+      
+      <g stroke="#fbbf24" stroke-width="0.9" fill="none" opacity="0.65">
+        <path d="M 15,20 Q 24,15 26,24 Q 32,20 34,28" />
+        <path d="M 85,20 Q 76,15 74,24 Q 68,20 66,28" />
+        <path d="M 15,130 Q 24,135 26,126 Q 32,130 34,122" />
+        <path d="M 85,130 Q 76,135 74,126 Q 68,130 66,122" />
+      </g>
+    
+      
+      <circle cx="50" cy="75" r="40" fill="url(#hk_global_seal)" opacity="0.9"/>
+      <circle cx="50" cy="75" r="42" fill="none" stroke="rgba(251, 191, 36, 0.4)" stroke-width="0.7" stroke-dasharray="3,3"/>
+    
+      
+      <g transform="translate(50, 75) scale(1.32) translate(-34, -31)" fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.5px 2px rgba(0,0,0,0.85));">
+        <!-- Main Serpentine Coiled Body -->
+        <path d="M 34,8 C 47,8 58,19 58,32 C 58,46 46,56 34,56 C 22,56 14,48 14,38 C 14,28 22,22 30,22 C 38,22 42,26 42,32 C 42,36 38,40 34,40 C 30,40 28,36 30,34" stroke-width="3.2"/>
+        <!-- Dorsal Spines & Flame Fins -->
+        <path d="M 50,16 L 54,12 M 58,26 L 63,24 M 58,38 L 63,40 M 50,50 L 54,54 M 40,56 L 42,61 M 26,56 L 24,61 M 16,46 L 11,48" stroke-width="1.8"/>
+        <!-- Dragon Antlers / Horns -->
+        <path d="M 30,8 L 32,3 M 36,7 L 40,2" stroke-width="2"/>
+        <!-- Eye -->
+        <circle cx="30" cy="11" r="1.5" fill="#fde047"/>
+        <!-- Dragon Snout & Whiskers -->
+        <path d="M 26,12 C 22,12 19,14 20,17 C 21,19 25,18 28,16" stroke-width="2"/>
+        <path d="M 22,14 Q 14,12 10,16 M 24,17 Q 16,20 12,25" stroke-width="1.2"/>
+        <!-- Claws & Talons -->
+        <path d="M 48,46 L 54,50 M 50,44 L 56,46 M 46,48 L 50,54" stroke-width="1.8"/>
+        <!-- Flaming Pearl in Center -->
+        <circle cx="34" cy="32" r="4.5" fill="#ef4444" stroke="#fde047" stroke-width="1.2"/>
+        <!-- Pearl Flame Tongue -->
+        <path d="M 34,24 Q 32,27 34,27.5 Q 36,27 34,24" fill="#fde047"/>
+      </g>
+    
+    </svg></div>
+            </div>
+            <!-- Dual mode (side-by-side bottom-aligned) -->
+            <div class="card-view-mode view-dual">
+              <div class="dual-col">
+                <div class="card-display-100"><svg viewBox="0 0 100 150" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      
+      <rect x="0" y="0" width="100" height="150" rx="6" fill="#ffffff" stroke="#7a7c76" stroke-width="1"/>
+      <rect x="4" y="4" width="92" height="142" rx="4.5" fill="url(#hk_global_bg)"/>
+      <rect x="7" y="7" width="86" height="136" rx="3" fill="none" stroke="rgba(251, 191, 36, 0.8)" stroke-width="0.9"/>
+      <rect x="9.5" y="9.5" width="81" height="131" rx="2" fill="none" stroke="rgba(251, 191, 36, 0.35)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <circle cx="11.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="11.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+    
+      
+      <g stroke="#fbbf24" stroke-width="0.9" fill="none" opacity="0.65">
+        <path d="M 15,20 Q 24,15 26,24 Q 32,20 34,28" />
+        <path d="M 85,20 Q 76,15 74,24 Q 68,20 66,28" />
+        <path d="M 15,130 Q 24,135 26,126 Q 32,130 34,122" />
+        <path d="M 85,130 Q 76,135 74,126 Q 68,130 66,122" />
+      </g>
+    
+      
+      <circle cx="50" cy="75" r="40" fill="url(#hk_global_seal)" opacity="0.9"/>
+      <circle cx="50" cy="75" r="42" fill="none" stroke="rgba(251, 191, 36, 0.4)" stroke-width="0.7" stroke-dasharray="3,3"/>
+    
+      
+      <g transform="translate(50, 75) scale(1.32) translate(-34, -31)" fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.5px 2px rgba(0,0,0,0.85));">
+        <!-- Main Serpentine Coiled Body -->
+        <path d="M 34,8 C 47,8 58,19 58,32 C 58,46 46,56 34,56 C 22,56 14,48 14,38 C 14,28 22,22 30,22 C 38,22 42,26 42,32 C 42,36 38,40 34,40 C 30,40 28,36 30,34" stroke-width="3.2"/>
+        <!-- Dorsal Spines & Flame Fins -->
+        <path d="M 50,16 L 54,12 M 58,26 L 63,24 M 58,38 L 63,40 M 50,50 L 54,54 M 40,56 L 42,61 M 26,56 L 24,61 M 16,46 L 11,48" stroke-width="1.8"/>
+        <!-- Dragon Antlers / Horns -->
+        <path d="M 30,8 L 32,3 M 36,7 L 40,2" stroke-width="2"/>
+        <!-- Eye -->
+        <circle cx="30" cy="11" r="1.5" fill="#fde047"/>
+        <!-- Dragon Snout & Whiskers -->
+        <path d="M 26,12 C 22,12 19,14 20,17 C 21,19 25,18 28,16" stroke-width="2"/>
+        <path d="M 22,14 Q 14,12 10,16 M 24,17 Q 16,20 12,25" stroke-width="1.2"/>
+        <!-- Claws & Talons -->
+        <path d="M 48,46 L 54,50 M 50,44 L 56,46 M 46,48 L 50,54" stroke-width="1.8"/>
+        <!-- Flaming Pearl in Center -->
+        <circle cx="34" cy="32" r="4.5" fill="#ef4444" stroke="#fde047" stroke-width="1.2"/>
+        <!-- Pearl Flame Tongue -->
+        <path d="M 34,24 Q 32,27 34,27.5 Q 36,27 34,24" fill="#fde047"/>
+      </g>
+    
+    </svg></div>
+                <span class="dual-label">Showcase</span>
+              </div>
+              <div class="dual-col">
+                <div class="card-display-52"><svg viewBox="0 0 100 150" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      
+      <rect x="0" y="0" width="100" height="150" rx="6" fill="#ffffff" stroke="#7a7c76" stroke-width="1"/>
+      <rect x="4" y="4" width="92" height="142" rx="4.5" fill="url(#hk_global_bg)"/>
+      <rect x="7" y="7" width="86" height="136" rx="3" fill="none" stroke="rgba(251, 191, 36, 0.8)" stroke-width="0.9"/>
+      <rect x="9.5" y="9.5" width="81" height="131" rx="2" fill="none" stroke="rgba(251, 191, 36, 0.35)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <circle cx="11.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="11.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+    
+      
+      <g stroke="#fbbf24" stroke-width="0.9" fill="none" opacity="0.65">
+        <path d="M 15,20 Q 24,15 26,24 Q 32,20 34,28" />
+        <path d="M 85,20 Q 76,15 74,24 Q 68,20 66,28" />
+        <path d="M 15,130 Q 24,135 26,126 Q 32,130 34,122" />
+        <path d="M 85,130 Q 76,135 74,126 Q 68,130 66,122" />
+      </g>
+    
+      
+      <circle cx="50" cy="75" r="40" fill="url(#hk_global_seal)" opacity="0.9"/>
+      <circle cx="50" cy="75" r="42" fill="none" stroke="rgba(251, 191, 36, 0.4)" stroke-width="0.7" stroke-dasharray="3,3"/>
+    
+      
+      <g transform="translate(50, 75) scale(1.32) translate(-34, -31)" fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.5px 2px rgba(0,0,0,0.85));">
+        <!-- Main Serpentine Coiled Body -->
+        <path d="M 34,8 C 47,8 58,19 58,32 C 58,46 46,56 34,56 C 22,56 14,48 14,38 C 14,28 22,22 30,22 C 38,22 42,26 42,32 C 42,36 38,40 34,40 C 30,40 28,36 30,34" stroke-width="3.2"/>
+        <!-- Dorsal Spines & Flame Fins -->
+        <path d="M 50,16 L 54,12 M 58,26 L 63,24 M 58,38 L 63,40 M 50,50 L 54,54 M 40,56 L 42,61 M 26,56 L 24,61 M 16,46 L 11,48" stroke-width="1.8"/>
+        <!-- Dragon Antlers / Horns -->
+        <path d="M 30,8 L 32,3 M 36,7 L 40,2" stroke-width="2"/>
+        <!-- Eye -->
+        <circle cx="30" cy="11" r="1.5" fill="#fde047"/>
+        <!-- Dragon Snout & Whiskers -->
+        <path d="M 26,12 C 22,12 19,14 20,17 C 21,19 25,18 28,16" stroke-width="2"/>
+        <path d="M 22,14 Q 14,12 10,16 M 24,17 Q 16,20 12,25" stroke-width="1.2"/>
+        <!-- Claws & Talons -->
+        <path d="M 48,46 L 54,50 M 50,44 L 56,46 M 46,48 L 50,54" stroke-width="1.8"/>
+        <!-- Flaming Pearl in Center -->
+        <circle cx="34" cy="32" r="4.5" fill="#ef4444" stroke="#fde047" stroke-width="1.2"/>
+        <!-- Pearl Flame Tongue -->
+        <path d="M 34,24 Q 32,27 34,27.5 Q 36,27 34,24" fill="#fde047"/>
+      </g>
+    
+    </svg></div>
+                <span class="dual-label">In-Game</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="option-card" data-group="dragon" data-val="d5">
+          <span class="option-badge">Casino Standard</span>
+          <div class="option-title">Option D5: 雙龍戲珠 (Twin Dragons)</div>
+          <div class="option-desc"><span>Authentic 2-way reversible casino layout: mirrored dragons spiraling toward ruby flaming pearl.</span></div>
+          <div class="preview-box hk-preview-box">
+            <!-- Showcase mode (single 100x150) -->
+            <div class="card-view-mode view-showcase">
+              <div class="card-display-100"><svg viewBox="0 0 100 150" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      
+      <rect x="0" y="0" width="100" height="150" rx="6" fill="#ffffff" stroke="#7a7c76" stroke-width="1"/>
+      <rect x="4" y="4" width="92" height="142" rx="4.5" fill="url(#hk_global_bg)"/>
+      <rect x="7" y="7" width="86" height="136" rx="3" fill="none" stroke="rgba(251, 191, 36, 0.8)" stroke-width="0.9"/>
+      <rect x="9.5" y="9.5" width="81" height="131" rx="2" fill="none" stroke="rgba(251, 191, 36, 0.35)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <circle cx="11.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="11.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+    
+      <!-- Top Half Dragon -->
+      
+      <g fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.3px 1.8px rgba(0,0,0,0.85));">
+        <!-- Serpentine coiling body from top corner down to center -->
+        <path d="M 68,22 C 73,31 67,40 56,44 C 44,48 40,55 45,63" stroke-width="3.0"/>
+        <!-- Dorsal spines -->
+        <path d="M 70,27 L 76,25 M 68,34 L 74,35 M 59,42 L 63,47 M 46,50 L 41,53 M 42,57 L 37,60" stroke-width="1.5"/>
+        <!-- Dragon flame tail flourish -->
+        <path d="M 68,22 C 76,17 74,11 67,13 C 63,16 65,20 68,22 Z" fill="#fde047" stroke-width="1.0"/>
+        <!-- Dragon head facing center pearl -->
+        <path d="M 45,63 C 48,68 53,67 55,63 C 56,59 52,57 47,58" stroke-width="2.4"/>
+        <circle cx="51" cy="62" r="1.2" fill="#fde047"/>
+        <!-- Horns & Whiskers -->
+        <path d="M 54,64 Q 60,67 63,64 M 53,59 Q 58,55 60,57" stroke-width="1.3"/>
+        <path d="M 46,67 Q 44,71 42,70" stroke-width="1.2"/>
+        <!-- Claws grasping toward pearl -->
+        <path d="M 41,56 L 35,58 M 43,60 L 37,63 M 44,62 L 40,66" stroke-width="1.6"/>
+      </g>
+    
+      <!-- Bottom Half Dragon (180 deg) -->
+      <g transform="rotate(180, 50, 75)">
+        
+      <g fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.3px 1.8px rgba(0,0,0,0.85));">
+        <!-- Serpentine coiling body from top corner down to center -->
+        <path d="M 68,22 C 73,31 67,40 56,44 C 44,48 40,55 45,63" stroke-width="3.0"/>
+        <!-- Dorsal spines -->
+        <path d="M 70,27 L 76,25 M 68,34 L 74,35 M 59,42 L 63,47 M 46,50 L 41,53 M 42,57 L 37,60" stroke-width="1.5"/>
+        <!-- Dragon flame tail flourish -->
+        <path d="M 68,22 C 76,17 74,11 67,13 C 63,16 65,20 68,22 Z" fill="#fde047" stroke-width="1.0"/>
+        <!-- Dragon head facing center pearl -->
+        <path d="M 45,63 C 48,68 53,67 55,63 C 56,59 52,57 47,58" stroke-width="2.4"/>
+        <circle cx="51" cy="62" r="1.2" fill="#fde047"/>
+        <!-- Horns & Whiskers -->
+        <path d="M 54,64 Q 60,67 63,64 M 53,59 Q 58,55 60,57" stroke-width="1.3"/>
+        <path d="M 46,67 Q 44,71 42,70" stroke-width="1.2"/>
+        <!-- Claws grasping toward pearl -->
+        <path d="M 41,56 L 35,58 M 43,60 L 37,63 M 44,62 L 40,66" stroke-width="1.6"/>
+      </g>
+    
+      </g>
+      <!-- Center Flaming Pearl -->
+      
+      <circle cx="50" cy="75" r="9" fill="#881337" stroke="#fbbf24" stroke-width="1.4"/>
+      <circle cx="50" cy="75" r="6.2" fill="#ef4444" stroke="#fde047" stroke-width="1.1"/>
+      <path d="M 42,75 Q 50,65 58,75 Q 50,85 42,75" fill="none" stroke="#fde047" stroke-width="0.8"/>
+      <!-- Small radiant sparks -->
+      <circle cx="40" cy="75" r="0.9" fill="#fde047"/>
+      <circle cx="60" cy="75" r="0.9" fill="#fde047"/>
+      <circle cx="50" cy="65" r="0.9" fill="#fde047"/>
+      <circle cx="50" cy="85" r="0.9" fill="#fde047"/>
+    
+    </svg></div>
+            </div>
+            <!-- In-game mode (single 52x78) -->
+            <div class="card-view-mode view-ingame">
+              <div class="card-display-52"><svg viewBox="0 0 100 150" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      
+      <rect x="0" y="0" width="100" height="150" rx="6" fill="#ffffff" stroke="#7a7c76" stroke-width="1"/>
+      <rect x="4" y="4" width="92" height="142" rx="4.5" fill="url(#hk_global_bg)"/>
+      <rect x="7" y="7" width="86" height="136" rx="3" fill="none" stroke="rgba(251, 191, 36, 0.8)" stroke-width="0.9"/>
+      <rect x="9.5" y="9.5" width="81" height="131" rx="2" fill="none" stroke="rgba(251, 191, 36, 0.35)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <circle cx="11.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="11.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+    
+      <!-- Top Half Dragon -->
+      
+      <g fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.3px 1.8px rgba(0,0,0,0.85));">
+        <!-- Serpentine coiling body from top corner down to center -->
+        <path d="M 68,22 C 73,31 67,40 56,44 C 44,48 40,55 45,63" stroke-width="3.0"/>
+        <!-- Dorsal spines -->
+        <path d="M 70,27 L 76,25 M 68,34 L 74,35 M 59,42 L 63,47 M 46,50 L 41,53 M 42,57 L 37,60" stroke-width="1.5"/>
+        <!-- Dragon flame tail flourish -->
+        <path d="M 68,22 C 76,17 74,11 67,13 C 63,16 65,20 68,22 Z" fill="#fde047" stroke-width="1.0"/>
+        <!-- Dragon head facing center pearl -->
+        <path d="M 45,63 C 48,68 53,67 55,63 C 56,59 52,57 47,58" stroke-width="2.4"/>
+        <circle cx="51" cy="62" r="1.2" fill="#fde047"/>
+        <!-- Horns & Whiskers -->
+        <path d="M 54,64 Q 60,67 63,64 M 53,59 Q 58,55 60,57" stroke-width="1.3"/>
+        <path d="M 46,67 Q 44,71 42,70" stroke-width="1.2"/>
+        <!-- Claws grasping toward pearl -->
+        <path d="M 41,56 L 35,58 M 43,60 L 37,63 M 44,62 L 40,66" stroke-width="1.6"/>
+      </g>
+    
+      <!-- Bottom Half Dragon (180 deg) -->
+      <g transform="rotate(180, 50, 75)">
+        
+      <g fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.3px 1.8px rgba(0,0,0,0.85));">
+        <!-- Serpentine coiling body from top corner down to center -->
+        <path d="M 68,22 C 73,31 67,40 56,44 C 44,48 40,55 45,63" stroke-width="3.0"/>
+        <!-- Dorsal spines -->
+        <path d="M 70,27 L 76,25 M 68,34 L 74,35 M 59,42 L 63,47 M 46,50 L 41,53 M 42,57 L 37,60" stroke-width="1.5"/>
+        <!-- Dragon flame tail flourish -->
+        <path d="M 68,22 C 76,17 74,11 67,13 C 63,16 65,20 68,22 Z" fill="#fde047" stroke-width="1.0"/>
+        <!-- Dragon head facing center pearl -->
+        <path d="M 45,63 C 48,68 53,67 55,63 C 56,59 52,57 47,58" stroke-width="2.4"/>
+        <circle cx="51" cy="62" r="1.2" fill="#fde047"/>
+        <!-- Horns & Whiskers -->
+        <path d="M 54,64 Q 60,67 63,64 M 53,59 Q 58,55 60,57" stroke-width="1.3"/>
+        <path d="M 46,67 Q 44,71 42,70" stroke-width="1.2"/>
+        <!-- Claws grasping toward pearl -->
+        <path d="M 41,56 L 35,58 M 43,60 L 37,63 M 44,62 L 40,66" stroke-width="1.6"/>
+      </g>
+    
+      </g>
+      <!-- Center Flaming Pearl -->
+      
+      <circle cx="50" cy="75" r="9" fill="#881337" stroke="#fbbf24" stroke-width="1.4"/>
+      <circle cx="50" cy="75" r="6.2" fill="#ef4444" stroke="#fde047" stroke-width="1.1"/>
+      <path d="M 42,75 Q 50,65 58,75 Q 50,85 42,75" fill="none" stroke="#fde047" stroke-width="0.8"/>
+      <!-- Small radiant sparks -->
+      <circle cx="40" cy="75" r="0.9" fill="#fde047"/>
+      <circle cx="60" cy="75" r="0.9" fill="#fde047"/>
+      <circle cx="50" cy="65" r="0.9" fill="#fde047"/>
+      <circle cx="50" cy="85" r="0.9" fill="#fde047"/>
+    
+    </svg></div>
+            </div>
+            <!-- Dual mode (side-by-side bottom-aligned) -->
+            <div class="card-view-mode view-dual">
+              <div class="dual-col">
+                <div class="card-display-100"><svg viewBox="0 0 100 150" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      
+      <rect x="0" y="0" width="100" height="150" rx="6" fill="#ffffff" stroke="#7a7c76" stroke-width="1"/>
+      <rect x="4" y="4" width="92" height="142" rx="4.5" fill="url(#hk_global_bg)"/>
+      <rect x="7" y="7" width="86" height="136" rx="3" fill="none" stroke="rgba(251, 191, 36, 0.8)" stroke-width="0.9"/>
+      <rect x="9.5" y="9.5" width="81" height="131" rx="2" fill="none" stroke="rgba(251, 191, 36, 0.35)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <circle cx="11.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="11.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+    
+      <!-- Top Half Dragon -->
+      
+      <g fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.3px 1.8px rgba(0,0,0,0.85));">
+        <!-- Serpentine coiling body from top corner down to center -->
+        <path d="M 68,22 C 73,31 67,40 56,44 C 44,48 40,55 45,63" stroke-width="3.0"/>
+        <!-- Dorsal spines -->
+        <path d="M 70,27 L 76,25 M 68,34 L 74,35 M 59,42 L 63,47 M 46,50 L 41,53 M 42,57 L 37,60" stroke-width="1.5"/>
+        <!-- Dragon flame tail flourish -->
+        <path d="M 68,22 C 76,17 74,11 67,13 C 63,16 65,20 68,22 Z" fill="#fde047" stroke-width="1.0"/>
+        <!-- Dragon head facing center pearl -->
+        <path d="M 45,63 C 48,68 53,67 55,63 C 56,59 52,57 47,58" stroke-width="2.4"/>
+        <circle cx="51" cy="62" r="1.2" fill="#fde047"/>
+        <!-- Horns & Whiskers -->
+        <path d="M 54,64 Q 60,67 63,64 M 53,59 Q 58,55 60,57" stroke-width="1.3"/>
+        <path d="M 46,67 Q 44,71 42,70" stroke-width="1.2"/>
+        <!-- Claws grasping toward pearl -->
+        <path d="M 41,56 L 35,58 M 43,60 L 37,63 M 44,62 L 40,66" stroke-width="1.6"/>
+      </g>
+    
+      <!-- Bottom Half Dragon (180 deg) -->
+      <g transform="rotate(180, 50, 75)">
+        
+      <g fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.3px 1.8px rgba(0,0,0,0.85));">
+        <!-- Serpentine coiling body from top corner down to center -->
+        <path d="M 68,22 C 73,31 67,40 56,44 C 44,48 40,55 45,63" stroke-width="3.0"/>
+        <!-- Dorsal spines -->
+        <path d="M 70,27 L 76,25 M 68,34 L 74,35 M 59,42 L 63,47 M 46,50 L 41,53 M 42,57 L 37,60" stroke-width="1.5"/>
+        <!-- Dragon flame tail flourish -->
+        <path d="M 68,22 C 76,17 74,11 67,13 C 63,16 65,20 68,22 Z" fill="#fde047" stroke-width="1.0"/>
+        <!-- Dragon head facing center pearl -->
+        <path d="M 45,63 C 48,68 53,67 55,63 C 56,59 52,57 47,58" stroke-width="2.4"/>
+        <circle cx="51" cy="62" r="1.2" fill="#fde047"/>
+        <!-- Horns & Whiskers -->
+        <path d="M 54,64 Q 60,67 63,64 M 53,59 Q 58,55 60,57" stroke-width="1.3"/>
+        <path d="M 46,67 Q 44,71 42,70" stroke-width="1.2"/>
+        <!-- Claws grasping toward pearl -->
+        <path d="M 41,56 L 35,58 M 43,60 L 37,63 M 44,62 L 40,66" stroke-width="1.6"/>
+      </g>
+    
+      </g>
+      <!-- Center Flaming Pearl -->
+      
+      <circle cx="50" cy="75" r="9" fill="#881337" stroke="#fbbf24" stroke-width="1.4"/>
+      <circle cx="50" cy="75" r="6.2" fill="#ef4444" stroke="#fde047" stroke-width="1.1"/>
+      <path d="M 42,75 Q 50,65 58,75 Q 50,85 42,75" fill="none" stroke="#fde047" stroke-width="0.8"/>
+      <!-- Small radiant sparks -->
+      <circle cx="40" cy="75" r="0.9" fill="#fde047"/>
+      <circle cx="60" cy="75" r="0.9" fill="#fde047"/>
+      <circle cx="50" cy="65" r="0.9" fill="#fde047"/>
+      <circle cx="50" cy="85" r="0.9" fill="#fde047"/>
+    
+    </svg></div>
+                <span class="dual-label">Showcase</span>
+              </div>
+              <div class="dual-col">
+                <div class="card-display-52"><svg viewBox="0 0 100 150" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      
+      <rect x="0" y="0" width="100" height="150" rx="6" fill="#ffffff" stroke="#7a7c76" stroke-width="1"/>
+      <rect x="4" y="4" width="92" height="142" rx="4.5" fill="url(#hk_global_bg)"/>
+      <rect x="7" y="7" width="86" height="136" rx="3" fill="none" stroke="rgba(251, 191, 36, 0.8)" stroke-width="0.9"/>
+      <rect x="9.5" y="9.5" width="81" height="131" rx="2" fill="none" stroke="rgba(251, 191, 36, 0.35)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <circle cx="11.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="11.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+    
+      <!-- Top Half Dragon -->
+      
+      <g fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.3px 1.8px rgba(0,0,0,0.85));">
+        <!-- Serpentine coiling body from top corner down to center -->
+        <path d="M 68,22 C 73,31 67,40 56,44 C 44,48 40,55 45,63" stroke-width="3.0"/>
+        <!-- Dorsal spines -->
+        <path d="M 70,27 L 76,25 M 68,34 L 74,35 M 59,42 L 63,47 M 46,50 L 41,53 M 42,57 L 37,60" stroke-width="1.5"/>
+        <!-- Dragon flame tail flourish -->
+        <path d="M 68,22 C 76,17 74,11 67,13 C 63,16 65,20 68,22 Z" fill="#fde047" stroke-width="1.0"/>
+        <!-- Dragon head facing center pearl -->
+        <path d="M 45,63 C 48,68 53,67 55,63 C 56,59 52,57 47,58" stroke-width="2.4"/>
+        <circle cx="51" cy="62" r="1.2" fill="#fde047"/>
+        <!-- Horns & Whiskers -->
+        <path d="M 54,64 Q 60,67 63,64 M 53,59 Q 58,55 60,57" stroke-width="1.3"/>
+        <path d="M 46,67 Q 44,71 42,70" stroke-width="1.2"/>
+        <!-- Claws grasping toward pearl -->
+        <path d="M 41,56 L 35,58 M 43,60 L 37,63 M 44,62 L 40,66" stroke-width="1.6"/>
+      </g>
+    
+      <!-- Bottom Half Dragon (180 deg) -->
+      <g transform="rotate(180, 50, 75)">
+        
+      <g fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.3px 1.8px rgba(0,0,0,0.85));">
+        <!-- Serpentine coiling body from top corner down to center -->
+        <path d="M 68,22 C 73,31 67,40 56,44 C 44,48 40,55 45,63" stroke-width="3.0"/>
+        <!-- Dorsal spines -->
+        <path d="M 70,27 L 76,25 M 68,34 L 74,35 M 59,42 L 63,47 M 46,50 L 41,53 M 42,57 L 37,60" stroke-width="1.5"/>
+        <!-- Dragon flame tail flourish -->
+        <path d="M 68,22 C 76,17 74,11 67,13 C 63,16 65,20 68,22 Z" fill="#fde047" stroke-width="1.0"/>
+        <!-- Dragon head facing center pearl -->
+        <path d="M 45,63 C 48,68 53,67 55,63 C 56,59 52,57 47,58" stroke-width="2.4"/>
+        <circle cx="51" cy="62" r="1.2" fill="#fde047"/>
+        <!-- Horns & Whiskers -->
+        <path d="M 54,64 Q 60,67 63,64 M 53,59 Q 58,55 60,57" stroke-width="1.3"/>
+        <path d="M 46,67 Q 44,71 42,70" stroke-width="1.2"/>
+        <!-- Claws grasping toward pearl -->
+        <path d="M 41,56 L 35,58 M 43,60 L 37,63 M 44,62 L 40,66" stroke-width="1.6"/>
+      </g>
+    
+      </g>
+      <!-- Center Flaming Pearl -->
+      
+      <circle cx="50" cy="75" r="9" fill="#881337" stroke="#fbbf24" stroke-width="1.4"/>
+      <circle cx="50" cy="75" r="6.2" fill="#ef4444" stroke="#fde047" stroke-width="1.1"/>
+      <path d="M 42,75 Q 50,65 58,75 Q 50,85 42,75" fill="none" stroke="#fde047" stroke-width="0.8"/>
+      <!-- Small radiant sparks -->
+      <circle cx="40" cy="75" r="0.9" fill="#fde047"/>
+      <circle cx="60" cy="75" r="0.9" fill="#fde047"/>
+      <circle cx="50" cy="65" r="0.9" fill="#fde047"/>
+      <circle cx="50" cy="85" r="0.9" fill="#fde047"/>
+    
+    </svg></div>
+                <span class="dual-label">In-Game</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="option-card" data-group="dragon" data-val="d6">
+          <span class="option-badge">Imperial Brocade</span>
+          <div class="option-title">Option D6: 海水江崖 (Cloud & Waves)</div>
+          <div class="option-desc"><span>Court tapestry aesthetic: 70% dragon medallion anchored by sacred sea waves & mountain peaks.</span></div>
+          <div class="preview-box hk-preview-box">
+            <!-- Showcase mode (single 100x150) -->
+            <div class="card-view-mode view-showcase">
+              <div class="card-display-100"><svg viewBox="0 0 100 150" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      
+      <rect x="0" y="0" width="100" height="150" rx="6" fill="#ffffff" stroke="#7a7c76" stroke-width="1"/>
+      <rect x="4" y="4" width="92" height="142" rx="4.5" fill="url(#hk_global_bg)"/>
+      <rect x="7" y="7" width="86" height="136" rx="3" fill="none" stroke="rgba(251, 191, 36, 0.8)" stroke-width="0.9"/>
+      <rect x="9.5" y="9.5" width="81" height="131" rx="2" fill="none" stroke="rgba(251, 191, 36, 0.35)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <circle cx="11.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="11.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+    
+      
+      <g stroke="#fbbf24" stroke-width="0.8" fill="none" opacity="0.85">
+        <path d="M 12,14 Q 22,22 32,14 Q 42,22 52,14 Q 62,22 72,14 Q 82,22 90,14"/>
+        <path d="M 16,18 Q 26,25 36,18 Q 46,25 56,18 Q 66,25 76,18 Q 84,23 88,18"/>
+        <!-- Center mountain crest -->
+        <path d="M 44,24 L 50,15 L 56,24 Z" fill="rgba(251, 191, 36, 0.3)" stroke="#fbbf24" stroke-width="0.9"/>
+      </g>
+    
+      
+      <g stroke="#fbbf24" stroke-width="0.8" fill="none" opacity="0.85">
+        <path d="M 12,136 Q 22,128 32,136 Q 42,128 52,136 Q 62,128 72,136 Q 82,128 90,136"/>
+        <path d="M 16,132 Q 26,125 36,132 Q 46,125 56,132 Q 66,125 76,132 Q 84,127 88,132"/>
+        <!-- Center mountain crest -->
+        <path d="M 44,126 L 50,135 L 56,126 Z" fill="rgba(251, 191, 36, 0.3)" stroke="#fbbf24" stroke-width="0.9"/>
+      </g>
+    
+      <circle cx="50" cy="75" r="35" fill="none" stroke="#fbbf24" stroke-width="1.6"/>
+      <circle cx="50" cy="75" r="31" fill="url(#hk_global_seal)" stroke="rgba(254, 240, 138, 0.5)" stroke-width="0.8" stroke-dasharray="2,2"/>
+      
+      <g transform="translate(50, 75) scale(0.88) translate(-34, -31)" fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.5px 2px rgba(0,0,0,0.85));">
+        <!-- Main Serpentine Coiled Body -->
+        <path d="M 34,8 C 47,8 58,19 58,32 C 58,46 46,56 34,56 C 22,56 14,48 14,38 C 14,28 22,22 30,22 C 38,22 42,26 42,32 C 42,36 38,40 34,40 C 30,40 28,36 30,34" stroke-width="3.2"/>
+        <!-- Dorsal Spines & Flame Fins -->
+        <path d="M 50,16 L 54,12 M 58,26 L 63,24 M 58,38 L 63,40 M 50,50 L 54,54 M 40,56 L 42,61 M 26,56 L 24,61 M 16,46 L 11,48" stroke-width="1.8"/>
+        <!-- Dragon Antlers / Horns -->
+        <path d="M 30,8 L 32,3 M 36,7 L 40,2" stroke-width="2"/>
+        <!-- Eye -->
+        <circle cx="30" cy="11" r="1.5" fill="#fde047"/>
+        <!-- Dragon Snout & Whiskers -->
+        <path d="M 26,12 C 22,12 19,14 20,17 C 21,19 25,18 28,16" stroke-width="2"/>
+        <path d="M 22,14 Q 14,12 10,16 M 24,17 Q 16,20 12,25" stroke-width="1.2"/>
+        <!-- Claws & Talons -->
+        <path d="M 48,46 L 54,50 M 50,44 L 56,46 M 46,48 L 50,54" stroke-width="1.8"/>
+        <!-- Flaming Pearl in Center -->
+        <circle cx="34" cy="32" r="4.5" fill="#ef4444" stroke="#fde047" stroke-width="1.2"/>
+        <!-- Pearl Flame Tongue -->
+        <path d="M 34,24 Q 32,27 34,27.5 Q 36,27 34,24" fill="#fde047"/>
+      </g>
+    
+    </svg></div>
+            </div>
+            <!-- In-game mode (single 52x78) -->
+            <div class="card-view-mode view-ingame">
+              <div class="card-display-52"><svg viewBox="0 0 100 150" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      
+      <rect x="0" y="0" width="100" height="150" rx="6" fill="#ffffff" stroke="#7a7c76" stroke-width="1"/>
+      <rect x="4" y="4" width="92" height="142" rx="4.5" fill="url(#hk_global_bg)"/>
+      <rect x="7" y="7" width="86" height="136" rx="3" fill="none" stroke="rgba(251, 191, 36, 0.8)" stroke-width="0.9"/>
+      <rect x="9.5" y="9.5" width="81" height="131" rx="2" fill="none" stroke="rgba(251, 191, 36, 0.35)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <circle cx="11.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="11.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+    
+      
+      <g stroke="#fbbf24" stroke-width="0.8" fill="none" opacity="0.85">
+        <path d="M 12,14 Q 22,22 32,14 Q 42,22 52,14 Q 62,22 72,14 Q 82,22 90,14"/>
+        <path d="M 16,18 Q 26,25 36,18 Q 46,25 56,18 Q 66,25 76,18 Q 84,23 88,18"/>
+        <!-- Center mountain crest -->
+        <path d="M 44,24 L 50,15 L 56,24 Z" fill="rgba(251, 191, 36, 0.3)" stroke="#fbbf24" stroke-width="0.9"/>
+      </g>
+    
+      
+      <g stroke="#fbbf24" stroke-width="0.8" fill="none" opacity="0.85">
+        <path d="M 12,136 Q 22,128 32,136 Q 42,128 52,136 Q 62,128 72,136 Q 82,128 90,136"/>
+        <path d="M 16,132 Q 26,125 36,132 Q 46,125 56,132 Q 66,125 76,132 Q 84,127 88,132"/>
+        <!-- Center mountain crest -->
+        <path d="M 44,126 L 50,135 L 56,126 Z" fill="rgba(251, 191, 36, 0.3)" stroke="#fbbf24" stroke-width="0.9"/>
+      </g>
+    
+      <circle cx="50" cy="75" r="35" fill="none" stroke="#fbbf24" stroke-width="1.6"/>
+      <circle cx="50" cy="75" r="31" fill="url(#hk_global_seal)" stroke="rgba(254, 240, 138, 0.5)" stroke-width="0.8" stroke-dasharray="2,2"/>
+      
+      <g transform="translate(50, 75) scale(0.88) translate(-34, -31)" fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.5px 2px rgba(0,0,0,0.85));">
+        <!-- Main Serpentine Coiled Body -->
+        <path d="M 34,8 C 47,8 58,19 58,32 C 58,46 46,56 34,56 C 22,56 14,48 14,38 C 14,28 22,22 30,22 C 38,22 42,26 42,32 C 42,36 38,40 34,40 C 30,40 28,36 30,34" stroke-width="3.2"/>
+        <!-- Dorsal Spines & Flame Fins -->
+        <path d="M 50,16 L 54,12 M 58,26 L 63,24 M 58,38 L 63,40 M 50,50 L 54,54 M 40,56 L 42,61 M 26,56 L 24,61 M 16,46 L 11,48" stroke-width="1.8"/>
+        <!-- Dragon Antlers / Horns -->
+        <path d="M 30,8 L 32,3 M 36,7 L 40,2" stroke-width="2"/>
+        <!-- Eye -->
+        <circle cx="30" cy="11" r="1.5" fill="#fde047"/>
+        <!-- Dragon Snout & Whiskers -->
+        <path d="M 26,12 C 22,12 19,14 20,17 C 21,19 25,18 28,16" stroke-width="2"/>
+        <path d="M 22,14 Q 14,12 10,16 M 24,17 Q 16,20 12,25" stroke-width="1.2"/>
+        <!-- Claws & Talons -->
+        <path d="M 48,46 L 54,50 M 50,44 L 56,46 M 46,48 L 50,54" stroke-width="1.8"/>
+        <!-- Flaming Pearl in Center -->
+        <circle cx="34" cy="32" r="4.5" fill="#ef4444" stroke="#fde047" stroke-width="1.2"/>
+        <!-- Pearl Flame Tongue -->
+        <path d="M 34,24 Q 32,27 34,27.5 Q 36,27 34,24" fill="#fde047"/>
+      </g>
+    
+    </svg></div>
+            </div>
+            <!-- Dual mode (side-by-side bottom-aligned) -->
+            <div class="card-view-mode view-dual">
+              <div class="dual-col">
+                <div class="card-display-100"><svg viewBox="0 0 100 150" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      
+      <rect x="0" y="0" width="100" height="150" rx="6" fill="#ffffff" stroke="#7a7c76" stroke-width="1"/>
+      <rect x="4" y="4" width="92" height="142" rx="4.5" fill="url(#hk_global_bg)"/>
+      <rect x="7" y="7" width="86" height="136" rx="3" fill="none" stroke="rgba(251, 191, 36, 0.8)" stroke-width="0.9"/>
+      <rect x="9.5" y="9.5" width="81" height="131" rx="2" fill="none" stroke="rgba(251, 191, 36, 0.35)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <circle cx="11.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="11.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+    
+      
+      <g stroke="#fbbf24" stroke-width="0.8" fill="none" opacity="0.85">
+        <path d="M 12,14 Q 22,22 32,14 Q 42,22 52,14 Q 62,22 72,14 Q 82,22 90,14"/>
+        <path d="M 16,18 Q 26,25 36,18 Q 46,25 56,18 Q 66,25 76,18 Q 84,23 88,18"/>
+        <!-- Center mountain crest -->
+        <path d="M 44,24 L 50,15 L 56,24 Z" fill="rgba(251, 191, 36, 0.3)" stroke="#fbbf24" stroke-width="0.9"/>
+      </g>
+    
+      
+      <g stroke="#fbbf24" stroke-width="0.8" fill="none" opacity="0.85">
+        <path d="M 12,136 Q 22,128 32,136 Q 42,128 52,136 Q 62,128 72,136 Q 82,128 90,136"/>
+        <path d="M 16,132 Q 26,125 36,132 Q 46,125 56,132 Q 66,125 76,132 Q 84,127 88,132"/>
+        <!-- Center mountain crest -->
+        <path d="M 44,126 L 50,135 L 56,126 Z" fill="rgba(251, 191, 36, 0.3)" stroke="#fbbf24" stroke-width="0.9"/>
+      </g>
+    
+      <circle cx="50" cy="75" r="35" fill="none" stroke="#fbbf24" stroke-width="1.6"/>
+      <circle cx="50" cy="75" r="31" fill="url(#hk_global_seal)" stroke="rgba(254, 240, 138, 0.5)" stroke-width="0.8" stroke-dasharray="2,2"/>
+      
+      <g transform="translate(50, 75) scale(0.88) translate(-34, -31)" fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.5px 2px rgba(0,0,0,0.85));">
+        <!-- Main Serpentine Coiled Body -->
+        <path d="M 34,8 C 47,8 58,19 58,32 C 58,46 46,56 34,56 C 22,56 14,48 14,38 C 14,28 22,22 30,22 C 38,22 42,26 42,32 C 42,36 38,40 34,40 C 30,40 28,36 30,34" stroke-width="3.2"/>
+        <!-- Dorsal Spines & Flame Fins -->
+        <path d="M 50,16 L 54,12 M 58,26 L 63,24 M 58,38 L 63,40 M 50,50 L 54,54 M 40,56 L 42,61 M 26,56 L 24,61 M 16,46 L 11,48" stroke-width="1.8"/>
+        <!-- Dragon Antlers / Horns -->
+        <path d="M 30,8 L 32,3 M 36,7 L 40,2" stroke-width="2"/>
+        <!-- Eye -->
+        <circle cx="30" cy="11" r="1.5" fill="#fde047"/>
+        <!-- Dragon Snout & Whiskers -->
+        <path d="M 26,12 C 22,12 19,14 20,17 C 21,19 25,18 28,16" stroke-width="2"/>
+        <path d="M 22,14 Q 14,12 10,16 M 24,17 Q 16,20 12,25" stroke-width="1.2"/>
+        <!-- Claws & Talons -->
+        <path d="M 48,46 L 54,50 M 50,44 L 56,46 M 46,48 L 50,54" stroke-width="1.8"/>
+        <!-- Flaming Pearl in Center -->
+        <circle cx="34" cy="32" r="4.5" fill="#ef4444" stroke="#fde047" stroke-width="1.2"/>
+        <!-- Pearl Flame Tongue -->
+        <path d="M 34,24 Q 32,27 34,27.5 Q 36,27 34,24" fill="#fde047"/>
+      </g>
+    
+    </svg></div>
+                <span class="dual-label">Showcase</span>
+              </div>
+              <div class="dual-col">
+                <div class="card-display-52"><svg viewBox="0 0 100 150" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      
+      <rect x="0" y="0" width="100" height="150" rx="6" fill="#ffffff" stroke="#7a7c76" stroke-width="1"/>
+      <rect x="4" y="4" width="92" height="142" rx="4.5" fill="url(#hk_global_bg)"/>
+      <rect x="7" y="7" width="86" height="136" rx="3" fill="none" stroke="rgba(251, 191, 36, 0.8)" stroke-width="0.9"/>
+      <rect x="9.5" y="9.5" width="81" height="131" rx="2" fill="none" stroke="rgba(251, 191, 36, 0.35)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <circle cx="11.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="11.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="11.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+      <circle cx="88.5" cy="138.5" r="1.2" fill="#fbbf24"/>
+    
+      
+      <g stroke="#fbbf24" stroke-width="0.8" fill="none" opacity="0.85">
+        <path d="M 12,14 Q 22,22 32,14 Q 42,22 52,14 Q 62,22 72,14 Q 82,22 90,14"/>
+        <path d="M 16,18 Q 26,25 36,18 Q 46,25 56,18 Q 66,25 76,18 Q 84,23 88,18"/>
+        <!-- Center mountain crest -->
+        <path d="M 44,24 L 50,15 L 56,24 Z" fill="rgba(251, 191, 36, 0.3)" stroke="#fbbf24" stroke-width="0.9"/>
+      </g>
+    
+      
+      <g stroke="#fbbf24" stroke-width="0.8" fill="none" opacity="0.85">
+        <path d="M 12,136 Q 22,128 32,136 Q 42,128 52,136 Q 62,128 72,136 Q 82,128 90,136"/>
+        <path d="M 16,132 Q 26,125 36,132 Q 46,125 56,132 Q 66,125 76,132 Q 84,127 88,132"/>
+        <!-- Center mountain crest -->
+        <path d="M 44,126 L 50,135 L 56,126 Z" fill="rgba(251, 191, 36, 0.3)" stroke="#fbbf24" stroke-width="0.9"/>
+      </g>
+    
+      <circle cx="50" cy="75" r="35" fill="none" stroke="#fbbf24" stroke-width="1.6"/>
+      <circle cx="50" cy="75" r="31" fill="url(#hk_global_seal)" stroke="rgba(254, 240, 138, 0.5)" stroke-width="0.8" stroke-dasharray="2,2"/>
+      
+      <g transform="translate(50, 75) scale(0.88) translate(-34, -31)" fill="none" stroke="#fde047" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1.5px 2px rgba(0,0,0,0.85));">
+        <!-- Main Serpentine Coiled Body -->
+        <path d="M 34,8 C 47,8 58,19 58,32 C 58,46 46,56 34,56 C 22,56 14,48 14,38 C 14,28 22,22 30,22 C 38,22 42,26 42,32 C 42,36 38,40 34,40 C 30,40 28,36 30,34" stroke-width="3.2"/>
+        <!-- Dorsal Spines & Flame Fins -->
+        <path d="M 50,16 L 54,12 M 58,26 L 63,24 M 58,38 L 63,40 M 50,50 L 54,54 M 40,56 L 42,61 M 26,56 L 24,61 M 16,46 L 11,48" stroke-width="1.8"/>
+        <!-- Dragon Antlers / Horns -->
+        <path d="M 30,8 L 32,3 M 36,7 L 40,2" stroke-width="2"/>
+        <!-- Eye -->
+        <circle cx="30" cy="11" r="1.5" fill="#fde047"/>
+        <!-- Dragon Snout & Whiskers -->
+        <path d="M 26,12 C 22,12 19,14 20,17 C 21,19 25,18 28,16" stroke-width="2"/>
+        <path d="M 22,14 Q 14,12 10,16 M 24,17 Q 16,20 12,25" stroke-width="1.2"/>
+        <!-- Claws & Talons -->
+        <path d="M 48,46 L 54,50 M 50,44 L 56,46 M 46,48 L 50,54" stroke-width="1.8"/>
+        <!-- Flaming Pearl in Center -->
+        <circle cx="34" cy="32" r="4.5" fill="#ef4444" stroke="#fde047" stroke-width="1.2"/>
+        <!-- Pearl Flame Tongue -->
+        <path d="M 34,24 Q 32,27 34,27.5 Q 36,27 34,24" fill="#fde047"/>
+      </g>
+    
+    </svg></div>
+                <span class="dual-label">In-Game</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reference Section 1: Waste -->
+    <!-- SECTION 1: WASTE PILE FAN WIDTH -->
+    <section class="studio-section">
+      <div class="section-title-bar">
+        <h2 class="section-title">1. Waste Pile 3-Card Fan Width</h2>
+        <div class="section-hint">Choose how much horizontal space the underlying cards show in the waste pile</div>
+      </div>
+
+      <div class="options-grid waste-grid" id="waste-options-grid">
+        <!-- Current: 28px -->
+        <div class="option-card" data-group="waste" data-val="28">
+          <span class="option-badge">Current</span>
+          <div class="option-title">28px Step</div>
+          <div class="option-desc"><span>Total fan width 108px. Slightly wide; leaves extra space.</span></div>
+          <div class="preview-box">
+    <div style="position: relative; width: 140px; height: 90px; margin-left: 40px;">
+      <div style="position: absolute; left: -56px; top: 6px; width: 52px; height: 78px; box-shadow: 0 3px 6px rgba(0,0,0,0.5);"><svg class="card-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cg_3" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#fafaf6"/>
+        <stop offset="100%" stop-color="#ebebe5"/>
+      </linearGradient>
+    </defs>
+    <!-- Card Surface with subtle rounded edge & crisp outline -->
+    <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="url(#cg_3)" stroke="#7c8078" stroke-width="0.6"/>
+    <!-- Rank Glyph (Top-Left) -->
+    <g transform="translate(1, 2.67) scale(0.166667) translate(0, 186) scale(0.1, -0.1)">
+      <path d="M170 1618 l0 -73 67 0 68 0 0 -625 0 -625 -67 -3 -68 -3 0 -69 0 -70 301 0 c270 0 301 2 295 16 -3 9 -6 40 -6 70 l0 54 -54 0 c-92 0 -86 -17 -86 234 l0 221 69 75 c58 63 72 73 87 64 25 -15 337 -562 330 -579 -3 -9 -19 -15 -41 -15 l-35 0 0 -70 0 -70 280 0 280 0 0 70 0 70 -55 0 c-41 0 -59 5 -72 19 -10 11 -101 165 -202 343 -102 178 -204 357 -228 398 -24 41 -43 82 -43 92 0 15 202 256 306 365 l41 43 106 0 107 0 0 70 0 70 -260 0 -260 0 0 -69 0 -70 48 -3 c37 -2 47 -7 47 -20 0 -15 -111 -151 -270 -328 -27 -31 -84 -95 -125 -143 -41 -47 -83 -86 -92 -87 -17 0 -18 20 -18 284 0 321 -7 296 86 296 l54 0 0 54 c0 30 3 61 6 70 6 14 -25 16 -295 16 l-301 0 0 -72z" fill="#1b0a0a"/>
+    </g>
+    <!-- Small Corner Suit (Top-Right) -->
+    <g transform="translate(34, 3.33) scale(0.166667) translate(0, 108) scale(0.1, -0.1)">
+      <path d="M476 902 c-15 -29 -69 -92 -141 -162 -114 -112 -195 -214 -195 -244 0 -8 -4 -18 -10 -21 -16 -10 -12 -118 6 -154 19 -39 66 -74 119 -89 70 -20 134 12 198 99 18 24 18 24 11 -31 -3 -30 -10 -59 -15 -64 -5 -6 -9 -17 -9 -26 0 -8 -13 -32 -30 -51 -16 -20 -26 -39 -23 -43 3 -3 57 -6 120 -6 94 0 113 3 113 15 0 8 -4 15 -8 15 -11 0 -38 48 -56 100 -18 51 -21 110 -6 110 6 0 10 -7 10 -15 0 -8 15 -32 34 -53 42 -46 107 -67 158 -51 97 31 128 74 128 178 0 103 -29 150 -186 302 -88 86 -174 193 -174 218 0 29 -22 16 -44 -27z" fill="#1b0a0a"/>
+    </g>
+    <!-- Big Center Suit Emblem -->
+    <g transform="translate(7.33, 34.67) scale(0.166667) translate(0, 240) scale(0.1, -0.1)">
+      <path d="M1076 2174 c-70 -148 -120 -209 -371 -459 -133 -132 -270 -271 -305 -310 -87 -97 -172 -228 -206 -321 -27 -74 -29 -89 -29 -224 0 -140 1 -147 29 -199 39 -75 122 -155 197 -190 234 -111 473 -21 592 224 49 100 60 86 41 -50 -22 -166 -58 -268 -131 -378 -25 -37 -58 -78 -74 -89 -16 -12 -29 -25 -29 -30 0 -4 146 -8 325 -8 179 0 325 2 325 5 0 2 -20 25 -45 51 -86 88 -148 222 -180 391 -17 89 -20 193 -5 193 6 0 10 -6 10 -14 0 -46 88 -188 148 -242 46 -40 134 -81 204 -95 171 -32 380 69 459 222 85 167 54 397 -80 601 -46 70 -254 308 -269 308 -16 0 -357 351 -412 425 -33 44 -81 122 -106 173 -26 50 -48 92 -49 92 -2 0 -19 -34 -39 -76z" fill="#1b0a0a"/>
+    </g>
+  </svg></div>
+      <div style="position: absolute; left: -28px; top: 6px; width: 52px; height: 78px; box-shadow: 0 3px 6px rgba(0,0,0,0.5);"><svg class="card-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cg_0" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#fafaf6"/>
+        <stop offset="100%" stop-color="#ebebe5"/>
+      </linearGradient>
+    </defs>
+    <!-- Card Surface with subtle rounded edge & crisp outline -->
+    <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="url(#cg_0)" stroke="#7c8078" stroke-width="0.6"/>
+    <!-- Rank Glyph (Top-Left) -->
+    <g transform="translate(1.33, 1.67) scale(0.166667) translate(0, 198) scale(0.1, -0.1)">
+      <path d="M730 1805 c-237 -47 -433 -212 -519 -435 -73 -188 -63 -377 28 -558 84 -166 227 -289 409 -351 75 -26 77 -27 107 -84 47 -90 78 -122 172 -177 83 -49 93 -53 183 -61 121 -11 241 -11 258 -1 9 6 10 19 4 48 l-8 39 -76 16 c-120 24 -218 98 -234 176 -6 31 -5 31 79 71 263 123 417 357 417 633 0 163 -50 305 -154 435 -159 200 -421 298 -666 249z m244 -146 c67 -25 133 -86 166 -154 25 -50 25 -53 28 -373 l3 -322 -31 -65 c-117 -246 -453 -244 -568 3 l-27 57 -3 298 c-3 331 1 367 58 446 34 46 103 99 153 118 53 19 159 16 221 -8z" fill="#c62f27"/>
+    </g>
+    <!-- Small Corner Suit (Top-Right) -->
+    <g transform="translate(33.67, 0.67) scale(0.166667) translate(0, 124) scale(0.1, -0.1)">
+      <path d="M245 936 c-43 -16 -105 -80 -105 -108 0 -9 -5 -20 -11 -24 -11 -7 -3 -134 11 -164 76 -164 130 -237 293 -399 l106 -104 80 72 c163 147 267 287 330 444 14 35 15 134 1 142 -5 3 -10 13 -10 21 0 24 -42 79 -79 104 -29 19 -50 24 -106 24 -61 1 -75 -3 -113 -28 -24 -17 -57 -50 -74 -74 -17 -24 -33 -40 -37 -35 -4 4 -19 25 -34 45 -46 63 -87 87 -153 93 -39 4 -72 0 -99 -9z" fill="#c62f27"/>
+    </g>
+    <!-- Big Center Suit Emblem -->
+    <g transform="translate(5.67, 34.67) scale(0.166667) translate(0, 232) scale(0.1, -0.1)">
+      <path d="M570 2129 c-95 -24 -168 -68 -236 -142 -74 -80 -107 -147 -133 -275 -56 -269 95 -597 476 -1039 103 -120 423 -444 516 -523 l37 -32 38 32 c60 52 320 309 405 399 389 417 596 778 596 1041 0 275 -145 479 -384 540 -44 11 -96 20 -115 19 -58 0 -156 -25 -217 -54 -76 -37 -204 -166 -263 -265 -25 -41 -52 -75 -60 -75 -8 0 -35 34 -60 75 -59 99 -187 228 -263 265 -64 31 -162 55 -222 54 -22 0 -74 -9 -115 -20z" fill="#c62f27"/>
+    </g>
+  </svg></div>
+      <div style="position: absolute; left: 0px; top: 6px; width: 52px; height: 78px; box-shadow: 0 3px 6px rgba(0,0,0,0.5);"><svg class="card-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cg_1" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#fafaf6"/>
+        <stop offset="100%" stop-color="#ebebe5"/>
+      </linearGradient>
+    </defs>
+    <!-- Card Surface with subtle rounded edge & crisp outline -->
+    <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="url(#cg_1)" stroke="#7c8078" stroke-width="0.6"/>
+    <!-- Rank Glyph (Top-Left) -->
+    <g transform="translate(5, 2.67) scale(0.166667) translate(0, 188) scale(0.1, -0.1)">
+      <path d="M442 1640 l-3 -70 94 0 c59 0 97 -4 105 -12 9 -9 12 -154 12 -590 0 -560 -1 -580 -20 -618 -24 -46 -51 -66 -117 -86 -35 -11 -55 -12 -79 -4 -53 18 -56 30 -23 79 69 104 13 234 -102 234 -75 0 -138 -59 -146 -136 -8 -70 4 -110 48 -160 116 -133 400 -168 566 -70 59 34 115 101 144 170 l24 58 5 558 c4 481 7 559 20 567 8 5 45 10 81 10 l66 0 -1 70 -1 70 -335 0 -336 0 -2 -70z" fill="#1b0a0a"/>
+    </g>
+    <!-- Small Corner Suit (Top-Right) -->
+    <g transform="translate(33.33, 0.67) scale(0.166667) translate(0, 124) scale(0.1, -0.1)">
+      <path d="M460 939 c-67 -39 -95 -103 -83 -192 4 -36 15 -58 44 -91 56 -63 50 -72 -23 -36 -94 45 -201 11 -247 -77 -15 -29 -14 -138 1 -166 39 -68 90 -97 172 -97 62 0 133 39 162 89 26 43 34 39 34 -17 0 -76 -51 -212 -80 -212 -6 0 -10 -4 -10 -10 0 -6 47 -10 120 -10 116 0 135 5 107 29 -20 16 -55 91 -61 131 -15 91 -18 120 -11 120 4 0 28 -22 54 -48 55 -58 85 -72 154 -72 61 0 102 21 143 76 26 33 29 45 29 109 -1 61 -5 76 -25 102 -57 70 -152 92 -232 53 -38 -18 -68 -26 -68 -17 0 2 18 23 40 46 22 23 40 50 40 61 0 10 5 22 10 25 14 9 12 67 -4 106 -20 48 -52 85 -88 103 -45 23 -135 20 -178 -5z" fill="#1b0a0a"/>
+    </g>
+    <!-- Big Center Suit Emblem -->
+    <g transform="translate(5.67, 34.67) scale(0.166667) translate(0, 236) scale(0.1, -0.1)">
+      <path d="M1080 2205 c-147 -42 -265 -166 -300 -318 -14 -62 -12 -163 5 -236 21 -90 67 -164 147 -243 63 -62 80 -90 60 -102 -5 -3 -52 15 -105 40 -177 83 -332 90 -477 22 -261 -124 -312 -513 -96 -729 65 -65 140 -105 237 -125 185 -38 400 60 524 240 59 87 69 78 62 -56 -13 -240 -75 -419 -184 -525 l-54 -53 326 0 326 0 -54 53 c-67 66 -121 168 -152 292 -24 95 -51 317 -40 335 12 19 33 10 57 -28 45 -66 109 -132 170 -173 74 -51 110 -66 204 -85 243 -50 486 125 525 378 33 211 -53 397 -222 475 -152 71 -308 64 -482 -23 -37 -19 -76 -34 -87 -34 -37 0 -22 36 37 86 229 196 233 565 9 734 -84 64 -143 82 -271 86 -78 3 -126 -1 -165 -11z" fill="#1b0a0a"/>
+    </g>
+  </svg></div>
+    </div>
+    </div>
+        </div>
+
+        <!-- Option W1: 24px (Recommended) -->
+        <div class="option-card selected" data-group="waste" data-val="24">
+          <span class="option-badge" style="background:#fbbf24; color:#0f172a;">Recommended</span>
+          <div class="option-title">Option W1: 24px Step</div>
+          <div class="option-desc"><span>Reduced by exactly 4px. Total fan width 100px. Tight & proportional.</span></div>
+          <div class="preview-box">
+    <div style="position: relative; width: 140px; height: 90px; margin-left: 40px;">
+      <div style="position: absolute; left: -48px; top: 6px; width: 52px; height: 78px; box-shadow: 0 3px 6px rgba(0,0,0,0.5);"><svg class="card-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cg_3" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#fafaf6"/>
+        <stop offset="100%" stop-color="#ebebe5"/>
+      </linearGradient>
+    </defs>
+    <!-- Card Surface with subtle rounded edge & crisp outline -->
+    <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="url(#cg_3)" stroke="#7c8078" stroke-width="0.6"/>
+    <!-- Rank Glyph (Top-Left) -->
+    <g transform="translate(1, 2.67) scale(0.166667) translate(0, 186) scale(0.1, -0.1)">
+      <path d="M170 1618 l0 -73 67 0 68 0 0 -625 0 -625 -67 -3 -68 -3 0 -69 0 -70 301 0 c270 0 301 2 295 16 -3 9 -6 40 -6 70 l0 54 -54 0 c-92 0 -86 -17 -86 234 l0 221 69 75 c58 63 72 73 87 64 25 -15 337 -562 330 -579 -3 -9 -19 -15 -41 -15 l-35 0 0 -70 0 -70 280 0 280 0 0 70 0 70 -55 0 c-41 0 -59 5 -72 19 -10 11 -101 165 -202 343 -102 178 -204 357 -228 398 -24 41 -43 82 -43 92 0 15 202 256 306 365 l41 43 106 0 107 0 0 70 0 70 -260 0 -260 0 0 -69 0 -70 48 -3 c37 -2 47 -7 47 -20 0 -15 -111 -151 -270 -328 -27 -31 -84 -95 -125 -143 -41 -47 -83 -86 -92 -87 -17 0 -18 20 -18 284 0 321 -7 296 86 296 l54 0 0 54 c0 30 3 61 6 70 6 14 -25 16 -295 16 l-301 0 0 -72z" fill="#1b0a0a"/>
+    </g>
+    <!-- Small Corner Suit (Top-Right) -->
+    <g transform="translate(34, 3.33) scale(0.166667) translate(0, 108) scale(0.1, -0.1)">
+      <path d="M476 902 c-15 -29 -69 -92 -141 -162 -114 -112 -195 -214 -195 -244 0 -8 -4 -18 -10 -21 -16 -10 -12 -118 6 -154 19 -39 66 -74 119 -89 70 -20 134 12 198 99 18 24 18 24 11 -31 -3 -30 -10 -59 -15 -64 -5 -6 -9 -17 -9 -26 0 -8 -13 -32 -30 -51 -16 -20 -26 -39 -23 -43 3 -3 57 -6 120 -6 94 0 113 3 113 15 0 8 -4 15 -8 15 -11 0 -38 48 -56 100 -18 51 -21 110 -6 110 6 0 10 -7 10 -15 0 -8 15 -32 34 -53 42 -46 107 -67 158 -51 97 31 128 74 128 178 0 103 -29 150 -186 302 -88 86 -174 193 -174 218 0 29 -22 16 -44 -27z" fill="#1b0a0a"/>
+    </g>
+    <!-- Big Center Suit Emblem -->
+    <g transform="translate(7.33, 34.67) scale(0.166667) translate(0, 240) scale(0.1, -0.1)">
+      <path d="M1076 2174 c-70 -148 -120 -209 -371 -459 -133 -132 -270 -271 -305 -310 -87 -97 -172 -228 -206 -321 -27 -74 -29 -89 -29 -224 0 -140 1 -147 29 -199 39 -75 122 -155 197 -190 234 -111 473 -21 592 224 49 100 60 86 41 -50 -22 -166 -58 -268 -131 -378 -25 -37 -58 -78 -74 -89 -16 -12 -29 -25 -29 -30 0 -4 146 -8 325 -8 179 0 325 2 325 5 0 2 -20 25 -45 51 -86 88 -148 222 -180 391 -17 89 -20 193 -5 193 6 0 10 -6 10 -14 0 -46 88 -188 148 -242 46 -40 134 -81 204 -95 171 -32 380 69 459 222 85 167 54 397 -80 601 -46 70 -254 308 -269 308 -16 0 -357 351 -412 425 -33 44 -81 122 -106 173 -26 50 -48 92 -49 92 -2 0 -19 -34 -39 -76z" fill="#1b0a0a"/>
+    </g>
+  </svg></div>
+      <div style="position: absolute; left: -24px; top: 6px; width: 52px; height: 78px; box-shadow: 0 3px 6px rgba(0,0,0,0.5);"><svg class="card-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cg_0" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#fafaf6"/>
+        <stop offset="100%" stop-color="#ebebe5"/>
+      </linearGradient>
+    </defs>
+    <!-- Card Surface with subtle rounded edge & crisp outline -->
+    <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="url(#cg_0)" stroke="#7c8078" stroke-width="0.6"/>
+    <!-- Rank Glyph (Top-Left) -->
+    <g transform="translate(1.33, 1.67) scale(0.166667) translate(0, 198) scale(0.1, -0.1)">
+      <path d="M730 1805 c-237 -47 -433 -212 -519 -435 -73 -188 -63 -377 28 -558 84 -166 227 -289 409 -351 75 -26 77 -27 107 -84 47 -90 78 -122 172 -177 83 -49 93 -53 183 -61 121 -11 241 -11 258 -1 9 6 10 19 4 48 l-8 39 -76 16 c-120 24 -218 98 -234 176 -6 31 -5 31 79 71 263 123 417 357 417 633 0 163 -50 305 -154 435 -159 200 -421 298 -666 249z m244 -146 c67 -25 133 -86 166 -154 25 -50 25 -53 28 -373 l3 -322 -31 -65 c-117 -246 -453 -244 -568 3 l-27 57 -3 298 c-3 331 1 367 58 446 34 46 103 99 153 118 53 19 159 16 221 -8z" fill="#c62f27"/>
+    </g>
+    <!-- Small Corner Suit (Top-Right) -->
+    <g transform="translate(33.67, 0.67) scale(0.166667) translate(0, 124) scale(0.1, -0.1)">
+      <path d="M245 936 c-43 -16 -105 -80 -105 -108 0 -9 -5 -20 -11 -24 -11 -7 -3 -134 11 -164 76 -164 130 -237 293 -399 l106 -104 80 72 c163 147 267 287 330 444 14 35 15 134 1 142 -5 3 -10 13 -10 21 0 24 -42 79 -79 104 -29 19 -50 24 -106 24 -61 1 -75 -3 -113 -28 -24 -17 -57 -50 -74 -74 -17 -24 -33 -40 -37 -35 -4 4 -19 25 -34 45 -46 63 -87 87 -153 93 -39 4 -72 0 -99 -9z" fill="#c62f27"/>
+    </g>
+    <!-- Big Center Suit Emblem -->
+    <g transform="translate(5.67, 34.67) scale(0.166667) translate(0, 232) scale(0.1, -0.1)">
+      <path d="M570 2129 c-95 -24 -168 -68 -236 -142 -74 -80 -107 -147 -133 -275 -56 -269 95 -597 476 -1039 103 -120 423 -444 516 -523 l37 -32 38 32 c60 52 320 309 405 399 389 417 596 778 596 1041 0 275 -145 479 -384 540 -44 11 -96 20 -115 19 -58 0 -156 -25 -217 -54 -76 -37 -204 -166 -263 -265 -25 -41 -52 -75 -60 -75 -8 0 -35 34 -60 75 -59 99 -187 228 -263 265 -64 31 -162 55 -222 54 -22 0 -74 -9 -115 -20z" fill="#c62f27"/>
+    </g>
+  </svg></div>
+      <div style="position: absolute; left: 0px; top: 6px; width: 52px; height: 78px; box-shadow: 0 3px 6px rgba(0,0,0,0.5);"><svg class="card-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cg_1" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#fafaf6"/>
+        <stop offset="100%" stop-color="#ebebe5"/>
+      </linearGradient>
+    </defs>
+    <!-- Card Surface with subtle rounded edge & crisp outline -->
+    <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="url(#cg_1)" stroke="#7c8078" stroke-width="0.6"/>
+    <!-- Rank Glyph (Top-Left) -->
+    <g transform="translate(5, 2.67) scale(0.166667) translate(0, 188) scale(0.1, -0.1)">
+      <path d="M442 1640 l-3 -70 94 0 c59 0 97 -4 105 -12 9 -9 12 -154 12 -590 0 -560 -1 -580 -20 -618 -24 -46 -51 -66 -117 -86 -35 -11 -55 -12 -79 -4 -53 18 -56 30 -23 79 69 104 13 234 -102 234 -75 0 -138 -59 -146 -136 -8 -70 4 -110 48 -160 116 -133 400 -168 566 -70 59 34 115 101 144 170 l24 58 5 558 c4 481 7 559 20 567 8 5 45 10 81 10 l66 0 -1 70 -1 70 -335 0 -336 0 -2 -70z" fill="#1b0a0a"/>
+    </g>
+    <!-- Small Corner Suit (Top-Right) -->
+    <g transform="translate(33.33, 0.67) scale(0.166667) translate(0, 124) scale(0.1, -0.1)">
+      <path d="M460 939 c-67 -39 -95 -103 -83 -192 4 -36 15 -58 44 -91 56 -63 50 -72 -23 -36 -94 45 -201 11 -247 -77 -15 -29 -14 -138 1 -166 39 -68 90 -97 172 -97 62 0 133 39 162 89 26 43 34 39 34 -17 0 -76 -51 -212 -80 -212 -6 0 -10 -4 -10 -10 0 -6 47 -10 120 -10 116 0 135 5 107 29 -20 16 -55 91 -61 131 -15 91 -18 120 -11 120 4 0 28 -22 54 -48 55 -58 85 -72 154 -72 61 0 102 21 143 76 26 33 29 45 29 109 -1 61 -5 76 -25 102 -57 70 -152 92 -232 53 -38 -18 -68 -26 -68 -17 0 2 18 23 40 46 22 23 40 50 40 61 0 10 5 22 10 25 14 9 12 67 -4 106 -20 48 -52 85 -88 103 -45 23 -135 20 -178 -5z" fill="#1b0a0a"/>
+    </g>
+    <!-- Big Center Suit Emblem -->
+    <g transform="translate(5.67, 34.67) scale(0.166667) translate(0, 236) scale(0.1, -0.1)">
+      <path d="M1080 2205 c-147 -42 -265 -166 -300 -318 -14 -62 -12 -163 5 -236 21 -90 67 -164 147 -243 63 -62 80 -90 60 -102 -5 -3 -52 15 -105 40 -177 83 -332 90 -477 22 -261 -124 -312 -513 -96 -729 65 -65 140 -105 237 -125 185 -38 400 60 524 240 59 87 69 78 62 -56 -13 -240 -75 -419 -184 -525 l-54 -53 326 0 326 0 -54 53 c-67 66 -121 168 -152 292 -24 95 -51 317 -40 335 12 19 33 10 57 -28 45 -66 109 -132 170 -173 74 -51 110 -66 204 -85 243 -50 486 125 525 378 33 211 -53 397 -222 475 -152 71 -308 64 -482 -23 -37 -19 -76 -34 -87 -34 -37 0 -22 36 37 86 229 196 233 565 9 734 -84 64 -143 82 -271 86 -78 3 -126 -1 -165 -11z" fill="#1b0a0a"/>
+    </g>
+  </svg></div>
+    </div>
+    </div>
+        </div>
+
+        <!-- Option W2: 22px -->
+        <div class="option-card" data-group="waste" data-val="22">
+          <span class="option-badge">Alternative</span>
+          <div class="option-title">Option W2: 22px Step</div>
+          <div class="option-desc"><span>Total fan width 96px (-6px). Compact fan.</span></div>
+          <div class="preview-box">
+    <div style="position: relative; width: 140px; height: 90px; margin-left: 40px;">
+      <div style="position: absolute; left: -44px; top: 6px; width: 52px; height: 78px; box-shadow: 0 3px 6px rgba(0,0,0,0.5);"><svg class="card-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cg_3" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#fafaf6"/>
+        <stop offset="100%" stop-color="#ebebe5"/>
+      </linearGradient>
+    </defs>
+    <!-- Card Surface with subtle rounded edge & crisp outline -->
+    <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="url(#cg_3)" stroke="#7c8078" stroke-width="0.6"/>
+    <!-- Rank Glyph (Top-Left) -->
+    <g transform="translate(1, 2.67) scale(0.166667) translate(0, 186) scale(0.1, -0.1)">
+      <path d="M170 1618 l0 -73 67 0 68 0 0 -625 0 -625 -67 -3 -68 -3 0 -69 0 -70 301 0 c270 0 301 2 295 16 -3 9 -6 40 -6 70 l0 54 -54 0 c-92 0 -86 -17 -86 234 l0 221 69 75 c58 63 72 73 87 64 25 -15 337 -562 330 -579 -3 -9 -19 -15 -41 -15 l-35 0 0 -70 0 -70 280 0 280 0 0 70 0 70 -55 0 c-41 0 -59 5 -72 19 -10 11 -101 165 -202 343 -102 178 -204 357 -228 398 -24 41 -43 82 -43 92 0 15 202 256 306 365 l41 43 106 0 107 0 0 70 0 70 -260 0 -260 0 0 -69 0 -70 48 -3 c37 -2 47 -7 47 -20 0 -15 -111 -151 -270 -328 -27 -31 -84 -95 -125 -143 -41 -47 -83 -86 -92 -87 -17 0 -18 20 -18 284 0 321 -7 296 86 296 l54 0 0 54 c0 30 3 61 6 70 6 14 -25 16 -295 16 l-301 0 0 -72z" fill="#1b0a0a"/>
+    </g>
+    <!-- Small Corner Suit (Top-Right) -->
+    <g transform="translate(34, 3.33) scale(0.166667) translate(0, 108) scale(0.1, -0.1)">
+      <path d="M476 902 c-15 -29 -69 -92 -141 -162 -114 -112 -195 -214 -195 -244 0 -8 -4 -18 -10 -21 -16 -10 -12 -118 6 -154 19 -39 66 -74 119 -89 70 -20 134 12 198 99 18 24 18 24 11 -31 -3 -30 -10 -59 -15 -64 -5 -6 -9 -17 -9 -26 0 -8 -13 -32 -30 -51 -16 -20 -26 -39 -23 -43 3 -3 57 -6 120 -6 94 0 113 3 113 15 0 8 -4 15 -8 15 -11 0 -38 48 -56 100 -18 51 -21 110 -6 110 6 0 10 -7 10 -15 0 -8 15 -32 34 -53 42 -46 107 -67 158 -51 97 31 128 74 128 178 0 103 -29 150 -186 302 -88 86 -174 193 -174 218 0 29 -22 16 -44 -27z" fill="#1b0a0a"/>
+    </g>
+    <!-- Big Center Suit Emblem -->
+    <g transform="translate(7.33, 34.67) scale(0.166667) translate(0, 240) scale(0.1, -0.1)">
+      <path d="M1076 2174 c-70 -148 -120 -209 -371 -459 -133 -132 -270 -271 -305 -310 -87 -97 -172 -228 -206 -321 -27 -74 -29 -89 -29 -224 0 -140 1 -147 29 -199 39 -75 122 -155 197 -190 234 -111 473 -21 592 224 49 100 60 86 41 -50 -22 -166 -58 -268 -131 -378 -25 -37 -58 -78 -74 -89 -16 -12 -29 -25 -29 -30 0 -4 146 -8 325 -8 179 0 325 2 325 5 0 2 -20 25 -45 51 -86 88 -148 222 -180 391 -17 89 -20 193 -5 193 6 0 10 -6 10 -14 0 -46 88 -188 148 -242 46 -40 134 -81 204 -95 171 -32 380 69 459 222 85 167 54 397 -80 601 -46 70 -254 308 -269 308 -16 0 -357 351 -412 425 -33 44 -81 122 -106 173 -26 50 -48 92 -49 92 -2 0 -19 -34 -39 -76z" fill="#1b0a0a"/>
+    </g>
+  </svg></div>
+      <div style="position: absolute; left: -22px; top: 6px; width: 52px; height: 78px; box-shadow: 0 3px 6px rgba(0,0,0,0.5);"><svg class="card-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cg_0" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#fafaf6"/>
+        <stop offset="100%" stop-color="#ebebe5"/>
+      </linearGradient>
+    </defs>
+    <!-- Card Surface with subtle rounded edge & crisp outline -->
+    <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="url(#cg_0)" stroke="#7c8078" stroke-width="0.6"/>
+    <!-- Rank Glyph (Top-Left) -->
+    <g transform="translate(1.33, 1.67) scale(0.166667) translate(0, 198) scale(0.1, -0.1)">
+      <path d="M730 1805 c-237 -47 -433 -212 -519 -435 -73 -188 -63 -377 28 -558 84 -166 227 -289 409 -351 75 -26 77 -27 107 -84 47 -90 78 -122 172 -177 83 -49 93 -53 183 -61 121 -11 241 -11 258 -1 9 6 10 19 4 48 l-8 39 -76 16 c-120 24 -218 98 -234 176 -6 31 -5 31 79 71 263 123 417 357 417 633 0 163 -50 305 -154 435 -159 200 -421 298 -666 249z m244 -146 c67 -25 133 -86 166 -154 25 -50 25 -53 28 -373 l3 -322 -31 -65 c-117 -246 -453 -244 -568 3 l-27 57 -3 298 c-3 331 1 367 58 446 34 46 103 99 153 118 53 19 159 16 221 -8z" fill="#c62f27"/>
+    </g>
+    <!-- Small Corner Suit (Top-Right) -->
+    <g transform="translate(33.67, 0.67) scale(0.166667) translate(0, 124) scale(0.1, -0.1)">
+      <path d="M245 936 c-43 -16 -105 -80 -105 -108 0 -9 -5 -20 -11 -24 -11 -7 -3 -134 11 -164 76 -164 130 -237 293 -399 l106 -104 80 72 c163 147 267 287 330 444 14 35 15 134 1 142 -5 3 -10 13 -10 21 0 24 -42 79 -79 104 -29 19 -50 24 -106 24 -61 1 -75 -3 -113 -28 -24 -17 -57 -50 -74 -74 -17 -24 -33 -40 -37 -35 -4 4 -19 25 -34 45 -46 63 -87 87 -153 93 -39 4 -72 0 -99 -9z" fill="#c62f27"/>
+    </g>
+    <!-- Big Center Suit Emblem -->
+    <g transform="translate(5.67, 34.67) scale(0.166667) translate(0, 232) scale(0.1, -0.1)">
+      <path d="M570 2129 c-95 -24 -168 -68 -236 -142 -74 -80 -107 -147 -133 -275 -56 -269 95 -597 476 -1039 103 -120 423 -444 516 -523 l37 -32 38 32 c60 52 320 309 405 399 389 417 596 778 596 1041 0 275 -145 479 -384 540 -44 11 -96 20 -115 19 -58 0 -156 -25 -217 -54 -76 -37 -204 -166 -263 -265 -25 -41 -52 -75 -60 -75 -8 0 -35 34 -60 75 -59 99 -187 228 -263 265 -64 31 -162 55 -222 54 -22 0 -74 -9 -115 -20z" fill="#c62f27"/>
+    </g>
+  </svg></div>
+      <div style="position: absolute; left: 0px; top: 6px; width: 52px; height: 78px; box-shadow: 0 3px 6px rgba(0,0,0,0.5);"><svg class="card-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cg_1" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#fafaf6"/>
+        <stop offset="100%" stop-color="#ebebe5"/>
+      </linearGradient>
+    </defs>
+    <!-- Card Surface with subtle rounded edge & crisp outline -->
+    <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="url(#cg_1)" stroke="#7c8078" stroke-width="0.6"/>
+    <!-- Rank Glyph (Top-Left) -->
+    <g transform="translate(5, 2.67) scale(0.166667) translate(0, 188) scale(0.1, -0.1)">
+      <path d="M442 1640 l-3 -70 94 0 c59 0 97 -4 105 -12 9 -9 12 -154 12 -590 0 -560 -1 -580 -20 -618 -24 -46 -51 -66 -117 -86 -35 -11 -55 -12 -79 -4 -53 18 -56 30 -23 79 69 104 13 234 -102 234 -75 0 -138 -59 -146 -136 -8 -70 4 -110 48 -160 116 -133 400 -168 566 -70 59 34 115 101 144 170 l24 58 5 558 c4 481 7 559 20 567 8 5 45 10 81 10 l66 0 -1 70 -1 70 -335 0 -336 0 -2 -70z" fill="#1b0a0a"/>
+    </g>
+    <!-- Small Corner Suit (Top-Right) -->
+    <g transform="translate(33.33, 0.67) scale(0.166667) translate(0, 124) scale(0.1, -0.1)">
+      <path d="M460 939 c-67 -39 -95 -103 -83 -192 4 -36 15 -58 44 -91 56 -63 50 -72 -23 -36 -94 45 -201 11 -247 -77 -15 -29 -14 -138 1 -166 39 -68 90 -97 172 -97 62 0 133 39 162 89 26 43 34 39 34 -17 0 -76 -51 -212 -80 -212 -6 0 -10 -4 -10 -10 0 -6 47 -10 120 -10 116 0 135 5 107 29 -20 16 -55 91 -61 131 -15 91 -18 120 -11 120 4 0 28 -22 54 -48 55 -58 85 -72 154 -72 61 0 102 21 143 76 26 33 29 45 29 109 -1 61 -5 76 -25 102 -57 70 -152 92 -232 53 -38 -18 -68 -26 -68 -17 0 2 18 23 40 46 22 23 40 50 40 61 0 10 5 22 10 25 14 9 12 67 -4 106 -20 48 -52 85 -88 103 -45 23 -135 20 -178 -5z" fill="#1b0a0a"/>
+    </g>
+    <!-- Big Center Suit Emblem -->
+    <g transform="translate(5.67, 34.67) scale(0.166667) translate(0, 236) scale(0.1, -0.1)">
+      <path d="M1080 2205 c-147 -42 -265 -166 -300 -318 -14 -62 -12 -163 5 -236 21 -90 67 -164 147 -243 63 -62 80 -90 60 -102 -5 -3 -52 15 -105 40 -177 83 -332 90 -477 22 -261 -124 -312 -513 -96 -729 65 -65 140 -105 237 -125 185 -38 400 60 524 240 59 87 69 78 62 -56 -13 -240 -75 -419 -184 -525 l-54 -53 326 0 326 0 -54 53 c-67 66 -121 168 -152 292 -24 95 -51 317 -40 335 12 19 33 10 57 -28 45 -66 109 -132 170 -173 74 -51 110 -66 204 -85 243 -50 486 125 525 378 33 211 -53 397 -222 475 -152 71 -308 64 -482 -23 -37 -19 -76 -34 -87 -34 -37 0 -22 36 37 86 229 196 233 565 9 734 -84 64 -143 82 -271 86 -78 3 -126 -1 -165 -11z" fill="#1b0a0a"/>
+    </g>
+  </svg></div>
+    </div>
+    </div>
+        </div>
+
+        <!-- Option W3: 20px -->
+        <div class="option-card" data-group="waste" data-val="20">
+          <span class="option-badge">Alternative</span>
+          <div class="option-title">Option W3: 20px Step</div>
+          <div class="option-desc"><span>Total fan width 92px (-8px). Slim fan.</span></div>
+          <div class="preview-box">
+    <div style="position: relative; width: 140px; height: 90px; margin-left: 40px;">
+      <div style="position: absolute; left: -40px; top: 6px; width: 52px; height: 78px; box-shadow: 0 3px 6px rgba(0,0,0,0.5);"><svg class="card-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cg_3" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#fafaf6"/>
+        <stop offset="100%" stop-color="#ebebe5"/>
+      </linearGradient>
+    </defs>
+    <!-- Card Surface with subtle rounded edge & crisp outline -->
+    <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="url(#cg_3)" stroke="#7c8078" stroke-width="0.6"/>
+    <!-- Rank Glyph (Top-Left) -->
+    <g transform="translate(1, 2.67) scale(0.166667) translate(0, 186) scale(0.1, -0.1)">
+      <path d="M170 1618 l0 -73 67 0 68 0 0 -625 0 -625 -67 -3 -68 -3 0 -69 0 -70 301 0 c270 0 301 2 295 16 -3 9 -6 40 -6 70 l0 54 -54 0 c-92 0 -86 -17 -86 234 l0 221 69 75 c58 63 72 73 87 64 25 -15 337 -562 330 -579 -3 -9 -19 -15 -41 -15 l-35 0 0 -70 0 -70 280 0 280 0 0 70 0 70 -55 0 c-41 0 -59 5 -72 19 -10 11 -101 165 -202 343 -102 178 -204 357 -228 398 -24 41 -43 82 -43 92 0 15 202 256 306 365 l41 43 106 0 107 0 0 70 0 70 -260 0 -260 0 0 -69 0 -70 48 -3 c37 -2 47 -7 47 -20 0 -15 -111 -151 -270 -328 -27 -31 -84 -95 -125 -143 -41 -47 -83 -86 -92 -87 -17 0 -18 20 -18 284 0 321 -7 296 86 296 l54 0 0 54 c0 30 3 61 6 70 6 14 -25 16 -295 16 l-301 0 0 -72z" fill="#1b0a0a"/>
+    </g>
+    <!-- Small Corner Suit (Top-Right) -->
+    <g transform="translate(34, 3.33) scale(0.166667) translate(0, 108) scale(0.1, -0.1)">
+      <path d="M476 902 c-15 -29 -69 -92 -141 -162 -114 -112 -195 -214 -195 -244 0 -8 -4 -18 -10 -21 -16 -10 -12 -118 6 -154 19 -39 66 -74 119 -89 70 -20 134 12 198 99 18 24 18 24 11 -31 -3 -30 -10 -59 -15 -64 -5 -6 -9 -17 -9 -26 0 -8 -13 -32 -30 -51 -16 -20 -26 -39 -23 -43 3 -3 57 -6 120 -6 94 0 113 3 113 15 0 8 -4 15 -8 15 -11 0 -38 48 -56 100 -18 51 -21 110 -6 110 6 0 10 -7 10 -15 0 -8 15 -32 34 -53 42 -46 107 -67 158 -51 97 31 128 74 128 178 0 103 -29 150 -186 302 -88 86 -174 193 -174 218 0 29 -22 16 -44 -27z" fill="#1b0a0a"/>
+    </g>
+    <!-- Big Center Suit Emblem -->
+    <g transform="translate(7.33, 34.67) scale(0.166667) translate(0, 240) scale(0.1, -0.1)">
+      <path d="M1076 2174 c-70 -148 -120 -209 -371 -459 -133 -132 -270 -271 -305 -310 -87 -97 -172 -228 -206 -321 -27 -74 -29 -89 -29 -224 0 -140 1 -147 29 -199 39 -75 122 -155 197 -190 234 -111 473 -21 592 224 49 100 60 86 41 -50 -22 -166 -58 -268 -131 -378 -25 -37 -58 -78 -74 -89 -16 -12 -29 -25 -29 -30 0 -4 146 -8 325 -8 179 0 325 2 325 5 0 2 -20 25 -45 51 -86 88 -148 222 -180 391 -17 89 -20 193 -5 193 6 0 10 -6 10 -14 0 -46 88 -188 148 -242 46 -40 134 -81 204 -95 171 -32 380 69 459 222 85 167 54 397 -80 601 -46 70 -254 308 -269 308 -16 0 -357 351 -412 425 -33 44 -81 122 -106 173 -26 50 -48 92 -49 92 -2 0 -19 -34 -39 -76z" fill="#1b0a0a"/>
+    </g>
+  </svg></div>
+      <div style="position: absolute; left: -20px; top: 6px; width: 52px; height: 78px; box-shadow: 0 3px 6px rgba(0,0,0,0.5);"><svg class="card-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cg_0" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#fafaf6"/>
+        <stop offset="100%" stop-color="#ebebe5"/>
+      </linearGradient>
+    </defs>
+    <!-- Card Surface with subtle rounded edge & crisp outline -->
+    <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="url(#cg_0)" stroke="#7c8078" stroke-width="0.6"/>
+    <!-- Rank Glyph (Top-Left) -->
+    <g transform="translate(1.33, 1.67) scale(0.166667) translate(0, 198) scale(0.1, -0.1)">
+      <path d="M730 1805 c-237 -47 -433 -212 -519 -435 -73 -188 -63 -377 28 -558 84 -166 227 -289 409 -351 75 -26 77 -27 107 -84 47 -90 78 -122 172 -177 83 -49 93 -53 183 -61 121 -11 241 -11 258 -1 9 6 10 19 4 48 l-8 39 -76 16 c-120 24 -218 98 -234 176 -6 31 -5 31 79 71 263 123 417 357 417 633 0 163 -50 305 -154 435 -159 200 -421 298 -666 249z m244 -146 c67 -25 133 -86 166 -154 25 -50 25 -53 28 -373 l3 -322 -31 -65 c-117 -246 -453 -244 -568 3 l-27 57 -3 298 c-3 331 1 367 58 446 34 46 103 99 153 118 53 19 159 16 221 -8z" fill="#c62f27"/>
+    </g>
+    <!-- Small Corner Suit (Top-Right) -->
+    <g transform="translate(33.67, 0.67) scale(0.166667) translate(0, 124) scale(0.1, -0.1)">
+      <path d="M245 936 c-43 -16 -105 -80 -105 -108 0 -9 -5 -20 -11 -24 -11 -7 -3 -134 11 -164 76 -164 130 -237 293 -399 l106 -104 80 72 c163 147 267 287 330 444 14 35 15 134 1 142 -5 3 -10 13 -10 21 0 24 -42 79 -79 104 -29 19 -50 24 -106 24 -61 1 -75 -3 -113 -28 -24 -17 -57 -50 -74 -74 -17 -24 -33 -40 -37 -35 -4 4 -19 25 -34 45 -46 63 -87 87 -153 93 -39 4 -72 0 -99 -9z" fill="#c62f27"/>
+    </g>
+    <!-- Big Center Suit Emblem -->
+    <g transform="translate(5.67, 34.67) scale(0.166667) translate(0, 232) scale(0.1, -0.1)">
+      <path d="M570 2129 c-95 -24 -168 -68 -236 -142 -74 -80 -107 -147 -133 -275 -56 -269 95 -597 476 -1039 103 -120 423 -444 516 -523 l37 -32 38 32 c60 52 320 309 405 399 389 417 596 778 596 1041 0 275 -145 479 -384 540 -44 11 -96 20 -115 19 -58 0 -156 -25 -217 -54 -76 -37 -204 -166 -263 -265 -25 -41 -52 -75 -60 -75 -8 0 -35 34 -60 75 -59 99 -187 228 -263 265 -64 31 -162 55 -222 54 -22 0 -74 -9 -115 -20z" fill="#c62f27"/>
+    </g>
+  </svg></div>
+      <div style="position: absolute; left: 0px; top: 6px; width: 52px; height: 78px; box-shadow: 0 3px 6px rgba(0,0,0,0.5);"><svg class="card-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cg_1" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#fafaf6"/>
+        <stop offset="100%" stop-color="#ebebe5"/>
+      </linearGradient>
+    </defs>
+    <!-- Card Surface with subtle rounded edge & crisp outline -->
+    <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="url(#cg_1)" stroke="#7c8078" stroke-width="0.6"/>
+    <!-- Rank Glyph (Top-Left) -->
+    <g transform="translate(5, 2.67) scale(0.166667) translate(0, 188) scale(0.1, -0.1)">
+      <path d="M442 1640 l-3 -70 94 0 c59 0 97 -4 105 -12 9 -9 12 -154 12 -590 0 -560 -1 -580 -20 -618 -24 -46 -51 -66 -117 -86 -35 -11 -55 -12 -79 -4 -53 18 -56 30 -23 79 69 104 13 234 -102 234 -75 0 -138 -59 -146 -136 -8 -70 4 -110 48 -160 116 -133 400 -168 566 -70 59 34 115 101 144 170 l24 58 5 558 c4 481 7 559 20 567 8 5 45 10 81 10 l66 0 -1 70 -1 70 -335 0 -336 0 -2 -70z" fill="#1b0a0a"/>
+    </g>
+    <!-- Small Corner Suit (Top-Right) -->
+    <g transform="translate(33.33, 0.67) scale(0.166667) translate(0, 124) scale(0.1, -0.1)">
+      <path d="M460 939 c-67 -39 -95 -103 -83 -192 4 -36 15 -58 44 -91 56 -63 50 -72 -23 -36 -94 45 -201 11 -247 -77 -15 -29 -14 -138 1 -166 39 -68 90 -97 172 -97 62 0 133 39 162 89 26 43 34 39 34 -17 0 -76 -51 -212 -80 -212 -6 0 -10 -4 -10 -10 0 -6 47 -10 120 -10 116 0 135 5 107 29 -20 16 -55 91 -61 131 -15 91 -18 120 -11 120 4 0 28 -22 54 -48 55 -58 85 -72 154 -72 61 0 102 21 143 76 26 33 29 45 29 109 -1 61 -5 76 -25 102 -57 70 -152 92 -232 53 -38 -18 -68 -26 -68 -17 0 2 18 23 40 46 22 23 40 50 40 61 0 10 5 22 10 25 14 9 12 67 -4 106 -20 48 -52 85 -88 103 -45 23 -135 20 -178 -5z" fill="#1b0a0a"/>
+    </g>
+    <!-- Big Center Suit Emblem -->
+    <g transform="translate(5.67, 34.67) scale(0.166667) translate(0, 236) scale(0.1, -0.1)">
+      <path d="M1080 2205 c-147 -42 -265 -166 -300 -318 -14 -62 -12 -163 5 -236 21 -90 67 -164 147 -243 63 -62 80 -90 60 -102 -5 -3 -52 15 -105 40 -177 83 -332 90 -477 22 -261 -124 -312 -513 -96 -729 65 -65 140 -105 237 -125 185 -38 400 60 524 240 59 87 69 78 62 -56 -13 -240 -75 -419 -184 -525 l-54 -53 326 0 326 0 -54 53 c-67 66 -121 168 -152 292 -24 95 -51 317 -40 335 12 19 33 10 57 -28 45 -66 109 -132 170 -173 74 -51 110 -66 204 -85 243 -50 486 125 525 378 33 211 -53 397 -222 475 -152 71 -308 64 -482 -23 -37 -19 -76 -34 -87 -34 -37 0 -22 36 37 86 229 196 233 565 9 734 -84 64 -143 82 -271 86 -78 3 -126 -1 -165 -11z" fill="#1b0a0a"/>
+    </g>
+  </svg></div>
+    </div>
+    </div>
+        </div>
+      </div>
+    </section>
+
+    
+
+    
+
+    
+
+    <!-- Reference Section 2: Tableau -->
+    <!-- SECTION 2: TABLEAU QUEEN TAIL EXPOSURE -->
+    <section class="studio-section">
+      <div class="section-title-bar">
+        <h2 class="section-title">2. Tableau Vertical Spacing & Queen Tail Visibility</h2>
+        <div class="section-hint">Cards move down so the sweeping serif tail of the Queen is fully visible instead of clipped</div>
+      </div>
+
+      <div class="options-grid tableau-grid" id="tableau-options-grid">
+        <!-- Current: 26px -->
+        <div class="option-card" data-group="tableau" data-val="26">
+          <span class="option-badge" style="background:rgba(239, 68, 68, 0.2); color:#f87171; border-color:#f87171;">Clipped</span>
+          <div class="option-title">Current: 26px Step</div>
+          <div class="option-desc"><span>Q tail is cut off by 8.7px by the card below. Resembles an 'O'.</span></div>
+          <div class="preview-box tall-preview-box">
+    <div style="position: relative; width: 60px; height: 180px; margin-top: 10px;">
+      <div style="position: absolute; top: 0px; left: 4px; width: 52px; height: 78px; box-shadow: 0 3px 6px rgba(0,0,0,0.45);"><svg class="card-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cg_0" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#fafaf6"/>
+        <stop offset="100%" stop-color="#ebebe5"/>
+      </linearGradient>
+    </defs>
+    <!-- Card Surface with subtle rounded edge & crisp outline -->
+    <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="url(#cg_0)" stroke="#7c8078" stroke-width="0.6"/>
+    <!-- Rank Glyph (Top-Left) -->
+    <g transform="translate(1.33, 1.67) scale(0.166667) translate(0, 198) scale(0.1, -0.1)">
+      <path d="M730 1805 c-237 -47 -433 -212 -519 -435 -73 -188 -63 -377 28 -558 84 -166 227 -289 409 -351 75 -26 77 -27 107 -84 47 -90 78 -122 172 -177 83 -49 93 -53 183 -61 121 -11 241 -11 258 -1 9 6 10 19 4 48 l-8 39 -76 16 c-120 24 -218 98 -234 176 -6 31 -5 31 79 71 263 123 417 357 417 633 0 163 -50 305 -154 435 -159 200 -421 298 -666 249z m244 -146 c67 -25 133 -86 166 -154 25 -50 25 -53 28 -373 l3 -322 -31 -65 c-117 -246 -453 -244 -568 3 l-27 57 -3 298 c-3 331 1 367 58 446 34 46 103 99 153 118 53 19 159 16 221 -8z" fill="#c62f27"/>
+    </g>
+    <!-- Small Corner Suit (Top-Right) -->
+    <g transform="translate(33.67, 0.67) scale(0.166667) translate(0, 124) scale(0.1, -0.1)">
+      <path d="M245 936 c-43 -16 -105 -80 -105 -108 0 -9 -5 -20 -11 -24 -11 -7 -3 -134 11 -164 76 -164 130 -237 293 -399 l106 -104 80 72 c163 147 267 287 330 444 14 35 15 134 1 142 -5 3 -10 13 -10 21 0 24 -42 79 -79 104 -29 19 -50 24 -106 24 -61 1 -75 -3 -113 -28 -24 -17 -57 -50 -74 -74 -17 -24 -33 -40 -37 -35 -4 4 -19 25 -34 45 -46 63 -87 87 -153 93 -39 4 -72 0 -99 -9z" fill="#c62f27"/>
+    </g>
+    <!-- Big Center Suit Emblem -->
+    <g transform="translate(5.67, 34.67) scale(0.166667) translate(0, 232) scale(0.1, -0.1)">
+      <path d="M570 2129 c-95 -24 -168 -68 -236 -142 -74 -80 -107 -147 -133 -275 -56 -269 95 -597 476 -1039 103 -120 423 -444 516 -523 l37 -32 38 32 c60 52 320 309 405 399 389 417 596 778 596 1041 0 275 -145 479 -384 540 -44 11 -96 20 -115 19 -58 0 -156 -25 -217 -54 -76 -37 -204 -166 -263 -265 -25 -41 -52 -75 -60 -75 -8 0 -35 34 -60 75 -59 99 -187 228 -263 265 -64 31 -162 55 -222 54 -22 0 -74 -9 -115 -20z" fill="#c62f27"/>
+    </g>
+  </svg></div>
+      <div style="position: absolute; top: 26px; left: 4px; width: 52px; height: 78px; box-shadow: 0 3px 6px rgba(0,0,0,0.45);"><svg class="card-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cg_1" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#fafaf6"/>
+        <stop offset="100%" stop-color="#ebebe5"/>
+      </linearGradient>
+    </defs>
+    <!-- Card Surface with subtle rounded edge & crisp outline -->
+    <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="url(#cg_1)" stroke="#7c8078" stroke-width="0.6"/>
+    <!-- Rank Glyph (Top-Left) -->
+    <g transform="translate(5, 2.67) scale(0.166667) translate(0, 188) scale(0.1, -0.1)">
+      <path d="M442 1640 l-3 -70 94 0 c59 0 97 -4 105 -12 9 -9 12 -154 12 -590 0 -560 -1 -580 -20 -618 -24 -46 -51 -66 -117 -86 -35 -11 -55 -12 -79 -4 -53 18 -56 30 -23 79 69 104 13 234 -102 234 -75 0 -138 -59 -146 -136 -8 -70 4 -110 48 -160 116 -133 400 -168 566 -70 59 34 115 101 144 170 l24 58 5 558 c4 481 7 559 20 567 8 5 45 10 81 10 l66 0 -1 70 -1 70 -335 0 -336 0 -2 -70z" fill="#1b0a0a"/>
+    </g>
+    <!-- Small Corner Suit (Top-Right) -->
+    <g transform="translate(33.33, 0.67) scale(0.166667) translate(0, 124) scale(0.1, -0.1)">
+      <path d="M460 939 c-67 -39 -95 -103 -83 -192 4 -36 15 -58 44 -91 56 -63 50 -72 -23 -36 -94 45 -201 11 -247 -77 -15 -29 -14 -138 1 -166 39 -68 90 -97 172 -97 62 0 133 39 162 89 26 43 34 39 34 -17 0 -76 -51 -212 -80 -212 -6 0 -10 -4 -10 -10 0 -6 47 -10 120 -10 116 0 135 5 107 29 -20 16 -55 91 -61 131 -15 91 -18 120 -11 120 4 0 28 -22 54 -48 55 -58 85 -72 154 -72 61 0 102 21 143 76 26 33 29 45 29 109 -1 61 -5 76 -25 102 -57 70 -152 92 -232 53 -38 -18 -68 -26 -68 -17 0 2 18 23 40 46 22 23 40 50 40 61 0 10 5 22 10 25 14 9 12 67 -4 106 -20 48 -52 85 -88 103 -45 23 -135 20 -178 -5z" fill="#1b0a0a"/>
+    </g>
+    <!-- Big Center Suit Emblem -->
+    <g transform="translate(5.67, 34.67) scale(0.166667) translate(0, 236) scale(0.1, -0.1)">
+      <path d="M1080 2205 c-147 -42 -265 -166 -300 -318 -14 -62 -12 -163 5 -236 21 -90 67 -164 147 -243 63 -62 80 -90 60 -102 -5 -3 -52 15 -105 40 -177 83 -332 90 -477 22 -261 -124 -312 -513 -96 -729 65 -65 140 -105 237 -125 185 -38 400 60 524 240 59 87 69 78 62 -56 -13 -240 -75 -419 -184 -525 l-54 -53 326 0 326 0 -54 53 c-67 66 -121 168 -152 292 -24 95 -51 317 -40 335 12 19 33 10 57 -28 45 -66 109 -132 170 -173 74 -51 110 -66 204 -85 243 -50 486 125 525 378 33 211 -53 397 -222 475 -152 71 -308 64 -482 -23 -37 -19 -76 -34 -87 -34 -37 0 -22 36 37 86 229 196 233 565 9 734 -84 64 -143 82 -271 86 -78 3 -126 -1 -165 -11z" fill="#1b0a0a"/>
+    </g>
+  </svg></div>
+      <div style="position: absolute; top: 52px; left: 4px; width: 52px; height: 78px; box-shadow: 0 3px 6px rgba(0,0,0,0.45);"><svg class="card-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cg_2" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#fafaf6"/>
+        <stop offset="100%" stop-color="#ebebe5"/>
+      </linearGradient>
+    </defs>
+    <!-- Card Surface with subtle rounded edge & crisp outline -->
+    <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="url(#cg_2)" stroke="#7c8078" stroke-width="0.6"/>
+    <!-- Rank Glyph (Top-Left) -->
+    <g transform="translate(0, 3.33) scale(0.166667) translate(0, 186) scale(0.1, -0.1)">
+      <path d="M1096 1679 c-158 -54 -273 -177 -320 -341 -22 -78 -24 -733 -1 -817 46 -174 184 -310 360 -356 160 -41 328 9 456 135 74 74 113 146 135 248 17 83 20 656 3 748 -32 179 -174 336 -349 388 -77 23 -210 21 -284 -5z m222 -124 c49 -21 81 -52 103 -100 17 -37 19 -75 19 -528 0 -463 -1 -490 -19 -526 -53 -103 -166 -144 -261 -95 -34 17 -77 63 -89 97 -7 19 -11 199 -11 528 0 471 1 502 19 537 23 45 46 66 91 86 45 20 101 20 148 1z M300 1627 c-31 -28 -79 -74 -108 -100 -51 -48 -52 -49 -52 -108 0 -32 4 -59 9 -59 6 0 53 25 106 57 78 45 99 53 106 42 9 -14 8 -1114 -1 -1123 -3 -2 -52 -6 -110 -8 l-105 -3 0 -75 0 -75 340 0 340 0 3 71 c3 81 1 84 -89 84 -33 0 -49 5 -53 16 -3 9 -6 312 -6 675 l0 659 -162 0 -163 0 -55 -53z" fill="#c62f27"/>
+    </g>
+    <!-- Small Corner Suit (Top-Right) -->
+    <g transform="translate(35, 4.33) scale(0.166667) translate(0, 104) scale(0.1, -0.1)">
+      <path d="M435 905 c-4 -11 -14 -38 -22 -60 -41 -112 -170 -268 -256 -312 l-50 -25 39 -17 c57 -26 134 -100 191 -183 51 -76 93 -157 93 -182 0 -8 5 -18 10 -21 6 -3 10 1 10 9 0 9 21 57 48 108 53 106 167 235 233 265 21 10 38 20 38 23 0 3 -18 14 -41 24 -46 22 -147 119 -186 181 -32 51 -83 152 -92 185 -7 23 -8 24 -15 5z" fill="#c62f27"/>
+    </g>
+    <!-- Big Center Suit Emblem -->
+    <g transform="translate(10, 29.33) scale(0.166667) translate(0, 280) scale(0.1, -0.1)">
+      <path d="M981 2152 c-142 -416 -460 -812 -758 -944 l-46 -20 84 -45 c314 -167 587 -521 727 -942 l28 -85 18 55 c87 274 239 538 422 728 115 121 185 175 311 243 l87 47 -49 21 c-79 34 -213 128 -299 210 -170 163 -334 413 -425 650 -18 47 -37 95 -42 108 -5 13 -9 31 -9 42 0 47 -19 21 -49 -68z" fill="#c62f27"/>
+    </g>
+  </svg></div>
+    </div>
+    </div>
+        </div>
+
+        <!-- Option T1: 30px -->
+        <div class="option-card" data-group="tableau" data-val="30">
+          <span class="option-badge">Alternative</span>
+          <div class="option-title">Option T1: 30px Step</div>
+          <div class="option-desc"><span>+4px down. Lower curve appears, but tail tip remains clipped.</span></div>
+          <div class="preview-box tall-preview-box">
+    <div style="position: relative; width: 60px; height: 180px; margin-top: 10px;">
+      <div style="position: absolute; top: 0px; left: 4px; width: 52px; height: 78px; box-shadow: 0 3px 6px rgba(0,0,0,0.45);"><svg class="card-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cg_0" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#fafaf6"/>
+        <stop offset="100%" stop-color="#ebebe5"/>
+      </linearGradient>
+    </defs>
+    <!-- Card Surface with subtle rounded edge & crisp outline -->
+    <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="url(#cg_0)" stroke="#7c8078" stroke-width="0.6"/>
+    <!-- Rank Glyph (Top-Left) -->
+    <g transform="translate(1.33, 1.67) scale(0.166667) translate(0, 198) scale(0.1, -0.1)">
+      <path d="M730 1805 c-237 -47 -433 -212 -519 -435 -73 -188 -63 -377 28 -558 84 -166 227 -289 409 -351 75 -26 77 -27 107 -84 47 -90 78 -122 172 -177 83 -49 93 -53 183 -61 121 -11 241 -11 258 -1 9 6 10 19 4 48 l-8 39 -76 16 c-120 24 -218 98 -234 176 -6 31 -5 31 79 71 263 123 417 357 417 633 0 163 -50 305 -154 435 -159 200 -421 298 -666 249z m244 -146 c67 -25 133 -86 166 -154 25 -50 25 -53 28 -373 l3 -322 -31 -65 c-117 -246 -453 -244 -568 3 l-27 57 -3 298 c-3 331 1 367 58 446 34 46 103 99 153 118 53 19 159 16 221 -8z" fill="#c62f27"/>
+    </g>
+    <!-- Small Corner Suit (Top-Right) -->
+    <g transform="translate(33.67, 0.67) scale(0.166667) translate(0, 124) scale(0.1, -0.1)">
+      <path d="M245 936 c-43 -16 -105 -80 -105 -108 0 -9 -5 -20 -11 -24 -11 -7 -3 -134 11 -164 76 -164 130 -237 293 -399 l106 -104 80 72 c163 147 267 287 330 444 14 35 15 134 1 142 -5 3 -10 13 -10 21 0 24 -42 79 -79 104 -29 19 -50 24 -106 24 -61 1 -75 -3 -113 -28 -24 -17 -57 -50 -74 -74 -17 -24 -33 -40 -37 -35 -4 4 -19 25 -34 45 -46 63 -87 87 -153 93 -39 4 -72 0 -99 -9z" fill="#c62f27"/>
+    </g>
+    <!-- Big Center Suit Emblem -->
+    <g transform="translate(5.67, 34.67) scale(0.166667) translate(0, 232) scale(0.1, -0.1)">
+      <path d="M570 2129 c-95 -24 -168 -68 -236 -142 -74 -80 -107 -147 -133 -275 -56 -269 95 -597 476 -1039 103 -120 423 -444 516 -523 l37 -32 38 32 c60 52 320 309 405 399 389 417 596 778 596 1041 0 275 -145 479 -384 540 -44 11 -96 20 -115 19 -58 0 -156 -25 -217 -54 -76 -37 -204 -166 -263 -265 -25 -41 -52 -75 -60 -75 -8 0 -35 34 -60 75 -59 99 -187 228 -263 265 -64 31 -162 55 -222 54 -22 0 -74 -9 -115 -20z" fill="#c62f27"/>
+    </g>
+  </svg></div>
+      <div style="position: absolute; top: 30px; left: 4px; width: 52px; height: 78px; box-shadow: 0 3px 6px rgba(0,0,0,0.45);"><svg class="card-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cg_1" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#fafaf6"/>
+        <stop offset="100%" stop-color="#ebebe5"/>
+      </linearGradient>
+    </defs>
+    <!-- Card Surface with subtle rounded edge & crisp outline -->
+    <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="url(#cg_1)" stroke="#7c8078" stroke-width="0.6"/>
+    <!-- Rank Glyph (Top-Left) -->
+    <g transform="translate(5, 2.67) scale(0.166667) translate(0, 188) scale(0.1, -0.1)">
+      <path d="M442 1640 l-3 -70 94 0 c59 0 97 -4 105 -12 9 -9 12 -154 12 -590 0 -560 -1 -580 -20 -618 -24 -46 -51 -66 -117 -86 -35 -11 -55 -12 -79 -4 -53 18 -56 30 -23 79 69 104 13 234 -102 234 -75 0 -138 -59 -146 -136 -8 -70 4 -110 48 -160 116 -133 400 -168 566 -70 59 34 115 101 144 170 l24 58 5 558 c4 481 7 559 20 567 8 5 45 10 81 10 l66 0 -1 70 -1 70 -335 0 -336 0 -2 -70z" fill="#1b0a0a"/>
+    </g>
+    <!-- Small Corner Suit (Top-Right) -->
+    <g transform="translate(33.33, 0.67) scale(0.166667) translate(0, 124) scale(0.1, -0.1)">
+      <path d="M460 939 c-67 -39 -95 -103 -83 -192 4 -36 15 -58 44 -91 56 -63 50 -72 -23 -36 -94 45 -201 11 -247 -77 -15 -29 -14 -138 1 -166 39 -68 90 -97 172 -97 62 0 133 39 162 89 26 43 34 39 34 -17 0 -76 -51 -212 -80 -212 -6 0 -10 -4 -10 -10 0 -6 47 -10 120 -10 116 0 135 5 107 29 -20 16 -55 91 -61 131 -15 91 -18 120 -11 120 4 0 28 -22 54 -48 55 -58 85 -72 154 -72 61 0 102 21 143 76 26 33 29 45 29 109 -1 61 -5 76 -25 102 -57 70 -152 92 -232 53 -38 -18 -68 -26 -68 -17 0 2 18 23 40 46 22 23 40 50 40 61 0 10 5 22 10 25 14 9 12 67 -4 106 -20 48 -52 85 -88 103 -45 23 -135 20 -178 -5z" fill="#1b0a0a"/>
+    </g>
+    <!-- Big Center Suit Emblem -->
+    <g transform="translate(5.67, 34.67) scale(0.166667) translate(0, 236) scale(0.1, -0.1)">
+      <path d="M1080 2205 c-147 -42 -265 -166 -300 -318 -14 -62 -12 -163 5 -236 21 -90 67 -164 147 -243 63 -62 80 -90 60 -102 -5 -3 -52 15 -105 40 -177 83 -332 90 -477 22 -261 -124 -312 -513 -96 -729 65 -65 140 -105 237 -125 185 -38 400 60 524 240 59 87 69 78 62 -56 -13 -240 -75 -419 -184 -525 l-54 -53 326 0 326 0 -54 53 c-67 66 -121 168 -152 292 -24 95 -51 317 -40 335 12 19 33 10 57 -28 45 -66 109 -132 170 -173 74 -51 110 -66 204 -85 243 -50 486 125 525 378 33 211 -53 397 -222 475 -152 71 -308 64 -482 -23 -37 -19 -76 -34 -87 -34 -37 0 -22 36 37 86 229 196 233 565 9 734 -84 64 -143 82 -271 86 -78 3 -126 -1 -165 -11z" fill="#1b0a0a"/>
+    </g>
+  </svg></div>
+      <div style="position: absolute; top: 60px; left: 4px; width: 52px; height: 78px; box-shadow: 0 3px 6px rgba(0,0,0,0.45);"><svg class="card-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cg_2" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#fafaf6"/>
+        <stop offset="100%" stop-color="#ebebe5"/>
+      </linearGradient>
+    </defs>
+    <!-- Card Surface with subtle rounded edge & crisp outline -->
+    <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="url(#cg_2)" stroke="#7c8078" stroke-width="0.6"/>
+    <!-- Rank Glyph (Top-Left) -->
+    <g transform="translate(0, 3.33) scale(0.166667) translate(0, 186) scale(0.1, -0.1)">
+      <path d="M1096 1679 c-158 -54 -273 -177 -320 -341 -22 -78 -24 -733 -1 -817 46 -174 184 -310 360 -356 160 -41 328 9 456 135 74 74 113 146 135 248 17 83 20 656 3 748 -32 179 -174 336 -349 388 -77 23 -210 21 -284 -5z m222 -124 c49 -21 81 -52 103 -100 17 -37 19 -75 19 -528 0 -463 -1 -490 -19 -526 -53 -103 -166 -144 -261 -95 -34 17 -77 63 -89 97 -7 19 -11 199 -11 528 0 471 1 502 19 537 23 45 46 66 91 86 45 20 101 20 148 1z M300 1627 c-31 -28 -79 -74 -108 -100 -51 -48 -52 -49 -52 -108 0 -32 4 -59 9 -59 6 0 53 25 106 57 78 45 99 53 106 42 9 -14 8 -1114 -1 -1123 -3 -2 -52 -6 -110 -8 l-105 -3 0 -75 0 -75 340 0 340 0 3 71 c3 81 1 84 -89 84 -33 0 -49 5 -53 16 -3 9 -6 312 -6 675 l0 659 -162 0 -163 0 -55 -53z" fill="#c62f27"/>
+    </g>
+    <!-- Small Corner Suit (Top-Right) -->
+    <g transform="translate(35, 4.33) scale(0.166667) translate(0, 104) scale(0.1, -0.1)">
+      <path d="M435 905 c-4 -11 -14 -38 -22 -60 -41 -112 -170 -268 -256 -312 l-50 -25 39 -17 c57 -26 134 -100 191 -183 51 -76 93 -157 93 -182 0 -8 5 -18 10 -21 6 -3 10 1 10 9 0 9 21 57 48 108 53 106 167 235 233 265 21 10 38 20 38 23 0 3 -18 14 -41 24 -46 22 -147 119 -186 181 -32 51 -83 152 -92 185 -7 23 -8 24 -15 5z" fill="#c62f27"/>
+    </g>
+    <!-- Big Center Suit Emblem -->
+    <g transform="translate(10, 29.33) scale(0.166667) translate(0, 280) scale(0.1, -0.1)">
+      <path d="M981 2152 c-142 -416 -460 -812 -758 -944 l-46 -20 84 -45 c314 -167 587 -521 727 -942 l28 -85 18 55 c87 274 239 538 422 728 115 121 185 175 311 243 l87 47 -49 21 c-79 34 -213 128 -299 210 -170 163 -334 413 -425 650 -18 47 -37 95 -42 108 -5 13 -9 31 -9 42 0 47 -19 21 -49 -68z" fill="#c62f27"/>
+    </g>
+  </svg></div>
+    </div>
+    </div>
+        </div>
+
+        <!-- Option T2: 32px -->
+        <div class="option-card selected" data-group="tableau" data-val="32">
+          <span class="option-badge">Alternative</span>
+          <div class="option-title">Option T2: 32px Step</div>
+          <div class="option-desc"><span>+6px down. Tail tip barely touches the card border below.</span></div>
+          <div class="preview-box tall-preview-box">
+    <div style="position: relative; width: 60px; height: 180px; margin-top: 10px;">
+      <div style="position: absolute; top: 0px; left: 4px; width: 52px; height: 78px; box-shadow: 0 3px 6px rgba(0,0,0,0.45);"><svg class="card-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cg_0" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#fafaf6"/>
+        <stop offset="100%" stop-color="#ebebe5"/>
+      </linearGradient>
+    </defs>
+    <!-- Card Surface with subtle rounded edge & crisp outline -->
+    <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="url(#cg_0)" stroke="#7c8078" stroke-width="0.6"/>
+    <!-- Rank Glyph (Top-Left) -->
+    <g transform="translate(1.33, 1.67) scale(0.166667) translate(0, 198) scale(0.1, -0.1)">
+      <path d="M730 1805 c-237 -47 -433 -212 -519 -435 -73 -188 -63 -377 28 -558 84 -166 227 -289 409 -351 75 -26 77 -27 107 -84 47 -90 78 -122 172 -177 83 -49 93 -53 183 -61 121 -11 241 -11 258 -1 9 6 10 19 4 48 l-8 39 -76 16 c-120 24 -218 98 -234 176 -6 31 -5 31 79 71 263 123 417 357 417 633 0 163 -50 305 -154 435 -159 200 -421 298 -666 249z m244 -146 c67 -25 133 -86 166 -154 25 -50 25 -53 28 -373 l3 -322 -31 -65 c-117 -246 -453 -244 -568 3 l-27 57 -3 298 c-3 331 1 367 58 446 34 46 103 99 153 118 53 19 159 16 221 -8z" fill="#c62f27"/>
+    </g>
+    <!-- Small Corner Suit (Top-Right) -->
+    <g transform="translate(33.67, 0.67) scale(0.166667) translate(0, 124) scale(0.1, -0.1)">
+      <path d="M245 936 c-43 -16 -105 -80 -105 -108 0 -9 -5 -20 -11 -24 -11 -7 -3 -134 11 -164 76 -164 130 -237 293 -399 l106 -104 80 72 c163 147 267 287 330 444 14 35 15 134 1 142 -5 3 -10 13 -10 21 0 24 -42 79 -79 104 -29 19 -50 24 -106 24 -61 1 -75 -3 -113 -28 -24 -17 -57 -50 -74 -74 -17 -24 -33 -40 -37 -35 -4 4 -19 25 -34 45 -46 63 -87 87 -153 93 -39 4 -72 0 -99 -9z" fill="#c62f27"/>
+    </g>
+    <!-- Big Center Suit Emblem -->
+    <g transform="translate(5.67, 34.67) scale(0.166667) translate(0, 232) scale(0.1, -0.1)">
+      <path d="M570 2129 c-95 -24 -168 -68 -236 -142 -74 -80 -107 -147 -133 -275 -56 -269 95 -597 476 -1039 103 -120 423 -444 516 -523 l37 -32 38 32 c60 52 320 309 405 399 389 417 596 778 596 1041 0 275 -145 479 -384 540 -44 11 -96 20 -115 19 -58 0 -156 -25 -217 -54 -76 -37 -204 -166 -263 -265 -25 -41 -52 -75 -60 -75 -8 0 -35 34 -60 75 -59 99 -187 228 -263 265 -64 31 -162 55 -222 54 -22 0 -74 -9 -115 -20z" fill="#c62f27"/>
+    </g>
+  </svg></div>
+      <div style="position: absolute; top: 32px; left: 4px; width: 52px; height: 78px; box-shadow: 0 3px 6px rgba(0,0,0,0.45);"><svg class="card-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cg_1" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#fafaf6"/>
+        <stop offset="100%" stop-color="#ebebe5"/>
+      </linearGradient>
+    </defs>
+    <!-- Card Surface with subtle rounded edge & crisp outline -->
+    <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="url(#cg_1)" stroke="#7c8078" stroke-width="0.6"/>
+    <!-- Rank Glyph (Top-Left) -->
+    <g transform="translate(5, 2.67) scale(0.166667) translate(0, 188) scale(0.1, -0.1)">
+      <path d="M442 1640 l-3 -70 94 0 c59 0 97 -4 105 -12 9 -9 12 -154 12 -590 0 -560 -1 -580 -20 -618 -24 -46 -51 -66 -117 -86 -35 -11 -55 -12 -79 -4 -53 18 -56 30 -23 79 69 104 13 234 -102 234 -75 0 -138 -59 -146 -136 -8 -70 4 -110 48 -160 116 -133 400 -168 566 -70 59 34 115 101 144 170 l24 58 5 558 c4 481 7 559 20 567 8 5 45 10 81 10 l66 0 -1 70 -1 70 -335 0 -336 0 -2 -70z" fill="#1b0a0a"/>
+    </g>
+    <!-- Small Corner Suit (Top-Right) -->
+    <g transform="translate(33.33, 0.67) scale(0.166667) translate(0, 124) scale(0.1, -0.1)">
+      <path d="M460 939 c-67 -39 -95 -103 -83 -192 4 -36 15 -58 44 -91 56 -63 50 -72 -23 -36 -94 45 -201 11 -247 -77 -15 -29 -14 -138 1 -166 39 -68 90 -97 172 -97 62 0 133 39 162 89 26 43 34 39 34 -17 0 -76 -51 -212 -80 -212 -6 0 -10 -4 -10 -10 0 -6 47 -10 120 -10 116 0 135 5 107 29 -20 16 -55 91 -61 131 -15 91 -18 120 -11 120 4 0 28 -22 54 -48 55 -58 85 -72 154 -72 61 0 102 21 143 76 26 33 29 45 29 109 -1 61 -5 76 -25 102 -57 70 -152 92 -232 53 -38 -18 -68 -26 -68 -17 0 2 18 23 40 46 22 23 40 50 40 61 0 10 5 22 10 25 14 9 12 67 -4 106 -20 48 -52 85 -88 103 -45 23 -135 20 -178 -5z" fill="#1b0a0a"/>
+    </g>
+    <!-- Big Center Suit Emblem -->
+    <g transform="translate(5.67, 34.67) scale(0.166667) translate(0, 236) scale(0.1, -0.1)">
+      <path d="M1080 2205 c-147 -42 -265 -166 -300 -318 -14 -62 -12 -163 5 -236 21 -90 67 -164 147 -243 63 -62 80 -90 60 -102 -5 -3 -52 15 -105 40 -177 83 -332 90 -477 22 -261 -124 -312 -513 -96 -729 65 -65 140 -105 237 -125 185 -38 400 60 524 240 59 87 69 78 62 -56 -13 -240 -75 -419 -184 -525 l-54 -53 326 0 326 0 -54 53 c-67 66 -121 168 -152 292 -24 95 -51 317 -40 335 12 19 33 10 57 -28 45 -66 109 -132 170 -173 74 -51 110 -66 204 -85 243 -50 486 125 525 378 33 211 -53 397 -222 475 -152 71 -308 64 -482 -23 -37 -19 -76 -34 -87 -34 -37 0 -22 36 37 86 229 196 233 565 9 734 -84 64 -143 82 -271 86 -78 3 -126 -1 -165 -11z" fill="#1b0a0a"/>
+    </g>
+  </svg></div>
+      <div style="position: absolute; top: 64px; left: 4px; width: 52px; height: 78px; box-shadow: 0 3px 6px rgba(0,0,0,0.45);"><svg class="card-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cg_2" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#fafaf6"/>
+        <stop offset="100%" stop-color="#ebebe5"/>
+      </linearGradient>
+    </defs>
+    <!-- Card Surface with subtle rounded edge & crisp outline -->
+    <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="url(#cg_2)" stroke="#7c8078" stroke-width="0.6"/>
+    <!-- Rank Glyph (Top-Left) -->
+    <g transform="translate(0, 3.33) scale(0.166667) translate(0, 186) scale(0.1, -0.1)">
+      <path d="M1096 1679 c-158 -54 -273 -177 -320 -341 -22 -78 -24 -733 -1 -817 46 -174 184 -310 360 -356 160 -41 328 9 456 135 74 74 113 146 135 248 17 83 20 656 3 748 -32 179 -174 336 -349 388 -77 23 -210 21 -284 -5z m222 -124 c49 -21 81 -52 103 -100 17 -37 19 -75 19 -528 0 -463 -1 -490 -19 -526 -53 -103 -166 -144 -261 -95 -34 17 -77 63 -89 97 -7 19 -11 199 -11 528 0 471 1 502 19 537 23 45 46 66 91 86 45 20 101 20 148 1z M300 1627 c-31 -28 -79 -74 -108 -100 -51 -48 -52 -49 -52 -108 0 -32 4 -59 9 -59 6 0 53 25 106 57 78 45 99 53 106 42 9 -14 8 -1114 -1 -1123 -3 -2 -52 -6 -110 -8 l-105 -3 0 -75 0 -75 340 0 340 0 3 71 c3 81 1 84 -89 84 -33 0 -49 5 -53 16 -3 9 -6 312 -6 675 l0 659 -162 0 -163 0 -55 -53z" fill="#c62f27"/>
+    </g>
+    <!-- Small Corner Suit (Top-Right) -->
+    <g transform="translate(35, 4.33) scale(0.166667) translate(0, 104) scale(0.1, -0.1)">
+      <path d="M435 905 c-4 -11 -14 -38 -22 -60 -41 -112 -170 -268 -256 -312 l-50 -25 39 -17 c57 -26 134 -100 191 -183 51 -76 93 -157 93 -182 0 -8 5 -18 10 -21 6 -3 10 1 10 9 0 9 21 57 48 108 53 106 167 235 233 265 21 10 38 20 38 23 0 3 -18 14 -41 24 -46 22 -147 119 -186 181 -32 51 -83 152 -92 185 -7 23 -8 24 -15 5z" fill="#c62f27"/>
+    </g>
+    <!-- Big Center Suit Emblem -->
+    <g transform="translate(10, 29.33) scale(0.166667) translate(0, 280) scale(0.1, -0.1)">
+      <path d="M981 2152 c-142 -416 -460 -812 -758 -944 l-46 -20 84 -45 c314 -167 587 -521 727 -942 l28 -85 18 55 c87 274 239 538 422 728 115 121 185 175 311 243 l87 47 -49 21 c-79 34 -213 128 -299 210 -170 163 -334 413 -425 650 -18 47 -37 95 -42 108 -5 13 -9 31 -9 42 0 47 -19 21 -49 -68z" fill="#c62f27"/>
+    </g>
+  </svg></div>
+    </div>
+    </div>
+        </div>
+
+        <!-- Option T3: 34px -->
+        <div class="option-card" data-group="tableau" data-val="34">
+          <span class="option-badge">Alternative</span>
+          <div class="option-title">Option T3: 34px Step</div>
+          <div class="option-desc"><span>+8px down. Tail is fully visible, flush with the top edge.</span></div>
+          <div class="preview-box tall-preview-box">
+    <div style="position: relative; width: 60px; height: 180px; margin-top: 10px;">
+      <div style="position: absolute; top: 0px; left: 4px; width: 52px; height: 78px; box-shadow: 0 3px 6px rgba(0,0,0,0.45);"><svg class="card-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cg_0" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#fafaf6"/>
+        <stop offset="100%" stop-color="#ebebe5"/>
+      </linearGradient>
+    </defs>
+    <!-- Card Surface with subtle rounded edge & crisp outline -->
+    <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="url(#cg_0)" stroke="#7c8078" stroke-width="0.6"/>
+    <!-- Rank Glyph (Top-Left) -->
+    <g transform="translate(1.33, 1.67) scale(0.166667) translate(0, 198) scale(0.1, -0.1)">
+      <path d="M730 1805 c-237 -47 -433 -212 -519 -435 -73 -188 -63 -377 28 -558 84 -166 227 -289 409 -351 75 -26 77 -27 107 -84 47 -90 78 -122 172 -177 83 -49 93 -53 183 -61 121 -11 241 -11 258 -1 9 6 10 19 4 48 l-8 39 -76 16 c-120 24 -218 98 -234 176 -6 31 -5 31 79 71 263 123 417 357 417 633 0 163 -50 305 -154 435 -159 200 -421 298 -666 249z m244 -146 c67 -25 133 -86 166 -154 25 -50 25 -53 28 -373 l3 -322 -31 -65 c-117 -246 -453 -244 -568 3 l-27 57 -3 298 c-3 331 1 367 58 446 34 46 103 99 153 118 53 19 159 16 221 -8z" fill="#c62f27"/>
+    </g>
+    <!-- Small Corner Suit (Top-Right) -->
+    <g transform="translate(33.67, 0.67) scale(0.166667) translate(0, 124) scale(0.1, -0.1)">
+      <path d="M245 936 c-43 -16 -105 -80 -105 -108 0 -9 -5 -20 -11 -24 -11 -7 -3 -134 11 -164 76 -164 130 -237 293 -399 l106 -104 80 72 c163 147 267 287 330 444 14 35 15 134 1 142 -5 3 -10 13 -10 21 0 24 -42 79 -79 104 -29 19 -50 24 -106 24 -61 1 -75 -3 -113 -28 -24 -17 -57 -50 -74 -74 -17 -24 -33 -40 -37 -35 -4 4 -19 25 -34 45 -46 63 -87 87 -153 93 -39 4 -72 0 -99 -9z" fill="#c62f27"/>
+    </g>
+    <!-- Big Center Suit Emblem -->
+    <g transform="translate(5.67, 34.67) scale(0.166667) translate(0, 232) scale(0.1, -0.1)">
+      <path d="M570 2129 c-95 -24 -168 -68 -236 -142 -74 -80 -107 -147 -133 -275 -56 -269 95 -597 476 -1039 103 -120 423 -444 516 -523 l37 -32 38 32 c60 52 320 309 405 399 389 417 596 778 596 1041 0 275 -145 479 -384 540 -44 11 -96 20 -115 19 -58 0 -156 -25 -217 -54 -76 -37 -204 -166 -263 -265 -25 -41 -52 -75 -60 -75 -8 0 -35 34 -60 75 -59 99 -187 228 -263 265 -64 31 -162 55 -222 54 -22 0 -74 -9 -115 -20z" fill="#c62f27"/>
+    </g>
+  </svg></div>
+      <div style="position: absolute; top: 34px; left: 4px; width: 52px; height: 78px; box-shadow: 0 3px 6px rgba(0,0,0,0.45);"><svg class="card-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cg_1" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#fafaf6"/>
+        <stop offset="100%" stop-color="#ebebe5"/>
+      </linearGradient>
+    </defs>
+    <!-- Card Surface with subtle rounded edge & crisp outline -->
+    <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="url(#cg_1)" stroke="#7c8078" stroke-width="0.6"/>
+    <!-- Rank Glyph (Top-Left) -->
+    <g transform="translate(5, 2.67) scale(0.166667) translate(0, 188) scale(0.1, -0.1)">
+      <path d="M442 1640 l-3 -70 94 0 c59 0 97 -4 105 -12 9 -9 12 -154 12 -590 0 -560 -1 -580 -20 -618 -24 -46 -51 -66 -117 -86 -35 -11 -55 -12 -79 -4 -53 18 -56 30 -23 79 69 104 13 234 -102 234 -75 0 -138 -59 -146 -136 -8 -70 4 -110 48 -160 116 -133 400 -168 566 -70 59 34 115 101 144 170 l24 58 5 558 c4 481 7 559 20 567 8 5 45 10 81 10 l66 0 -1 70 -1 70 -335 0 -336 0 -2 -70z" fill="#1b0a0a"/>
+    </g>
+    <!-- Small Corner Suit (Top-Right) -->
+    <g transform="translate(33.33, 0.67) scale(0.166667) translate(0, 124) scale(0.1, -0.1)">
+      <path d="M460 939 c-67 -39 -95 -103 -83 -192 4 -36 15 -58 44 -91 56 -63 50 -72 -23 -36 -94 45 -201 11 -247 -77 -15 -29 -14 -138 1 -166 39 -68 90 -97 172 -97 62 0 133 39 162 89 26 43 34 39 34 -17 0 -76 -51 -212 -80 -212 -6 0 -10 -4 -10 -10 0 -6 47 -10 120 -10 116 0 135 5 107 29 -20 16 -55 91 -61 131 -15 91 -18 120 -11 120 4 0 28 -22 54 -48 55 -58 85 -72 154 -72 61 0 102 21 143 76 26 33 29 45 29 109 -1 61 -5 76 -25 102 -57 70 -152 92 -232 53 -38 -18 -68 -26 -68 -17 0 2 18 23 40 46 22 23 40 50 40 61 0 10 5 22 10 25 14 9 12 67 -4 106 -20 48 -52 85 -88 103 -45 23 -135 20 -178 -5z" fill="#1b0a0a"/>
+    </g>
+    <!-- Big Center Suit Emblem -->
+    <g transform="translate(5.67, 34.67) scale(0.166667) translate(0, 236) scale(0.1, -0.1)">
+      <path d="M1080 2205 c-147 -42 -265 -166 -300 -318 -14 -62 -12 -163 5 -236 21 -90 67 -164 147 -243 63 -62 80 -90 60 -102 -5 -3 -52 15 -105 40 -177 83 -332 90 -477 22 -261 -124 -312 -513 -96 -729 65 -65 140 -105 237 -125 185 -38 400 60 524 240 59 87 69 78 62 -56 -13 -240 -75 -419 -184 -525 l-54 -53 326 0 326 0 -54 53 c-67 66 -121 168 -152 292 -24 95 -51 317 -40 335 12 19 33 10 57 -28 45 -66 109 -132 170 -173 74 -51 110 -66 204 -85 243 -50 486 125 525 378 33 211 -53 397 -222 475 -152 71 -308 64 -482 -23 -37 -19 -76 -34 -87 -34 -37 0 -22 36 37 86 229 196 233 565 9 734 -84 64 -143 82 -271 86 -78 3 -126 -1 -165 -11z" fill="#1b0a0a"/>
+    </g>
+  </svg></div>
+      <div style="position: absolute; top: 68px; left: 4px; width: 52px; height: 78px; box-shadow: 0 3px 6px rgba(0,0,0,0.45);"><svg class="card-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cg_2" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#fafaf6"/>
+        <stop offset="100%" stop-color="#ebebe5"/>
+      </linearGradient>
+    </defs>
+    <!-- Card Surface with subtle rounded edge & crisp outline -->
+    <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="url(#cg_2)" stroke="#7c8078" stroke-width="0.6"/>
+    <!-- Rank Glyph (Top-Left) -->
+    <g transform="translate(0, 3.33) scale(0.166667) translate(0, 186) scale(0.1, -0.1)">
+      <path d="M1096 1679 c-158 -54 -273 -177 -320 -341 -22 -78 -24 -733 -1 -817 46 -174 184 -310 360 -356 160 -41 328 9 456 135 74 74 113 146 135 248 17 83 20 656 3 748 -32 179 -174 336 -349 388 -77 23 -210 21 -284 -5z m222 -124 c49 -21 81 -52 103 -100 17 -37 19 -75 19 -528 0 -463 -1 -490 -19 -526 -53 -103 -166 -144 -261 -95 -34 17 -77 63 -89 97 -7 19 -11 199 -11 528 0 471 1 502 19 537 23 45 46 66 91 86 45 20 101 20 148 1z M300 1627 c-31 -28 -79 -74 -108 -100 -51 -48 -52 -49 -52 -108 0 -32 4 -59 9 -59 6 0 53 25 106 57 78 45 99 53 106 42 9 -14 8 -1114 -1 -1123 -3 -2 -52 -6 -110 -8 l-105 -3 0 -75 0 -75 340 0 340 0 3 71 c3 81 1 84 -89 84 -33 0 -49 5 -53 16 -3 9 -6 312 -6 675 l0 659 -162 0 -163 0 -55 -53z" fill="#c62f27"/>
+    </g>
+    <!-- Small Corner Suit (Top-Right) -->
+    <g transform="translate(35, 4.33) scale(0.166667) translate(0, 104) scale(0.1, -0.1)">
+      <path d="M435 905 c-4 -11 -14 -38 -22 -60 -41 -112 -170 -268 -256 -312 l-50 -25 39 -17 c57 -26 134 -100 191 -183 51 -76 93 -157 93 -182 0 -8 5 -18 10 -21 6 -3 10 1 10 9 0 9 21 57 48 108 53 106 167 235 233 265 21 10 38 20 38 23 0 3 -18 14 -41 24 -46 22 -147 119 -186 181 -32 51 -83 152 -92 185 -7 23 -8 24 -15 5z" fill="#c62f27"/>
+    </g>
+    <!-- Big Center Suit Emblem -->
+    <g transform="translate(10, 29.33) scale(0.166667) translate(0, 280) scale(0.1, -0.1)">
+      <path d="M981 2152 c-142 -416 -460 -812 -758 -944 l-46 -20 84 -45 c314 -167 587 -521 727 -942 l28 -85 18 55 c87 274 239 538 422 728 115 121 185 175 311 243 l87 47 -49 21 c-79 34 -213 128 -299 210 -170 163 -334 413 -425 650 -18 47 -37 95 -42 108 -5 13 -9 31 -9 42 0 47 -19 21 -49 -68z" fill="#c62f27"/>
+    </g>
+  </svg></div>
+    </div>
+    </div>
+        </div>
+
+        <!-- Option T4: 35px (Recommended) -->
+        <div class="option-card" data-group="tableau" data-val="35">
+          <span class="option-badge" style="background:#fbbf24; color:#0f172a;">Recommended</span>
+          <div class="option-title">Option T4: 35px Step</div>
+          <div class="option-desc"><span>+9px down. Full Q tail with 1.5px breathing room above next card.</span></div>
+          <div class="preview-box tall-preview-box">
+    <div style="position: relative; width: 60px; height: 180px; margin-top: 10px;">
+      <div style="position: absolute; top: 0px; left: 4px; width: 52px; height: 78px; box-shadow: 0 3px 6px rgba(0,0,0,0.45);"><svg class="card-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cg_0" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#fafaf6"/>
+        <stop offset="100%" stop-color="#ebebe5"/>
+      </linearGradient>
+    </defs>
+    <!-- Card Surface with subtle rounded edge & crisp outline -->
+    <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="url(#cg_0)" stroke="#7c8078" stroke-width="0.6"/>
+    <!-- Rank Glyph (Top-Left) -->
+    <g transform="translate(1.33, 1.67) scale(0.166667) translate(0, 198) scale(0.1, -0.1)">
+      <path d="M730 1805 c-237 -47 -433 -212 -519 -435 -73 -188 -63 -377 28 -558 84 -166 227 -289 409 -351 75 -26 77 -27 107 -84 47 -90 78 -122 172 -177 83 -49 93 -53 183 -61 121 -11 241 -11 258 -1 9 6 10 19 4 48 l-8 39 -76 16 c-120 24 -218 98 -234 176 -6 31 -5 31 79 71 263 123 417 357 417 633 0 163 -50 305 -154 435 -159 200 -421 298 -666 249z m244 -146 c67 -25 133 -86 166 -154 25 -50 25 -53 28 -373 l3 -322 -31 -65 c-117 -246 -453 -244 -568 3 l-27 57 -3 298 c-3 331 1 367 58 446 34 46 103 99 153 118 53 19 159 16 221 -8z" fill="#c62f27"/>
+    </g>
+    <!-- Small Corner Suit (Top-Right) -->
+    <g transform="translate(33.67, 0.67) scale(0.166667) translate(0, 124) scale(0.1, -0.1)">
+      <path d="M245 936 c-43 -16 -105 -80 -105 -108 0 -9 -5 -20 -11 -24 -11 -7 -3 -134 11 -164 76 -164 130 -237 293 -399 l106 -104 80 72 c163 147 267 287 330 444 14 35 15 134 1 142 -5 3 -10 13 -10 21 0 24 -42 79 -79 104 -29 19 -50 24 -106 24 -61 1 -75 -3 -113 -28 -24 -17 -57 -50 -74 -74 -17 -24 -33 -40 -37 -35 -4 4 -19 25 -34 45 -46 63 -87 87 -153 93 -39 4 -72 0 -99 -9z" fill="#c62f27"/>
+    </g>
+    <!-- Big Center Suit Emblem -->
+    <g transform="translate(5.67, 34.67) scale(0.166667) translate(0, 232) scale(0.1, -0.1)">
+      <path d="M570 2129 c-95 -24 -168 -68 -236 -142 -74 -80 -107 -147 -133 -275 -56 -269 95 -597 476 -1039 103 -120 423 -444 516 -523 l37 -32 38 32 c60 52 320 309 405 399 389 417 596 778 596 1041 0 275 -145 479 -384 540 -44 11 -96 20 -115 19 -58 0 -156 -25 -217 -54 -76 -37 -204 -166 -263 -265 -25 -41 -52 -75 -60 -75 -8 0 -35 34 -60 75 -59 99 -187 228 -263 265 -64 31 -162 55 -222 54 -22 0 -74 -9 -115 -20z" fill="#c62f27"/>
+    </g>
+  </svg></div>
+      <div style="position: absolute; top: 35px; left: 4px; width: 52px; height: 78px; box-shadow: 0 3px 6px rgba(0,0,0,0.45);"><svg class="card-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cg_1" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#fafaf6"/>
+        <stop offset="100%" stop-color="#ebebe5"/>
+      </linearGradient>
+    </defs>
+    <!-- Card Surface with subtle rounded edge & crisp outline -->
+    <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="url(#cg_1)" stroke="#7c8078" stroke-width="0.6"/>
+    <!-- Rank Glyph (Top-Left) -->
+    <g transform="translate(5, 2.67) scale(0.166667) translate(0, 188) scale(0.1, -0.1)">
+      <path d="M442 1640 l-3 -70 94 0 c59 0 97 -4 105 -12 9 -9 12 -154 12 -590 0 -560 -1 -580 -20 -618 -24 -46 -51 -66 -117 -86 -35 -11 -55 -12 -79 -4 -53 18 -56 30 -23 79 69 104 13 234 -102 234 -75 0 -138 -59 -146 -136 -8 -70 4 -110 48 -160 116 -133 400 -168 566 -70 59 34 115 101 144 170 l24 58 5 558 c4 481 7 559 20 567 8 5 45 10 81 10 l66 0 -1 70 -1 70 -335 0 -336 0 -2 -70z" fill="#1b0a0a"/>
+    </g>
+    <!-- Small Corner Suit (Top-Right) -->
+    <g transform="translate(33.33, 0.67) scale(0.166667) translate(0, 124) scale(0.1, -0.1)">
+      <path d="M460 939 c-67 -39 -95 -103 -83 -192 4 -36 15 -58 44 -91 56 -63 50 -72 -23 -36 -94 45 -201 11 -247 -77 -15 -29 -14 -138 1 -166 39 -68 90 -97 172 -97 62 0 133 39 162 89 26 43 34 39 34 -17 0 -76 -51 -212 -80 -212 -6 0 -10 -4 -10 -10 0 -6 47 -10 120 -10 116 0 135 5 107 29 -20 16 -55 91 -61 131 -15 91 -18 120 -11 120 4 0 28 -22 54 -48 55 -58 85 -72 154 -72 61 0 102 21 143 76 26 33 29 45 29 109 -1 61 -5 76 -25 102 -57 70 -152 92 -232 53 -38 -18 -68 -26 -68 -17 0 2 18 23 40 46 22 23 40 50 40 61 0 10 5 22 10 25 14 9 12 67 -4 106 -20 48 -52 85 -88 103 -45 23 -135 20 -178 -5z" fill="#1b0a0a"/>
+    </g>
+    <!-- Big Center Suit Emblem -->
+    <g transform="translate(5.67, 34.67) scale(0.166667) translate(0, 236) scale(0.1, -0.1)">
+      <path d="M1080 2205 c-147 -42 -265 -166 -300 -318 -14 -62 -12 -163 5 -236 21 -90 67 -164 147 -243 63 -62 80 -90 60 -102 -5 -3 -52 15 -105 40 -177 83 -332 90 -477 22 -261 -124 -312 -513 -96 -729 65 -65 140 -105 237 -125 185 -38 400 60 524 240 59 87 69 78 62 -56 -13 -240 -75 -419 -184 -525 l-54 -53 326 0 326 0 -54 53 c-67 66 -121 168 -152 292 -24 95 -51 317 -40 335 12 19 33 10 57 -28 45 -66 109 -132 170 -173 74 -51 110 -66 204 -85 243 -50 486 125 525 378 33 211 -53 397 -222 475 -152 71 -308 64 -482 -23 -37 -19 -76 -34 -87 -34 -37 0 -22 36 37 86 229 196 233 565 9 734 -84 64 -143 82 -271 86 -78 3 -126 -1 -165 -11z" fill="#1b0a0a"/>
+    </g>
+  </svg></div>
+      <div style="position: absolute; top: 70px; left: 4px; width: 52px; height: 78px; box-shadow: 0 3px 6px rgba(0,0,0,0.45);"><svg class="card-svg" viewBox="0 0 52 78" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cg_2" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#fafaf6"/>
+        <stop offset="100%" stop-color="#ebebe5"/>
+      </linearGradient>
+    </defs>
+    <!-- Card Surface with subtle rounded edge & crisp outline -->
+    <rect x="0.4" y="0.4" width="51.2" height="77.2" rx="3.2" fill="url(#cg_2)" stroke="#7c8078" stroke-width="0.6"/>
+    <!-- Rank Glyph (Top-Left) -->
+    <g transform="translate(0, 3.33) scale(0.166667) translate(0, 186) scale(0.1, -0.1)">
+      <path d="M1096 1679 c-158 -54 -273 -177 -320 -341 -22 -78 -24 -733 -1 -817 46 -174 184 -310 360 -356 160 -41 328 9 456 135 74 74 113 146 135 248 17 83 20 656 3 748 -32 179 -174 336 -349 388 -77 23 -210 21 -284 -5z m222 -124 c49 -21 81 -52 103 -100 17 -37 19 -75 19 -528 0 -463 -1 -490 -19 -526 -53 -103 -166 -144 -261 -95 -34 17 -77 63 -89 97 -7 19 -11 199 -11 528 0 471 1 502 19 537 23 45 46 66 91 86 45 20 101 20 148 1z M300 1627 c-31 -28 -79 -74 -108 -100 -51 -48 -52 -49 -52 -108 0 -32 4 -59 9 -59 6 0 53 25 106 57 78 45 99 53 106 42 9 -14 8 -1114 -1 -1123 -3 -2 -52 -6 -110 -8 l-105 -3 0 -75 0 -75 340 0 340 0 3 71 c3 81 1 84 -89 84 -33 0 -49 5 -53 16 -3 9 -6 312 -6 675 l0 659 -162 0 -163 0 -55 -53z" fill="#c62f27"/>
+    </g>
+    <!-- Small Corner Suit (Top-Right) -->
+    <g transform="translate(35, 4.33) scale(0.166667) translate(0, 104) scale(0.1, -0.1)">
+      <path d="M435 905 c-4 -11 -14 -38 -22 -60 -41 -112 -170 -268 -256 -312 l-50 -25 39 -17 c57 -26 134 -100 191 -183 51 -76 93 -157 93 -182 0 -8 5 -18 10 -21 6 -3 10 1 10 9 0 9 21 57 48 108 53 106 167 235 233 265 21 10 38 20 38 23 0 3 -18 14 -41 24 -46 22 -147 119 -186 181 -32 51 -83 152 -92 185 -7 23 -8 24 -15 5z" fill="#c62f27"/>
+    </g>
+    <!-- Big Center Suit Emblem -->
+    <g transform="translate(10, 29.33) scale(0.166667) translate(0, 280) scale(0.1, -0.1)">
+      <path d="M981 2152 c-142 -416 -460 -812 -758 -944 l-46 -20 84 -45 c314 -167 587 -521 727 -942 l28 -85 18 55 c87 274 239 538 422 728 115 121 185 175 311 243 l87 47 -49 21 c-79 34 -213 128 -299 210 -170 163 -334 413 -425 650 -18 47 -37 95 -42 108 -5 13 -9 31 -9 42 0 47 -19 21 -49 -68z" fill="#c62f27"/>
+    </g>
+  </svg></div>
+    </div>
+    </div>
+        </div>
+      </div>
+    </section>
+
+    
+
+    
+
+    
+
+    <!-- Selection Summary -->
+    <section class="summary-section">
+      <h3 class="summary-heading">Your Final Configuration Summary</h3>
+      <div class="summary-rows">
+        <div class="summary-row"><strong>1. Waste Pile Fan Width:</strong> <span id="sel-waste">24px (Option W1)</span></div>
+        <div class="summary-row"><strong>2. Tableau Queen Tail Step:</strong> <span id="sel-tab">32px (Option T2)</span></div>
+        <div class="summary-row"><strong>3. Imperial Dragon Symbol:</strong> <span id="sel-dragon">Option D1: 72% Medallion</span></div>
+      </div>
+      <button class="apply-btn" id="btn-copy-selection">Confirm & Copy My Selection</button>
+    </section>
+  </div>
+
+  <script>
+    const selections = {
+      waste: '24',
+      tableau: '32',
+      dragon: 'd1'
+    };
+
+    const dragonLabels = {
+      d1: 'Option D1: 72% Medallion (Scale 1.35x)',
+      d2: 'Option D2: 85% Grand Seal (Scale 1.65x with 36-Ray Sunburst)',
+      d3: 'Option D3: Oval Cartouche (72×108px form-fitted to card)',
+      d4: 'Option D4: Frameless Dragon (80×120px giant coiled crest)',
+      d5: 'Option D5: 雙龍戲珠 (Twin Dragons - 2-Way Symmetrical Casino Standard)',
+      d6: 'Option D6: 海水江崖 (Imperial Brocade with Sea Waves & Clouds)'
+    };
+
+    function updateSummary() {
+      document.getElementById('sel-waste').textContent = selections.waste + 'px (Option W1)';
+      document.getElementById('sel-tab').textContent = selections.tableau + 'px (Option T2)';
+      document.getElementById('sel-dragon').textContent = dragonLabels[selections.dragon];
+    }
+
+    document.querySelectorAll('.option-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const group = card.dataset.group;
+        const val = card.dataset.val;
+        selections[group] = val;
+
+        document.querySelectorAll(`.option-card[data-group="${group}"]`).forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        updateSummary();
+      });
+    });
+
+    // View Mode Toggle (Showcase / InGame / Dual)
+    document.querySelectorAll('.scale-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const mode = btn.dataset.mode;
+        document.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        document.body.classList.remove('view-mode-showcase', 'view-mode-ingame', 'view-mode-dual');
+        document.body.classList.add('view-mode-' + mode);
+      });
+    });
+
+    document.getElementById('btn-copy-selection').addEventListener('click', () => {
+      const summary = `Waste: ${selections.waste}px | Tableau: ${selections.tableau}px | Dragon Back: ${dragonLabels[selections.dragon]}`;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(summary);
+      }
+      alert("Selections copied to clipboard:\n\n" + summary + "\n\nPaste this in the chat to apply to the game!");
+    });
+  </script>
+</body>
+</html>

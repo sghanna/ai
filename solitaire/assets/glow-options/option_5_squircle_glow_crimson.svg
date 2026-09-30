@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    
+    <linearGradient id="cardGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="45%" stop-color="#fafaf6"/>
+      <stop offset="100%" stop-color="#ebebe3"/>
+    </linearGradient>
+
+    <!-- Natural Card Drop Shadows -->
+    <filter id="shadowK" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+    <filter id="shadowQ" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.5"/>
+      <feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#000000" flood-opacity="0.38"/>
+    </filter>
+
+    <!-- Game Selection Gold Glow Filter (matching .stack-selection-halo: 0 0 6px #fbbf24, 0 0 14px rgba(251, 191, 36, 0.55)) -->
+    <filter id="goldHaloGlow" x="-35%" y="-35%" width="170%" height="170%">
+      <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#fef08a" flood-opacity="0.95"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="10" flood-color="#fbbf24" flood-opacity="0.85"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="22" flood-color="#d97706" flood-opacity="0.6"/>
+    </filter>
+
+    <!-- Outer Squircle Gold Glow Filter -->
+    <filter id="outerSquircleGlow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#fef08a" flood-opacity="0.9"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="12" flood-color="#fbbf24" flood-opacity="0.8"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="24" flood-color="#b45309" flood-opacity="0.5"/>
+    </filter>
+    
+    
+        <radialGradient id="bgGrad" cx="35%" cy="30%" r="75%">
+          <stop offset="0%" stop-color="#b91c1c"/>
+          <stop offset="65%" stop-color="#881337"/>
+          <stop offset="100%" stop-color="#450a0a"/>
+        </radialGradient>
+        
+  </defs>
+
+  <rect width="512" height="512" fill="url(#bgGrad)"/>
+  
+        <!-- Glowing Gold Selection Halo around Squircle Perimeter -->
+        <rect x="16" y="16" width="480" height="480" rx="94" fill="none" stroke="#fbbf24" stroke-width="3.5" filter="url(#outerSquircleGlow)"/>
+        <rect x="16" y="16" width="480" height="480" rx="94" fill="none" stroke="#fef08a" stroke-width="1.6"/>
+        
+
+  <!-- Stack Selection Halo (Behind or Wrapping Cards) -->
+  
+
+  <!-- 1. King of Clubs (Top Card in Column) -->
+  <g id="card-king" transform="translate(113.00, 34.00) scale(5.5)" filter="url(#shadowK)">
+    
+    <rect x="0.5" y="0.5" width="51" height="77" rx="3.8" fill="url(#cardGrad)" stroke="#787b74" stroke-width="0.8"/>
+    <rect x="1.4" y="1.4" width="49.2" height="75.2" rx="3.0" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="0.6"/>
+    <g transform="translate(1.0, 2.67) scale(0.166667) translate(0, 186.0) scale(0.1, -0.1)">
+      <path d="M170 1618 l0 -73 67 0 68 0 0 -625 0 -625 -67 -3 -68 -3 0 -69 0 -70 301 0 c270 0 301 2 295 16 -3 9 -6 40 -6 70 l0 54 -54 0 c-92 0 -86 -17 -86 234 l0 221 69 75 c58 63 72 73 87 64 25 -15 337 -562 330 -579 -3 -9 -19 -15 -41 -15 l-35 0 0 -70 0 -70 280 0 280 0 0 70 0 70 -55 0 c-41 0 -59 5 -72 19 -10 11 -101 165 -202 343 -102 178 -204 357 -228 398 -24 41 -43 82 -43 92 0 15 202 256 306 365 l41 43 106 0 107 0 0 70 0 70 -260 0 -260 0 0 -69 0 -70 48 -3 c37 -2 47 -7 47 -20 0 -15 -111 -151 -270 -328 -27 -31 -84 -95 -125 -143 -41 -47 -83 -86 -92 -87 -17 0 -18 20 -18 284 0 321 -7 296 86 296 l54 0 0 54 c0 30 3 61 6 70 6 14 -25 16 -295 16 l-301 0 0 -72z" fill="#1b0a0a"/>
+    </g>
+    <g transform="translate(33.33, 0.67) scale(0.166667) translate(0, 124.0) scale(0.1, -0.1)">
+      <path d="M460 939 c-67 -39 -95 -103 -83 -192 4 -36 15 -58 44 -91 56 -63 50 -72 -23 -36 -94 45 -201 11 -247 -77 -15 -29 -14 -138 1 -166 39 -68 90 -97 172 -97 62 0 133 39 162 89 26 43 34 39 34 -17 0 -76 -51 -212 -80 -212 -6 0 -10 -4 -10 -10 0 -6 47 -10 120 -10 116 0 135 5 107 29 -20 16 -55 91 -61 131 -15 91 -18 120 -11 120 4 0 28 -22 54 -48 55 -58 85 -72 154 -72 61 0 102 21 143 76 26 33 29 45 29 109 -1 61 -5 76 -25 102 -57 70 -152 92 -232 53 -38 -18 -68 -26 -68 -17 0 2 18 23 40 46 22 23 40 50 40 61 0 10 5 22 10 25 14 9 12 67 -4 106 -20 48 -52 85 -88 103 -45 23 -135 20 -178 -5z" fill="#1b0a0a"/>
+    </g>
+    <g transform="translate(5.67, 34.67) scale(0.166667) translate(0, 236.0) scale(0.1, -0.1)">
+      <path d="M1080 2205 c-147 -42 -265 -166 -300 -318 -14 -62 -12 -163 5 -236 21 -90 67 -164 147 -243 63 -62 80 -90 60 -102 -5 -3 -52 15 -105 40 -177 83 -332 90 -477 22 -261 -124 -312 -513 -96 -729 65 -65 140 -105 237 -125 185 -38 400 60 524 240 59 87 69 78 62 -56 -13 -240 -75 -419 -184 -525 l-54 -53 326 0 326 0 -54 53 c-67 66 -121 168 -152 292 -24 95 -51 317 -40 335 12 19 33 10 57 -28 45 -66 109 -132 170 -173 74 -51 110 -66 204 -85 243 -50 486 125 525 378 33 211 -53 397 -222 475 -152 71 -308 64 -482 -23 -37 -19 -76 -34 -87 -34 -37 0 -22 36 37 86 229 196 233 565 9 734 -84 64 -143 82 -271 86 -78 3 -126 -1 -165 -11z" fill="#1b0a0a"/>
+    </g>
+    
+  </g>
+
+  <!-- 2. Queen of Hearts (Overlapping Cascade) -->
+  <g id="card-queen" transform="translate(113.00, 130.00) scale(5.5)" filter="url(#shadowQ)">
+    
+    <rect x="0.5" y="0.5" width="51" height="77" rx="3.8" fill="url(#cardGrad)" stroke="#787b74" stroke-width="0.8"/>
+    <rect x="1.4" y="1.4" width="49.2" height="75.2" rx="3.0" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="0.6"/>
+    <g transform="translate(1.33, 1.67) scale(0.166667) translate(0, 198.0) scale(0.1, -0.1)">
+      <path d="M730 1805 c-237 -47 -433 -212 -519 -435 -73 -188 -63 -377 28 -558 84 -166 227 -289 409 -351 75 -26 77 -27 107 -84 47 -90 78 -122 172 -177 83 -49 93 -53 183 -61 121 -11 241 -11 258 -1 9 6 10 19 4 48 l-8 39 -76 16 c-120 24 -218 98 -234 176 -6 31 -5 31 79 71 263 123 417 357 417 633 0 163 -50 305 -154 435 -159 200 -421 298 -666 249z m244 -146 c67 -25 133 -86 166 -154 25 -50 25 -53 28 -373 l3 -322 -31 -65 c-117 -246 -453 -244 -568 3 l-27 57 -3 298 c-3 331 1 367 58 446 34 46 103 99 153 118 53 19 159 16 221 -8z" fill="#c62f27"/>
+    </g>
+    <g transform="translate(33.67, 0.67) scale(0.166667) translate(0, 124.0) scale(0.1, -0.1)">
+      <path d="M245 936 c-43 -16 -105 -80 -105 -108 0 -9 -5 -20 -11 -24 -11 -7 -3 -134 11 -164 76 -164 130 -237 293 -399 l106 -104 80 72 c163 147 267 287 330 444 14 35 15 134 1 142 -5 3 -10 13 -10 21 0 24 -42 79 -79 104 -29 19 -50 24 -106 24 -61 1 -75 -3 -113 -28 -24 -17 -57 -50 -74 -74 -17 -24 -33 -40 -37 -35 -4 4 -19 25 -34 45 -46 63 -87 87 -153 93 -39 4 -72 0 -99 -9z" fill="#c62f27"/>
+    </g>
+    <g transform="translate(5.67, 34.67) scale(0.166667) translate(0, 232.0) scale(0.1, -0.1)">
+      <path d="M570 2129 c-95 -24 -168 -68 -236 -142 -74 -80 -107 -147 -133 -275 -56 -269 95 -597 476 -1039 103 -120 423 -444 516 -523 l37 -32 38 32 c60 52 320 309 405 399 389 417 596 778 596 1041 0 275 -145 479 -384 540 -44 11 -96 20 -115 19 -58 0 -156 -25 -217 -54 -76 -37 -204 -166 -263 -265 -25 -41 -52 -75 -60 -75 -8 0 -35 34 -60 75 -59 99 -187 228 -263 265 -64 31 -162 55 -222 54 -22 0 -74 -9 -115 -20z" fill="#c62f27"/>
+    </g>
+    
+  </g>
+</svg>

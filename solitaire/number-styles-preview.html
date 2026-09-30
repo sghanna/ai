@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>agy-solitaire - High-Legibility Number Styles Sandbox</title>
+  
+  <!-- Web fonts for high-legibility accessibility research -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,700;1,700&family=Lexend:wght@700;800;900&family=Outfit:wght@800;900&family=Public+Sans:wght@800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --card-red: #c62828;
+      --card-black: #111111;
+      --pine-felt: radial-gradient(circle at 50% 30%, #163827 0%, #0c2419 70%, #05130d 100%);
+      --gold-accent: #fbbf24;
+      --gold-light: #fef08a;
+      --ui-bg: #091510;
+      --panel-bg: #122119;
+      --panel-border: rgba(251, 191, 36, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--ui-bg);
+      color: #f1f5f9;
+      padding: 24px 16px 80px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      max-width: 960px;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 8px;
+      color: var(--gold-accent);
+      letter-spacing: 0.5px;
+    }
+
+    p.subtitle {
+      font-size: 15px;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    .callout {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--gold-accent);
+      border-left: 5px solid var(--gold-accent);
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin: 16px 0 24px 0;
+      font-size: 13.5px;
+      color: #e2e8f0;
+      text-align: left;
+      line-height: 1.6;
+    }
+
+    .callout strong { color: var(--gold-light); }
+
+    /* Controls Bar */
+    .controls-bar {
+      max-width: 960px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      padding: 12px 18px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+    }
+
+    .toggle-btn {
+      background: #1e293b;
+      color: #e2e8f0;
+      border: 1.5px solid #475569;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .toggle-btn:hover {
+      border-color: var(--gold-accent);
+      color: var(--gold-light);
+    }
+
+    .toggle-btn.active {
+      background: #78350f;
+      border-color: var(--gold-accent);
+      color: #fef08a;
+      box-shadow: 0 0 12px rgba(251, 191, 36, 0.4);
+    }
+
+    /* Simulation Blur Filter */
+    .floater-sim {
+      filter: blur(0.7px) contrast(0.92);
+      position: relative;
+    }
+    .floater-sim::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at 45% 40%, rgba(0,0,0,0.18) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 99;
+    }
+
+    /* Option Cards */
+    .option-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 16px;
+      padding: 22px;
+      max-width: 960px;
+      width: 100%;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .option-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      border-bottom: 1px solid var(--panel-border);
+      padding-bottom: 10px;
+    }
+
+    .option-title {
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--gold-light);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .option-badge {
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .option-badge.recommended { background: #166534; color: #86efac; border: 1px solid #22c55e; }
+    .option-badge.standard { background: #1e3a8a; color: #93c5fd; }
+    .option-badge.high-tech { background: #581c87; color: #d8b4fe; }
+
+    .option-desc {
+      font-size: 13.5px;
+      color: #cbd5e1;
+      line-height: 1.55;
+      margin-bottom: 18px;
+    }
+
+    /* Grid Layouts inside option */
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .specimen-box {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .specimen-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    /* Macro Zoom Display */
+    .macro-zoom-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 8px 0;
+    }
+
+    .macro-digit {
+      font-size: 56px;
+      font-weight: 900;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 65px;
+      height: 65px;
+      background: #ffffff;
+      border-radius: 8px;
+      border: 2px solid #111111;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.4);
+    }
+    .macro-digit.red { color: var(--card-red); }
+    .macro-digit.black { color: var(--card-black); }
+
+    .confusion-test-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      font-weight: 900;
+      padding: 4px 10px;
+      background: #ffffff;
+      color: var(--card-black);
+      border-radius: 6px;
+      border: 1.5px solid #111111;
+    }
+
+    /* Realistic Card Simulators */
+    .cards-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .mini-card {
+      width: 52px;
+      height: 74px;
+      border-radius: 6px;
+      border: 1.5px solid #111111;
+      background: #ffffff;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+      overflow: hidden;
+    }
+
+    .mini-banner {
+      width: 100%;
+      height: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 4px;
+      border-bottom: 1.5px solid;
+    }
+
+    .mini-card.red .mini-banner {
+      background: #fee2e2;
+      border-color: #f87171;
+      color: var(--card-red);
+    }
+
+    .mini-card.black .mini-banner {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+      color: var(--card-black);
+    }
+
+    .banner-suit-icon {
+      width: 13px;
+      height: 13px;
+    }
+    .banner-suit-icon svg { width: 100%; height: 100%; }
+
+    .mini-card-center {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .center-suit-icon {
+      width: 24px;
+      height: 24px;
+    }
+    .center-suit-icon svg { width: 100%; height: 100%; }
+    .mini-card.red .center-suit-icon { color: var(--card-red); }
+    .mini-card.black .center-suit-icon { color: var(--card-black); }
+
+    /* Cascade Simulator inside Pine Felt */
+    .felt-simulator {
+      width: 100%;
+      background: var(--pine-felt);
+      border: 1.5px solid var(--gold-accent);
+      border-radius: 12px;
+      padding: 16px 12px 28px 12px;
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      box-shadow: inset 0 3px 12px rgba(0,0,0,0.6);
+      margin-top: 12px;
+    }
+
+    .column-stack {
+      width: 52px;
+      position: relative;
+      height: 190px;
+    }
+
+    .stack-card {
+      position: absolute;
+      left: 0;
+      width: 52px;
+      height: 74px;
+      border-radius: 6px;
+      border: 1.5px solid #111111;
+      background: #ffffff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Specific Font Style Classes */
+    /* ------------------------------------------------------------- */
+    /* Style 0: Current System Font (-apple-system / San Francisco) */
+    .font-current {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-weight: 900;
+      font-size: 15px;
+      letter-spacing: -0.5px;
+    }
+    .macro-digit.font-current { font-size: 52px; letter-spacing: -1.5px; }
+
+    /* Style 1: Atkinson Hyperlegible (Braille Institute) */
+    .font-atkinson {
+      font-family: 'Atkinson Hyperlegible', -apple-system, sans-serif;
+      font-weight: 700;
+      font-size: 17px;
+      letter-spacing: 0.2px;
+    }
+    .macro-digit.font-atkinson { font-size: 58px; letter-spacing: 0px; }
+
+    /* Style 2: Lexend Open (Research-Backed Visual Flow) */
+    .font-lexend {
+      font-family: 'Lexend', sans-serif;
+      font-weight: 800;
+      font-size: 16.5px;
+      letter-spacing: 0px;
+    }
+    .macro-digit.font-lexend { font-size: 54px; letter-spacing: 0px; }
+
+    /* Style 3: Trebuchet MS / Humanist Open Aperture */
+    .font-trebuchet {
+      font-family: 'Trebuchet MS', 'Lucida Grande', sans-serif;
+      font-weight: 900;
+      font-size: 17px;
+      letter-spacing: -0.2px;
+    }
+    .macro-digit.font-trebuchet { font-size: 56px; }
+
+    /* Style 4: Public Sans / Clearview Highway Signage Style */
+    .font-public {
+      font-family: 'Public Sans', -apple-system, sans-serif;
+      font-weight: 900;
+      font-size: 16.5px;
+      letter-spacing: 0px;
+    }
+    .macro-digit.font-public { font-size: 54px; }
+
+    /* Style 5: Handcrafted Vector SVG 6 */
+    .vector-6-icon {
+      width: 14px;
+      height: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .vector-6-icon svg { width: 100%; height: 100%; }
+
+    .apply-btn {
+      background: linear-gradient(180deg, #d97706 0%, #b45309 100%);
+      border: 1.5px solid var(--gold-light);
+      color: #ffffff;
+      padding: 10px 22px;
+      border-radius: 20px;
+      font-size: 13.5px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 14px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+      transition: transform 0.15s;
+    }
+    .apply-btn:active { transform: scale(0.96); }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>High-Legibility Number Styles: The "6" Solution</h1>
+    <p class="subtitle">
+      Optimizing numeral legibility for Mom's monocular vision and eye-floater comfort on the iPhone 16e.
+    </p>
+
+    <div class="callout">
+      <strong>The Problem with standard "6":</strong> In Apple's system font, the numeral 6 has a curved neck that curls inwards towards the loop, and the negative letter-spacing (-0.5px) closes up the internal hole (counter). When viewed quickly or through an eye floater, it easily blurs into an <strong>8</strong>, a <strong>5</strong>, or a solid blob.
+      <br><br>
+      Below are <strong>5 distinct high-legibility typographic solutions</strong> compared against the current font. Use the toggle to test legibility under a simulated eye-floater blur!
+    </div>
+  </header>
+
+  <!-- Controls Bar -->
+  <section class="controls-bar">
+    <div>
+      <span style="font-size: 13px; font-weight: 700; color: var(--gold-light);">Interactive Testing Tools:</span>
+    </div>
+    <div style="display: flex; gap: 8px;">
+      <button class="toggle-btn" id="btn-toggle-blur" onclick="toggleBlur()">
+        👁️ Simulate Floater / Acuity Blur
+      </button>
+      <button class="toggle-btn" id="btn-toggle-scale" onclick="toggleScale()">
+        🔍 Toggle Jumbo Scale (1.2x)
+      </button>
+    </div>
+  </section>
+
+  <main style="max-width: 960px; width: 100%;" id="sandbox-container">
+
+    <!-- ================================================================= -->
+    <!-- CURRENT BASELINE (FOR COMPARISON)                                 -->
+    <!-- ================================================================= -->
+    <article class="option-card" style="border-color: #475569; opacity: 0.9;">
+      <div class="option-header">
+        <h2 class="option-title" style="color: #94a3b8;">
+          Baseline: Current System Font (San Francisco / -apple-system)
+        </h2>
+        <span class="option-badge standard">Current App Font</span>
+      </div>
+      <p class="option-desc">
+        Notice how the top hook curls tightly down toward the bottom circular loop, leaving only a tiny 1-pixel gap. Under eye floaters, the gap vanishes and the number closes into an 8.
+      </p>
+
+      <div class="comparison-grid">
+        <div class="specimen-box">
+          <div class="specimen-title">Macro Inspection & Confusion Check</div>
+          <div class="macro-zoom-row">
+            <div class="macro-digit red font-current">6</div>
+            <div class="macro-digit black font-current">6</div>
+          </div>
+          <div class="confusion-test-row font-current">
+            <span>5</span> &bull; <strong style="color: var(--card-red); font-size: 29px;">6</strong> &bull; <span>8</span> &bull; <span>9</span>
+          </div>
+        </div>
+
+        <div class="specimen-box">
+          <div class="specimen-title">Phone Banner & Cascade Simulation</div>
+          <div class="cards-row">
+            <div class="mini-card red">
+              <div class="mini-banner">
+                <span class="font-current">6</span>
+                <div class="banner-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div>
+              </div>
+              <div class="mini-card-center"><div class="center-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div>
+            </div>
+
+            <div class="mini-card black">
+              <div class="mini-banner">
+                <span class="font-current">6</span>
+                <div class="banner-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div>
+              </div>
+              <div class="mini-card-center"><div class="center-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ================================================================= -->
+    <!-- OPTION 1: ATKINSON HYPERLEGIBLE (RECOMMENDED)                     -->
+    <!-- ================================================================= -->
+    <article class="option-card" style="border-color: #22c55e;">
+      <div class="option-header">
+        <h2 class="option-title" style="color: #4ade80;">
+          Option 1: Atkinson Hyperlegible (Braille Institute of America)
+        </h2>
+        <span class="option-badge recommended">⭐ Top Recommendation for Low-Vision</span>
+      </div>
+      <p class="option-desc">
+        <strong>Specially sculpted for visual impairment.</strong> The top stem breaks away straight at an open 55° diagonal angle with an expansive mouth (aperture), while the bottom counter is a wide, unobstructed circle. It is mathematically impossible to mistake this '6' for an 8 or 5, even through dense eye floaters.
+      </p>
+
+      <div class="comparison-grid">
+        <div class="specimen-box">
+          <div class="specimen-title">Macro Inspection (Wide-Open Aperture)</div>
+          <div class="macro-zoom-row">
+            <div class="macro-digit red font-atkinson">6</div>
+            <div class="macro-digit black font-atkinson">6</div>
+          </div>
+          <div class="confusion-test-row font-atkinson">
+            <span>5</span> &bull; <strong style="color: var(--card-red); font-size: 30px;">6</strong> &bull; <span>8</span> &bull; <span>9</span>
+          </div>
+        </div>
+
+        <div class="specimen-box">
+          <div class="specimen-title">Phone Banner Test (At Actual Size)</div>
+          <div class="cards-row">
+            <div class="mini-card red">
+              <div class="mini-banner">
+                <span class="font-atkinson">6</span>
+                <div class="banner-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div>
+              </div>
+              <div class="mini-card-center"><div class="center-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div>
+            </div>
+
+            <div class="mini-card black">
+              <div class="mini-banner">
+                <span class="font-atkinson">6</span>
+                <div class="banner-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div>
+              </div>
+              <div class="mini-card-center"><div class="center-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center;">
+        <button class="apply-btn" onclick="selectStyle('atkinson')">Choose Option 1 (Atkinson Hyperlegible)</button>
+      </div>
+    </article>
+
+    <!-- ================================================================= -->
+    <!-- OPTION 2: LEXEND (RESEARCH-BACKED READING CLARITY)                -->
+    <!-- ================================================================= -->
+    <article class="option-card">
+      <div class="option-header">
+        <h2 class="option-title">
+          Option 2: Lexend Open Heavy
+        </h2>
+        <span class="option-badge high-tech">Reading Science Font</span>
+      </div>
+      <p class="option-desc">
+        Developed specifically by typography researchers to reduce cognitive reading friction. The 6 features a crisp geometric open neck with an expansive internal loop volume, providing immediate clarity on 6.1" OLED displays.
+      </p>
+
+      <div class="comparison-grid">
+        <div class="specimen-box">
+          <div class="specimen-title">Macro Inspection</div>
+          <div class="macro-zoom-row">
+            <div class="macro-digit red font-lexend">6</div>
+            <div class="macro-digit black font-lexend">6</div>
+          </div>
+          <div class="confusion-test-row font-lexend">
+            <span>5</span> &bull; <strong style="color: var(--card-red); font-size: 30px;">6</strong> &bull; <span>8</span> &bull; <span>9</span>
+          </div>
+        </div>
+
+        <div class="specimen-box">
+          <div class="specimen-title">Phone Banner Test</div>
+          <div class="cards-row">
+            <div class="mini-card red">
+              <div class="mini-banner">
+                <span class="font-lexend">6</span>
+                <div class="banner-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div>
+              </div>
+              <div class="mini-card-center"><div class="center-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div>
+            </div>
+
+            <div class="mini-card black">
+              <div class="mini-banner">
+                <span class="font-lexend">6</span>
+                <div class="banner-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div>
+              </div>
+              <div class="mini-card-center"><div class="center-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center;">
+        <button class="apply-btn" onclick="selectStyle('lexend')">Choose Option 2 (Lexend)</button>
+      </div>
+    </article>
+
+    <!-- ================================================================= -->
+    <!-- OPTION 3: TREBUCHET MS (MATTHEW CARTER HUMANIST)                  -->
+    <!-- ================================================================= -->
+    <article class="option-card">
+      <div class="option-header">
+        <h2 class="option-title">
+          Option 3: Trebuchet MS Bold (Native Screen Humanist)
+        </h2>
+        <span class="option-badge standard">Native Web Safe</span>
+      </div>
+      <p class="option-desc">
+        Designed by Matthew Carter for Microsoft specifically for low-resolution computer displays. The 6 has an extra-tall, open arch that terminates horizontally rather than hooking downward, keeping the aperture wide open. Works 100% natively without downloading any font files.
+      </p>
+
+      <div class="comparison-grid">
+        <div class="specimen-box">
+          <div class="specimen-title">Macro Inspection</div>
+          <div class="macro-zoom-row">
+            <div class="macro-digit red font-trebuchet">6</div>
+            <div class="macro-digit black font-trebuchet">6</div>
+          </div>
+          <div class="confusion-test-row font-trebuchet">
+            <span>5</span> &bull; <strong style="color: var(--card-red); font-size: 30px;">6</strong> &bull; <span>8</span> &bull; <span>9</span>
+          </div>
+        </div>
+
+        <div class="specimen-box">
+          <div class="specimen-title">Phone Banner Test</div>
+          <div class="cards-row">
+            <div class="mini-card red">
+              <div class="mini-banner">
+                <span class="font-trebuchet">6</span>
+                <div class="banner-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div>
+              </div>
+              <div class="mini-card-center"><div class="center-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div>
+            </div>
+
+            <div class="mini-card black">
+              <div class="mini-banner">
+                <span class="font-trebuchet">6</span>
+                <div class="banner-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div>
+              </div>
+              <div class="mini-card-center"><div class="center-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center;">
+        <button class="apply-btn" onclick="selectStyle('trebuchet')">Choose Option 3 (Trebuchet MS)</button>
+      </div>
+    </article>
+
+    <!-- ================================================================= -->
+    <!-- OPTION 4: CUSTOM HAND-SCULPTED VECTOR 6 (MAX COUNTER)            -->
+    <!-- ================================================================= -->
+    <article class="option-card">
+      <div class="option-header">
+        <h2 class="option-title">
+          Option 4: Tailored Vector SVG 6 (Extra-Large Open Loop)
+        </h2>
+        <span class="option-badge standard">Custom Vector Path</span>
+      </div>
+      <p class="option-desc">
+        A custom vector SVG numeral created directly for the 22px banner. The top stem is a crisp 45° straight blade, while the bottom loop is blown out to 65% of the total glyph width with thin boundary walls and maximum white space inside.
+      </p>
+
+      <div class="comparison-grid">
+        <div class="specimen-box">
+          <div class="specimen-title">Macro Inspection</div>
+          <div class="macro-zoom-row">
+            <div class="macro-digit red">
+              <svg viewBox="0 0 100 130" width="38" height="50" fill="currentColor">
+                <path d="M 80,18 L 36,60 C 40,54 48,50 60,50 C 78,50 92,64 92,88 C 92,112 76,126 52,126 C 26,126 12,104 12,68 C 12,30 36,6 82,6 Z M 52,70 C 42,70 34,78 34,88 C 34,98 42,106 52,106 C 62,106 70,98 70,88 C 70,78 62,70 52,70 Z"/>
+              </svg>
+            </div>
+            <div class="macro-digit black">
+              <svg viewBox="0 0 100 130" width="38" height="50" fill="currentColor">
+                <path d="M 80,18 L 36,60 C 40,54 48,50 60,50 C 78,50 92,64 92,88 C 92,112 76,126 52,126 C 26,126 12,104 12,68 C 12,30 36,6 82,6 Z M 52,70 C 42,70 34,78 34,88 C 34,98 42,106 52,106 C 62,106 70,98 70,88 C 70,78 62,70 52,70 Z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="confusion-test-row font-atkinson">
+            <span>5</span> &bull; 
+            <svg viewBox="0 0 100 130" width="18" height="24" fill="var(--card-red)">
+              <path d="M 80,18 L 36,60 C 40,54 48,50 60,50 C 78,50 92,64 92,88 C 92,112 76,126 52,126 C 26,126 12,104 12,68 C 12,30 36,6 82,6 Z M 52,70 C 42,70 34,78 34,88 C 34,98 42,106 52,106 C 62,106 70,98 70,88 C 70,78 62,70 52,70 Z"/>
+            </svg> &bull; <span>8</span> &bull; <span>9</span>
+          </div>
+        </div>
+
+        <div class="specimen-box">
+          <div class="specimen-title">Phone Banner Test</div>
+          <div class="cards-row">
+            <div class="mini-card red">
+              <div class="mini-banner">
+                <span class="vector-6-icon">
+                  <svg viewBox="0 0 100 130" fill="currentColor">
+                    <path d="M 80,18 L 36,60 C 40,54 48,50 60,50 C 78,50 92,64 92,88 C 92,112 76,126 52,126 C 26,126 12,104 12,68 C 12,30 36,6 82,6 Z M 52,70 C 42,70 34,78 34,88 C 34,98 42,106 52,106 C 62,106 70,98 70,88 C 70,78 62,70 52,70 Z"/>
+                  </svg>
+                </span>
+                <div class="banner-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div>
+              </div>
+              <div class="mini-card-center"><div class="center-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div>
+            </div>
+
+            <div class="mini-card black">
+              <div class="mini-banner">
+                <span class="vector-6-icon">
+                  <svg viewBox="0 0 100 130" fill="currentColor">
+                    <path d="M 80,18 L 36,60 C 40,54 48,50 60,50 C 78,50 92,64 92,88 C 92,112 76,126 52,126 C 26,126 12,104 12,68 C 12,30 36,6 82,6 Z M 52,70 C 42,70 34,78 34,88 C 34,98 42,106 52,106 C 62,106 70,98 70,88 C 70,78 62,70 52,70 Z"/>
+                  </svg>
+                </span>
+                <div class="banner-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div>
+              </div>
+              <div class="mini-card-center"><div class="center-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center;">
+        <button class="apply-btn" onclick="selectStyle('vector')">Choose Option 4 (Custom Vector 6)</button>
+      </div>
+    </article>
+
+    <!-- ================================================================= -->
+    <!-- OPTION 5: DOT-DIFFERENTIATED ("6.")                               -->
+    <!-- ================================================================= -->
+    <article class="option-card">
+      <div class="option-header">
+        <h2 class="option-title">
+          Option 5: Dot-Anchored Index ("6.")
+        </h2>
+        <span class="option-badge standard">Tournament Playing Card Convention</span>
+      </div>
+      <p class="option-desc">
+        The international tournament convention used in dice, dominoes, and card decks where 6 and 9 could be misread. A crisp dot sits at the bottom-right of the numeral, immediately identifying it as a 6 and anchoring its bottom loop.
+      </p>
+
+      <div class="comparison-grid">
+        <div class="specimen-box">
+          <div class="specimen-title">Macro Inspection</div>
+          <div class="macro-zoom-row">
+            <div class="macro-digit red font-atkinson">6.</div>
+            <div class="macro-digit black font-atkinson">6.</div>
+          </div>
+          <div class="confusion-test-row font-atkinson">
+            <span>5</span> &bull; <strong style="color: var(--card-red); font-size: 30px;">6.</strong> &bull; <span>8</span> &bull; <span>9.</span>
+          </div>
+        </div>
+
+        <div class="specimen-box">
+          <div class="specimen-title">Phone Banner Test</div>
+          <div class="cards-row">
+            <div class="mini-card red">
+              <div class="mini-banner">
+                <span class="font-atkinson" style="font-size: 16px;">6.</span>
+                <div class="banner-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div>
+              </div>
+              <div class="mini-card-center"><div class="center-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div>
+            </div>
+
+            <div class="mini-card black">
+              <div class="mini-banner">
+                <span class="font-atkinson" style="font-size: 16px;">6.</span>
+                <div class="banner-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div>
+              </div>
+              <div class="mini-card-center"><div class="center-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center;">
+        <button class="apply-btn" onclick="selectStyle('dot')">Choose Option 5 (Dot-Anchored 6.)</button>
+      </div>
+    </article>
+
+    <!-- ================================================================= -->
+    <!-- LIVE TABLEAU CASCADE SIMULATOR                                    -->
+    <!-- ================================================================= -->
+    <section class="option-card" style="border-color: var(--gold-accent);">
+      <div class="option-header">
+        <h2 class="option-title">
+          Live Solitaire Cascade Test: 8 &rarr; 7 &rarr; 6 &rarr; 5 Sequence
+        </h2>
+        <span class="option-badge recommended">Context Test</span>
+      </div>
+      <p class="option-desc">
+        See how the '6' reads in the middle of a cascading column on the Imperial Pine felt. Toggle between font styles using the buttons below:
+      </p>
+
+      <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 14px;">
+        <button class="toggle-btn active" id="filter-btn-baseline" onclick="setCascadeFont('font-current', 'filter-btn-baseline')">Current Baseline</button>
+        <button class="toggle-btn" id="filter-btn-atkinson" onclick="setCascadeFont('font-atkinson', 'filter-btn-atkinson')">Option 1: Atkinson ⭐</button>
+        <button class="toggle-btn" id="filter-btn-lexend" onclick="setCascadeFont('font-lexend', 'filter-btn-lexend')">Option 2: Lexend</button>
+        <button class="toggle-btn" id="filter-btn-trebuchet" onclick="setCascadeFont('font-trebuchet', 'filter-btn-trebuchet')">Option 3: Trebuchet</button>
+      </div>
+
+      <div class="felt-simulator" id="felt-sim">
+        <!-- Col A: Black 8 -> Red 7 -> Black 6 -> Red 5 -->
+        <div class="column-stack">
+          <!-- Card 1: 8 Spades -->
+          <div class="stack-card black" style="top: 0px;">
+            <div class="mini-banner">
+              <span class="cascade-font font-current">8</span>
+              <div class="banner-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div>
+            </div>
+          </div>
+
+          <!-- Card 2: 7 Hearts -->
+          <div class="stack-card red" style="top: 26px;">
+            <div class="mini-banner">
+              <span class="cascade-font font-current">7</span>
+              <div class="banner-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div>
+            </div>
+          </div>
+
+          <!-- Card 3: 6 Clubs (The Test Card!) -->
+          <div class="stack-card black" style="top: 52px; box-shadow: 0 0 12px rgba(251, 191, 36, 0.5);">
+            <div class="mini-banner" style="border-bottom-width: 2px;">
+              <span class="cascade-font font-current" style="color: #0f172a; font-size: 17px;">6</span>
+              <div class="banner-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div>
+            </div>
+          </div>
+
+          <!-- Card 4: 5 Diamonds (Exposed) -->
+          <div class="stack-card red" style="top: 78px;">
+            <div class="mini-banner">
+              <span class="cascade-font font-current">5</span>
+              <div class="banner-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div>
+            </div>
+            <div class="mini-card-center">
+              <div class="center-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Col B: Red 8 -> Black 7 -> Red 6 -> Black 5 -->
+        <div class="column-stack">
+          <!-- Card 1: 8 Diamonds -->
+          <div class="stack-card red" style="top: 0px;">
+            <div class="mini-banner">
+              <span class="cascade-font font-current">8</span>
+              <div class="banner-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div>
+            </div>
+          </div>
+
+          <!-- Card 2: 7 Clubs -->
+          <div class="stack-card black" style="top: 26px;">
+            <div class="mini-banner">
+              <span class="cascade-font font-current">7</span>
+              <div class="banner-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div>
+            </div>
+          </div>
+
+          <!-- Card 3: 6 Hearts (The Test Card!) -->
+          <div class="stack-card red" style="top: 52px; box-shadow: 0 0 12px rgba(251, 191, 36, 0.5);">
+            <div class="mini-banner" style="border-bottom-width: 2px;">
+              <span class="cascade-font font-current" style="font-size: 17px;">6</span>
+              <div class="banner-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div>
+            </div>
+          </div>
+
+          <!-- Card 4: 5 Spades (Exposed) -->
+          <div class="stack-card black" style="top: 78px;">
+            <div class="mini-banner">
+              <span class="cascade-font font-current">5</span>
+              <div class="banner-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div>
+            </div>
+            <div class="mini-card-center">
+              <div class="center-suit-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    let isBlurActive = false;
+    let isScaleActive = false;
+
+    function toggleBlur() {
+      isBlurActive = !isBlurActive;
+      const btn = document.getElementById('btn-toggle-blur');
+      const container = document.getElementById('sandbox-container');
+      
+      btn.classList.toggle('active', isBlurActive);
+      container.classList.toggle('floater-sim', isBlurActive);
+    }
+
+    function toggleScale() {
+      isScaleActive = !isScaleActive;
+      const btn = document.getElementById('btn-toggle-scale');
+      btn.classList.toggle('active', isScaleActive);
+
+      document.querySelectorAll('.mini-card, .stack-card').forEach(card => {
+        card.style.transform = isScaleActive ? 'scale(1.18)' : 'none';
+        card.style.transformOrigin = 'top center';
+        card.style.margin = isScaleActive ? '0 6px' : '0';
+      });
+    }
+
+    function setCascadeFont(fontClass, btnId) {
+      document.querySelectorAll('.cascade-font').forEach(el => {
+        el.className = `cascade-font ${fontClass}`;
+      });
+
+      document.querySelectorAll('#filter-btn-baseline, #filter-btn-atkinson, #filter-btn-lexend, #filter-btn-trebuchet').forEach(b => {
+        b.classList.remove('active');
+      });
+      const activeBtn = document.getElementById(btnId);
+      if (activeBtn) activeBtn.classList.add('active');
+    }
+
+    function selectStyle(name) {
+      alert(`Selected Style: ${name.toUpperCase()}!\n\nTell the assistant: "Let's use Option ${name}" and it will be integrated into the game.`);
+    }
+  </script>
+</body>
+</html>

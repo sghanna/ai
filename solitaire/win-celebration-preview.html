@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>agy-solitaire - Victory Celebration: Cascade + Modal & Lantern/Firework Combos</title>
+  <style>
+    :root {
+      --card-red: #c62828;
+      --card-black: #111111;
+      --ui-bg: #070d0a;
+      --panel-bg: #121c17;
+      --border-color: #233b2e;
+      /* Option 3 Pine Felt */
+      --pine-felt: radial-gradient(circle at 50% 30%, #163827 0%, #0c2419 70%, #05130d 100%);
+      --gold-accent: #fbbf24;
+      --gold-light: #fef08a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--ui-bg);
+      color: #f0f0f0;
+      padding: 24px 16px 100px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      max-width: 920px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 8px;
+      color: #fbbf24;
+      letter-spacing: 0.5px;
+    }
+
+    p.subtitle {
+      font-size: 15px;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    .callout-box {
+      background: rgba(6, 78, 59, 0.4);
+      border: 1px solid #10b981;
+      border-left: 5px solid #10b981;
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin: 18px 0 24px 0;
+      font-size: 14px;
+      color: #ecfdf5;
+      text-align: left;
+      max-width: 880px;
+      line-height: 1.6;
+    }
+
+    .callout-box strong { color: #6ee7b7; }
+
+    /* Sticky Navigation Bar */
+    .nav-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 30px;
+      position: sticky;
+      top: 10px;
+      z-index: 100;
+      background: rgba(7, 13, 10, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 8px 14px;
+      border-radius: 30px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+    }
+
+    .nav-btn {
+      background: #192a21;
+      color: #e2e8f0;
+      border: 1px solid #2d4a3b;
+      padding: 7px 14px;
+      border-radius: 18px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover, .nav-btn.active {
+      background: #fbbf24;
+      color: #451a03;
+      border-color: #fbbf24;
+      box-shadow: 0 0 12px rgba(251, 191, 36, 0.4);
+    }
+
+    .section-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 24px;
+      max-width: 900px;
+      width: 100%;
+      margin-bottom: 40px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .option-header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+    }
+
+    .option-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .option-badge {
+      background: #065f46;
+      color: #a7f3d0;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: bold;
+      border: 1px solid #10b981;
+    }
+
+    .option-badge.gold {
+      background: #78350f;
+      color: #fef08a;
+      border-color: #fbbf24;
+    }
+
+    .option-desc {
+      width: 100%;
+      font-size: 14px;
+      color: #cbd5e1;
+      margin-bottom: 20px;
+      line-height: 1.5;
+      text-align: left;
+    }
+
+    /* iPhone 16e Frame with Option 3 Pine Felt */
+    .iphone-board-frame {
+      width: 100%;
+      max-width: 390px;
+      height: 640px;
+      border-radius: 26px;
+      border: 3px solid #2d4a3b;
+      padding: 14px 10px 16px 10px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.7), inset 0 2px 14px rgba(0,0,0,0.6);
+      background: var(--pine-felt);
+      position: relative;
+      overflow: hidden;
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* OPTION 2 TOP BAR (LOCKED) */
+    .ui-top-bar-2 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding: 0 2px;
+      z-index: 10;
+    }
+    .btn-pill-2 {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1.5px solid #fbbf24;
+      color: #fef08a;
+      padding: 6px 14px;
+      border-radius: 16px;
+      font-size: 12px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+    .hud-text-2 {
+      font-size: 11px;
+      font-weight: 800;
+      color: #cbd5e1;
+      letter-spacing: 0.5px;
+    }
+
+    /* Top Row Layout (Stock / Waste / 4 Foundations) */
+    .board-top-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      margin-bottom: 14px;
+      z-index: 10;
+    }
+
+    /* Completed Foundation King Cards */
+    .mini-card {
+      position: relative;
+      width: 100%;
+      height: 64px;
+      background: #ffffff;
+      border-radius: 5px;
+      border: 1.5px solid #111111;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .mini-card.red { color: var(--card-red) !important; }
+    .mini-card.black { color: var(--card-black) !important; }
+
+    .mini-card-header {
+      width: 100%;
+      height: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 4px;
+      border-bottom: 1.5px solid;
+    }
+    .mini-card.red .mini-card-header { background: #fee2e2; border-color: #f87171; }
+    .mini-card.black .mini-card-header { background: #f1f5f9; border-color: #94a3b8; }
+
+    .mini-rank { font-size: 16px; font-weight: 900; letter-spacing: -0.5px; line-height: 1; }
+    .mini-suit-wrap { width: 13px; height: 13px; display: flex; align-items: center; justify-content: center; }
+    .mini-suit-wrap svg { width: 100%; height: 100%; }
+    .mini-card-center { flex: 1; display: flex; align-items: center; justify-content: center; }
+    .mini-center-suit { width: 22px; height: 22px; }
+    .mini-center-suit svg { width: 100%; height: 100%; }
+
+    /* Empty Stock/Waste slot */
+    .board-slot {
+      width: 100%;
+      height: 64px;
+      border-radius: 5px;
+      border: 1.5px solid rgba(251, 191, 36, 0.4);
+      background: rgba(12, 36, 25, 0.3);
+      color: rgba(251, 191, 36, 0.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .slot-label { font-size: 9px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; }
+
+    /* Tableau cleared space */
+    .board-tableau-cleared {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Buttons & Controls */
+    .play-controls {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-replay {
+      background: #142820;
+      border: 1.5px solid #10b981;
+      color: #6ee7b7;
+      padding: 9px 18px;
+      border-radius: 22px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-replay:hover {
+      background: #10b981;
+      color: #064e3b;
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.5);
+    }
+    .btn-secondary {
+      background: #1e293b;
+      border: 1.5px solid #475569;
+      color: #cbd5e1;
+      padding: 9px 16px;
+      border-radius: 22px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover {
+      background: #334155;
+      color: #ffffff;
+    }
+
+    .key-features {
+      list-style: none;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 18px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 16px;
+    }
+    .key-features li {
+      font-size: 13px;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .key-features .tag {
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+    .key-features .tag.highlight { background: #065f46; color: #6ee7b7; }
+    .key-features .tag.note { background: #1e3a8a; color: #93c5fd; }
+    .key-features .tag.gold { background: #78350f; color: #fef08a; }
+
+    /* Canvas overlays */
+    .celebration-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    /* ================================================================= */
+    /* DOUBLE HAPPINESS VICTORY MODAL (OPTION 2 MODAL)                   */
+    /* ================================================================= */
+    .opt2-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at center, rgba(185, 28, 28, 0.45) 0%, rgba(12, 36, 25, 0.88) 75%);
+      backdrop-filter: blur(5px);
+      z-index: 35;
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.92);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .opt2-overlay.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1);
+    }
+    .opt2-seal {
+      width: 105px;
+      height: 105px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #b91c1c 0%, #7f1d1d 70%, #450a0a 100%);
+      border: 3px solid #fbbf24;
+      box-shadow: 0 0 35px rgba(251, 191, 36, 0.65), inset 0 2px 10px rgba(254, 240, 138, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+      animation: opt2Pulse 2.5s infinite ease-in-out;
+    }
+    @keyframes opt2Pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 30px rgba(251, 191, 36, 0.5); }
+      50% { transform: scale(1.05); box-shadow: 0 0 45px rgba(251, 191, 36, 0.85); }
+    }
+    .opt2-glyph {
+      font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+      font-size: 56px;
+      font-weight: 900;
+      color: #fbbf24;
+      line-height: 1;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.8);
+    }
+    .opt2-title {
+      font-size: 26px;
+      font-weight: 900;
+      color: #fef08a;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+      margin-bottom: 2px;
+    }
+    .opt2-sub {
+      font-size: 14px;
+      font-weight: 800;
+      color: #6ee7b7;
+      letter-spacing: 3px;
+      margin-bottom: 16px;
+    }
+    .opt2-stats {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(251, 191, 36, 0.4);
+      border-radius: 12px;
+      padding: 8px 16px;
+      display: flex;
+      gap: 16px;
+      font-size: 12px;
+      font-weight: 800;
+      color: #fef08a;
+      margin-bottom: 22px;
+    }
+    .opt2-btn {
+      background: linear-gradient(180deg, #d97706 0%, #b45309 100%);
+      border: 2px solid #fef08a;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 900;
+      padding: 12px 28px;
+      border-radius: 25px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .opt2-btn:hover {
+      transform: scale(1.04);
+      box-shadow: 0 8px 25px rgba(251, 191, 36, 0.5);
+    }
+
+    /* ================================================================= */
+    /* FLOATING LANTERNS STYLES                                          */
+    /* ================================================================= */
+    .lantern-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 22;
+      overflow: hidden;
+    }
+    .dyn-lantern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0; /* Fully hidden before animation delay elapses */
+      transform: translateY(720px); /* Parked off-screen below the bottom frame */
+      animation-fill-mode: both !important;
+      border-radius: 8px;
+      background: radial-gradient(circle at 40% 35%, #ef4444 0%, #991b1b 75%, #450a0a 100%);
+      border: 1.5px solid #fbbf24;
+      box-shadow: 0 0 16px rgba(239, 68, 68, 0.8), 0 0 30px rgba(251, 191, 36, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fef08a;
+      font-family: "PingFang SC", sans-serif;
+      font-weight: 900;
+      will-change: transform, opacity;
+      pointer-events: none;
+    }
+    .dyn-lantern::after {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: calc(50% - 1.5px);
+      width: 3px;
+      height: 8px;
+      background: #fbbf24;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    /* Lantern sizes */
+    .dyn-lantern.small { width: 26px; height: 36px; font-size: 11px; }
+    .dyn-lantern.medium { width: 34px; height: 46px; font-size: 14px; }
+    .dyn-lantern.large { width: 42px; height: 58px; font-size: 18px; border-width: 2px; }
+
+    /* Floating Sky Lantern Animations: Slow, Serene, Authentic Ascent */
+    @keyframes floatUpGentle {
+      0% { transform: translateY(720px) translateX(0) rotate(0deg); opacity: 0; }
+      5% { opacity: 0.95; }
+      25% { transform: translateY(500px) translateX(10px) rotate(1.2deg); }
+      50% { transform: translateY(330px) translateX(-8px) rotate(-1deg); }
+      75% { transform: translateY(160px) translateX(12px) rotate(1.2deg); }
+      92% { opacity: 0.95; }
+      100% { transform: translateY(-110px) translateX(2px) rotate(-0.5deg); opacity: 0; }
+    }
+    @keyframes floatUpSwayLeft {
+      0% { transform: translateY(720px) translateX(0) rotate(0deg); opacity: 0; }
+      5% { opacity: 0.95; }
+      25% { transform: translateY(510px) translateX(-16px) rotate(-1.5deg); }
+      50% { transform: translateY(340px) translateX(8px) rotate(1deg); }
+      75% { transform: translateY(170px) translateX(-18px) rotate(-1.2deg); }
+      92% { opacity: 0.95; }
+      100% { transform: translateY(-110px) translateX(-4px) rotate(0.5deg); opacity: 0; }
+    }
+    @keyframes floatUpSwayRight {
+      0% { transform: translateY(720px) translateX(0) rotate(0deg); opacity: 0; }
+      5% { opacity: 0.95; }
+      25% { transform: translateY(510px) translateX(18px) rotate(1.5deg); }
+      50% { transform: translateY(340px) translateX(-10px) rotate(-1.2deg); }
+      75% { transform: translateY(170px) translateX(14px) rotate(1deg); }
+      92% { opacity: 0.95; }
+      100% { transform: translateY(-110px) translateX(6px) rotate(-0.5deg); opacity: 0; }
+    }
+
+    /* Subtle Flame Flicker inside paper lanterns */
+    @keyframes lanternFlicker {
+      0%, 100% { box-shadow: 0 0 16px rgba(239, 68, 68, 0.75), 0 0 28px rgba(251, 191, 36, 0.45); filter: brightness(1); }
+      50% { box-shadow: 0 0 24px rgba(239, 68, 68, 0.95), 0 0 40px rgba(251, 191, 36, 0.65); filter: brightness(1.08); }
+    }
+
+    /* Festive Banner Overlays for Combos */
+    .combo-banner {
+      z-index: 30;
+      background: rgba(15, 23, 42, 0.88);
+      border: 2px solid #fbbf24;
+      border-radius: 18px;
+      padding: 16px 24px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 20px rgba(251, 191, 36, 0.35);
+      backdrop-filter: blur(6px);
+      transition: opacity 0.5s;
+    }
+
+    /* Interactive Studio Panel */
+    .studio-panel {
+      width: 100%;
+      max-width: 390px;
+      background: rgba(18, 28, 23, 0.95);
+      border: 1.5px solid #2d4a3b;
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .studio-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+    }
+    .studio-label {
+      color: #94a3b8;
+      font-weight: 600;
+    }
+    .studio-val {
+      color: #fbbf24;
+      font-weight: 800;
+    }
+    .studio-slider {
+      width: 100%;
+      accent-color: #fbbf24;
+      cursor: pointer;
+    }
+    .pill-selector {
+      display: flex;
+      gap: 6px;
+    }
+    .pill-opt {
+      background: #1e293b;
+      color: #94a3b8;
+      border: 1px solid #334155;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .pill-opt.selected {
+      background: #fbbf24;
+      color: #451a03;
+      border-color: #fbbf24;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>agy-solitaire: Victory Screen Refinements</h1>
+    <p class="subtitle">
+      Tailored for your mom on iPhone 16e (6.1"). We took your favorite elements—the nostalgic Klondike card cascade, the celebratory Double Happiness modal, and combining serene floating lanterns with vibrant regal starbursts.
+    </p>
+
+    <div class="callout-box" style="border-left-color: #fbbf24; background: rgba(120, 53, 15, 0.35); border-color: rgba(251, 191, 36, 0.45);">
+      <div style="font-size: 15px; font-weight: 800; color: #fbbf24; margin-bottom: 6px;">
+        🎉 LOCKED IN: Alternating Celebrations Between Win 1 &amp; Win 2
+      </div>
+      <p style="font-size: 13.5px; color: #e2e8f0; line-height: 1.6; margin-bottom: 8px;">
+        Every time mom completes a game, the app will smoothly alternate between two grand celebrations:
+      </p>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px;">
+        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid #334155; border-radius: 10px; padding: 10px 12px;">
+          <div style="font-size: 11px; font-weight: 800; color: #6ee7b7; text-transform: uppercase;">Win 1 &bull; Nostalgic Klondike</div>
+          <div style="font-size: 13px; font-weight: 700; color: #f8fafc; margin: 2px 0 4px 0;">Option 1: 4.7s Cascade &rarr; 囍 Modal</div>
+          <div style="font-size: 12px; color: #94a3b8;">4.7s card bouncing fountain, followed by the blooming Double Happiness victory modal with game stats.</div>
+        </div>
+        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(251, 191, 36, 0.4); border-radius: 10px; padding: 10px 12px;">
+          <div style="font-size: 11px; font-weight: 800; color: #fbbf24; text-transform: uppercase;">Win 2 &bull; Imperial Dynasty</div>
+          <div style="font-size: 13px; font-weight: 700; color: #fef08a; margin: 2px 0 4px 0;">Option C: 9 Lanterns + 20s Gold Fireworks</div>
+          <div style="font-size: 12px; color: #94a3b8;">9 slow-ascending lanterns (久, eternity) with a 20-second pure Imperial Gold starburst show.</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="nav-bar">
+    <a href="#win-opt1" class="nav-btn">⭐ Win 1: Cascade + 囍 Modal</a>
+    <a href="#combo-c" class="nav-btn active">⭐ Win 2: 9 Lanterns + 20s Gold Fireworks</a>
+    <a href="#combo-a" class="nav-btn">Combo A: Gentle Garden</a>
+    <a href="#combo-b" class="nav-btn">Combo B: Sky Festival</a>
+    <a href="#combo-d" class="nav-btn">Combo D: Willow Cascade</a>
+    <a href="#combo-studio" class="nav-btn">✨ Live Customizer Studio</a>
+  </nav>
+
+  <!-- ================================================================= -->
+  <!-- SECTION 1: OPTION 1 CASCADE + OPTION 2 MODAL                      -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="win-opt1">
+    <div class="option-header">
+      <div class="option-title">Option 1: Classic Card Cascade &rarr; Imperial 囍 Modal</div>
+      <div class="option-badge gold">⭐ Requested Flow</div>
+    </div>
+    <p class="option-desc">
+      Cards cascade and bounce rhythmically off the 4 completed Foundation Kings. After the cards finish cascading (extended +0.5s to ~4.7s), the grand glowing <strong>Double Happiness (囍) victory modal</strong> smoothly rises into view over the cascaded cards, providing stats and a prominent "Play Again" button.
+    </p>
+
+    <div class="iphone-board-frame" id="frame-opt1">
+      <!-- TOP HUD (OPTION 2) -->
+      <div class="ui-top-bar-2">
+        <div class="btn-pill-2">&#x21BA; Undo</div>
+        <div class="hud-text-2">SCORE: 7,450 &bull; 02:45</div>
+        <div class="btn-pill-2" style="background: #b45309; border-color: #fde68a;">New Game</div>
+      </div>
+
+      <!-- Top Row: Foundations Full (Kings) -->
+      <div class="board-top-row">
+        <div class="board-slot"><span class="slot-label">Deck</span></div>
+        <div class="board-slot"><span class="slot-label">Waste</span></div>
+        <div></div>
+        <!-- 4 Completed Foundations -->
+        <div class="mini-card black">
+          <div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+          <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div>
+        </div>
+        <div class="mini-card red">
+          <div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div>
+          <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div>
+        </div>
+        <div class="mini-card black">
+          <div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div>
+          <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div>
+        </div>
+        <div class="mini-card red">
+          <div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+          <div class="mini-card-center"><div class="mini-center-suit"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div>
+        </div>
+      </div>
+
+      <!-- Physics Card Cascade Canvas -->
+      <canvas class="celebration-canvas" id="canvas-opt1" width="390" height="640"></canvas>
+
+      <!-- Seamless Double Happiness Victory Overlay -->
+      <div class="opt2-overlay" id="overlay-opt1">
+        <div class="opt2-seal">
+          <span class="opt2-glyph">囍</span>
+        </div>
+        <div class="opt2-title">VICTORY!</div>
+        <div class="opt2-sub">DOUBLE HAPPINESS</div>
+        <div class="opt2-stats">
+          <span>TIME: 02:45</span>
+          <span>&bull;</span>
+          <span>MOVES: 76</span>
+          <span>&bull;</span>
+          <span>SCORE: 7,450</span>
+        </div>
+        <button class="opt2-btn" onclick="triggerCascadeWithModal()">PLAY AGAIN &#x27F6;</button>
+      </div>
+    </div>
+
+    <div class="play-controls">
+      <button class="btn-replay" onclick="triggerCascadeWithModal()">&#x25B6; Replay Cascade &rarr; Modal Sequence</button>
+      <button class="btn-secondary" onclick="showModalInstantly()">⚡ Show Modal Directly</button>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag highlight">Smooth Flow</span> Bouncing cards provide nostalgic joy, then settle as modal appears.</li>
+      <li><span class="tag gold">Clear Reward</span> High-contrast gold seal and stats give mom a definitive, rewarding completion.</li>
+    </ul>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- COMBO 4+5 A: GENTLE NIGHT GARDEN                                 -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="combo-a">
+    <div class="option-header">
+      <div class="option-title">Combo A: Gentle Night Garden (3 Lanterns &bull; 3.5s Golden Bursts)</div>
+      <div class="option-badge">Peaceful & Floater-Safe</div>
+    </div>
+    <p class="option-desc">
+      A calm, low-stimulation celebration for mom's eye comfort: only <strong>3 large slow-floating lanterns</strong> (囍, 福, 寿) drift gently upwards with warm crimson glow, accompanied by a <strong>short 3.5-second</strong> sequence of gentle golden starbursts that fade into soft stardust.
+    </p>
+
+    <div class="iphone-board-frame" id="frame-combo-a">
+      <div class="ui-top-bar-2">
+        <div class="btn-pill-2">&#x21BA; Undo</div>
+        <div class="hud-text-2">SCORE: 7,450 &bull; 02:45</div>
+        <div class="btn-pill-2" style="background: #b45309; border-color: #fde68a;">New Game</div>
+      </div>
+
+      <div class="board-top-row">
+        <div class="board-slot"><span class="slot-label">Deck</span></div>
+        <div class="board-slot"><span class="slot-label">Waste</span></div>
+        <div></div>
+        <div class="mini-card black"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div></div>
+        <div class="mini-card red"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div>
+        <div class="mini-card black"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div></div>
+        <div class="mini-card red"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div></div>
+      </div>
+
+      <!-- 3 Floating Lanterns (Slow, authentic sky ascent) -->
+      <div class="lantern-container" id="lanterns-a">
+        <div class="dyn-lantern large" style="left: 50px; animation: floatUpSwayLeft 19s linear 0s infinite both, lanternFlicker 3.2s ease-in-out 0s infinite both;">囍</div>
+        <div class="dyn-lantern large" style="left: 280px; animation: floatUpSwayRight 22s linear 7s infinite both, lanternFlicker 2.8s ease-in-out 7s infinite both;">福</div>
+        <div class="dyn-lantern medium" style="left: 175px; animation: floatUpGentle 17s linear 13s infinite both, lanternFlicker 3.5s ease-in-out 13s infinite both;">寿</div>
+      </div>
+
+      <canvas class="celebration-canvas" id="canvas-a" width="390" height="640"></canvas>
+
+      <div class="board-tableau-cleared">
+        <div class="combo-banner">
+          <div style="font-size: 24px; font-weight: 900; color: #fbbf24; margin-bottom: 4px;">VICTORY!</div>
+          <div style="font-size: 13px; font-weight: 700; color: #6ee7b7; margin-bottom: 14px;">Peaceful Garden &bull; 02:45</div>
+          <button class="opt2-btn" style="padding: 10px 22px; font-size: 14px;">Play Next Deal &#x27F6;</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="play-controls">
+      <button class="btn-replay" onclick="triggerFireworksA()">&#x25B6; Launch 3.5s Gentle Starbursts</button>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag highlight">Eye Friendly</span> Minimal clutter, zero rapid flashing, ideal for floaters.</li>
+      <li><span class="tag note">Duration</span> Crisp 3.5 seconds then gently fades.</li>
+    </ul>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- COMBO 4+5 B: IMPERIAL SKY FESTIVAL                                -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="combo-b">
+    <div class="option-header">
+      <div class="option-title">Combo B: Imperial Sky Festival (6 Lanterns &bull; 6.5s Dual Bursts)</div>
+      <div class="option-badge gold">⭐ Rich & Harmonious</div>
+    </div>
+    <p class="option-desc">
+      A balanced, festive jubilee: <strong>6 lanterns</strong> at varying depths (small, medium, large) drift in multi-speed parallax, while <strong>6.5 seconds</strong> of paired gold and ruby fireworks burst rhythmically across the upper and lower screen quadrants.
+    </p>
+
+    <div class="iphone-board-frame" id="frame-combo-b">
+      <div class="ui-top-bar-2">
+        <div class="btn-pill-2">&#x21BA; Undo</div>
+        <div class="hud-text-2">SCORE: 7,450 &bull; 02:45</div>
+        <div class="btn-pill-2" style="background: #b45309; border-color: #fde68a;">New Game</div>
+      </div>
+
+      <div class="board-top-row">
+        <div class="board-slot"><span class="slot-label">Deck</span></div>
+        <div class="board-slot"><span class="slot-label">Waste</span></div>
+        <div></div>
+        <div class="mini-card black"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div></div>
+        <div class="mini-card red"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div>
+        <div class="mini-card black"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div></div>
+        <div class="mini-card red"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div></div>
+      </div>
+
+      <!-- 6 Floating Lanterns (Slow, authentic sky ascent) -->
+      <div class="lantern-container" id="lanterns-b">
+        <div class="dyn-lantern medium" style="left: 30px; animation: floatUpGentle 18s linear 0s infinite both, lanternFlicker 3s ease-in-out 0s infinite both;">囍</div>
+        <div class="dyn-lantern small" style="left: 110px; animation: floatUpSwayRight 23s linear 3.5s infinite both, lanternFlicker 2.5s ease-in-out 3.5s infinite both;">福</div>
+        <div class="dyn-lantern large" style="left: 290px; animation: floatUpSwayLeft 19s linear 7s infinite both, lanternFlicker 3.3s ease-in-out 7s infinite both;">囍</div>
+        <div class="dyn-lantern medium" style="left: 200px; animation: floatUpGentle 17s linear 10.5s infinite both, lanternFlicker 3.1s ease-in-out 10.5s infinite both;">禄</div>
+        <div class="dyn-lantern small" style="left: 60px; animation: floatUpSwayRight 22s linear 14s infinite both, lanternFlicker 2.7s ease-in-out 14s infinite both;">寿</div>
+        <div class="dyn-lantern medium" style="left: 250px; animation: floatUpSwayLeft 20s linear 17.5s infinite both, lanternFlicker 3.4s ease-in-out 17.5s infinite both;">吉</div>
+      </div>
+
+      <canvas class="celebration-canvas" id="canvas-b" width="390" height="640"></canvas>
+
+      <div class="board-tableau-cleared">
+        <div class="combo-banner" style="background: linear-gradient(180deg, rgba(30, 41, 59, 0.92) 0%, rgba(15, 23, 42, 0.95) 100%);">
+          <div style="font-size: 26px; font-weight: 900; color: #fef08a; letter-spacing: 1px;">DOUBLE HAPPINESS!</div>
+          <div style="font-size: 13px; font-weight: 800; color: #6ee7b7; margin: 4px 0 14px 0;">Sky Jubilee &bull; Score: 7,450</div>
+          <button class="opt2-btn" style="padding: 10px 24px; font-size: 14px;">Next Deal &#x27F6;</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="play-controls">
+      <button class="btn-replay" onclick="triggerFireworksB()">&#x25B6; Launch 6.5s Paired Fireworks</button>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag gold">Parallax Depth</span> Multi-sized lanterns create a natural sense of depth over the felt.</li>
+      <li><span class="tag highlight">Dual Bursts</span> Rhythmic fireworks in ruby and gold that don't overwhelm.</li>
+    </ul>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- COMBO 4+5 C: GRAND DYNASTY JUBILEE                                -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="combo-c">
+    <div class="option-header">
+      <div class="option-title">Combo C: Grand Dynasty Jubilee (9 Lanterns &bull; 20s Pure Imperial Gold Fireworks)</div>
+      <div class="option-badge gold">⭐ Locked In: Win 2 Celebration</div>
+    </div>
+    <p class="option-desc">
+      Honoring the auspicious Cantonese number 9 (久, <em>gau2</em>, representing eternity and long life): <strong>9 authentic sky lanterns</strong> drift serenely upward while a <strong>20-second symphony of pure Imperial Gold and amber starbursts</strong> illuminates the pine felt with zero eye-straining colors or strobing.
+    </p>
+
+    <div class="iphone-board-frame" id="frame-combo-c">
+      <div class="ui-top-bar-2">
+        <div class="btn-pill-2">&#x21BA; Undo</div>
+        <div class="hud-text-2">SCORE: 7,450 &bull; 02:45</div>
+        <div class="btn-pill-2" style="background: #b45309; border-color: #fde68a;">New Game</div>
+      </div>
+
+      <div class="board-top-row">
+        <div class="board-slot"><span class="slot-label">Deck</span></div>
+        <div class="board-slot"><span class="slot-label">Waste</span></div>
+        <div></div>
+        <div class="mini-card black"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div></div>
+        <div class="mini-card red"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div>
+        <div class="mini-card black"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div></div>
+        <div class="mini-card red"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div></div>
+      </div>
+
+      <!-- 9 Floating Lanterns (Slow, authentic sky ascent) -->
+      <div class="lantern-container" id="lanterns-c">
+        <div class="dyn-lantern medium" style="left: 20px; animation: floatUpGentle 17s linear 0s infinite both, lanternFlicker 3s ease-in-out 0s infinite both;">囍</div>
+        <div class="dyn-lantern large" style="left: 80px; animation: floatUpSwayRight 20s linear 3s infinite both, lanternFlicker 3.4s ease-in-out 3s infinite both;">福</div>
+        <div class="dyn-lantern small" style="left: 140px; animation: floatUpSwayLeft 22s linear 6s infinite both, lanternFlicker 2.6s ease-in-out 6s infinite both;">禄</div>
+        <div class="dyn-lantern medium" style="left: 200px; animation: floatUpGentle 18s linear 9s infinite both, lanternFlicker 3.2s ease-in-out 9s infinite both;">寿</div>
+        <div class="dyn-lantern large" style="left: 270px; animation: floatUpSwayLeft 19s linear 2s infinite both, lanternFlicker 3.5s ease-in-out 2s infinite both;">囍</div>
+        <div class="dyn-lantern small" style="left: 320px; animation: floatUpSwayRight 23s linear 7s infinite both, lanternFlicker 2.8s ease-in-out 7s infinite both;">财</div>
+        <div class="dyn-lantern medium" style="left: 50px; animation: floatUpSwayLeft 18s linear 11s infinite both, lanternFlicker 3.1s ease-in-out 11s infinite both;">吉</div>
+        <div class="dyn-lantern small" style="left: 170px; animation: floatUpGentle 21s linear 14s infinite both, lanternFlicker 2.9s ease-in-out 14s infinite both;">春</div>
+        <div class="dyn-lantern medium" style="left: 240px; animation: floatUpSwayRight 19s linear 16s infinite both, lanternFlicker 3.3s ease-in-out 16s infinite both;">和</div>
+      </div>
+
+      <canvas class="celebration-canvas" id="canvas-c" width="390" height="640"></canvas>
+
+      <div class="board-tableau-cleared">
+        <div class="combo-banner" style="background: radial-gradient(circle at center, rgba(127, 29, 29, 0.95) 0%, rgba(69, 10, 10, 0.98) 100%);">
+          <div style="font-size: 26px; font-weight: 900; color: #fbbf24; letter-spacing: 1px;">GRAND JUBILEE!</div>
+          <div style="font-size: 13px; font-weight: 800; color: #fde68a; margin: 4px 0 14px 0;">Imperial Gold &bull; 9 Auspicious Lanterns</div>
+          <button class="opt2-btn" style="padding: 10px 24px; font-size: 14px;">Next Deal &#x27F6;</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="play-controls">
+      <button class="btn-replay" onclick="triggerFireworksC()">&#x25B6; Launch 20s Imperial Gold Fireworks</button>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag gold">Auspicious 9</span> 9 lanterns honor longevity and eternity (久, <em>gau2</em>).</li>
+      <li><span class="tag highlight">Pure Imperial Gold</span> 20 seconds of warm golden starbursts without competing colors.</li>
+    </ul>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- COMBO 4+5 D: WILLOW CASCADE & ASCENDING LANTERNS                 -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="combo-d">
+    <div class="option-header">
+      <div class="option-title">Combo D: Willow Cascade &amp; Ascending Lanterns (Opposing Flow)</div>
+      <div class="option-badge">Artistic & Mesmerizing</div>
+    </div>
+    <p class="option-desc">
+      A visually stunning contrast of motions: <strong>5 lanterns rise upward</strong> in a serene formation while <strong>golden willow sparks fall slowly downward</strong> like glowing stardust, producing a magical curtain of light without disorienting strobing.
+    </p>
+
+    <div class="iphone-board-frame" id="frame-combo-d">
+      <div class="ui-top-bar-2">
+        <div class="btn-pill-2">&#x21BA; Undo</div>
+        <div class="hud-text-2">SCORE: 7,450 &bull; 02:45</div>
+        <div class="btn-pill-2" style="background: #b45309; border-color: #fde68a;">New Game</div>
+      </div>
+
+      <div class="board-top-row">
+        <div class="board-slot"><span class="slot-label">Deck</span></div>
+        <div class="board-slot"><span class="slot-label">Waste</span></div>
+        <div></div>
+        <div class="mini-card black"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div></div>
+        <div class="mini-card red"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div>
+        <div class="mini-card black"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div></div>
+        <div class="mini-card red"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div></div>
+      </div>
+
+      <!-- 5 Floating Lanterns in ascending arc (Slow, authentic sky ascent) -->
+      <div class="lantern-container" id="lanterns-d">
+        <div class="dyn-lantern medium" style="left: 40px; animation: floatUpGentle 19s linear 0s infinite both, lanternFlicker 3.1s ease-in-out 0s infinite both;">囍</div>
+        <div class="dyn-lantern large" style="left: 100px; animation: floatUpSwayRight 18s linear 4s infinite both, lanternFlicker 3.4s ease-in-out 4s infinite both;">福</div>
+        <div class="dyn-lantern medium" style="left: 175px; animation: floatUpGentle 21s linear 8s infinite both, lanternFlicker 2.9s ease-in-out 8s infinite both;">寿</div>
+        <div class="dyn-lantern large" style="left: 250px; animation: floatUpSwayLeft 20s linear 3s infinite both, lanternFlicker 3.5s ease-in-out 3s infinite both;">囍</div>
+        <div class="dyn-lantern medium" style="left: 310px; animation: floatUpGentle 17s linear 7s infinite both, lanternFlicker 3.0s ease-in-out 7s infinite both;">吉</div>
+      </div>
+
+      <canvas class="celebration-canvas" id="canvas-d" width="390" height="640"></canvas>
+
+      <div class="board-tableau-cleared">
+        <div class="combo-banner">
+          <div style="font-size: 24px; font-weight: 900; color: #fef08a; letter-spacing: 1px;">GOLDEN WILLOW</div>
+          <div style="font-size: 13px; font-weight: 700; color: #a7f3d0; margin: 4px 0 14px 0;">Floating Stardust Jubilee</div>
+          <button class="opt2-btn" style="padding: 10px 24px; font-size: 14px;">Next Deal &#x27F6;</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="play-controls">
+      <button class="btn-replay" onclick="triggerWillowD()">&#x25B6; Launch Golden Willow Sparks</button>
+    </div>
+
+    <ul class="key-features">
+      <li><span class="tag gold">Opposing Physics</span> Upward rising lanterns + downward falling stardust.</li>
+      <li><span class="tag note">No Screen Flashing</span> Gentle trailing embers drift softly down to the bottom.</li>
+    </ul>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- COMBO 4+5 E: LIVE CUSTOMIZER STUDIO                              -->
+  <!-- ================================================================= -->
+  <section class="section-card" id="combo-studio">
+    <div class="option-header">
+      <div class="option-title">Combo E: Live Customizer Studio (Fine-Tune Everything)</div>
+      <div class="option-badge gold">🎛️ Interactive Sandbox</div>
+    </div>
+    <p class="option-desc">
+      Use the sliders below to adjust the exact number of lanterns, firework duration, and spark color palette directly on the iPhone 16e screen in real time!
+    </p>
+
+    <div class="iphone-board-frame" id="frame-studio">
+      <div class="ui-top-bar-2">
+        <div class="btn-pill-2">&#x21BA; Undo</div>
+        <div class="hud-text-2">SCORE: 7,450 &bull; 02:45</div>
+        <div class="btn-pill-2" style="background: #b45309; border-color: #fde68a;">New Game</div>
+      </div>
+
+      <div class="board-top-row">
+        <div class="board-slot"><span class="slot-label">Deck</span></div>
+        <div class="board-slot"><span class="slot-label">Waste</span></div>
+        <div></div>
+        <div class="mini-card black"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,10 C 46,24 37,38 28,49 C 20,58 16,66 16,73 C 16,81 21,86 28,86 C 35,86 40,82 46,75 L 45,95 L 55,95 L 54,75 C 60,82 65,86 72,86 C 79,86 84,81 84,73 C 84,66 80,58 72,49 C 63,38 54,24 50,10 Z"/></svg></div></div></div>
+        <div class="mini-card red"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,88 C 29,64 16,46 16,30 C 16,17 25,10 36,10 C 42,10 47,13 50,18 C 53,13 58,10 64,10 C 75,10 84,17 84,30 C 84,46 71,64 50,88 Z"/></svg></div></div></div>
+        <div class="mini-card black"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="28" r="16"/><circle cx="30" cy="56" r="16"/><circle cx="70" cy="56" r="16"/><path d="M 47,56 L 46,95 L 54,95 L 53,56 Z"/></svg></div></div></div>
+        <div class="mini-card red"><div class="mini-card-header"><span class="mini-rank">K</span><div class="mini-suit-wrap"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,5 Q 55,48 90,50 Q 55,52 50,95 Q 45,52 10,50 Q 45,48 50,5 Z"/></svg></div></div></div>
+      </div>
+
+      <!-- Studio Dynamic Lanterns -->
+      <div class="lantern-container" id="lanterns-studio"></div>
+
+      <!-- Studio Canvas -->
+      <canvas class="celebration-canvas" id="canvas-studio" width="390" height="640"></canvas>
+
+      <div class="board-tableau-cleared">
+        <div class="combo-banner" id="banner-studio">
+          <div style="font-size: 26px; font-weight: 900; color: #fbbf24; letter-spacing: 1px;">CUSTOM JUBILEE</div>
+          <div style="font-size: 13px; font-weight: 700; color: #a7f3d0; margin: 4px 0 14px 0;" id="studio-status-text">Ready to Launch</div>
+          <button class="opt2-btn" style="padding: 10px 24px; font-size: 14px;">Next Deal &#x27F6;</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Control Deck -->
+    <div class="studio-panel">
+      <div>
+        <div class="studio-row">
+          <span class="studio-label">Lantern Count</span>
+          <span class="studio-val" id="val-lanterns">5 Lanterns</span>
+        </div>
+        <input type="range" class="studio-slider" id="slide-lanterns" min="0" max="10" value="5" oninput="updateStudioLanterns()">
+      </div>
+
+      <div>
+        <div class="studio-row">
+          <span class="studio-label">Fireworks Duration</span>
+          <span class="studio-val" id="val-duration">5.0 Seconds</span>
+        </div>
+        <input type="range" class="studio-slider" id="slide-duration" min="2" max="10" step="0.5" value="5" oninput="updateStudioDuration()">
+      </div>
+
+      <div class="studio-row">
+        <span class="studio-label">Color Theme</span>
+        <div class="pill-selector">
+          <div class="pill-opt selected" onclick="setStudioColor('gold', this)">Imperial Gold</div>
+          <div class="pill-opt" onclick="setStudioColor('crimson-gold', this)">Crimson &amp; Gold</div>
+          <div class="pill-opt" onclick="setStudioColor('festive', this)">Multicolor</div>
+        </div>
+      </div>
+
+      <div class="studio-row">
+        <span class="studio-label">Spark Style</span>
+        <div class="pill-selector">
+          <div class="pill-opt selected" onclick="setStudioStyle('burst', this)">Starburst</div>
+          <div class="pill-opt" onclick="setStudioStyle('willow', this)">Weeping Willow</div>
+        </div>
+      </div>
+
+      <button class="btn-replay" style="justify-content: center; width: 100%; margin-top: 4px;" onclick="triggerStudioCelebration()">
+        &#x25B6; Launch Custom Celebration
+      </button>
+    </div>
+  </section>
+
+  <footer>
+    <p>agy-solitaire &bull; Accessible Klondike Solitaire for iPhone 16e &bull; High-Legibility Deck</p>
+  </footer>
+
+  <script>
+    // =========================================================================
+    // SECTION 1: OPTION 1 CASCADE WITH SEAMLESS OPTION 2 MODAL
+    // =========================================================================
+    const canvas1 = document.getElementById('canvas-opt1');
+    const ctx1 = canvas1.getContext('2d');
+    const overlay1 = document.getElementById('overlay-opt1');
+
+    let cascadeCards = [];
+    let cascadeAnimId = null;
+    let modalTimeoutId = null;
+
+    function triggerCascadeWithModal() {
+      if (cascadeAnimId) cancelAnimationFrame(cascadeAnimId);
+      if (modalTimeoutId) clearTimeout(modalTimeoutId);
+
+      // Hide modal first
+      overlay1.classList.remove('visible');
+      ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+      cascadeCards = [];
+
+      // Starting positions corresponding to the 4 Foundation stacks
+      const startX = [190, 240, 290, 340];
+      const startY = 48;
+
+      for (let f = 0; f < 4; f++) {
+        for (let i = 0; i < 13; i++) {
+          cascadeCards.push({
+            x: startX[f],
+            y: startY,
+            vx: (Math.random() - 0.5) * 6 - (f > 1 ? 1 : -1),
+            vy: -(Math.random() * 3 + 1),
+            gravity: 0.28,
+            bounce: 0.76,
+            width: 46,
+            height: 64,
+            isRed: f === 1 || f === 3,
+            delay: (f * 13 + i) * 6,
+            active: false,
+            rank: ['K','Q','J','10','9','8','7','6','5','4','3','2','A'][i]
+          });
+        }
+      }
+
+      let frameCount = 0;
+      function renderCascade() {
+        frameCount++;
+
+        cascadeCards.forEach(c => {
+          if (frameCount > c.delay) c.active = true;
+          if (!c.active) return;
+
+          c.vy += c.gravity;
+          c.x += c.vx;
+          c.y += c.vy;
+
+          // Bounce off floor
+          if (c.y + c.height > canvas1.height) {
+            c.y = canvas1.height - c.height;
+            c.vy = -c.vy * c.bounce;
+            c.vx *= 0.98;
+          }
+
+          // Bounce off walls
+          if (c.x < 0) {
+            c.x = 0;
+            c.vx = -c.vx * 0.8;
+          } else if (c.x + c.width > canvas1.width) {
+            c.x = canvas1.width - c.width;
+            c.vx = -c.vx * 0.8;
+          }
+
+          // Draw Card Stamp
+          ctx1.save();
+          ctx1.fillStyle = '#ffffff';
+          ctx1.strokeStyle = '#111111';
+          ctx1.lineWidth = 1.5;
+          ctx1.shadowColor = 'rgba(0,0,0,0.35)';
+          ctx1.shadowBlur = 4;
+          ctx1.beginPath();
+          ctx1.roundRect(c.x, c.y, c.width, c.height, 4);
+          ctx1.fill();
+          ctx1.stroke();
+
+          // Header
+          ctx1.fillStyle = c.isRed ? '#fee2e2' : '#f1f5f9';
+          ctx1.fillRect(c.x + 1, c.y + 1, c.width - 2, 18);
+
+          // Rank
+          ctx1.font = '900 13px -apple-system, sans-serif';
+          ctx1.fillStyle = c.isRed ? '#c62828' : '#111111';
+          ctx1.fillText(c.rank, c.x + 4, c.y + 14);
+
+          ctx1.restore();
+        });
+
+        if (frameCount < 430) {
+          cascadeAnimId = requestAnimationFrame(renderCascade);
+        }
+      }
+      renderCascade();
+
+      // Show Option 2 Double Happiness modal at ~4.7 seconds (+0.5s extension)
+      modalTimeoutId = setTimeout(() => {
+        overlay1.classList.add('visible');
+      }, 4700);
+    }
+
+    function showModalInstantly() {
+      overlay1.classList.add('visible');
+    }
+
+    // =========================================================================
+    // GENERAL FIREWORK ENGINE UTILITIES
+    // =========================================================================
+    function createBurstSparks(list, cx, cy, count, colors, style = 'burst') {
+      for (let i = 0; i < count; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = style === 'willow' ? (Math.random() * 2.2 + 0.5) : (Math.random() * 3.8 + 1);
+        list.push({
+          x: cx,
+          y: cy,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed - (style === 'willow' ? 1.0 : 0),
+          color: colors[Math.floor(Math.random() * colors.length)],
+          alpha: 1,
+          size: style === 'willow' ? (Math.random() * 2 + 1.2) : (Math.random() * 3 + 1.5),
+          decay: style === 'willow' ? (Math.random() * 0.007 + 0.004) : (Math.random() * 0.016 + 0.01),
+          gravity: style === 'willow' ? 0.07 : 0.03
+        });
+      }
+    }
+
+    function renderSparkList(ctx, list, width, height) {
+      ctx.clearRect(0, 0, width, height);
+      for (let i = list.length - 1; i >= 0; i--) {
+        const s = list[i];
+        s.x += s.vx;
+        s.y += s.vy;
+        s.vy += s.gravity;
+        s.alpha -= s.decay;
+
+        if (s.alpha <= 0) {
+          list.splice(i, 1);
+          continue;
+        }
+
+        ctx.save();
+        ctx.globalAlpha = s.alpha;
+        ctx.fillStyle = s.color;
+        ctx.shadowColor = s.color;
+        ctx.shadowBlur = 6;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    // =========================================================================
+    // COMBO A: 3.5s GENTLE GOLD BURSTS
+    // =========================================================================
+    const canvasA = document.getElementById('canvas-a');
+    const ctxA = canvasA.getContext('2d');
+    let sparksA = [];
+    let animA = null;
+
+    function triggerFireworksA() {
+      if (animA) cancelAnimationFrame(animA);
+      sparksA = [];
+      ctxA.clearRect(0, 0, canvasA.width, canvasA.height);
+
+      const bursts = [
+        { x: 100, y: 180, delay: 0 },
+        { x: 290, y: 220, delay: 35 },
+        { x: 195, y: 130, delay: 75 }
+      ];
+      const colors = ['#fbbf24', '#fef08a', '#f59e0b'];
+      let fCount = 0;
+
+      function loop() {
+        fCount++;
+        bursts.forEach(b => {
+          if (fCount === b.delay) createBurstSparks(sparksA, b.x, b.y, 40, colors, 'burst');
+        });
+
+        renderSparkList(ctxA, sparksA, canvasA.width, canvasA.height);
+
+        if (fCount < 210 || sparksA.length > 0) {
+          animA = requestAnimationFrame(loop);
+        }
+      }
+      loop();
+    }
+
+    // =========================================================================
+    // COMBO B: 6.5s DUAL BURSTS
+    // =========================================================================
+    const canvasB = document.getElementById('canvas-b');
+    const ctxB = canvasB.getContext('2d');
+    let sparksB = [];
+    let animB = null;
+
+    function triggerFireworksB() {
+      if (animB) cancelAnimationFrame(animB);
+      sparksB = [];
+      ctxB.clearRect(0, 0, canvasB.width, canvasB.height);
+
+      const bursts = [
+        { x: 90, y: 160, delay: 0 },
+        { x: 300, y: 180, delay: 30 },
+        { x: 195, y: 120, delay: 70 },
+        { x: 110, y: 320, delay: 110 },
+        { x: 280, y: 340, delay: 150 },
+        { x: 195, y: 240, delay: 200 }
+      ];
+      const colors = ['#fbbf24', '#fef08a', '#ef4444', '#f87171'];
+      let fCount = 0;
+
+      function loop() {
+        fCount++;
+        bursts.forEach(b => {
+          if (fCount === b.delay) createBurstSparks(sparksB, b.x, b.y, 45, colors, 'burst');
+        });
+
+        renderSparkList(ctxB, sparksB, canvasB.width, canvasB.height);
+
+        if (fCount < 390 || sparksB.length > 0) {
+          animB = requestAnimationFrame(loop);
+        }
+      }
+      loop();
+    }
+
+    // =========================================================================
+    // COMBO C: 20s EXTENDED PURE IMPERIAL GOLD FIREWORKS
+    // =========================================================================
+    const canvasC = document.getElementById('canvas-c');
+    const ctxC = canvasC.getContext('2d');
+    let sparksC = [];
+    let animC = null;
+
+    function triggerFireworksC() {
+      if (animC) cancelAnimationFrame(animC);
+      sparksC = [];
+      ctxC.clearRect(0, 0, canvasC.width, canvasC.height);
+
+      // 20 seconds @ 60fps = 1200 frames total duration
+      const bursts = [
+        { x: 85, y: 150, delay: 0 },
+        { x: 305, y: 170, delay: 70 },
+        { x: 195, y: 110, delay: 150 },
+        { x: 110, y: 280, delay: 230 },
+        { x: 280, y: 300, delay: 310 },
+        { x: 195, y: 200, delay: 390 },
+        { x: 90, y: 160, delay: 470 },
+        { x: 300, y: 190, delay: 550 },
+        { x: 195, y: 130, delay: 630 },
+        { x: 130, y: 320, delay: 710 },
+        { x: 260, y: 310, delay: 790 },
+        { x: 95, y: 180, delay: 870 },
+        { x: 295, y: 160, delay: 950 },
+        { x: 195, y: 220, delay: 1030 },
+        { x: 140, y: 140, delay: 1100 },
+        { x: 250, y: 130, delay: 1115 }
+      ];
+      // Pure Imperial Gold palette: shimmer gold, rich amber, and pale radiant yellow
+      const colors = ['#fbbf24', '#fef08a', '#fde047', '#f59e0b', '#fef9c3', '#d97706'];
+      let fCount = 0;
+
+      function loop() {
+        fCount++;
+        bursts.forEach(b => {
+          if (fCount === b.delay) createBurstSparks(sparksC, b.x, b.y, 48, colors, 'burst');
+        });
+
+        renderSparkList(ctxC, sparksC, canvasC.width, canvasC.height);
+
+        if (fCount < 1200 || sparksC.length > 0) {
+          animC = requestAnimationFrame(loop);
+        }
+      }
+      loop();
+    }
+
+    // =========================================================================
+    // COMBO D: WILLOW CASCADE (FALLING SPARKS)
+    // =========================================================================
+    const canvasD = document.getElementById('canvas-d');
+    const ctxD = canvasD.getContext('2d');
+    let sparksD = [];
+    let animD = null;
+
+    function triggerWillowD() {
+      if (animD) cancelAnimationFrame(animD);
+      sparksD = [];
+      ctxD.clearRect(0, 0, canvasD.width, canvasD.height);
+
+      const bursts = [
+        { x: 100, y: 100, delay: 0 },
+        { x: 290, y: 120, delay: 40 },
+        { x: 195, y: 80, delay: 90 },
+        { x: 140, y: 130, delay: 150 },
+        { x: 250, y: 110, delay: 200 }
+      ];
+      const colors = ['#fef08a', '#fbbf24', '#fde047', '#f59e0b'];
+      let fCount = 0;
+
+      function loop() {
+        fCount++;
+        bursts.forEach(b => {
+          if (fCount === b.delay) createBurstSparks(sparksD, b.x, b.y, 65, colors, 'willow');
+        });
+
+        renderSparkList(ctxD, sparksD, canvasD.width, canvasD.height);
+
+        if (fCount < 380 || sparksD.length > 0) {
+          animD = requestAnimationFrame(loop);
+        }
+      }
+      loop();
+    }
+
+    // =========================================================================
+    // COMBO E: INTERACTIVE LIVE CUSTOMIZER STUDIO
+    // =========================================================================
+    const canvasStudio = document.getElementById('canvas-studio');
+    const ctxStudio = canvasStudio.getContext('2d');
+    const lanternContainerStudio = document.getElementById('lanterns-studio');
+    let studioSparks = [];
+    let studioAnimId = null;
+
+    let studioConfig = {
+      lanternCount: 5,
+      durationSec: 5,
+      colorTheme: 'gold',
+      style: 'burst'
+    };
+
+    const characters = ['囍', '福', '禄', '寿', '财', '吉', '春', '和', '泰', '盛'];
+
+    function updateStudioLanterns() {
+      const val = parseInt(document.getElementById('slide-lanterns').value, 10);
+      studioConfig.lanternCount = val;
+      document.getElementById('val-lanterns').textContent = val === 0 ? 'Disabled (0)' : `${val} Lanterns`;
+
+      // Re-populate lanterns
+      lanternContainerStudio.innerHTML = '';
+      if (val === 0) return;
+
+      const animations = ['floatUpGentle', 'floatUpSwayLeft', 'floatUpSwayRight'];
+      const sizes = ['small', 'medium', 'large'];
+
+      for (let i = 0; i < val; i++) {
+        const div = document.createElement('div');
+        const size = sizes[i % sizes.length];
+        const anim = animations[i % animations.length];
+        const dur = (16.0 + (i * 1.5) % 7.0).toFixed(1);
+        const flickerDur = (2.6 + (i * 0.4) % 1.2).toFixed(1);
+        const delay = (i * 2.2).toFixed(1);
+        const left = Math.floor(20 + (i * (350 / Math.max(val, 1)))) % 340;
+
+        div.className = `dyn-lantern ${size}`;
+        div.style.left = `${left}px`;
+        div.style.animation = `${anim} ${dur}s linear ${delay}s infinite both, lanternFlicker ${flickerDur}s ease-in-out ${delay}s infinite both`;
+        div.textContent = characters[i % characters.length];
+
+        lanternContainerStudio.appendChild(div);
+      }
+    }
+
+    function updateStudioDuration() {
+      const val = parseFloat(document.getElementById('slide-duration').value);
+      studioConfig.durationSec = val;
+      document.getElementById('val-duration').textContent = `${val.toFixed(1)} Seconds`;
+    }
+
+    function setStudioColor(theme, elem) {
+      studioConfig.colorTheme = theme;
+      elem.parentNode.querySelectorAll('.pill-opt').forEach(p => p.classList.remove('selected'));
+      elem.classList.add('selected');
+    }
+
+    function setStudioStyle(style, elem) {
+      studioConfig.style = style;
+      elem.parentNode.querySelectorAll('.pill-opt').forEach(p => p.classList.remove('selected'));
+      elem.classList.add('selected');
+    }
+
+    function triggerStudioCelebration() {
+      if (studioAnimId) cancelAnimationFrame(studioAnimId);
+      studioSparks = [];
+      ctxStudio.clearRect(0, 0, canvasStudio.width, canvasStudio.height);
+
+      let colors = ['#fbbf24', '#fef08a', '#f59e0b'];
+      if (studioConfig.colorTheme === 'crimson-gold') {
+        colors = ['#fbbf24', '#fef08a', '#ef4444', '#f87171'];
+      } else if (studioConfig.colorTheme === 'festive') {
+        colors = ['#fbbf24', '#fef08a', '#ef4444', '#f87171', '#34d399', '#60a5fa'];
+      }
+
+      const totalFrames = Math.round(studioConfig.durationSec * 60);
+      const burstCount = Math.max(3, Math.round(studioConfig.durationSec * 1.5));
+      const bursts = [];
+
+      for (let i = 0; i < burstCount; i++) {
+        bursts.push({
+          x: Math.floor(Math.random() * 260 + 65),
+          y: Math.floor(Math.random() * 280 + 90),
+          delay: Math.round((i / burstCount) * (totalFrames - 60))
+        });
+      }
+
+      let fCount = 0;
+      document.getElementById('studio-status-text').textContent = `Jubilee in Progress (${studioConfig.durationSec}s)`;
+
+      function loop() {
+        fCount++;
+        bursts.forEach(b => {
+          if (fCount === b.delay) {
+            createBurstSparks(studioSparks, b.x, b.y, 50, colors, studioConfig.style);
+          }
+        });
+
+        renderSparkList(ctxStudio, studioSparks, canvasStudio.width, canvasStudio.height);
+
+        if (fCount < totalFrames || studioSparks.length > 0) {
+          studioAnimId = requestAnimationFrame(loop);
+        } else {
+          document.getElementById('studio-status-text').textContent = 'Celebration Finished';
+        }
+      }
+      loop();
+    }
+
+    // Auto trigger on initial load
+    window.addEventListener('DOMContentLoaded', () => {
+      triggerCascadeWithModal();
+      triggerFireworksA();
+      triggerFireworksB();
+      triggerFireworksC();
+      triggerWillowD();
+      updateStudioLanterns();
+    });
+  </script>
+</body>
+</html>
