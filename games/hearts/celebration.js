@@ -17,7 +17,63 @@ const HeartsCelebration = (() => {
   }
   function moon() {
     const id = `moon-${serial}`;
-    return `<svg viewBox="0 0 200 200" aria-hidden="true"><defs><radialGradient id="${id}" cx="40%" cy="35%" r="65%"><stop stop-color="#fffef2"/><stop offset=".6" stop-color="#f6e5ae"/><stop offset="1" stop-color="#d7b968"/></radialGradient></defs><circle cx="100" cy="100" r="91" fill="url(#${id})"/><g fill="#b59c60" opacity=".27"><circle cx="67" cy="65" r="16"/><circle cx="127" cy="57" r="9"/><circle cx="138" cy="119" r="19"/><circle cx="153" cy="83" r="6"/><path d="M72 148c-9-8-21-15-21-25 0-12 16-14 21-4 6-10 22-8 22 4 0 10-13 18-22 25Z"/></g></svg>`;
+    // The disk matches the favicon's circle exactly, so the final seal stays put.
+    return `<svg viewBox="0 0 512 512" aria-hidden="true"><defs><radialGradient id="${id}" cx="40%" cy="35%" r="65%"><stop stop-color="#fffef2"/><stop offset=".6" stop-color="#f6e5ae"/><stop offset="1" stop-color="#d7b968"/></radialGradient></defs><circle cx="256" cy="256" r="194" fill="url(#${id})"/><g fill="#b59c60" opacity=".27"><circle cx="185" cy="181" r="34"/><circle cx="314" cy="164" r="19"/><circle cx="337" cy="297" r="40"/><circle cx="369" cy="220" r="13"/><circle cx="202" cy="337" r="23"/></g></svg>`;
+  }
+  // Exact heart outline and placement from icons/icon.svg. Each landing heart
+  // reveals one adjoining region; together those regions form the whole mark.
+  const logoHeart = 'M50 93C39 82 4 58 4 32C4 7 35 1 50 24C65 1 96 7 96 32C96 58 61 82 50 93Z';
+  const landings = [[196,174],[316,174],[160,218],[224,218],[288,218],[352,218],[191,264],[256,264],[321,264],[223,308],[289,308],[244,340],[268,340]];
+  function landingRegion(index) {
+    const [x,y]=landings[index];
+    let polygon=[[0,0],[512,0],[512,512],[0,512]];
+    for(const [otherIndex,[ox,oy]] of landings.entries()) {
+      if(index===otherIndex)continue;
+      // Tiny overlap removes antialias seams when adjacent regions meet.
+      const dx=ox-x,dy=oy-y,edge=(ox*ox+oy*oy-x*x-y*y)/2+Math.hypot(dx,dy);
+      const distance=([px,py])=>px*dx+py*dy-edge;
+      const clipped=[];
+      for(let i=0;i<polygon.length;i++) {
+        const a=polygon[i],b=polygon[(i+1)%polygon.length],da=distance(a),db=distance(b);
+        if(da<=0)clipped.push(a);
+        if((da<=0)!==(db<=0)) {
+          const t=da/(da-db);clipped.push([a[0]+t*(b[0]-a[0]),a[1]+t*(b[1]-a[1])]);
+        }
+      }
+      polygon=clipped;
+    }
+    return polygon.map(p=>p.join(',')).join(' ');
+  }
+  function drawMoon(w,h,motion) {
+    const size=Math.min(430,w*.86,h*.94),cx=w/2,cy=h/2,left=cx-size/2,top=cy-size/2;
+    const logo=()=>piece('<img src="icons/icon.svg" alt="" draggable="false">','celebration-logo',left,top,size);
+    if(!motion) { logo();return; }
+    const queenWidth=Math.min(240,w*.52,h*.55);
+    const queen=piece(cardSVG('Q','S'),'celebration-queen moon-queen',cx-queenWidth/2,cy-queenWidth*.75,queenWidth);
+    queen.dataset.card='QS';
+    animate(queen,[{transform:'perspective(900px) rotateY(0deg)',opacity:1},{transform:'perspective(900px) rotateY(90deg)',opacity:0}],{delay:850,duration:450,easing:'ease-in'});
+    const orb=piece(moon(),'celebration-moon',left,top,size);
+    animate(orb,[{transform:'perspective(900px) rotateY(-90deg)'},{transform:'perspective(900px) rotateY(0deg)'}],{delay:1300,duration:450,easing:'ease-out'});
+    const regions=landings.map((_,i)=>`<clipPath id="landing-${serial}-${i}"><polygon points="${landingRegion(i)}"/></clipPath>`).join('');
+    const patches=landings.map((_,i)=>`<g class="moon-heart-tile" clip-path="url(#landing-${serial}-${i})"><path d="${logoHeart}" transform="translate(116 105) scale(2.8)" fill="#961c18"/></g>`).join('');
+    const mark=piece(`<svg viewBox="0 0 512 512" aria-hidden="true"><defs>${regions}</defs>${patches}</svg>`,'celebration-heartmark',left,top,size);
+    const tiles=mark.querySelectorAll('.moon-heart-tile');
+    const width=Math.min(82,w*.19,h*.30),rx=(w-width)/2-10,ry=(h-width)/2-10;
+    for(let i=0;i<13;i++) {
+      const delay=1900+i*130,duration=2200;
+      const target={x:left+landings[i][0]*size/512,y:top+landings[i][1]*size/512};
+      const el=piece(heart,'celebration-heart',0,0,width),frames=[];
+      for(let step=0;step<=64;step++) {
+        const t=step/64,p=t*t*(3-2*t),angle=i*Math.PI*2/13-Math.PI/2+p*Math.PI*2.2;
+        const x=cx+Math.cos(angle)*rx*(1-p)+(target.x-cx)*p;
+        const y=cy+Math.sin(angle)*ry*(1-p)+(target.y-cy)*p;
+        frames.push({offset:t,transform:`translate(${x-width/2}px,${y-width/2}px) scale(${1-.58*p}) rotate(${Math.sin(p*Math.PI*2)*16}deg)`,opacity:t<.07?t/.07:t>.92?(1-t)/.08:1});
+      }
+      animate(el,frames,{delay,duration,easing:'linear'});
+      animate(tiles[i],[{opacity:0},{opacity:1}],{delay:delay+duration-180,duration:360,easing:'ease-out'});
+    }
+    // Hold the assembled heart before the moon resolves into the exact favicon.
+    animate(logo(),[{opacity:0},{opacity:1}],{delay:6050,duration:650,easing:'ease-in-out'});
   }
   function piece(html, className, x, y, width) {
     const el = document.createElement('div');
@@ -72,18 +128,7 @@ const HeartsCelebration = (() => {
         ],{duration:2400,delay:i*95,easing:'ease-out'});
       }
     } else {
-      const size = Math.min(230,w*.49,h*.49), mx = w/2, my = h*.3;
-      const orb = piece(moon(),'celebration-moon',mx-size/2,my-size/2,size);
-      animate(orb,[{transform:'scale(.7)',opacity:0},{transform:'scale(1)',opacity:1,offset:.18},{transform:'scale(1)',opacity:1,offset:.82},{opacity:0}],{duration:4400,easing:'ease-out'});
-      for(let i=0;i<14;i++) {
-        const queen = i===13, row = i<7 ? 0 : 1, col = i%7;
-        const width = queen ? Math.min(44,w*.105) : Math.min(32,w*.072);
-        const height = queen ? width*1.5 : width;
-        const x = w*(.12+col*.12)-width/2, y = h*(.65+row*.17)-height/2;
-        const el = piece(queen ? cardSVG('Q','S') : heart,queen ? 'celebration-queen' : 'celebration-heart',x,y,width);
-        const dx = mx-x-width/2, dy = my-y-height/2;
-        animate(el,[{opacity:0,transform:'none'},{opacity:1,transform:'none',offset:.14},{opacity:1,offset:.5},{transform:`translate(${dx}px,${dy}px) scale(.15)`,opacity:0}],{duration:2100,delay:600+i*95,easing:'cubic-bezier(.45,0,.25,1)'});
-      }
+      drawMoon(w,h,motion);
     }
   }
   function pause() {
@@ -114,7 +159,7 @@ const HeartsCelebration = (() => {
     document.getElementById('celebration-detail').textContent=detail;
     dialog.dataset.kind=kind;
     const motion=!reduced.matches && typeof Element.prototype.animate==='function';
-    current={kind,motion,onFinish,animations:[],held:new Set(),remaining:motion ? (kind==='clean'?3000:4600) : 1800,started:null,timer:null};
+    current={kind,motion,onFinish,animations:[],held:new Set(),remaining:motion ? ({clean:3000,moon:8200,win:4600}[kind]) : 1800,started:null,timer:null};
     dialog.showModal();draw();resume();
     document.getElementById('celebration-skip').focus({preventScroll:true});
   }

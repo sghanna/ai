@@ -84,7 +84,8 @@ try{
   await page.emulateMedia({reducedMotion:'reduce'});
   await page.waitForFunction(()=>document.querySelector('#celebration-scene').dataset.motion==='off');
   assert.equal(await page.locator('#celebration-scene').getAttribute('data-motion'),'off');
-  assert.equal(await page.locator('.celebration-heart').count(),13);assert.equal(await page.locator('.celebration-queen').count(),1);
+  assert.equal(await page.locator('.celebration-logo img').getAttribute('src'),'icons/icon.svg');
+  assert.equal(await page.locator('.celebration-heart,.celebration-queen').count(),0);
   assert.equal(await page.evaluate(()=>document.getAnimations().length),0);
   await page.screenshot({path:`${artifacts}/celebration-reduced-motion.png`});
   await page.locator('#celebration-skip').click();
@@ -130,7 +131,7 @@ try{
   await touch.page.clock.runFor(7000);
   assert.equal(await touch.page.locator('#celebration-dialog').evaluate(e=>e.open),true);
   await touch.page.evaluate(()=>{Object.defineProperty(document,'hidden',{configurable:true,value:false});document.dispatchEvent(new Event('visibilitychange'));});
-  await touch.page.clock.runFor(5000);
+  await touch.page.clock.runFor(9000);
   assert.equal(await touch.page.locator('#celebration-dialog').evaluate(e=>e.open),false,'Backgrounding during a press clears stale pointer IDs and resumes the timer');
   await touch.context.close();
   report.push({check:'slow release beyond automatic duration, upward drift, duplicate click, cancelled drag, Escape, replacement scene'});

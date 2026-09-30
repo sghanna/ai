@@ -13,6 +13,12 @@
 #celebration-scene { position:relative; width:min(100%,1050px); min-height:0; justify-self:center; overflow:hidden; }
 .celebration-piece { position:absolute; pointer-events:none; }
 .celebration-piece svg { display:block; width:100%; height:auto; }
+.celebration-piece img { display:block; width:100%; height:auto; border-radius:20%; }
+.moon-queen { z-index:3; backface-visibility:hidden; }
+.celebration-moon { z-index:1; backface-visibility:hidden; }
+.celebration-heartmark { z-index:2; }
+.celebration-heart { z-index:4; }
+.celebration-logo { z-index:3; }
 .celebration-star { opacity:.55; }
 .celebration-lantern { filter:drop-shadow(0 0 15px #ffb14d77); }
 .celebration-moon { filter:drop-shadow(0 0 24px #f9db9766); }

@@ -1,10 +1,12 @@
 # Hearts for iPhone and iPad
 
-[Play Hearts](https://sghanna.github.io/ai/games/hearts/)
+[Play Hearts](https://sghanna.github.io/ai/games/hearts/) · [Replay the celebrations](https://sghanna.github.io/ai/previews/hearts-celebrations/)
+
+September 30 update: the queen-to-moon-to-logo sequence uses cache `ai-hearts-v2`. The preview page replays all three animations without changing a saved game.
 
 An ad-free Hearts game with readable cards, three computer opponents, English, Spanish, Vietnamese, saved progress, and offline play. There is no build step or runtime dependency.
 
-This version brings the responsive Codex iPad game together with celebrations inspired by Claude Hearts. A match win sends up warm lanterns, shooting the moon gathers thirteen hearts and the queen of spades into a full moon, and a clean hand sends up five heart cards. Each scene fits the available screen, ends after a few seconds, and has a large **See scores** button. Reduced Motion shows the same artwork without movement.
+This version brings the responsive Codex iPad game together with celebrations inspired by Claude Hearts. A match win sends up warm lanterns, and a clean hand sends up five heart cards. For shooting the moon, a large queen of spades flips to reveal the moon; thirteen larger hearts spiral in and build the crimson heart in the gold-seal favicon. Each scene fits the available screen and has a large **See scores** button. The revised moon sequence lasts about eight seconds, including a pause on the finished logo. Reduced Motion shows still artwork, with the completed logo for shooting the moon.
 
 The game preserves deliberate card selection and confirmation, optional one-tap play, slow presses with modest finger drift, automatic trick collection, and the three-second countdown when only one card is legal. Celebrations leave the cards, scoring, and saved result unchanged. They run when a hand finishes and do not replay after restoring a finished result. A whole-match win takes priority over a hand celebration.
 
@@ -14,7 +16,7 @@ Choose three cards and confirm the pass. Review the received cards, then start p
 
 Menu contains settings, rules, the last trick, and a guarded new-game action. On iPhone or iPad, open the game in Safari and use **Share → Add to Home Screen**. Load the game online once before using it offline.
 
-This release has separate saves (`ai-hearts-game-v2` and its backup), preferences (`ai-hearts-settings-v2`), and cache (`ai-hearts-v1`). Progress in earlier Codex and Claude games stays at those versions; it is not imported here.
+This release has separate saves (`ai-hearts-game-v2` and its backup), preferences (`ai-hearts-settings-v2`), and cache (`ai-hearts-v2`). Progress in earlier Codex and Claude games stays at those versions; it is not imported here.
 
 ## Sources and credit
 
@@ -44,6 +46,8 @@ The celebration suite checks actual final-trick triggers, unchanged scores, rest
 
 Desktop WebKit and Chromium checks supplement physical testing. This release still needs a hands-on playtest on iPhone, iPad Air 2, and iPad mini 5, including Safari toolbars, installation, pinch zoom, and Mom's natural touch gestures.
 
-September 30, 2026 validation: 12 engine/insights tests (including 120 seeded matches), 43 celebration checks, 162 localized phone renders, and 239 tablet checks passed. Native Chromium quick-tap and 6.5-second hold/drift checks confirm that dismissing a scene preserves the result until a separate deliberate tap. The inherited browser suites also passed, including touch, recovery, responsive lifecycle, and offline loading. All 19 precached entries were available offline.
+Initial combined-release validation, September 30, 2026: 12 engine/insights tests (including 120 seeded matches), 43 celebration checks, 162 localized phone renders, and 239 tablet checks passed. Native Chromium quick-tap and 6.5-second hold/drift checks confirm that dismissing a scene preserves the result until a separate deliberate tap. The inherited browser suites also passed, including touch, recovery, responsive lifecycle, and offline loading. All 19 precached entries were available offline.
+
+The moon revision passed the 43 celebration checks again, plus inspection of seven sequence stages at three phone/tablet sizes. The checks verify the queen of spades artwork, thirteen larger hearts, progressive logo assembly, natural completion, Reduced Motion, all preview buttons, and no preview storage writes. The updated offline cache also passed.
 
 After changing cached assets, bump the worker cache version and the matching query strings in `index.html` and `manifest.json`. Publication requires Shawn's authorization and verification of the deployed assets.

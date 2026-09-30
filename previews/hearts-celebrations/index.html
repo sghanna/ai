@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <title>Hearts · Celebrations</title>
+  <base href="../../games/hearts/">
+  <link rel="icon" href="icons/icon.svg">
+  <link rel="stylesheet" href="celebration.css?v=ai-hearts-v2">
+  <link rel="stylesheet" href="../../previews/hearts-celebrations/style.css">
+</head>
+<body>
+  <main>
+    <header><img src="icons/icon.svg" alt="" width="64" height="64"><p class="eyebrow">Hearts · Animation preview</p><h1>Three ways to celebrate.</h1><p>Choose an animation. Replay as often as you like.</p></header>
+    <div class="previews">
+      <article class="moon-preview"><div class="art" id="queen-preview" aria-hidden="true"></div><p class="eyebrow">Updated</p><h2>Shoot the moon</h2><p>A big queen of spades flips into the moon. Thirteen hearts spiral in and build the gold-seal logo.</p><button type="button" data-kind="moon">Play shoot-the-moon</button></article>
+      <article><div class="art lantern-art" aria-hidden="true"><span>🏮</span><span>🏮</span><span>🏮</span></div><p class="eyebrow">Match win</p><h2>Lanterns rise</h2><p>Warm red and gold lanterns float upward to celebrate the lowest final score.</p><button type="button" data-kind="win">Play win animation</button></article>
+      <article><div class="art" id="cards-preview" aria-hidden="true"></div><p class="eyebrow">No points added</p><h2>A clean hand</h2><p>Five heart cards rise from the table after a hand without any penalty points.</p><button type="button" data-kind="clean">Play clean-hand animation</button></article>
+    </div>
+    <footer><p>Each animation opens at your screen size. <strong>See scores</strong> returns here. Your device’s Reduced Motion setting shows still artwork.</p><p>This preview does not change a saved game.</p></footer>
+  </main>
+  <dialog id="celebration-dialog" aria-labelledby="celebration-title" aria-describedby="celebration-detail">
+    <div class="celebration-heading"><h2 id="celebration-title"></h2><p id="celebration-detail"></p></div>
+    <div id="celebration-scene" aria-hidden="true"></div>
+    <div class="celebration-footer"><button id="celebration-skip" type="button">See scores</button></div>
+  </dialog>
+  <script src="deck.js?v=ai-hearts-v2"></script>
+  <script src="touch.js?v=ai-hearts-v2"></script>
+  <script src="celebration.js?v=ai-hearts-v2"></script>
+  <script src="../../previews/hearts-celebrations/preview.js"></script>
+</body>
+</html>

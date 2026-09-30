@@ -1,0 +1,26 @@
+* { box-sizing:border-box; }
+body { margin:0; color:#fff3d9; background:#0b2420; font:18px/1.5 system-ui,sans-serif; }
+main { max-width:1180px; margin:auto; padding:56px 24px 30px; }
+header { max-width:720px; margin-bottom:38px; }
+header>img { float:left; margin-right:18px; border-radius:15px; }
+.eyebrow { text-transform:uppercase; letter-spacing:.12em; color:#e6c783; font-size:13px; font-weight:750; margin:0 0 8px; }
+h1 { font:normal clamp(32px,5vw,52px)/1.12 Georgia,serif; margin:0 0 14px; }
+header>p:last-child { color:#c9d8d1; }
+.previews { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
+article { display:flex; flex-direction:column; padding:24px; border:1px solid #547166; border-radius:24px; background:#15392f; }
+.moon-preview { border-color:#d7b568; background:linear-gradient(155deg,#1d3b50,#14372f); }
+h2 { font:normal 29px/1.15 Georgia,serif; margin:0; }
+article>p:not(.eyebrow) { color:#dfebe4; margin:14px 0 28px; }
+button { -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; touch-action:pinch-zoom; cursor:pointer; }
+article button { min-height:58px; padding:13px 16px; border:1px solid #efd293; border-radius:13px; font:750 17px/1.35 system-ui,sans-serif; background:#f7e5b9; color:#19382b; margin-top:auto; }
+button:focus-visible { outline:3px solid white; outline-offset:4px; }
+.art { height:164px; display:flex; align-items:center; justify-content:center; margin:0 0 25px; }
+.art svg { width:85px; max-height:150px; height:auto; filter:drop-shadow(0 5px 7px #0005); }
+#queen-preview svg { width:96px; transform:rotate(-8deg); }
+#cards-preview svg { width:65px; margin:0 -8px; }
+#cards-preview svg:first-child { transform:rotate(-13deg) translateY(8px); }
+#cards-preview svg:last-child { transform:rotate(13deg) translateY(8px); }
+.lantern-art { gap:4px; font-size:61px; }
+.lantern-art span:nth-child(2) { transform:translateY(-20px); }
+footer { color:#b8cec1; max-width:790px; margin-top:30px; font-size:16px; }
+@media(max-width:800px) { .previews { grid-template-columns:1fr; } main { padding-top:30px; } .art { height:125px; } }
