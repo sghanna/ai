@@ -71,6 +71,7 @@
   for(const type of ['pointerup','pointercancel'])document.addEventListener(type,event=>{held.delete(event.pointerId);schedule();},true);
   for(const type of ['blur','pagehide'])window.addEventListener(type,()=>{held.clear();clearTimeout(timer);generation++;});
   document.addEventListener('visibilitychange',()=>{held.clear();generation++;if(document.hidden)clearTimeout(timer);else schedule();});window.addEventListener('focus',schedule);
+  window.addEventListener('resize',()=>{held.clear();generation++;schedule();});
   HeartsTouch.install(document.body,()=>[generation,state.phase,state.turn,dialogKind],{selector:'button',unavailable:()=>false,selectable:'.help-text',consumeOutsideClick:true});
   load();render();
   if('serviceWorker' in navigator)navigator.serviceWorker.register('service-worker.js').then(()=>navigator.serviceWorker.ready).then(()=>{offlineReady=true;$('save-status').textContent='Saved here · Offline ready';}).catch(()=>{});

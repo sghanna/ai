@@ -93,7 +93,7 @@
   "assets": {
     "index.html": "738a0150375297322aafb4ec05ac9dc272ff9fe7ea7e595cc12a1340bf8578c7",
     "style.css": "1404f73135bff35c86d777a5731a3cfb2cd3e729f634fad6171d255c5e4a4f8c",
-    "app.js": "03eb5caa933a85c20f714d5e03ade24fc554cd1bda18eed983b6dfea2d128989",
+    "app.js": "e79cc91cf0d591548f3efa0565dc11da7b872366fef8192c9e2904568043d7dc",
     "engine.js": "ab244a6fb79afd8e75d09c52c72581a1b290fdbb3b2eb5c0a92bdcfed331516c",
     "deck.js": "6daa18203fcf829e22fbf0652995537c454a1dfd7cf7f1c7fc8a9595fa0de226",
     "touch.js": "512af0a91054951a99c022bff182d947a68935b487e7329a02633a8abbdd3ad7",
@@ -103,5 +103,11 @@
     "icons/icon-180.png": "169346b7c54502e4ce4960e81c637333b34e965de66f219bfb036ae573adf65d",
     "icons/icon-192.png": "97027b66af7b4cf71e1acc508feef4f51a6a41c8865024a9cd99ea209245b9a6",
     "icons/icon-512.png": "76c1a6578fd8d560377217b6fe727d6c08ebc4159734c105289ab029a100e1f4"
-  }
+  },
+  "modal_followup": {
+    "layouts": 15,
+    "help_scroll": "passed",
+    "portfolio_images": "passed"
+  },
+  "interrupted_press_followup": "Synthetic pointer hold pauses computer; rotation clears abandoned held pointer and resumes play."
 }
