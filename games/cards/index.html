@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; font-src 'self'; object-src 'none'; frame-src 'none'; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="theme-color" content="#133e2e"><meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="card-suite-root" content="/ai/games/cards/"><meta name="card-suite-release" content="905f8c95f726efb4">
+<title>Card Games</title>
+<link rel="manifest" href="/ai/games/cards/manifest.webmanifest"><link rel="icon" href="/ai/games/cards/releases/905f8c95f726efb4/icons/icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/ai/games/cards/releases/905f8c95f726efb4/icons/icon-180.png">
+<link rel="stylesheet" href="/ai/games/cards/releases/905f8c95f726efb4/home.css"><link rel="stylesheet" href="/ai/games/cards/releases/905f8c95f726efb4/shared/suite.css">
+</head><body>
+<main class="home">
+<header><img class="collection-icon" src="/ai/games/cards/releases/905f8c95f726efb4/icons/icon.svg" alt="" width="62" height="62" draggable="false"><div><p class="eyebrow">A place to play</p><h1>Card Games</h1></div></header>
+<section class="welcome" aria-labelledby="welcome-title"><h2 id="welcome-title">Choose a game</h2><p>Take your time. Your place is saved.</p></section>
+<a id="continue-game" class="continue" hidden><span><small>Pick up where you left off</small><strong id="continue-title"></strong></span><span aria-hidden="true">↗</span></a>
+<nav class="games" aria-label="Choose a card game">
+<a class="game-choice" data-game="hearts" href="/ai/games/cards/hearts/"><img src="/ai/games/cards/releases/905f8c95f726efb4/hearts/icons/icon.svg" alt="" width="94" height="94" draggable="false"><div><h2>Hearts</h2><p>Keep the points low.</p><span class="game-state" id="hearts-state">Play Hearts</span></div><span class="arrow" aria-hidden="true">›</span></a>
+<a class="game-choice" data-game="euchre" href="/ai/games/cards/euchre/"><img src="/ai/games/cards/releases/905f8c95f726efb4/euchre/icons/icon.svg" alt="" width="94" height="94" draggable="false"><div><h2>Euchre</h2><p>Team up. Choose your trump.</p><span class="game-state" id="euchre-state">Play Euchre</span></div><span class="arrow" aria-hidden="true">›</span></a>
+</nav>
+<section class="offline" aria-label="Offline availability"><span class="status-dot" aria-hidden="true"></span><div><p id="offline-status" role="status" data-state="checking">Checking offline play…</p><p id="offline-detail">Preparing both games on this device.</p><button id="retry-offline" hidden>Try download again</button><p id="update-status" hidden>An update is ready. Close all Card Games tabs, then reopen to use it.</p></div></section>
+<details class="install"><summary>Keep Card Games on your Home Screen</summary><div><p>On iPhone or iPad, open this home page in Safari, tap Share, then Add to Home Screen.</p><p>Wait for “Ready offline” before disconnecting. Both games will be available, even if you have not opened them yet.</p><p>This pilot keeps separate practice progress. Your existing game apps keep their own saved games. Clearing website data removes this device's progress.</p></div></details>
+<footer>No ads. No account. <span>Hearts &amp; Euchre · Pilot</span></footer>
+</main>
+<script src="/ai/games/cards/releases/905f8c95f726efb4/hearts/engine.js"></script><script src="/ai/games/cards/releases/905f8c95f726efb4/euchre/engine.js"></script><script src="/ai/games/cards/releases/905f8c95f726efb4/shared/touch.js"></script><script src="/ai/games/cards/releases/905f8c95f726efb4/shared/progress.js"></script><script src="/ai/games/cards/releases/905f8c95f726efb4/shared/suite.js"></script><script src="/ai/games/cards/releases/905f8c95f726efb4/home.js"></script>
+</body></html>
