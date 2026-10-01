@@ -46,7 +46,7 @@ Twelve engine test groups include 200 complete deterministic matches, card conse
 
 ## Collaboration and assets
 
-Shawn requested the game, selected AGY as collaborator, carried forward the established card-game requirements and requested publication for review. Codex implemented, integrated and tested it. AGY used Gemini 3.8 Flash High with high effort for design and source critique. Codex inspected the rendered screenshots; AGY's separate image review was unavailable. Claude's final check was attempted but could not run because of its weekly usage limit. No Claude review is claimed.
+Shawn requested the game, selected AGY as collaborator, carried forward the established card-game requirements and requested publication for review. Codex implemented, integrated and tested it. AGY used Gemini 3.8 Flash High with high effort for design and source critique. Codex inspected the rendered screenshots; AGY's separate image review was unavailable. Claude's final check was attempted but could not run because of its weekly usage limit. Shawn approved publication with that check deferred on September 30, 2026. No Claude review is claimed.
 
 `deck.js` reuses the established Hearts/Euchre vector card faces, originally adapted from AGY Solitaire. Its unused deck constructor was removed; `engine.js` owns the deck. `touch.js` reuses the released Hearts input helper. The Rummy icon is an original SVG with opaque PNG exports. Review exchanges and test artifacts remain local and excluded from publication.
 

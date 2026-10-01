@@ -84,7 +84,7 @@
   "review": {
     "codex": "Source integration, rendered PNG inspection and browser tests complete.",
     "agy": "Gemini 3.8 Flash High, high effort: design, source and final engine follow-up complete; no release blockers identified. Image review unavailable; Codex inspected rendered PNGs.",
-    "claude": "Attempted; unavailable due weekly usage limit. No review claimed."
+    "claude": "Attempted; unavailable due weekly usage limit. Shawn approved publication with this check deferred on September 30, 2026. No Claude review claimed."
   },
   "limits": [
     "Desktop WebKit and installed Chrome only.",
