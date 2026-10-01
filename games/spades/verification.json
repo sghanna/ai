@@ -1,0 +1,140 @@
+{
+  "date": "2026-09-30",
+  "release": "ai-spades-v1",
+  "engine": {
+    "test_groups": 11,
+    "simulated_matches": 200,
+    "status": "passed"
+  },
+  "browser": [
+    {
+      "check": "WebKit game-state layouts and exposed card hit targets",
+      "passed": 99,
+      "viewports": [
+        [
+          320,
+          568
+        ],
+        [
+          375,
+          667
+        ],
+        [
+          390,
+          740
+        ],
+        [
+          430,
+          932
+        ],
+        [
+          667,
+          375
+        ],
+        [
+          844,
+          390
+        ],
+        [
+          768,
+          1024
+        ],
+        [
+          1024,
+          768
+        ],
+        [
+          1366,
+          768
+        ]
+      ]
+    },
+    {
+      "check": "bid change, reload, explicit Nil warning, correction and confirmation",
+      "passed": true
+    },
+    {
+      "check": "card correction/reload/rotation, menus pause bots, focus return, settings for next match",
+      "passed": true
+    },
+    {
+      "check": "keyboard bidding and reduced motion",
+      "passed": true
+    },
+    {
+      "check": "complete browser match, restored final result, play again at new target",
+      "iterations": 198,
+      "passed": true
+    },
+    {
+      "check": "save fallback, invalid selection, nil failure, bag penalty, denied storage",
+      "passed": true
+    },
+    {
+      "check": "native Chromium touch: real 6.5s holds, 24px button drift, bid/Nil confirmation, card drift, large drag, cancellation, extra finger, modal tap-through",
+      "passed": true
+    },
+    {
+      "check": "offline reload, bidding, help and all install assets",
+      "cacheEntries": 12,
+      "passed": true
+    }
+  ],
+  "repeated_activation": {
+    "cases": 18,
+    "browsers": [
+      "Chromium",
+      "WebKit"
+    ],
+    "inputs": [
+      "mouse",
+      "keyboard",
+      "touch"
+    ],
+    "transitions": [
+      "Play again",
+      "Deal next hand",
+      "See hand score"
+    ],
+    "status": "passed",
+    "deliberate_retry": "accepted after transition guard"
+  },
+  "native_touch": {
+    "hold_duration_ms": 6500,
+    "duration_source": "real wall-clock delay, native CDP touch events"
+  },
+  "targeted_followup": [
+    "Rendered rank bounds remain exposed and hittable when a lower-row card is selected across six viewport sizes.",
+    "All three PNG icon exports have alpha255 throughout; enlarged and home-screen-size renders inspected on light and dark backgrounds."
+  ],
+  "source_review": {
+    "agy": "Gemini 3.8 Flash High, high effort: ready for public review",
+    "claude": "Original repeated-activation blocker resolved; no remaining release blockers; ready for public review."
+  },
+  "limits": [
+    "Desktop browser automation only.",
+    "Physical iPhone/iPad, Safari toolbars, installation, pinch zoom, VoiceOver and natural player gestures remain untested."
+  ],
+  "assets": {
+    "index.html": "7068333027f565217c186d00f5ae68e2c038b750fa84a285ed7e79be3cdf2759",
+    "style.css": "baa618cc93e8c6c3e483764769f6ab9cd3a49c2a438b625507e0513a5e3235d8",
+    "engine.js": "6f5dc2cf1ac2888b4e5d16e575efd973811f038f04588b0b79249e2922e5fb12",
+    "app.js": "aab868eeee80cc969f59344ff0d47a326cfc5e499c405b30fc9453be09b71c2b",
+    "deck.js": "e9bee798f301889642e3b9b3a9694359bb58138cce728b551b878a810055506c",
+    "touch.js": "512af0a91054951a99c022bff182d947a68935b487e7329a02633a8abbdd3ad7",
+    "service-worker.js": "c08b9488b50fd3ef3109d0fcf1685873ec45b39be9945d11ede05d553b54dfa1",
+    "manifest.json": "78754fced0a968c55ccfbe6f22a5abf47be4beadbe1584adf3303f8968d6c0e3",
+    "icons/icon.svg": "62ae1a506e778621104d2c279c523f3021a2d852d397beff10a581b785e699fd",
+    "icons/icon-180.png": "3965bf38fe16a7039d5331c57c2d6321ced119ad39d39547a6626beb2a98a7f4",
+    "icons/icon-192.png": "701d33e42c40fa9c74cbc9e49276c333a6daadd60048011936e0ed0b88b90854",
+    "icons/icon-512.png": "b12bbdb5519af4f328de66ea06da9a9e630b3f615796e00709733263e3cccfc3"
+  },
+  "test_environment": {
+    "automation_library": "Playwright 1.64.0-alpha-1790635538000",
+    "engines": [
+      "Desktop WebKit",
+      "Installed Google Chrome"
+    ],
+    "note": "Regression exercises the 500ms transition guard. Held-key-repeat suppression and multi-click detail guard additionally inspected in source review."
+  }
+}
