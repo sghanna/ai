@@ -2,7 +2,8 @@
  * agy-solitaire: Service Worker (Cache-First Offline Play)
  */
 
-const CACHE_NAME = 'agy-solitaire-v23';
+const CACHE_PREFIX = 'agy-solitaire-';
+const CACHE_NAME = `${CACHE_PREFIX}v24`;
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -36,7 +37,7 @@ self.addEventListener('activate', (e) => {
     caches.keys().then((keys) => {
       return Promise.all(
         keys.map((key) => {
-          if (key !== CACHE_NAME) {
+          if (key.startsWith(CACHE_PREFIX) && key !== CACHE_NAME) {
             return caches.delete(key);
           }
         })
@@ -47,8 +48,9 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
+  if (e.request.method !== 'GET' || new URL(e.request.url).origin !== self.location.origin) return;
   e.respondWith(
-    caches.match(e.request, { ignoreSearch: true }).then((response) => {
+    caches.open(CACHE_NAME).then((cache) => cache.match(e.request, { ignoreSearch: true })).then((response) => {
       return response || fetch(e.request);
     })
   );
