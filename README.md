@@ -21,3 +21,5 @@ Rule (Shawn, 2026-09-29): only AI work directed by Shawn Hanna in collaboration 
 [Play Bridge](https://sghanna.github.io/ai/games/bridge/) - bidding, declarer and dummy play, four-board practice sessions, saved progress and offline support. Review build. [Source and checks](games/bridge/README.md).
 
 [Play Canasta](https://sghanna.github.io/ai/games/canasta/) - classic partnership play with editable meld drafts, readable cards, saved matches and offline support. Review build. [Source and checks](games/canasta/README.md).
+
+[Play Rummy](https://sghanna.github.io/ai/games/rummy/) - classic two-player Rummy with sets and runs, deliberate moves, saved matches and offline play. Review build. [Source and checks](games/rummy/README.md).
