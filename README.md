@@ -4,6 +4,8 @@
 
 AI work directed by Shawn Hanna, built in collaboration with Antigravity, Claude, and Codex.
 
+[Play Card Games](https://sghanna.github.io/ai/games/card-games/) - Hearts and Euchre in one installable home, with separate saved progress and a shared offline download. Two-game pilot. [Release and checks](games/card-games/README.md).
+
 [Play Hearts](https://sghanna.github.io/ai/games/hearts/) — the iPhone and iPad game with responsive win, moon, and clean-hand celebrations. [Source and checks](games/hearts/README.md).
 
 [Play Solitaire](https://sghanna.github.io/ai/games/solitaire/) — the accessible iPhone and iPad Klondike game with responsive Didone typography, guaranteed winnable deals, and auspicious celebrations. [Portfolio Page](https://sghanna.github.io/ai/games/solitaire/portfolio.html) · [Deep Case Study](https://sghanna.github.io/ai/games/solitaire/case-study.html) · [Source and checks](games/solitaire/README.md).
