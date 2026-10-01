@@ -17,3 +17,5 @@ Rule (Shawn, 2026-09-29): only AI work directed by Shawn Hanna in collaboration 
 [Play Euchre](https://sghanna.github.io/ai/games/euchre/) - a partnership card game with readable cards, deliberate bidding and play, saved matches and offline support. Review build. [Source and checks](games/euchre/README.md).
 
 [Play Spades](https://sghanna.github.io/ai/games/spades/) - a partnership card game with thirteen-card hands, deliberate bids and Nil, visible contracts and bags, saved matches and offline play. Review build. [Source and checks](games/spades/README.md).
+
+[Play Bridge](https://sghanna.github.io/ai/games/bridge/) - bidding, declarer and dummy play, four-board practice sessions, saved progress and offline support. Review build. [Source and checks](games/bridge/README.md).
