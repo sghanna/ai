@@ -19,3 +19,5 @@ Rule (Shawn, 2026-09-29): only AI work directed by Shawn Hanna in collaboration 
 [Play Spades](https://sghanna.github.io/ai/games/spades/) - a partnership card game with thirteen-card hands, deliberate bids and Nil, visible contracts and bags, saved matches and offline play. Review build. [Source and checks](games/spades/README.md).
 
 [Play Bridge](https://sghanna.github.io/ai/games/bridge/) - bidding, declarer and dummy play, four-board practice sessions, saved progress and offline support. Review build. [Source and checks](games/bridge/README.md).
+
+[Play Canasta](https://sghanna.github.io/ai/games/canasta/) - classic partnership play with editable meld drafts, readable cards, saved matches and offline support. Review build. [Source and checks](games/canasta/README.md).

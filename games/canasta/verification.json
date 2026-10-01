@@ -1,0 +1,95 @@
+{
+  "release": "ai-canasta-v1",
+  "checked_on": "2026-09-30",
+  "engine": {
+    "groups": 13,
+    "complete_seeded_matches": 200,
+    "passed": true
+  },
+  "browser": [
+    {
+      "check": "WebKit responsive states",
+      "passed": 72,
+      "viewports": [
+        [
+          320,
+          568
+        ],
+        [
+          375,
+          667
+        ],
+        [
+          390,
+          740
+        ],
+        [
+          430,
+          932
+        ],
+        [
+          667,
+          375
+        ],
+        [
+          844,
+          390
+        ],
+        [
+          820,
+          1180
+        ],
+        [
+          1180,
+          820
+        ],
+        [
+          1440,
+          900
+        ]
+      ]
+    },
+    {
+      "check": "selection correction, reload, rotation, keyboard discard",
+      "passed": true
+    },
+    {
+      "check": "draft preview, persistence, cancellation and confirmation",
+      "passed": true
+    },
+    {
+      "check": "pile planning, cancellation and atomic pickup",
+      "passed": true
+    },
+    {
+      "check": "menus pause bots, settings persist, Escape restores focus, new match cancel",
+      "passed": true
+    },
+    {
+      "check": "round results and match restart",
+      "passed": true
+    },
+    {
+      "check": "complete match through visible controls",
+      "passed": true,
+      "steps": 423
+    },
+    {
+      "check": "corrupt primary save recovers valid backup",
+      "passed": true
+    },
+    {
+      "check": "Chrome offline reload and saved state",
+      "passed": true
+    },
+    {
+      "check": "native Chrome touch: holds, action drift, card drag, cancel, multiple fingers, duplicate click; selection prevention and zoom-capable CSS",
+      "passed": true
+    }
+  ],
+  "limits": [
+    "No physical-device playtest.",
+    "Desktop WebKit offline simulation returned an internal browser error; Chrome offline check passed.",
+    "Claude review unavailable: weekly usage limit; AGY approved after source reconciliation."
+  ]
+}
