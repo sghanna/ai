@@ -28,7 +28,7 @@ The computer uses simple heuristics and receives its own cards and visible table
 
 ## Source and verification
 
-Canonical source: `~/codex/rummy/`. Public deployment: `games/rummy/` in `sghanna/ai`. Release cache: `ai-rummy-v1`.
+Canonical source: `~/codex/rummy/`. Public deployment: `games/rummy/` in `sghanna/ai`. Release cache: `ai-rummy-v2`.
 
 ```sh
 npm ci

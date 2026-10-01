@@ -1,6 +1,6 @@
 {
   "date": "2026-09-30",
-  "release": "ai-rummy-v1",
+  "release": "ai-rummy-v2",
   "engine": {
     "test_groups": 12,
     "simulated_matches": 200,
@@ -91,14 +91,14 @@
     "Physical iPhone/iPad, Safari toolbars, pinch zoom, VoiceOver, installation and natural gestures remain untested."
   ],
   "assets": {
-    "index.html": "738a0150375297322aafb4ec05ac9dc272ff9fe7ea7e595cc12a1340bf8578c7",
+    "index.html": "2fd829d0ccfef7d6719bfbaa7110f55bdc69e2f33d991f561fee72abdfaa8595",
     "style.css": "1404f73135bff35c86d777a5731a3cfb2cd3e729f634fad6171d255c5e4a4f8c",
     "app.js": "e79cc91cf0d591548f3efa0565dc11da7b872366fef8192c9e2904568043d7dc",
     "engine.js": "ab244a6fb79afd8e75d09c52c72581a1b290fdbb3b2eb5c0a92bdcfed331516c",
     "deck.js": "6daa18203fcf829e22fbf0652995537c454a1dfd7cf7f1c7fc8a9595fa0de226",
     "touch.js": "512af0a91054951a99c022bff182d947a68935b487e7329a02633a8abbdd3ad7",
-    "manifest.json": "359bfb1c4502997925735b35af4e86c25d60934029127dfbbf4d835d234554b1",
-    "service-worker.js": "b197cf4c5dcf6557405dea85d68cf4edaac6685b834b46e9cacf950ded0ee52c",
+    "manifest.json": "55e9e2ad0ca6f354d156709fcd7e2e438744e0f7748e18b533965c08b7a0d45e",
+    "service-worker.js": "7d6bf4f7240e674e051a0d4a639a52c35ca5a6e824124a766ca9376b6934cb73",
     "icons/icon.svg": "5795c1b5abf5cae059bcc8d7caeab34b94fd1a32eeb6a4f292eaab1ac63db81b",
     "icons/icon-180.png": "169346b7c54502e4ce4960e81c637333b34e965de66f219bfb036ae573adf65d",
     "icons/icon-192.png": "97027b66af7b4cf71e1acc508feef4f51a6a41c8865024a9cd99ea209245b9a6",
@@ -109,5 +109,6 @@
     "help_scroll": "passed",
     "portfolio_images": "passed"
   },
-  "interrupted_press_followup": "Synthetic pointer hold pauses computer; rotation clears abandoned held pointer and resumes play."
+  "interrupted_press_followup": "Synthetic pointer hold pauses computer; rotation clears abandoned held pointer and resumes play.",
+  "cache_version_followup": "Final ai-rummy-v2 native touch and offline checks passed with 12 cached assets."
 }

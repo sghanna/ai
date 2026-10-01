@@ -1,6 +1,6 @@
 'use strict';
-const CACHE='ai-rummy-v1';
-const VERSION='rummy-v1';
+const CACHE='ai-rummy-v2';
+const VERSION='rummy-v2';
 const ASSETS=['./','index.html','style.css','deck.js','engine.js','touch.js','app.js','manifest.json','icons/icon.svg','icons/icon-180.png','icons/icon-192.png','icons/icon-512.png'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS.map(path=>path==='./'?path:`${path}?v=${VERSION}`)))));
 // Wait for the old game to close before activating an update.
