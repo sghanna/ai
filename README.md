@@ -15,13 +15,3 @@ Rule (Shawn, 2026-09-29): only AI work directed by Shawn Hanna in collaboration 
 [Replay the celebrations](https://sghanna.github.io/ai/previews/hearts-celebrations/) — watch the win, shoot-the-moon, and clean-hand animations without playing a match.
 
 [Play Words](https://sghanna.github.io/ai/games/words/) - Word Wheel for iPhone, iPad and laptop browsers, with 1,000 levels, keyboard play and offline support. [Source and checks](games/words/README.md). [Portfolio case study](https://sghanna.github.io/ai/games/words/portfolio.html).
-
-[Play Euchre](https://sghanna.github.io/ai/games/euchre/) - a partnership card game with readable cards, deliberate bidding and play, saved matches and offline support. Review build. [Source and checks](games/euchre/README.md).
-
-[Play Spades](https://sghanna.github.io/ai/games/spades/) - a partnership card game with thirteen-card hands, deliberate bids and Nil, visible contracts and bags, saved matches and offline play. Review build. [Source and checks](games/spades/README.md).
-
-[Play Bridge](https://sghanna.github.io/ai/games/bridge/) - bidding, declarer and dummy play, four-board practice sessions, saved progress and offline support. Review build. [Source and checks](games/bridge/README.md).
-
-[Play Canasta](https://sghanna.github.io/ai/games/canasta/) - classic partnership play with editable meld drafts, readable cards, saved matches and offline support. Review build. [Source and checks](games/canasta/README.md).
-
-[Play Rummy](https://sghanna.github.io/ai/games/rummy/) - classic two-player Rummy with sets and runs, deliberate moves, saved matches and offline play. Review build. [Source and checks](games/rummy/README.md).

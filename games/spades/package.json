@@ -1,7 +1,0 @@
-{
-  "name": "spades-for-shawn",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {"test":"node --test tests/engine.test.cjs", "test:browser":"node tests/browser.mjs", "test:activation":"node tests/activation.mjs"},
-  "devDependencies": {"playwright":"1.63.0"}
-}
