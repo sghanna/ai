@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="description" content="Shawn Hanna | Program manager | San Francisco. Program management for AI adoption, learning and talent programs, and workflow improvement.">
+<link rel="icon" href="data:,">
+<title>Shawn Hanna | Program manager</title>
+<style>
+/* Shared Codex type, color, spacing, and interaction styles. */
+:root {
+  --paper: #f7f9fc; --ink: #172c43; --muted: #536278;
+  --blue: #2855b5; --bright: #285ad7; --line: #c9d4e0;
+  --tint: #e1e9f0; --focus: #bd3c16;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 18px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, p, figure, blockquote { margin: 0; }
+h1, h2, h3 { line-height: 1.12; font-weight: 620; }
+h2 { font-size: 46px; letter-spacing: -1.8px; }
+h3 { font-size: 30px; letter-spacing: -.8px; }
+p + p { margin-top: 18px; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 5px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible { outline: 3px solid var(--focus); outline-offset: 5px; border-radius: 2px; }
+.wrap { width: min(1240px, calc(100% - 112px)); margin-inline: auto; }
+.skip { position: absolute; top: -100px; left: 16px; z-index: 10; background: white; padding: 12px 20px; }
+.skip:focus { top: 12px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.eyebrow { font-size: 16px; font-weight: 650; line-height: 1.6; letter-spacing: 1.6px; text-transform: uppercase; }
+
+/* Header and opening use the same type and margins as the rest of the page. */
+.nav { display: flex; justify-content: space-between; align-items: center; gap: 24px; min-height: 98px; }
+.brand { font-size: 24px; font-weight: 650; letter-spacing: -.7px; text-decoration: none; white-space: nowrap; }
+.nav nav { display: flex; flex-wrap: wrap; align-items: center; gap: 28px; font-size: 16px; }
+.nav nav a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; font-weight: 400; }
+.nav nav a:hover { text-decoration: underline; }
+.hero { padding-block: 30px 64px; }
+.hero .eyebrow { color: var(--blue); font-size: 14px; letter-spacing: 1.3px; margin-bottom: 24px; }
+h1 { max-width: 1100px; font-size: clamp(52px, 4.5vw, 65px); letter-spacing: -3.3px; line-height: 1.035; font-weight: 620; text-wrap: balance; }
+h1 span { display: block; color: var(--bright); margin-top: 10px; }
+.opening { max-width: 990px; margin-top: 28px; font-size: 18px; color: var(--muted); }
+.trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 36px; }
+.mv { min-width: 0; background: white; border: 1px solid var(--line); border-radius: 3px; padding: 24px; display: grid; grid-template-rows: auto auto 1fr auto; gap: 16px; }
+.mv .lab { font-size: 14px; font-weight: 650; letter-spacing: 1.3px; text-transform: uppercase; color: var(--blue); }
+.mv .big { font-size: 44px; font-weight: 620; line-height: 1.05; letter-spacing: -1.5px; margin: 0; }
+.mv .big span { color: var(--bright); margin-inline: .12em; }
+.mv .big.sm { font-size: 27px; letter-spacing: -.8px; line-height: 1.12; }
+.mv .cap { font-size: 17px; line-height: 1.5; color: var(--muted); grid-row: 4; margin: 0; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-self: center; }
+.dots { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; max-width: 110px; }
+.dots i { aspect-ratio: 1; border-radius: 50%; background: var(--tint); }
+.dots.before i.on { background: var(--muted); }
+.dots.after i.on { background: var(--bright); }
+.sealrow { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 18px; align-items: center; align-self: start; }
+.seal { width: 92px; height: 92px; border-radius: 50%; display: grid; place-content: center; text-align: center; background: #fff6dc; border: 2px solid #a17b27; box-shadow: inset 0 0 0 5px white; color: #5c4106; }
+.seal span { font-size: 12px; font-weight: 650; letter-spacing: 1.5px; text-transform: uppercase; }
+.seal b { font-size: 30px; font-weight: 620; line-height: 1; letter-spacing: -1px; }
+.mtl { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); position: relative; align-self: center; }
+.mtl::before { content: ""; position: absolute; left: 8px; right: 8px; top: 7px; height: 2px; background: #748ca7; }
+.mtl li { display: grid; gap: 6px; position: relative; }
+.mtl li:last-child { justify-items: end; text-align: right; }
+.mtl i { width: 16px; height: 16px; border-radius: 50%; background: white; border: 3px solid var(--blue); }
+.mtl li:last-child i { background: var(--blue); }
+.mtl span { font-size: 16px; line-height: 1.4; font-weight: 600; color: var(--muted); }
+
+/* Existing Codex content sections. */
+.section { padding-block: 80px; }
+.white { background: white; border-block: 1px solid var(--line); }
+.section-head { margin-bottom: 44px; }
+.section-head .eyebrow { margin-bottom: 17px; color: var(--blue); }
+.story p, .feature-copy p, .method p, .contact p { color: var(--muted); font-size: 18px; }
+.story h3, .feature-copy h3 { margin-bottom: 20px; }
+.feature-row { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.story .eyebrow, .feature-copy .eyebrow { color: var(--blue); font-size: 16px; margin-bottom: 15px; }
+.outcomes { display: flex; gap: 34px; padding-top: 24px; margin-top: 24px; border-top: 1px solid var(--line); }
+.outcomes p { flex: 1; margin: 0; font-size: 16px; }
+.outcomes strong { display: block; font-size: 25px; color: var(--blue); letter-spacing: -.6px; }
+.handoff { background: var(--tint); padding: 30px; }
+.handoff figcaption { color: var(--ink); font-size: 18px; line-height: 1.5; margin-bottom: 24px; }
+.handoff ol { list-style: none; padding: 0; margin: 0; }
+.handoff li { display: grid; grid-template-columns: 102px 1fr; gap: 22px; position: relative; padding: 0 0 30px; }
+.handoff li:last-child { padding-bottom: 0; }
+.handoff .time { color: var(--blue); font-size: 14px; letter-spacing: .6px; font-weight: 700; text-transform: uppercase; padding-top: 3px; }
+.handoff .task { border-left: 2px solid #748ca7; padding-left: 22px; font-size: 16px; color: var(--muted); }
+.handoff .task strong { display: block; color: var(--ink); font-size: 18px; margin-bottom: 4px; font-weight: 600; }
+.handoff li:not(:last-child)::after { content: "\2193"; position: absolute; left: 117px; bottom: 4px; color: var(--blue); font-size: 20px; line-height: 24px; }
+.story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; padding-block: 44px; margin-top: 44px; border-top: 1px solid var(--line); }
+.boa-row { padding-top: 44px; border-top: 1px solid var(--line); }
+.pullquote { padding-left: 28px; border-left: 3px solid var(--bright); }
+.pullquote blockquote { font: 29px/1.4 Georgia, "Times New Roman", serif; letter-spacing: -.35px; }
+.pullquote figcaption { margin-top: 18px; font-size: 16px; color: var(--muted); }
+.pullquote figcaption strong { color: var(--ink); font-weight: 600; }
+.quote-source { display: block; margin-top: 5px; }
+.quote-band { padding-block: 42px; }
+.quote-band .pullquote { max-width: 980px; margin-inline: auto; }
+.work { border-top: 1px solid var(--line); }
+.feature-copy h3 { font-size: 36px; letter-spacing: -1.2px; }
+.text-link { display: inline-block; font-size: 16px; font-weight: 600; color: var(--blue); margin-top: 22px; padding-block: 4px; min-height: 44px; }
+.proof { background: var(--tint); padding: 20px; }
+.proof img { width: 100%; border: 1px solid #748ca7; }
+figcaption { font-size: 16px; color: var(--muted); line-height: 1.5; }
+.proof figcaption { padding-top: 14px; }
+.games { border-top: 1px solid var(--line); margin-top: 52px; padding-top: 48px; }
+.games-intro { display: grid; grid-template-columns: 1.45fr 1fr; gap: 64px; align-items: end; }
+.player { display: grid; grid-template-columns: 160px 1fr; align-items: end; gap: 20px; }
+.player img { width: 100%; border-radius: 14px; }
+.games-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 30px; }
+.game { min-width: 0; }
+.game img { width: 100%; border: 1px solid var(--line); border-radius: 3px; }
+.game figcaption { padding-top: 15px; display: flex; justify-content: space-between; gap: 12px; }
+.game figcaption strong { color: var(--ink); font-size: 18px; font-weight: 600; display: block; }
+.game a { color: var(--blue); font-size: 16px; font-weight: 600; padding: 4px 0; align-self: start; min-height: 44px; }
+.game-checks { display: flex; flex-wrap: wrap; gap: 10px 32px; margin-top: 22px; font-size: 16px; color: var(--muted); }
+.project-row { display: grid; grid-template-columns: 50px 1fr 240px; align-items: start; gap: 30px; padding-block: 36px; border-top: 1px solid var(--line); margin-top: 42px; }
+.project-row + .project-row { margin-top: 0; padding-bottom: 0; }
+.index { color: var(--blue); font-family: monospace; font-size: 16px; padding-top: 6px; }
+.project-row .text-link { margin-top: 0; justify-self: end; }
+.method .section-head { margin-bottom: 36px; }
+
+/* Hybrid-6's connected process columns and shaded boxes. */
+.phases { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; position: relative; margin-top: 8px; }
+.phases::before { content: ""; position: absolute; left: 0; right: 0; top: 11px; height: 2px; background: var(--line); }
+.phase { position: relative; display: grid; grid-row: span 3; grid-template-rows: subgrid; row-gap: 0; padding-top: 44px; }
+.phase::before { content: ""; position: absolute; left: 0; top: 4px; width: 16px; height: 16px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 0 5px white; }
+.phase-tag { position: absolute; left: 30px; top: 0; font-size: 16px; font-weight: 650; letter-spacing: 1.4px; text-transform: uppercase; color: var(--blue); background: white; padding: 0 10px; line-height: 24px; }
+.phase h3 { font-size: 24px; letter-spacing: -.4px; margin: 0 0 14px; }
+.phase-step { font-size: 18px; line-height: 1.5; color: var(--muted); margin-bottom: 24px; }
+.phase-get { background: var(--tint); padding: 20px 22px 22px; border-top: 3px solid var(--blue); }
+.phase-cap { display: block; font-size: 15px; font-weight: 650; letter-spacing: 1.3px; text-transform: uppercase; color: var(--blue); margin-bottom: 8px; }
+.phase-get strong { display: block; font-size: 20px; line-height: 1.3; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+.phase-get p { font-size: 17px; line-height: 1.5; color: var(--muted); }
+.contact { padding-block: 72px; background: var(--tint); }
+.contact h2 { margin-bottom: 36px; }
+.contact .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; }
+.contact h3 { font-size: 22px; margin-bottom: 16px; letter-spacing: -.3px; }
+.contact .text-link { margin-top: 28px; }
+.offer-quote { margin-top: 30px; }
+.offer-quote blockquote { font-size: 28px; }
+.offer-quote blockquote p { font: inherit; color: var(--ink); }
+footer { padding-block: 26px; font-size: 16px; }
+.footer-inner { display: flex; justify-content: space-between; gap: 24px; }
+footer nav { display: flex; flex-wrap: wrap; gap: 24px; }
+footer a { display: inline-block; padding-block: 4px; }
+
+@media (max-width: 1100px) {
+  .wrap { width: calc(100% - 64px); }
+  .feature-row, .story-grid, .games-intro, .contact .two-col { gap: 36px; }
+  .project-row { grid-template-columns: 30px 1fr 190px; gap: 20px; }
+  .player { grid-template-columns: 133px 1fr; gap: 16px; }
+  .nav nav { gap: 22px; }
+  .handoff { padding: 24px; }
+  .trio { gap: 20px; }
+  .mv { padding: 20px; }
+  .sealrow { grid-template-columns: 1fr; gap: 14px; }
+}
+@media (max-width: 900px) {
+  .trio { grid-template-columns: 1fr; }
+  .mv { padding: 24px; }
+  .sealrow { grid-template-columns: auto minmax(0, 1fr); }
+  .phases { grid-template-columns: 1fr; gap: 36px; padding-left: 34px; }
+  .phases::before { left: 7px; right: auto; top: 8px; bottom: 8px; width: 2px; height: auto; }
+  .phase { display: block; padding-top: 0; }
+  .phase::before { left: -34px; top: 2px; }
+  .phase-tag { position: static; background: none; padding: 0; margin-bottom: 6px; display: block; }
+}
+@media (max-width: 800px) {
+  .feature-row, .story-grid, .games-intro, .contact .two-col { grid-template-columns: 1fr; }
+  .player { max-width: 430px; grid-template-columns: 133px 1fr; }
+  .proof { max-width: 650px; }
+}
+@media (max-width: 600px) {
+  .wrap { width: calc(100% - 40px); }
+  .nav { flex-direction: column; align-items: flex-start; justify-content: center; gap: 4px; padding-block: 18px 8px; min-height: 108px; }
+  .brand { font-size: 22px; }
+  .nav nav { width: 100%; justify-content: space-between; gap: 0 13px; font-size: 16px; }
+  .hero { padding-block: 26px 46px; }
+  .hero .eyebrow { letter-spacing: .9px; margin-bottom: 20px; }
+  h1 { font-size: 43px; letter-spacing: -1.85px; line-height: 1.06; }
+  h1 span { margin-top: 8px; }
+  .opening { margin-top: 22px; }
+  .trio { margin-top: 28px; }
+  .section { padding-block: 52px; }
+  .section-head { margin-bottom: 30px; }
+  h2 { font-size: 35px; letter-spacing: -1.1px; }
+  h3 { font-size: 28px; }
+  .feature-copy h3 { font-size: 31px; letter-spacing: -.8px; }
+  .outcomes { gap: 22px; }
+  .outcomes strong { font-size: 23px; }
+  .handoff { padding: 22px; }
+  .handoff li { grid-template-columns: 82px 1fr; gap: 15px; }
+  .handoff .task { padding-left: 15px; }
+  .handoff .task strong { font-size: 16px; }
+  .handoff li:not(:last-child)::after { left: 90px; }
+  .story-grid { margin-top: 34px; padding-block: 34px; gap: 34px; }
+  .story-grid .story + .story { border-top: 1px solid var(--line); padding-top: 34px; }
+  .boa-row { padding-top: 34px; }
+  .pullquote { padding-left: 20px; }
+  .pullquote blockquote, .quote-band blockquote, .offer-quote blockquote { font-size: 26px; }
+  .quote-band { padding-block: 34px; }
+  .proof { padding: 12px; }
+  .proof figcaption { padding-top: 10px; }
+  .games { margin-top: 36px; padding-top: 36px; }
+  .games-intro { gap: 25px; }
+  .games-strip { grid-template-columns: 1fr; gap: 28px; margin-top: 28px; }
+  .game figcaption { padding-top: 10px; }
+  .game-checks { gap: 8px; }
+  .project-row { grid-template-columns: 24px 1fr; gap: 12px; padding-block: 30px; margin-top: 34px; }
+  .project-row h3 { font-size: 27px; }
+  .project-row .text-link { grid-column: 2; justify-self: start; }
+  .contact { padding-block: 52px; }
+  .contact h2 { margin-bottom: 28px; }
+  .contact .two-col { gap: 40px; }
+  .footer-inner { display: block; }
+  footer nav { margin-top: 14px; }
+}
+@media (max-width: 360px) {
+  h1 { font-size: 37px; letter-spacing: -1.5px; }
+  .nav nav { justify-content: flex-start; column-gap: 22px; }
+  .mv { padding: 20px; }
+  .mv .big { font-size: 38px; }
+  .mv .big.sm { font-size: 24px; }
+  .sealrow { gap: 12px; }
+  .seal { width: 80px; height: 80px; }
+  .handoff { padding: 18px; }
+  .handoff li:not(:last-child)::after { left: 90px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* round 6: five nav links on one line on iPhones */
+@media (max-width: 600px) { .nav nav { flex-wrap: nowrap; justify-content: space-between; column-gap: 8px; font-size: 15px; } .nav nav a { white-space: nowrap; } }
+@media (max-width: 360px) { .nav nav { font-size: 13.5px; column-gap: 4px; } }
+</style>
+</head>
+<body>
+<div><a class="skip" href="#main">Skip to content</a><header class="wrap nav"><a class="brand" href="#">Shawn Hanna</a><nav aria-label="Main"><a href="#career">Career</a><a href="#work">AI work</a><a href="#approach">Approach</a><a href="resume.html">Resume</a><a href="https://www.linkedin.com/in/sghsf">LinkedIn</a></nav></header></div>
+<main id="main" tabindex="-1">
+<div><section class="hero wrap"><div><p class="eyebrow">Program manager | San Francisco</p><h1>I make systems work for the people who use them. <span>Now I do it with AI.</span></h1><p class="opening">17+ years leading programs at Wells Fargo and Bank of America, 11+ of them as product owner of internal tools. Since September 2026 I have directed AI coding agents to build and test accessible web apps and contribute fixes to open-source software.</p><div class="trio"><figure class="mv"><p class="lab">Adoption</p><p class="big">24%<span aria-hidden="true">&rarr;</span>89%</p><div class="pair mini"><div><div class="dots before" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div></div><div><div class="dots after" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div></div></div><p class="cap">of analysts using a Wells Fargo system I owned, after a rebuild I directed around what they needed</p></figure><figure class="mv"><p class="lab">Recognition</p><div class="sealrow"><div class="seal" aria-hidden="true"><span>Top</span><b>1%</b></div><p class="big sm">Golden Spoke Award</p></div><p class="cap">Top 1% recognition at Wells Fargo, for an executive data visualization tool supporting succession planning for about 3,000 leaders</p></figure><figure class="mv"><p class="lab">Learning speed</p><p class="big">10 days</p><ol class="mtl" aria-hidden="true"><li><i></i><span>Sept 17</span><span class="lb">First app</span></li><li><i></i><span>Sept 27</span><span class="lb">Fixes merged</span></li></ol><p class="cap">from my first AI-built app to code merged, unchanged, by an outside open-source project</p></figure></div></div></section></div>
+<div>
+<section class="section white" id="career" aria-labelledby="career-title">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Career</p>
+          <h2 id="career-title">At Wells Fargo and Bank of America</h2>
+        </div>
+        <article class="feature-row">
+          <div class="story">
+            <p class="eyebrow">Wells Fargo | Technology enablement</p>
+            <h3>Recruiting around the clock</h3>
+            <p>Our recruiting system let only one person own and edit a requisition, so teams in the US and the Philippines could not share the work. I built an online tool that let them pass it back and forth: the team in the Philippines completed work such as resume screening overnight, and the US owner entered it the next morning.</p>
+            <p>It worked, and hiring demand was high: within 30 days the number of roles worked through the tool doubled.</p>
+            <div class="outcomes">
+              <p><strong>50%</strong>Drop in time-to-hire for the roles using it</p>
+              <p><strong>2x roles</strong>Worked through the tool within 30 days of launch</p>
+            </div>
+          </div>
+          <figure class="handoff">
+            <figcaption>The recruiting system allowed one owner per requisition. My tool let two teams work it around the clock.</figcaption>
+            <ol>
+              <li><span class="time">US day</span><div class="task"><strong>US recruiter</strong>Works the requisition and hands off.</div></li>
+              <li><span class="time">US night</span><div class="task"><strong>Team in the Philippines</strong>Screens resumes during their day and hands back.</div></li>
+              <li><span class="time">Next US morning</span><div class="task"><strong>US recruiter</strong>Enters the offshore work in the system.</div></li>
+            </ol>
+          </figure>
+        </article>
+        <div class="story-grid">
+          <article class="story">
+            <p class="eyebrow">Wells Fargo</p>
+            <h3>A system switch with nothing lost</h3>
+            <p>When recruiting moved to a new system, 20,000+ open requisitions were in flight. I built the tracking solution the 18-day cutover ran on, and 50 analysts carried every requisition across. All of them were preserved.</p>
+          </article>
+          <article class="story">
+            <p class="eyebrow">Wells Fargo</p>
+            <h3>A prioritization tool that shaped the bank's PMO system</h3>
+            <p>The Chief Learning Officer volunteered me to the HR PMO to rebuild its prioritization process. I built the online tool and refined it through 900+ updates over two years.</p>
+            <p>Prioritizing the PMO's portfolio used to take about a month; with the tool it took about a week, because stakeholders could have faster conversations. Over two years about 200 large initiatives went through the tool, $100M in annual initiatives. The tool then helped IT define the requirements for the bank's enterprise PMO system.</p>
+          </article>
+        </div>
+        <div class="feature-row boa-row">
+          <article class="story">
+            <p class="eyebrow">Bank of America</p>
+            <h3>Reporting for about 180,000 employees</h3>
+            <p>At Bank of America I managed a team of 9 and a $2M budget delivering compliance and learning reporting. User satisfaction rose from 22% to 87%, and reporting run times fell 80%.</p>
+          </article>
+          <figure class="pullquote">
+            <blockquote><p>"Much of my career at Wells Fargo was shaped by my relationship with Shawn and the initiatives we planned and executed. Shawn has been one of my greatest advocates and cheerleaders, always supporting me."</p></blockquote>
+            <figcaption><strong>Ray Orquiola</strong>, my manager for 10 years at Wells Fargo<span class="quote-source">LinkedIn comment</span></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <aside class="quote-band wrap" aria-label="LinkedIn recommendation from Jorge Miyares">
+      <figure class="pullquote">
+        <blockquote><p>"As proficient as technology experts while simultaneously being able to demystify technology for those who are clueless about it."</p></blockquote>
+        <figcaption><strong>Jorge Miyares</strong>, who reported to me at Wells Fargo<span class="quote-source">LinkedIn recommendation</span></figcaption>
+      </figure>
+    </aside>
+
+    <section class="work section" id="work" aria-labelledby="work-title">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Since September 2026</p>
+          <h2 id="work-title">Real work with AI tools</h2>
+        </div>
+        <article class="feature-row">
+          <div class="feature-copy">
+            <p class="eyebrow">01 / Open-source fixes</p>
+            <h3>An outside maintainer merged all three fixes, unchanged</h3>
+            <p>olkcli reads Outlook email from the command line, and I use it myself. I directed Claude Code and Codex to find and fix three real bugs, with each checking the other's work against a live mailbox. I decided what was ready.</p>
+            <p>The maintainer merged all three pull requests about 90 minutes after I submitted them, with no changes requested.</p>
+          </div>
+          <figure class="proof">
+            <img id="gh-shot" src="assets/home/olkcli-merged-prs.png" width="1000" height="400" loading="lazy" alt="GitHub list of three merged pull requests by sghanna, each merged September 27, 2026: #131 explain device-code expiry and login timeouts, #130 prevent errors with mail list --from, #129 show reply-to addresses">
+            <figcaption>Merged September 27, 2026<br><a href="assets/home/olkcli-merged-prs-full.png">View full size <span aria-hidden="true">&nearr;</span></a></figcaption>
+          </figure>
+        </article>
+        <article class="games">
+          <div class="games-intro">
+            <div class="feature-copy">
+              <p class="eyebrow">02 / Games</p>
+              <h3>Three games, three AI builders</h3>
+              <p>I wanted card and word games my mother could actually play. I built them for her and others like her who live with vision loss and limited fine motor control. I gave Claude, Codex, and Antigravity the same kind of brief, compared their work at real screen sizes, and kept the strongest.</p>
+              <p>When I watched her play and her finger drifted off a card, slow presses and drift support became a requirement for every game that followed.</p>
+            </div>
+            <figure class="player">
+              <img src="assets/home/mother-first-player.jpg" width="900" height="1200" loading="lazy" alt="Shawn's mother smiling at a cafe table over a bowl of soup">
+              <figcaption>My mother, the first player for every game, at Cinderella Russian Bakery on Balboa Street in San Francisco.</figcaption>
+            </figure>
+          </div>
+          <div class="games-strip">
+            <figure class="game">
+              <img src="assets/home/solitaire-wide-move7.jpg" width="1180" height="820" loading="lazy" alt="Solitaire game screen on a tablet">
+              <figcaption><div><strong>Solitaire</strong>Built with Antigravity</div><a href="https://sghanna.github.io/ai/games/solitaire/" aria-label="Play Solitaire">Play <span aria-hidden="true">&nearr;</span></a></figcaption>
+            </figure>
+            <figure class="game">
+              <img src="assets/home/hearts-wide-trick2.jpg" width="1180" height="820" loading="lazy" alt="Hearts game screen on a tablet">
+              <figcaption><div><strong>Hearts</strong>Built with Codex</div><a href="https://sghanna.github.io/ai/games/hearts/" aria-label="Play Hearts">Play <span aria-hidden="true">&nearr;</span></a></figcaption>
+            </figure>
+            <figure class="game">
+              <img src="assets/home/words-wide.jpg" width="1180" height="820" loading="lazy" alt="Words game screen on a tablet">
+              <figcaption><div><strong>Words</strong>Built with Claude</div><a href="https://sghanna.github.io/ai/games/words/" aria-label="Play Words">Play <span aria-hidden="true">&nearr;</span></a></figcaption>
+            </figure>
+          </div>
+          <div class="game-checks"><span>5,000 simulated games to test the Hearts rules.</span><span>1,000 word puzzles, each checked.</span></div>
+        </article>
+        <article class="project-row">
+          <span class="index" aria-hidden="true">03</span>
+          <div class="story">
+            <h3>The missing flight voucher</h3>
+            <p>My mother could not find an airline voucher in an inbox of 211,962 messages that also held family estate records. Before any bulk action I set rules to protect those records, then directed an AI agent through reviewed batches: 206,531 messages moved to Trash, and 192 estate emails already in Trash were found and restored.</p>
+          </div>
+        </article>
+        <article class="project-row">
+          <span class="index" aria-hidden="true">04</span>
+          <div class="story">
+            <h3>Running a team of AI tools</h3>
+            <p>Claude, Codex, and Antigravity each get the work they do best, a second AI checks the first, and a usage budget keeps costs in line. When the open-source tools I rely on have bugs, I report them or submit fixes.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="method section white" id="approach" aria-labelledby="method-title">
+      <div class="wrap">
+        <div class="section-head"><h2 id="method-title">How I work</h2></div>
+        <div class="phases">
+<article class="phase"><span class="phase-tag">Step 1</span><h3>Start with the person.</h3><p class="phase-step">Watch the real problem: a card too small to read, a button too easy to miss, a report nobody uses. Turn it into a requirement the finished work can be checked against.</p><div class="phase-get"><span class="phase-cap">IN PRACTICE</span><strong>My mother's games.</strong><p>When her finger drifted off a card, slow presses and drift support became a requirement for every game that followed.</p></div></article>
+<article class="phase"><span class="phase-tag">Step 2</span><h3>Make the options visible.</h3><p class="phase-step">Ask for working alternatives, compare them where they will be used, and keep the reason for the choice.</p><div class="phase-get"><span class="phase-cap">IN PRACTICE</span><strong>Three AI builders.</strong><p>I gave Claude, Codex, and Antigravity the same kind of brief, compared their work at real screen sizes, and kept the strongest.</p></div></article>
+<article class="phase"><span class="phase-tag">Step 3</span><h3>Check before accepting.</h3><p class="phase-step">A second AI reviews the first. Defects get reproduced and fixed. Humans are always in the loop and participate in testing that cannot be replicated by a machine.</p><div class="phase-get"><span class="phase-cap">IN PRACTICE</span><strong>Three open-source fixes.</strong><p>Claude Code and Codex each checked the other's work. The maintainer merged all three, unchanged.</p></div></article>
+</div>
+      </div>
+    </section>
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <div class="wrap">
+        <h2 id="contact-title">How I can help</h2>
+        <div class="two-col">
+          <div class="offer">
+            <h3>If you are hiring</h3>
+            <p>Program management for AI adoption, learning and talent programs, and workflow improvement. I bring order to work that crosses teams: clear priorities, honest status, systems people actually use, and AI tools put to work with a human checking the result.</p>
+            <figure class="pullquote offer-quote">
+              <blockquote><p>"Masterfully skilled in consulting and IT."</p></blockquote>
+              <figcaption><strong>John Schulze</strong>, my manager at Bank of America<span class="quote-source">LinkedIn recommendation</span></figcaption>
+            </figure>
+          </div>
+          <div class="offer">
+            <h3>If you want help with one workflow</h3>
+            <p>Start with one process your team already uses. We review where it slows down, the constraints, and what an improvement needs to do. You get a recommendation and a proposed scope. If a trial would help, we agree on the checks and handoff before starting.</p>
+            <figure class="pullquote offer-quote">
+              <blockquote><p>"Hands on partner who learns his client's business in order to insure that his work directly aligns to the need."</p></blockquote>
+              <figcaption><strong>Todd Cunningham</strong>, a learning executive my team supported at Bank of America<span class="quote-source">LinkedIn recommendation</span></figcaption>
+            </figure>
+          </div>
+        </div>
+        <a class="text-link" href="https://www.linkedin.com/in/sghsf">Connect on LinkedIn <span aria-hidden="true">&nearr;</span></a>
+      </div>
+    </section>
+  </div>
+</main>
+<div><footer class="wrap">
+    <div class="footer-inner">
+      <span>Shawn Hanna | Program manager | San Francisco</span>
+      <nav aria-label="Footer navigation"><a href="https://www.linkedin.com/in/sghsf">LinkedIn</a><a href="resume.html">Resume</a><a href="https://github.com/sghanna/ai">GitHub</a></nav>
+    </div>
+  </footer></div>
+</body>
+</html>
