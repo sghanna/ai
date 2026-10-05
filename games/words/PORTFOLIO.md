@@ -56,6 +56,6 @@ Claude built the original game. Codex implemented and tested the revisions. Anti
 
 ## What comes next
 
-The remaining check is ordinary play on real iPhone and iPad devices: slow presses, finger drift, Safari bars, rotation, pinch zoom, VoiceOver and Home Screen installation. Rotating while already zoomed can retain the earlier board dimensions until zooming out. Spanish and Vietnamese interface text also needs native-speaker review.
+The remaining check is ordinary play on real iPhone and iPad devices: slow presses, finger drift, Safari bars, rotation, pinch zoom and Home Screen installation. Rotating while already zoomed can retain the earlier board dimensions until zooming out. Spanish and Vietnamese interface text also needs native-speaker review.
 
 The automated checks establish software behavior. A playtest will show whether the revised game works well for my mother in daily use.

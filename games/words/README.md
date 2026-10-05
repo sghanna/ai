@@ -19,7 +19,7 @@ The interface supports English, Spanish and Vietnamese; puzzles remain English. 
 
 The game uses one column on phones and portrait tablets, with larger controls where space permits. Landscape screens at least 700 CSS pixels wide use two columns. Narrow or very short windows can scroll instead of hiding the game. The layout responds to window resizing and rotation without clearing progress. Pinch zoom remains available.
 
-For iPhone or iPad, open the game in Safari, choose **Share > Add to Home Screen**, then open it once while online. After its files finish caching, it can be played offline. The manifest permits both orientations. Real-device checks on iPhone and iPad, including Safari browser bars, pinch zoom, VoiceOver and Home Screen installation, remain necessary; desktop browser emulation does not prove those behaviors.
+For iPhone or iPad, open the game in Safari, choose **Share > Add to Home Screen**, then open it once while online. After its files finish caching, it can be played offline. The manifest permits both orientations. Real-device checks on iPhone and iPad, including Safari browser bars, pinch zoom and Home Screen installation, remain necessary; desktop browser emulation does not prove those behaviors.
 
 Saved progress stays on the device. The existing `claude-word-wheel-save` and settings keys are retained so a browser on the same `sghanna.github.io` origin can reuse its original progress. Separate browser profiles and Home Screen apps may have separate storage; there is no cloud synchronization. The new `ai-words-` cache prefix keeps this installation from deleting the original game's offline files.
 

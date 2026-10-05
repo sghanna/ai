@@ -33,4 +33,4 @@ Claude's independent review reproduced the zoom and hint-keyboard issues in the 
 
 Rotating while already zoomed can retain the earlier board dimensions until zooming out.
 
-Use real iPhone and iPad devices to check slow presses, finger drift, pinch zoom, dynamic Safari bars, rotation, VoiceOver and Home Screen installation. Test Spanish and Vietnamese wording with native speakers. Very small windows use scrolling, and the smallest portrait phones still have smaller grid squares than larger phones. No new user playtest, usability improvement measurement or universal accessibility claim is made.
+Use real iPhone and iPad devices to check slow presses, finger drift, pinch zoom, dynamic Safari bars, rotation and Home Screen installation. Test Spanish and Vietnamese wording with native speakers. Very small windows use scrolling, and the smallest portrait phones still have smaller grid squares than larger phones. No new user playtest, usability improvement measurement or universal accessibility claim is made.
