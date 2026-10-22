@@ -3,6 +3,12 @@
   const E = HeartsEngine, I = HeartsInsights, L = HeartsText, $ = id => document.getElementById(id);
   const KEY = 'ai-hearts-game-v2', BACKUP = KEY + '-backup', PREFS = 'ai-hearts-settings-v2';
   const params = new URLSearchParams(location.search);
+  const PACES = {
+    slow:{opponent:1500,review:1200,collection:1000,forced:3000},
+    normal:{opponent:1000,review:900,collection:850,forced:2000},
+    fast:{opponent:350,review:350,collection:400,forced:1000}
+  };
+  const timing = () => PACES[preferences.pace];
   const defaultNames = ['Michael','Jerry','Barbara'];
   const cleanName = value => typeof value === 'string' ? value.replace(/[\u0000-\u001f\u007f]/g,'').replace(/\s+/g,' ').trim().slice(0,10).trim() : '';
   let preferences = { language:(navigator.languages || [navigator.language]).map(s => s.slice(0,2)).find(s => ['en','es','vi'].includes(s)) || 'en', pace:'slow', sound:false, tapToPlay:false, schoolPromise:false, opponentNames:[...defaultNames] };
@@ -73,7 +79,7 @@
   function resumeAdvance() {
     const card = forcedCard();
     if (!card) return;
-    advance ||= {state:game,remaining:3000,card,startedAt:null,timer:null};
+    advance ||= {state:game,remaining:timing().forced,card,startedAt:null,timer:null};
     const current = advance;
     renderAction();
     current.startedAt = Date.now();
@@ -99,7 +105,7 @@
       if (document.hidden || document.querySelector('dialog[open]') || game.phase !== 'play' || game.turn === 0) return;
       const player = game.turn;
       commit(E.play(game,player,E.choosePlay(E.viewFor(game,player))));
-    },{slow:1500,normal:1000,fast:550}[preferences.pace]);
+    },timing().opponent);
   }
   function unlockSound() {
     if (!preferences.sound) return;
@@ -309,7 +315,7 @@
     const pile = document.querySelector(`[data-pile-for="${current.winner}"]`);
     const destination = pile.getBoundingClientRect();
     const center = $('center-cards').getBoundingClientRect();
-    const duration = {slow:1000,normal:850,fast:650}[preferences.pace];
+    const duration = timing().collection;
     const layer = document.createElement('div');
     layer.className = 'trick-flight'; layer.setAttribute('aria-hidden','true');
     document.body.append(layer);
@@ -346,7 +352,7 @@
     if (collection.stage === 'moving') collection.animations.forEach(animation => { if (animation.playState === 'paused') animation.play(); });
     else if (!collection.timer) {
       const current = collection;
-      current.timer = setTimeout(() => flyTrick(current),{slow:1200,normal:900,fast:600}[preferences.pace]);
+      current.timer = setTimeout(() => flyTrick(current),timing().review);
     }
   }
 
@@ -422,7 +428,7 @@
       $('instruction').textContent = game.turn !== 0 ? t('wait') : !game.history.length && !game.trick.length ? t('leadTwo') : t('chooseCard');
       $('action-label').textContent = t(game.turn === 0 ? 'playCard' : 'wait');
       detail.textContent = selected.length ? selected[0].replace(/C$/,'♣').replace(/D$/,'♦').replace(/S$/,'♠').replace(/H$/,'♥') : t('choose1');
-      if (legal.length === 1 && game.turn === 0) detail.textContent = t('autoSeconds',{n:Math.max(1,Math.ceil((advance?.remaining ?? 3000)/1000))});
+      if (legal.length === 1 && game.turn === 0) detail.textContent = t('autoSeconds',{n:Math.max(1,Math.ceil((advance?.remaining ?? timing().forced)/1000))});
       detail.hidden = game.turn !== 0; action.disabled = game.turn !== 0 || selected.length !== 1 || !legal.includes(selected[0]);
       if (game.turn === 0 && preferences.tapToPlay && !selected.length) { $('action-label').textContent = t('tapACard'); detail.hidden = true; }
     }
@@ -498,6 +504,7 @@
     $('result-screen').hidden = !results;
     if (results) renderResult(); else { renderHand(); renderTable(); renderAction(); }
     $('language').value = preferences.language; $('pace').value = preferences.pace; $('sound').value = preferences.sound ? 'on' : 'off';
+    renderPace();
     $('tap-to-play').value = preferences.tapToPlay ? 'on' : 'off';
     schedule();
   }
@@ -577,7 +584,17 @@
     schedule();
   }));
   $('language').addEventListener('change',() => { preferences.language = $('language').value; L.set(preferences.language); save(); render(); });
-  $('pace').addEventListener('change',() => { preferences.pace = $('pace').value; save(); schedule(); });
+  function renderPace() {
+    $('pace').value = $('menu-pace').value = preferences.pace;
+    $('pace-note').textContent = t('paceNote',{n:timing().forced / 1000});
+  }
+  ['pace','menu-pace'].forEach(id => $(id).addEventListener('change',() => {
+    pauseAdvance();
+    preferences.pace = $(id).value;
+    // A deliberate speed change gives a pending sole card a fresh review interval.
+    if (advance) advance.remaining = timing().forced;
+    renderPace(); renderAction(); save(); schedule();
+  }));
   $('sound').addEventListener('change',() => { preferences.sound = $('sound').value === 'on'; unlockSound(); sound(); save(); });
   $('tap-to-play').addEventListener('change',() => { preferences.tapToPlay = $('tap-to-play').value === 'on'; save(); render(); });
   document.addEventListener('visibilitychange',() => { if (document.hidden) { stopTimer(); pauseAdvance(); pauseCollection(); pauseReceipt(); save(); } else schedule(); });

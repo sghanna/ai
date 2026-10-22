@@ -10,7 +10,18 @@ An ad-free Hearts game with readable cards, three computer opponents, English, S
 
 This version brings the responsive Codex iPad game together with celebrations inspired by Claude Hearts. A match win sends up warm lanterns, and a clean hand sends up five heart cards. For shooting the moon, a large queen of spades flips to reveal the moon; thirteen larger hearts spiral in and build the crimson heart in the gold-seal favicon. Each scene fits the available screen and has a large **See scores** button. The revised moon sequence lasts about eight seconds, including a pause on the finished logo. Reduced Motion shows still artwork, with the completed logo for shooting the moon.
 
-The game preserves deliberate card selection and confirmation, optional one-tap play, slow presses with modest finger drift, automatic trick collection, and the three-second countdown when only one card is legal. Celebrations leave the cards, scoring, and saved result unchanged. They run when a hand finishes and do not replay after restoring a finished result. A whole-match win takes priority over a hand celebration.
+October 22 speed update: **Menu → Game speed** offers Gentle, Normal, and Quick, synchronized with Settings and saved on this device. Gentle remains the default and existing speed preferences are preserved. Quick now shortens opponents' pauses and trick collection; the sole-card countdown follows the selected speed. Confirmation, received-card review, and celebrations retain their existing behavior. Cache: `ai-hearts-v10`.
+
+| Timing | Gentle | Normal | Quick |
+| --- | --- | --- | --- |
+| Opponent pause | 1.5s | 1s | 0.35s |
+| Completed-trick review | 1.2s | 0.9s | 0.35s |
+| Collection motion | 1s | 0.85s | 0.4s |
+| Sole legal card | 3s | 2s | 1s |
+
+Changing speed during a sole-card countdown starts a fresh interval at the new speed after closing Menu. Menus and backgrounding continue to pause automatic play. An already-moving collection finishes at its original speed; subsequent collections use the new setting. Reduced Motion omits collection motion.
+
+The game preserves deliberate card selection and confirmation, optional one-tap play, slow presses with modest finger drift, automatic trick collection, and a speed-dependent countdown when only one card is legal. Celebrations leave the cards, scoring, and saved result unchanged. They run when a hand finishes and do not replay after restoring a finished result. A whole-match win takes priority over a hand celebration.
 
 ## Play and install
 
@@ -18,7 +29,7 @@ Choose three cards and confirm the pass. Review the received cards, then start p
 
 Menu contains settings, rules, the last trick, and a guarded new-game action. On iPhone or iPad, open the game in Safari and use **Share → Add to Home Screen**. Load the game online once before using it offline.
 
-This version has separate saves (`ai-hearts-game-v2` and its backup), preferences (`ai-hearts-settings-v2`), and cache (`ai-hearts-v9`). Progress in earlier Codex and Claude games stays at those versions; it is not imported here.
+This version has separate saves (`ai-hearts-game-v2` and its backup), preferences (`ai-hearts-settings-v2`), and cache (`ai-hearts-v10`). Progress in earlier Codex and Claude games stays at those versions; it is not imported here.
 
 ## Sources and credit
 
@@ -39,6 +50,7 @@ npx playwright install chromium webkit
 npm test
 npm run test:celebrations
 npm run test:menus
+npm run test:speed
 npm run test:ipad
 npm run test:browser
 ```
@@ -64,3 +76,5 @@ AGY reviewed the design and revised code. Its interactive browser tools were una
 For the menu revision, AGY (Gemini 3.8 Flash High) inspected screenshots and reviewed the design and code. Codex implemented it and ran 105 menu/language/viewport checks, the existing names and responsive lifecycle suites, native Chromium touch checks, and offline loading with all 20 cache entries. The checks cover fixed return/save buttons, scrolling, focus restoration, unchanged paused saves, three languages, settings persistence, slow presses with upward drift, cancellation, and tap-through protection. Native touch exposed a conflict with vertical panning on buttons; buttons retain pinch zoom and deliberate release, while the surrounding body scrolls normally. The onscreen keyboard, Safari toolbars, VoiceOver, and Mom's natural gestures still need device testing.
 
 Local before/after screenshots and the review page are in `.artifacts/menu-refinement/review.html`; AGY review records and browser evidence share that ignored folder. Open the game through the local server to try the menus. Long panels intentionally scroll rather than reduce text size.
+
+The speed update passed the engine suite (120 seeded matches), focused checks for all three timing profiles, menu/background pauses, mid-countdown speed changes, persistence, three languages, and deliberate selections. The menu suite covers 105 language/viewport/screen combinations and native touch/offline behavior. These are desktop browser checks; physical-device testing remains outstanding.

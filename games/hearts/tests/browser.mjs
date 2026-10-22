@@ -27,16 +27,16 @@ try{
    if(off){const before=await read();const b=await page.locator(`[data-card="${off}"]`).boundingBox();await page.mouse.click(b.x+20,b.y+20);assert.deepEqual(await read(),before);}
    const card=E.choosePlay(E.viewFor(s,0));const button=page.locator(`[data-card="${card}"]`);if(await button.getAttribute('aria-pressed')!=='true')await button.click({position:{x:25,y:20}});await page.locator('#primary-action').click();
   }else if(s.phase==='trick-end'){
-   if(!restoreChecked){await page.reload();assert.equal((await read()).game.phase,'trick-end');await page.locator('#menu-button').click();await page.locator('#last-trick-button').click();assert.equal(await page.locator('.review-card').count(),4);await page.locator('#last-trick-dialog [data-close]').click();restoreChecked=true;}
+   if(!restoreChecked){await page.reload();assert.equal((await read()).game.phase,'trick-end');await page.locator('#menu-button').click();await page.locator('#last-trick-button').click();assert.equal(await page.locator('.review-card').count(),4);await page.locator('#last-trick-dialog .close-button').click();restoreChecked=true;}
    await page.clock.runFor(2400);
    await page.waitForFunction(({KEY,count})=>JSON.parse(localStorage.getItem(KEY)).game.history.length===count+1,{KEY,count:s.history.length},{timeout:6000});
   }
  }
  saved=await read();assert.equal(saved.game.history.length,13);assert.equal(saved.game.handPoints.reduce((a,b)=>a+b),26);
- await page.locator('#menu-button').click();await page.locator('#last-trick-button').click();assert.equal(await page.locator('.review-card').count(),4);await page.locator('#last-trick-dialog [data-close]').click();
+ await page.locator('#menu-button').click();await page.locator('#last-trick-button').click();assert.equal(await page.locator('.review-card').count(),4);await page.locator('#last-trick-dialog .close-button').click();
  const totals=saved.game.scores;await page.locator('.result-continue').click();saved=await read();assert.equal(saved.game.handNumber,2);assert.equal(saved.game.passOffset,3);assert.deepEqual(saved.game.scores,totals);
  await page.locator('#menu-button').click();await page.locator('#settings-button').click();await page.locator('#language').selectOption('es');assert.equal(await page.locator('html').getAttribute('lang'),'es');await page.locator('#settings-dialog [data-close].dialog-action').click();await page.reload();assert.equal(await page.locator('html').getAttribute('lang'),'es');
- await page.locator('#menu-button').click();await page.locator('#new-game').click();await page.locator('#new-dialog [data-close]').click();assert.equal((await read()).game.handNumber,2);
+ await page.locator('#menu-button').click();await page.locator('#new-game').click();await page.locator('#new-dialog .close-button').click();assert.equal((await read()).game.handNumber,2);
  await page.locator('#menu-button').click();await page.locator('#new-game').click();await page.locator('#restart').click();assert.deepEqual((await read()).game.scores,[0,0,0,0]);
  assert.deepEqual(errors,[]);console.log('PASS: automated browser clicks through a full 13-trick hand; legal-card guards, selection cap, selected/received/trick restore, menu pauses AI, last trick, score carry, pass-right next hand, language persistence, and guarded restart.');
 }finally{await browser.close()}

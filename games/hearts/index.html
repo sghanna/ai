@@ -6,21 +6,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#102a20">
   <title>Hearts</title>
-  <link rel="manifest" href="manifest.json?v=ai-hearts-v9">
-  <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png?v=ai-hearts-v9">
-  <link rel="icon" type="image/svg+xml" sizes="any" href="icons/icon.svg?v=ai-hearts-v9">
-  <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png?v=ai-hearts-v9">
+  <link rel="manifest" href="manifest.json?v=ai-hearts-v10">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png?v=ai-hearts-v10">
+  <link rel="icon" type="image/svg+xml" sizes="any" href="icons/icon.svg?v=ai-hearts-v10">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png?v=ai-hearts-v10">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <link rel="stylesheet" href="style.css?v=ai-hearts-v9">
-  <link rel="stylesheet" href="screens.css?v=ai-hearts-v9">
-  <link rel="stylesheet" href="game.css?v=ai-hearts-v9">
-  <link rel="stylesheet" href="menus.css?v=ai-hearts-v9">
-  <link rel="stylesheet" href="celebration.css?v=ai-hearts-v9">
+  <link rel="stylesheet" href="style.css?v=ai-hearts-v10">
+  <link rel="stylesheet" href="screens.css?v=ai-hearts-v10">
+  <link rel="stylesheet" href="game.css?v=ai-hearts-v10">
+  <link rel="stylesheet" href="menus.css?v=ai-hearts-v10">
+  <link rel="stylesheet" href="celebration.css?v=ai-hearts-v10">
 </head>
 <body>
 <main class="game" aria-label="Hearts game">
   <header class="header">
-    <h1><img class="crest" src="icons/icon.svg?v=ai-hearts-v9" width="32" height="32" alt="" draggable="false"><span data-i18n="title">Hearts</span></h1>
+    <h1><img class="crest" src="icons/icon.svg?v=ai-hearts-v10" width="32" height="32" alt="" draggable="false"><span data-i18n="title">Hearts</span></h1>
     <button class="pill menu-button" id="menu-button" aria-haspopup="dialog"><span data-i18n="menu">Menu</span> <svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><path d="M2 5h16M2 10h16M2 15h16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
   </header>
 
@@ -82,6 +82,10 @@
 <dialog id="menu-dialog" class="menu-panel" aria-labelledby="menu-title">
   <div class="dialog-heading"><h2 id="menu-title" tabindex="-1" autofocus data-i18n="menu">Menu</h2><button class="close-button" data-close aria-label="Close menu">×</button></div>
   <div class="dialog-body">
+    <div class="settings-group">
+      <label class="setting"><span data-i18n="pace">Game speed</span><select id="menu-pace" aria-describedby="pace-note"><option value="slow" data-i18n="slow">Gentle</option><option value="normal" data-i18n="normal">Normal</option><option value="fast" data-i18n="fast">Quick</option></select></label>
+      <p class="dialog-note" id="pace-note"></p>
+    </div>
     <nav class="menu-links" aria-labelledby="menu-title">
       <button class="menu-link" id="last-trick-button" disabled aria-describedby="last-trick-hint"><span><span data-i18n="lastTrick">Last trick</span><small id="last-trick-hint" data-i18n="lastTrickHint">Available after the first trick.</small></span><span class="menu-chevron" aria-hidden="true">›</span></button>
       <button class="menu-link" id="settings-button"><span data-i18n="settings">Settings</span><span class="menu-chevron" aria-hidden="true">›</span></button>
@@ -155,7 +159,7 @@
       <label class="setting"><span data-i18n="language">Language</span><select id="language"><option value="en">English</option><option value="es">Español</option><option value="vi">Tiếng Việt</option></select></label>
     </div>
     <div class="settings-group">
-      <label class="setting"><span data-i18n="pace">Computer speed</span><select id="pace"><option value="slow" data-i18n="slow">Gentle</option><option value="normal" data-i18n="normal">Normal</option><option value="fast" data-i18n="fast">Quick</option></select></label>
+      <label class="setting"><span data-i18n="pace">Game speed</span><select id="pace"><option value="slow" data-i18n="slow">Gentle</option><option value="normal" data-i18n="normal">Normal</option><option value="fast" data-i18n="fast">Quick</option></select></label>
       <label class="setting"><span data-i18n="sound">Soft card sounds</span><select id="sound"><option value="off" data-i18n="off">Off</option><option value="on" data-i18n="on">On</option></select></label>
       <label class="setting"><span data-i18n="tapToPlay">Play cards with one tap</span><select id="tap-to-play"><option value="off" data-i18n="off">Off</option><option value="on" data-i18n="on">On</option></select></label>
     </div>
@@ -168,12 +172,12 @@
   <div id="celebration-scene" aria-hidden="true"></div>
   <div class="celebration-footer"><button id="celebration-skip" type="button" data-i18n="seeScores">See scores</button></div>
 </dialog>
-<script src="deck.js?v=ai-hearts-v9"></script>
-<script src="engine.js?v=ai-hearts-v9"></script>
-<script src="insights.js?v=ai-hearts-v9"></script>
-<script src="i18n.js?v=ai-hearts-v9"></script>
-<script src="touch.js?v=ai-hearts-v9"></script>
-<script src="celebration.js?v=ai-hearts-v9"></script>
-<script src="app.js?v=ai-hearts-v9"></script>
+<script src="deck.js?v=ai-hearts-v10"></script>
+<script src="engine.js?v=ai-hearts-v10"></script>
+<script src="insights.js?v=ai-hearts-v10"></script>
+<script src="i18n.js?v=ai-hearts-v10"></script>
+<script src="touch.js?v=ai-hearts-v10"></script>
+<script src="celebration.js?v=ai-hearts-v10"></script>
+<script src="app.js?v=ai-hearts-v10"></script>
 </body>
 </html>

@@ -76,7 +76,7 @@ try{
  await p.locator('#help-dialog .close-button').click();await panel(p,'names-button');await slow('#promise-button');assert(await p.locator('#names-editor').isVisible());
  await p.locator('#opponent-1').fill('Mom');await slow('#names-form [type="submit"]');assert.equal(await p.locator('dialog[open]').count(),0);
  await c.setOffline(true);await p.reload();await panel(p,'settings-button');assert.equal(await p.locator('#settings-dialog .dialog-footer').evaluate(e=>getComputedStyle(e).display),'grid','new CSS works offline');
- const cache=await p.evaluate(async()=>({names:await caches.keys(),files:await (await caches.open('ai-hearts-v9')).keys().then(r=>r.map(v=>v.url))}));assert(cache.files.some(s=>s.endsWith('/menus.css')));assert.equal(cache.files.length,20);
+ const cache=await p.evaluate(async()=>({names:await caches.keys(),files:await (await caches.open('ai-hearts-v10')).keys().then(r=>r.map(v=>v.url))}));assert(cache.files.some(s=>s.endsWith('/menus.css')));assert.equal(cache.files.length,20);
  console.log('PASS: native Chrome held/drift presses, no tap-through, large-drag cancellation, touch scrolling, names save, and 20-asset offline cache.');
  await fs.writeFile(`${artifacts}/menu-refinement/offline-check.json`,JSON.stringify(cache,null,2));await c.close();
 }finally{await chrome.close();}
