@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Coaching with Shawn Hanna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#fbf7f0; --surface:#fff; --fg:#1d1a16; --muted:#62594e; --line:#e6dccd;
+  --accent:#c4552f; --accent-soft:#fbe6dc; --green:#3f7a4e; --green-soft:#e2f0e4;
+  --sun:#f2b632; --ink:#23324a; --on-ink:#f6f1e8;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"Source Sans 3",ui-sans-serif,system-ui,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#16140f; --surface:#211e18; --fg:#f1ebe0; --muted:#b3a897; --line:#3a342a;
+  --accent:#f0845c; --accent-soft:#3b2419; --green:#86c495; --green-soft:#1f3324;
+  --sun:#f5c552; --ink:#1c2738; --on-ink:#f6f1e8; color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:18px/1.55 var(--body);padding:20px 16px 64px}
+main{max-width:40rem;margin:0 auto;display:grid;gap:40px}
+h1,h2,h3{font-family:var(--display);line-height:1.12;margin:0;text-wrap:balance}
+h1{font-size:clamp(2.1rem,8vw,3rem);font-weight:800}
+h2{font-size:1.55rem;font-weight:800}
+h3{font-size:1.1rem;font-weight:800}
+p{margin:0}
+a{color:var(--accent)}
+section{display:grid;gap:14px}
+.label{font:600 .78rem var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.muted{color:var(--muted)}
+.hero{background:var(--ink);color:var(--on-ink);border-radius:18px;padding:30px 24px;display:grid;gap:14px;position:relative;overflow:hidden}
+.hero .label{color:var(--sun)}
+.hero p{opacity:.92;font-size:1.08rem}
+.hero svg{position:absolute;right:-20px;top:-20px;width:150px;opacity:.18}
+.cta{display:inline-block;justify-self:start;background:var(--sun);color:#1d1a16;font:700 1rem var(--body);text-decoration:none;border-radius:999px;padding:10px 20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:grid;gap:10px}
+/* quiz */
+.q{display:grid;gap:10px}
+.q legend{font:800 1.12rem var(--display);padding:0;margin-bottom:4px}
+fieldset{border:0;margin:0;padding:0;display:grid;gap:8px}
+.opt{display:block;position:relative}
+.opt input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.opt span{display:block;background:var(--bg);border:2px solid var(--line);border-radius:10px;padding:11px 14px;font-size:1rem;cursor:pointer}
+.opt input:checked+span{border-color:var(--accent);background:var(--accent-soft);font-weight:600}
+.opt input:focus-visible+span{outline:3px solid var(--fg);outline-offset:2px}
+.progress{font-size:.9rem;color:var(--muted)}
+/* meter */
+.meter{display:grid;gap:8px}
+.bar{height:18px;border-radius:999px;background:var(--line);overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--sun),var(--accent));border-radius:999px;transition:width .8s ease}
+.score{font:800 2.4rem/1 var(--display);color:var(--accent)}
+.verdict{font:800 1.3rem/1.25 var(--display)}
+.plan{display:grid;gap:12px;margin:0;padding:0;list-style:none}
+.plan li{display:grid;grid-template-columns:2.2rem 1fr;gap:12px;align-items:start}
+.plan b.n{font:800 1.1rem var(--display);background:var(--green-soft);color:var(--green);border-radius:50%;width:2.2rem;height:2.2rem;display:grid;place-items:center}
+.plan strong{display:block}
+button{font:700 1rem var(--body);border:0;border-radius:999px;padding:10px 18px;cursor:pointer;background:var(--accent);color:var(--bg)}
+button.ghost{background:none;color:var(--accent);padding:0;text-decoration:underline}
+button:focus-visible{outline:3px solid var(--fg);outline-offset:2px}
+[hidden]{display:none!important}
+/* proof */
+.proof{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:12px}
+.proof a{text-decoration:none;color:var(--fg)}
+.proof .card{gap:4px;height:100%}
+.proof .card:hover{border-color:var(--accent)}
+.proof em{font-style:normal;font-size:.85rem;color:var(--accent);font-weight:600}
+ul.list{margin:0;padding-left:1.2rem;display:grid;gap:6px}
+.bid{background:var(--green-soft);border-radius:14px;padding:22px;display:grid;gap:8px}
+.bid .big{font:800 1.6rem var(--display)}
+.fine{font-size:.9rem;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){.fill{transition:none}}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+  <svg viewBox="0 0 100 100" aria-hidden="true"><g fill="#f2b632"><circle cx="50" cy="50" r="14"/><g stroke="#f2b632" stroke-width="6" stroke-linecap="round"><path d="M50 8v14M50 78v14M8 50h14M78 50h14M20 20l10 10M70 70l10 10M80 20L70 30M30 70L20 80"/></g></g></svg>
+  <p class="label">Glenridge Auction</p>
+  <h1>Build something real with AI</h1>
+  <p>Three one-on-one sessions with Shawn Hanna. Start wherever you are and leave with work you actually made, on your own laptop.</p>
+  <a class="cta" href="#quiz">How ready are you to bid? &darr;</a>
+</header>
+
+<section id="quiz">
+  <p class="label">The 30-second bid check</p>
+  <h2>Should you bid on this?</h2>
+  <p class="muted">Four quick taps. You'll see your score and what your three sessions would look like.</p>
+
+  <form class="card" id="form" novalidate>
+    <p class="progress" id="progress">Question 1 of 4</p>
+
+    <fieldset class="q" data-step="0">
+      <legend>Where are you with AI right now?</legend>
+      <label class="opt"><input type="radio" name="level" value="new" data-pts="22"><span>Never really tried it</span></label>
+      <label class="opt"><input type="radio" name="level" value="some" data-pts="25"><span>I ask ChatGPT things sometimes</span></label>
+      <label class="opt"><input type="radio" name="level" value="regular" data-pts="24"><span>I use it most weeks</span></label>
+      <label class="opt"><input type="radio" name="level" value="power" data-pts="23"><span>I use it daily and want to go further</span></label>
+    </fieldset>
+
+    <fieldset class="q" data-step="1" hidden>
+      <legend>What would you most like AI to help with?</legend>
+      <label class="opt"><input type="radio" name="goal" value="work" data-pts="25"><span>My job: email, reports, meetings</span></label>
+      <label class="opt"><input type="radio" name="goal" value="home" data-pts="25"><span>Family life: meals, schedules, school stuff</span></label>
+      <label class="opt"><input type="radio" name="goal" value="career" data-pts="25"><span>A job search or career change</span></label>
+      <label class="opt"><input type="radio" name="goal" value="build" data-pts="25"><span>Building my own website, app or game</span></label>
+    </fieldset>
+
+    <fieldset class="q" data-step="2" hidden>
+      <legend>How do you feel about AI?</legend>
+      <label class="opt"><input type="radio" name="feel" value="curious" data-pts="25"><span>Curious, but I don't know where to start</span></label>
+      <label class="opt"><input type="radio" name="feel" value="skeptic" data-pts="20"><span>Skeptical. Show me it's worth it.</span></label>
+      <label class="opt"><input type="radio" name="feel" value="behind" data-pts="25"><span>I feel like I'm falling behind</span></label>
+      <label class="opt"><input type="radio" name="feel" value="excited" data-pts="25"><span>Excited. I want more out of it.</span></label>
+    </fieldset>
+
+    <fieldset class="q" data-step="3" hidden>
+      <legend>An hour a week back would mean&hellip;</legend>
+      <label class="opt"><input type="radio" name="hour" value="kids" data-pts="25"><span>More time with my kids</span></label>
+      <label class="opt"><input type="radio" name="hour" value="sleep" data-pts="25"><span>Sleep. Just sleep.</span></label>
+      <label class="opt"><input type="radio" name="hour" value="project" data-pts="25"><span>Finally starting that side project</span></label>
+      <label class="opt"><input type="radio" name="hour" value="nothing" data-pts="18"><span>I don't need an hour back (sure you don't)</span></label>
+    </fieldset>
+  </form>
+
+  <div class="card" id="result" hidden aria-live="polite">
+    <div class="meter">
+      <p class="label">Your bid-readiness</p>
+      <p class="score"><span id="score">0</span>%</p>
+      <div class="bar" role="img" id="barlabel"><div class="fill" id="fill"></div></div>
+      <p class="verdict" id="verdict"></p>
+    </div>
+    <h3>Your three sessions could look like this</h3>
+    <ol class="plan" id="plan"></ol>
+    <button type="button" class="ghost" id="again">Take it again</button>
+  </div>
+</section>
+
+<section>
+  <p class="label">What you get</p>
+  <h2>Three sessions, one real result</h2>
+  <ul class="list">
+    <li><strong>Before we meet:</strong> a personal AI starter guide built for your job and your life, with prompts ready to copy.</li>
+    <li><strong>On your laptop:</strong> we set up free tools, and paid ones only if they're worth it to you.</li>
+    <li><strong>Your real tasks:</strong> emails, plans, how-to guides and documents, made from your own material.</li>
+    <li><strong>By the last session:</strong> something you built, live on the web and ready to share. That could be a portfolio, a family site or a simple game.</li>
+  </ul>
+</section>
+
+<section>
+  <p class="label">Things I've built with AI</p>
+  <h2>Not a coder. Still ships.</h2>
+  <p class="muted">I don't write code myself. I direct AI tools to build it, then test and refine. These are live; tap to try one.</p>
+  <div class="proof">
+    <a href="https://sghanna.github.io/ai/games/solitaire/"><div class="card"><em>Play it</em><h3>Solitaire for low vision</h3><p class="muted">Big, high-contrast cards, made for my mom.</p></div></a>
+    <a href="https://sghanna.github.io/ai/games/hearts/"><div class="card"><em>Play it</em><h3>Hearts</h3><p class="muted">For iPhone and iPad, with celebrations.</p></div></a>
+    <a href="https://sghanna.github.io/ai/games/words/"><div class="card"><em>Play it</em><h3>Word Wheel</h3><p class="muted">1,000 levels, and it works offline.</p></div></a>
+    <a href="https://sghanna.github.io/ai/"><div class="card"><em>Look around</em><h3>My portfolio</h3><p class="muted">Career results and AI work.</p></div></a>
+  </div>
+</section>
+
+<section>
+  <p class="label">About me</p>
+  <h2>Shawn Hanna</h2>
+  <p>Glenridge parent. 20+ years in HR technology, data analytics and corporate training at Wells Fargo and Bank of America. Former adjunct instructor in Oracle and PL/SQL. My specialty is translating tech into plain English. I've coached friends and colleagues who left with their own starter guide and portfolio website.</p>
+</section>
+
+<section class="bid">
+  <p class="label">Ready?</p>
+  <p class="big">Find this item at the Glenridge auction</p>
+  <p>Value: <strong>$450</strong></p>
+  <p class="fine">Three 60-minute sessions, in person in San Francisco or over Zoom. Laptop required. Adults only. We schedule sessions together after the auction. Proceeds support Glenridge.</p>
+</section>
+
+</main>
+
+<script>
+(function(){
+  var form=document.getElementById('form'), steps=[].slice.call(form.querySelectorAll('fieldset')),
+      progress=document.getElementById('progress'), result=document.getElementById('result');
+  var plans={
+    level:{
+      new:["Get set up, no jargon","We sign you in to a couple of free AI tools on your laptop and do three small wins together, like an email, a meal plan and a summary of a long PDF."],
+      some:["Go past quick questions","You'll learn the habits that make answers good: giving context, asking for changes, and uploading files and photos."],
+      regular:["Make it routine","We'll build saved instructions and reusable prompts so you stop starting from scratch every time."],
+      power:["Level up your setup","Connected apps, projects, and a look at AI agents that do multi-step work for you."]
+    },
+    goal:{
+      work:["Your job, faster","We'll take one real task from your work, like a report, a deck outline or an inbox cleanup, and turn it into a workflow you can repeat every week."],
+      home:["Family life, handled","Meal plans from what's in your fridge, school newsletters summarized, trip plans, a calendar that makes sense."],
+      career:["Your career story","AI interviews you about your work, writes your stories, and tailors your resume for the jobs you want."],
+      build:["Plan what you'll build","We'll sketch your website, app or game in plain English, the same way I plan mine."]
+    },
+    goalFinal:{
+      work:"A live page that shows off your work, or a small tool your team can use.",
+      home:"A family website or tracker, live on the web, that you can share with relatives.",
+      career:"Your own portfolio website, live and ready to put on LinkedIn.",
+      build:"Your website, app or game, live on the web with a link you can text to people."
+    }
+  };
+  var verdicts=[
+    [95,"Bid now. Bring your laptop."],
+    [88,"This item has your name on it."],
+    [80,"Strong match. Raise your paddle."],
+    [0,"Fair enough. Come bid on it anyway; I'll win you over."]
+  ];
+  function current(){return steps.findIndex(function(s){return !s.hidden})}
+  form.addEventListener('change',function(e){
+    if(e.target.type!=='radio')return;
+    var i=current();
+    setTimeout(function(){
+      if(i<steps.length-1){
+        steps[i].hidden=true; steps[i+1].hidden=false;
+        progress.textContent='Question '+(i+2)+' of 4';
+        var first=steps[i+1].querySelector('input'); if(first)first.focus({preventScroll:true});
+      } else { show(); }
+    },220);
+  });
+  function val(n){var x=form.querySelector('input[name="'+n+'"]:checked');return x?x:null}
+  function show(){
+    var pts=0; ['level','goal','feel','hour'].forEach(function(n){var x=val(n); if(x)pts+=+x.dataset.pts});
+    var score=Math.min(99,Math.max(60,pts));
+    form.hidden=true; result.hidden=false;
+    var lv=val('level').value, gl=val('goal').value;
+    var v=verdicts.find(function(p){return score>=p[0]})[1];
+    document.getElementById('verdict').textContent=v;
+    document.getElementById('barlabel').setAttribute('aria-label','Bid-readiness '+score+' percent');
+    var items=[plans.level[lv],plans.goal[gl],["Ship it",plans.goalFinal[gl]]];
+    document.getElementById('plan').innerHTML=items.map(function(it,k){
+      return '<li><b class="n">'+(k+1)+'</b><div><strong>'+it[0]+'</strong>'+it[1]+'</div></li>';
+    }).join('');
+    var el=document.getElementById('score'), fill=document.getElementById('fill'), t=0;
+    requestAnimationFrame(function(){fill.style.width=score+'%'});
+    var tick=setInterval(function(){t+=3; if(t>=score){t=score;clearInterval(tick)} el.textContent=t},20);
+    result.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  document.getElementById('again').addEventListener('click',function(){
+    form.reset(); steps.forEach(function(s,k){s.hidden=k!==0});
+    progress.textContent='Question 1 of 4'; result.hidden=true; form.hidden=false;
+    document.getElementById('fill').style.width=0;
+    form.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+})();
+</script>
+</body>
+</html>
