@@ -54,6 +54,11 @@ footer { color: var(--muted); font-size: 15px; padding-bottom: 40px; }
 @media (max-width: 640px) { main { padding: 26px 18px; } h1 { font-size: 32px; } }
 @media print { header.nav, footer, .skip, .downloads { display: none; } body { background: #fff; } main { border: 0; padding: 0; margin: 0; width: 100%; } body { font: 10.2pt/1.34 Helvetica, Arial, sans-serif; } h1 { font-size: 24pt; } h2 { font-size: 10.5pt; margin: 11pt 0 4pt; letter-spacing: 0; } h3 { font-size: 11.5pt; margin: 10pt 0 2pt; } li { margin: 2pt 0; } p { margin: 4pt 0; } .contact { margin-bottom: 8pt; } h3 { break-after: avoid; } li { break-inside: avoid; } }
 @page { size: letter; margin: 0.5in; }
+body { background: #172c43; }
+header.nav, header.nav a { color: #fff; } footer, footer a { color: #cfdbec; } header.nav a:focus-visible, footer a:focus-visible, .skip:focus-visible { outline-color: #ffb9a3; } main { border-color: #35516f; }
+@media print { body { background: #fff; } }
+.print-only { display: none; }
+@media print { .print-only { display: inline; } main { border-left: 0; } }
 </style>
 </head>
 <body>
@@ -61,12 +66,7 @@ footer { color: var(--muted); font-size: 15px; padding-bottom: 40px; }
 <header class="wrap nav"><a class="brand" href="./">Shawn Hanna</a><nav aria-label="Main"><a href="./">Portfolio</a><a href="https://www.linkedin.com/in/sghsf">LinkedIn</a><a href="https://github.com/sghanna/ai">GitHub</a></nav></header>
 <main id="main" class="wrap">
 <h1>Shawn Hanna</h1>
-<p class="contact">
-San Francisco, CA | <a
-href="https://www.linkedin.com/in/sghsf">linkedin.com/in/sghsf</a> | <a
-href="./">sghanna.github.io/ai</a>
-</p>
-<p class="downloads"><a href="assets/Shawn-Hanna-Resume.pdf" download>Download the 2-page PDF</a></p>
+<p class="contact">San Francisco, CA<span class="print-only"> | <a href="https://www.linkedin.com/in/sghsf">linkedin.com/in/sghsf</a> | <a href="https://sghanna.github.io/ai/">sghanna.github.io/ai</a></span></p>
 <p class="headline">
 Program Manager | Product Owner, Internal Tools | Learning and Talent
 Programs | Workflow Improvement and Adoption | Directing AI coding
