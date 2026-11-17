@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="description" content="How I split work across Claude Code, Codex, and Antigravity by strength and cost, scored one tool before trusting it, and had two reviewers reach one decision.">
+<link rel="icon" type="image/svg+xml" href="../assets/home/icon.svg">
+<link rel="canonical" href="https://sghanna.github.io/ai/case/ai-team.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://sghanna.github.io/ai/case/ai-team.html">
+<meta property="og:title" content="Running a Team of AI Tools | Shawn Hanna">
+<meta property="og:description" content="How I split work across Claude Code, Codex, and Antigravity by strength and cost, scored one tool before trusting it, and had two reviewers reach one decision.">
+<meta property="og:image" content="https://sghanna.github.io/ai/assets/home/og-home.png">
+<meta name="twitter:card" content="summary_large_image">
+<title>Running a Team of AI Tools | Shawn Hanna</title>
+<link rel="stylesheet" href="../assets/case.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="dark"><header class="wrap nav"><a class="brand" href="../">Shawn Hanna</a><nav aria-label="Main"><a href="../#work">AI work</a><a href="../resume.html">Resume</a><a href="https://www.linkedin.com/in/sghsf">LinkedIn</a></nav></header></div>
+<main id="main" tabindex="-1">
+
+<section class="hero dark"><div class="wrap">
+<div class="hero-grid">
+<div class="hero-copy">
+<p class="eyebrow" style="--d:0">Case study | AI operations | Sept 28, 2026</p>
+<h1 style="--d:1">Running a Team of AI Tools <span>I make the final call.</span></h1>
+<p class="lede" style="--d:2">I use three AI tools from three companies: Claude Code, Codex, and Antigravity. Early on I used whichever one was open. Then my Claude usage ran out halfway through a day of work, and I started treating the three of them like a small team with different strengths, a shared budget, and rules for checking each other.</p>
+</div>
+<figure class="handoff" style="--d:3"><figcaption>Each tool gets the work it does best, a second AI checks the first, and I make the final call.</figcaption><ol>
+<li style="--i:0"><span class="time">Research</span><div class="task"><strong>Antigravity</strong>Web research, first-pass bug hunting, and simple drafts.</div></li>
+<li style="--i:1"><span class="time">Build</span><div class="task"><strong>Codex</strong>The long, heavy work: code, browser tasks, and fixes.</div></li>
+<li style="--i:2"><span class="time">Check</span><div class="task"><strong>Claude</strong>Reviews the work, and writes anything a person will read.</div></li>
+<li style="--i:3"><span class="time">Decide</span><div class="task"><strong>Me</strong>The tools propose, check, and argue. I decide what ships.</div></li>
+</ol></figure>
+</div>
+<div class="stats three">
+<div class="stat" style="--d:4"><strong>4.2 vs 6.5</strong><p>Best of two tries each: Antigravity on Gemini Pro against Gemini Flash, scored by Codex with a five-part rubric I could read and question.</p></div>
+<div class="stat" style="--d:5"><strong>3 of 3</strong><p>Evidence-backed objections Codex raised to Claude's design. Claude accepted all three before both signed one answer.</p></div>
+<div class="stat" style="--d:6"><strong>1 day</strong><p>From "use whatever is open" to a written split of the work, a budget rule, and a weekly review.</p></div>
+</div>
+</div></section>
+
+<nav class="chapters" aria-label="On this page"><div class="wrap"><a href="#problem"><span>01</span>Problem</a><a href="#split"><span>02</span>Split</a><a href="#test"><span>03</span>Test</a><a href="#decision"><span>04</span>Decision</a><a href="#result"><span>05</span>Result</a></div><i class="bar" aria-hidden="true"></i></nav>
+
+<section class="section" id="problem" aria-labelledby="problem-title"><div class="wrap">
+<p class="kicker"><span class="no">01</span><span class="pill">Problem</span></p>
+<h2 id="problem-title">One tool doing everything</h2>
+<p class="sub">By mid-afternoon I had hit my Claude session limit. Meanwhile Codex had almost its whole week of usage left, and Antigravity was sitting idle. The work was fine. The budget was not.</p>
+<figure class="day watch">
+<figcaption class="fig-title">One day of work, before the split</figcaption>
+<div class="day-axis" aria-hidden="true"><span>Start of the day</span><span>Mid-afternoon</span></div>
+<div class="day-row out"><b>Claude</b><div><div class="day-track"><i class="used"></i><i class="stop"></i></div><p>Session limit reached by mid-afternoon</p></div></div>
+<div class="day-row"><b>Codex</b><div><div class="day-track"></div><p>Almost its whole week of usage left</p></div></div>
+<div class="day-row"><b>Antigravity</b><div><div class="day-track"></div><p>Sitting idle</p></div></div>
+</figure>
+</div></section>
+
+<section class="section dark" id="split" aria-labelledby="split-title"><div class="wrap">
+<p class="kicker"><span class="no">02</span><span class="pill action">Action</span></p>
+<h2 id="split-title">The split</h2>
+<p class="said big">I stopped asking which AI is best and started asking which AI is best for this job, at what cost.</p>
+<div class="roles" data-roles>
+<div class="role reveal" data-role="Codex"><span class="t">Builds and fixes</span><h3>Codex</h3><p>It does the long, heavy work: code, browser tasks, first reviews.</p><p class="said">"When you hand things off to Codex, don't NERF Codex. Let it use all tools and abilities at its disposal."</p><ul class="tags" aria-label="Codex's jobs"><li data-order="1" data-why="It does the long, heavy work.">Code</li><li data-order="4" data-why="It does the long, heavy work.">Browser tasks</li><li data-order="9" data-why="It does the long, heavy work.">First reviews</li></ul></div>
+<div class="role reveal" style="--d:1" data-role="Claude"><span class="t">Checks and writes</span><h3>Claude</h3><p>It reviews Codex's work, makes judgment calls, and writes anything a person will read. It works in short, focused passes, because its budget is the one that runs out.</p><ul class="tags" aria-label="Claude's jobs"><li data-order="7" data-why="A second AI checks the first.">Reviewing Codex's work</li><li data-order="5" data-why="It works in short, focused passes, because its budget is the one that runs out.">Judgment calls</li><li data-order="3" data-why="Claude writes anything a person will read.">Anything a person will read</li></ul></div>
+<div class="role reveal" style="--d:2" data-role="Antigravity"><span class="t">Researches and drafts</span><h3>Antigravity</h3><p>It does web research, first-pass bug hunting, and simple pages. Codex verifies its research before anyone relies on it.</p><ul class="tags" aria-label="Antigravity's jobs"><li data-order="2" data-why="Codex verifies its research before anyone relies on it.">Web research</li><li data-order="6" data-why="Its findings always get a second check.">First-pass bug hunting</li><li data-order="8" data-why="It researches and drafts.">Simple pages</li></ul></div>
+<div class="role me reveal" style="--d:3" data-role="Me"><span class="t">Decides</span><h3>Me</h3><p>The tools propose, check, and argue. I decide what ships.</p><ul class="tags" aria-label="My job"><li data-order="10" data-why="The tools propose, check, and argue. I decide what ships.">What ships</li></ul></div>
+</div>
+<p class="note"><b>Every handoff is a file.</b> Everything is handed off as a written brief in a file, never a pasted prompt, so each step can be checked later. Codex also pauses itself when its weekly usage reaches 95%, instead of failing halfway through a job.</p>
+</div></section>
+
+<section class="section white" id="test" aria-labelledby="test-title"><div class="wrap">
+<p class="kicker"><span class="no">03</span><span class="pill action">A scored test</span></p>
+<h2 id="test-title">Testing a tool before trusting it</h2>
+<p class="said big">"it isn't perfect, but it did find unique bugs."</p>
+<p class="prose">That was my doubt about Antigravity. So Codex scored Antigravity's code reviews against the same brief the other two tools had, with a five-part rubric.</p>
+<div class="rubric watch" role="img" aria-label="Rubric weights: accuracy 30%, evidence 20%, coverage 20%, usefulness of the proposed action 20%, confidence matched to evidence 10%"><div style="--w:30;--i:0;background:#172c43">30%</div><div style="--w:20;--i:1;background:#2855b5">20%</div><div style="--w:20;--i:2;background:#3c69c9">20%</div><div style="--w:20;--i:3;background:#536278">20%</div><div style="--w:10;--i:4;background:#748ca7">10%</div></div>
+<ul class="rubric-key" aria-hidden="true"><li><i style="background:#172c43"></i>Accuracy 30%</li><li><i style="background:#2855b5"></i>Evidence 20%</li><li><i style="background:#3c69c9"></i>Coverage 20%</li><li><i style="background:#536278"></i>Usefulness of the proposed action 20%</li><li><i style="background:#748ca7"></i>Confidence matched to evidence 10%</li></ul>
+<figure class="scores" data-scores>
+<div class="scores-head"><figcaption class="fig-title">Scores out of 10 for each run</figcaption></div>
+<div class="sr-only"><table><caption>Scores out of 10 for each run</caption><tr><th scope="col">Model</th><th scope="col">First report</th><th scope="col">After feedback</th></tr><tr><th scope="row">Gemini 3.1 Pro</th><td>3.0</td><td>4.2</td></tr><tr><th scope="row">Gemini 3.8 Flash</th><td>5.1</td><td>6.5</td></tr></table></div>
+<div aria-hidden="true">
+<p class="score-legend"><span><i></i>First report</span><span><i></i>After feedback</span></p>
+<div class="score-row"><b>Gemini 3.1 Pro</b><div class="score-track" style="--first:3.0;--after:4.2"><i class="after-bar"></i><i class="first-bar"></i><span class="val first">3.0</span><span class="val after">4.2</span></div></div>
+<div class="score-row"><b>Gemini 3.8 Flash</b><div class="score-track" style="--first:5.1;--after:6.5"><i class="after-bar"></i><i class="first-bar"></i><span class="val first">5.1</span><span class="val after">6.5</span></div></div>
+<div class="score-axis"><span>0</span><span>5</span><span>10</span></div>
+</div>
+</figure>
+<p class="prose" style="margin-top:30px">Each model got two tries: a first report, then a revision after feedback. The scores describe these reports, not the models in general. They still settled the question: Flash is worth keeping as an extra bug hunter, and its findings always get a second check.</p>
+</div></section>
+
+<section class="section" id="decision" aria-labelledby="decision-title"><div class="wrap">
+<p class="kicker"><span class="no">04</span><span class="pill action">A joint decision</span></p>
+<h2 id="decision-title">Two reviewers, one decision</h2>
+<p class="sub">I wanted to borrow from two popular open-source job-search tools. I asked Claude and Codex to "fully review the code and decide together."</p>
+<div class="converge">
+<p class="cv-step">Each reviewed independently</p>
+<div class="cv-row"><div class="cv-card claude reveal"><b>Claude's review</b></div><div class="cv-card reveal" style="--d:1"><b>Codex's review</b></div></div>
+<div class="cv-link watch"><svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M25 0L75 100M75 0L25 100" vector-effect="non-scaling-stroke"/></svg><p>Then each read the other's review and answered it point by point.</p></div>
+<p class="cv-step">Neither one was simply right</p>
+<div class="cv-row watch"><div class="cv-card claude"><b>Claude</b>Claude found things Codex had left out.</div><div class="cv-card"><b>Codex</b>Codex pushed back three times on Claude's design, with evidence. Claude accepted all three.<ul class="objs" aria-hidden="true"><li style="--i:0">Accepted</li><li style="--i:1">Accepted</li><li style="--i:2">Accepted</li></ul></div></div>
+<div class="cv-link plain watch"><svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M25 0L50 100M75 0L50 100" vector-effect="non-scaling-stroke"/></svg></div>
+<div class="cv-final reveal"><span>Both signed the same answer</span><b>Borrow a few small pieces from each, install neither.</b></div>
+</div>
+<p class="note"><b>My rule for giving back:</b> fix what we use, look for security holes that a compromised AI could exploit, send no more than three pull requests to any one project a week, and check again right before sending that nobody else has already fixed it.</p>
+</div></section>
+
+<section class="section white" id="result" aria-labelledby="result-title"><div class="wrap">
+<p class="kicker"><span class="no">05</span><span class="pill result">Result</span></p>
+<h2 id="result-title">What I learned</h2>
+<div class="oneday reveal"><strong>1 day</strong><div><p>From "use whatever is open" to a written split of the work, a budget rule, and a weekly review.</p><ul aria-hidden="true"><li>A written split of the work</li><li>A budget rule</li><li>A weekly review</li></ul></div></div>
+<ul class="learned">
+<li class="reveal"><strong>Budget is a design constraint.</strong> Once I could see where the usage went, the split of work followed.</li>
+<li class="reveal" style="--d:1"><strong>Measure a tool before trusting it.</strong> A rubric turned "I'm doubtful" into a score and a clear role.</li>
+<li class="reveal" style="--d:2"><strong>Two reviewers beat one</strong> only if each has to answer the other with evidence.</li>
+<li class="reveal"><strong>Every handoff is a file.</strong> That makes the work checkable, and it makes this write-up possible.</li>
+<li class="reveal" style="--d:1"><strong>I make the final call.</strong> The tools propose, check, and argue; I decide what ships.</li>
+</ul>
+<p class="credit">Written with Claude from my session notes and the files the three tools produced. Scores are from Codex's review of Antigravity's delivered reports, September 28, 2026.</p>
+</div></section>
+
+<section class="more"><div class="wrap"><a class="next-case" href="olkcli.html"><span>Next case study</span><b>Three Fixes for olkcli</b></a><a class="all" href="../#work">All AI work</a></div></section>
+</main>
+<footer class="wrap"><div class="footer-inner"><span>Shawn Hanna | Program manager | San Francisco</span><nav aria-label="Footer navigation"><a href="https://www.linkedin.com/in/sghsf">LinkedIn</a><a href="../resume.html">Resume</a><a href="https://github.com/sghanna/ai">GitHub</a></nav></div></footer>
+
+<script>
+/* All content above is complete without this script. It only adds the
+   interactive controls and, when the reader's system allows motion, animation.
+   No network calls. */
+(function () {
+  var root = document.documentElement;
+  var motion = window.matchMedia('(prefers-reduced-motion: no-preference)').matches && 'IntersectionObserver' in window;
+  root.classList.add('js');
+  if (motion) root.classList.add('motion');
+  function $(s, c) { return (c || document).querySelector(s); }
+  function $$(s, c) { return [].slice.call((c || document).querySelectorAll(s)); }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function button(cls, text) { var b = el('button', cls, text); b.type = 'button'; return b; }
+  function onView(node, fn) {
+    if (!('IntersectionObserver' in window)) { fn(); return; }
+    var o = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { o.disconnect(); fn(); } }, { rootMargin: '0px 0px -12% 0px' });
+    o.observe(node);
+  }
+
+  /* Fade sections in as they are reached. */
+  if (motion) $$('.reveal, .watch').forEach(function (n) { onView(n, function () { n.classList.add('in'); }); });
+
+  /* Chapter bar: mark the current chapter, and show reading progress. */
+  var links = $$('.chapters a'), bar = $('.chapters .bar');
+  var targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+  function spy() {
+    var line = window.scrollY + 140, cur = -1;
+    targets.forEach(function (t, i) { if (t && t.getBoundingClientRect().top + window.scrollY <= line) cur = i; });
+    links.forEach(function (a, i) { if (i === cur) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); });
+    if (motion && bar) { var max = root.scrollHeight - window.innerHeight; bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, window.scrollY / max) : 0) + ')'; }
+  }
+  window.addEventListener('scroll', spy, { passive: true });
+  window.addEventListener('resize', spy);
+  spy();
+
+  /* 02: pick a job and see which tool gets it. Built from the job tags on the four cards. */
+  var roles = $('[data-roles]');
+  if (roles) (function () {
+    var tags = $$('.tags li', roles).sort(function (a, b) { return a.getAttribute('data-order') - b.getAttribute('data-order'); });
+    var box = el('div', 'router'), jobs = el('div', 'jobs'), out = el('p', 'router-out');
+    box.appendChild(el('p', 'fig-title', 'Pick a job to see who gets it'));
+    jobs.setAttribute('role', 'group');
+    jobs.setAttribute('aria-label', 'Jobs');
+    out.setAttribute('role', 'status');
+    out.appendChild(el('span', '', 'Each tool gets the work it does best, a second AI checks the first, and I make the final call.'));
+    var btns = tags.map(function (tag) {
+      var b = button('', tag.textContent);
+      b.setAttribute('aria-pressed', 'false');
+      b.addEventListener('click', function () { pick(tag, b); });
+      jobs.appendChild(b);
+      return b;
+    });
+    box.appendChild(jobs);
+    box.appendChild(out);
+    roles.parentNode.insertBefore(box, roles);
+    function pick(tag, b) {
+      var card = tag.closest('.role'), who = card.getAttribute('data-role');
+      btns.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      $$('.role', roles).forEach(function (r) { r.classList.toggle('on', r === card); });
+      tags.forEach(function (t) { t.classList.toggle('on', t === tag); });
+      out.textContent = '';
+      var line = el('b', '', tag.textContent + ' ');
+      var arrow = el('i', '', '→');
+      arrow.setAttribute('aria-hidden', 'true');
+      line.appendChild(arrow);
+      line.appendChild(el('span', 'sr-only', 'goes to '));
+      line.appendChild(document.createTextNode(' ' + who));
+      out.appendChild(line);
+      out.appendChild(el('span', '', tag.getAttribute('data-why')));
+    }
+  })();
+
+  /* 03: watch the scores move from the first report to the revision. */
+  var scores = $('[data-scores]');
+  if (scores) (function () {
+    var sw = el('div', 'score-switch'), btns = {}, picked = false;
+    sw.setAttribute('role', 'group');
+    sw.setAttribute('aria-label', 'Show scores for the first report or after feedback');
+    [['first', 'First report'], ['after', 'After feedback']].forEach(function (p) {
+      btns[p[0]] = button('', p[1]);
+      btns[p[0]].addEventListener('click', function () { picked = true; set(p[0]); });
+      sw.appendChild(btns[p[0]]);
+    });
+    $('.scores-head', scores).appendChild(sw);
+    function set(k) {
+      scores.setAttribute('data-state', k);
+      for (var n in btns) btns[n].setAttribute('aria-pressed', n === k ? 'true' : 'false');
+    }
+    /* The first-view switch never overrides a choice the reader already made. */
+    if (motion) { set('first'); onView(scores, function () { setTimeout(function () { if (!picked) set('after'); }, 700); }); }
+    else set('after');
+  })();
+})();
+</script>
+</body>
+</html>

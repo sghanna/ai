@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="description" content="Two AI coding agents checked each other, and an outside maintainer merged all three fixes about 90 minutes after submission, with no changes requested.">
+<link rel="icon" type="image/svg+xml" href="../assets/home/icon.svg">
+<link rel="canonical" href="https://sghanna.github.io/ai/case/olkcli.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://sghanna.github.io/ai/case/olkcli.html">
+<meta property="og:title" content="Three Fixes for olkcli | Shawn Hanna">
+<meta property="og:description" content="Two AI coding agents checked each other, and an outside maintainer merged all three fixes about 90 minutes after submission, with no changes requested.">
+<meta property="og:image" content="https://sghanna.github.io/ai/assets/home/og-home.png">
+<meta name="twitter:card" content="summary_large_image">
+<title>Three Fixes for olkcli | Shawn Hanna</title>
+<link rel="stylesheet" href="../assets/case.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="dark"><header class="wrap nav"><a class="brand" href="../">Shawn Hanna</a><nav aria-label="Main"><a href="../#work">AI work</a><a href="../resume.html">Resume</a><a href="https://www.linkedin.com/in/sghsf">LinkedIn</a></nav></header></div>
+<main id="main" tabindex="-1">
+
+<section class="hero dark"><div class="wrap">
+<div class="hero-grid">
+<div class="hero-copy">
+<p class="eyebrow" style="--d:0">Case study | Open-source contribution | Sept 27, 2026</p>
+<h1 style="--d:1">Three Fixes for olkcli <span>All three merged, unchanged.</span></h1>
+<p class="lede" style="--d:2">I asked two AI coding agents from different companies to look for bugs and to check each other's work. Three fixes came out of it. I submitted them as my first open-source pull requests, and the maintainer merged all three about 90 minutes later.</p>
+</div>
+<figure class="proof" style="--d:3"><div class="winbar" aria-hidden="true"><i></i><i></i><i></i></div><img src="../assets/home/olkcli-merged-prs.png" width="1000" height="400" alt="GitHub list of three merged pull requests by sghanna, each merged September 27, 2026: #131 explain device-code expiry and login timeouts, #130 prevent errors with mail list --from, #129 show reply-to addresses"><figcaption>Merged September 27, 2026. See each one on GitHub:<span class="links"><a href="https://github.com/rlrghb/olkcli/pull/129">Pull request 129 <span aria-hidden="true">&nearr;</span></a><a href="https://github.com/rlrghb/olkcli/pull/130">Pull request 130 <span aria-hidden="true">&nearr;</span></a><a href="https://github.com/rlrghb/olkcli/pull/131">Pull request 131 <span aria-hidden="true">&nearr;</span></a></span></figcaption></figure>
+</div>
+<div class="stats">
+<div class="stat" style="--d:4"><strong><span data-count="3">3</span> of 3</strong><p>Pull requests merged by the maintainer, with no changes requested.</p></div>
+<div class="stat" style="--d:5"><strong data-count="5">5</strong><p>Problems the two AIs caught in each other's work before anything went public.</p></div>
+<div class="stat" style="--d:6"><strong data-count="128">128</strong><p>Past issues and pull requests checked so we did not duplicate anyone's work.</p></div>
+<div class="stat" style="--d:7"><strong>0</strong><p>Changes to my mailbox. Every live test was read-only, and Microsoft refused a test write.</p></div>
+</div>
+</div></section>
+
+<nav class="chapters" aria-label="On this page"><div class="wrap"><a href="#problem"><span>01</span>Problem</a><a href="#action"><span>02</span>Action</a><a href="#result"><span>03</span>Result</a><a href="#my-part"><span>04</span>My part</a></div><i class="bar" aria-hidden="true"></i></nav>
+
+<section class="section" id="problem" aria-labelledby="problem-title"><div class="wrap">
+<div class="split">
+<div class="reveal">
+<p class="kicker"><span class="no">01</span><span class="pill">Problem</span></p>
+<h2 id="problem-title">A safe way in to my inbox</h2>
+<p class="prose">I keep a separate Outlook.com account only for my job search. I wanted an AI agent to read the job alerts that land there, so I needed a way in that could read mail but never send, delete, or change it. olkcli is a young open-source tool that offers exactly that: a read-only sign-in.</p>
+<p class="note"><b>Read-only first.</b> The account holds only job-search mail, and the agent's sign-in can read but not write. We proved it: a harmless test change was refused twice, once by the tool and once by Microsoft.</p>
+</div>
+<figure class="gate reveal" style="--d:2" data-gate>
+<figcaption class="fig-title">What the agent's sign-in allows</figcaption>
+<div class="gate-track">
+<div class="gate-node agent"><span class="ico"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="6" y="11" width="20" height="15" rx="4"/><path d="M16 11V6"/><circle cx="16" cy="5" r="1.4"/><circle cx="12" cy="18" r="1.1"/><circle cx="20" cy="18" r="1.1"/></svg></span>AI agent</div>
+<div class="gate-wire"></div>
+<div class="gate-node lock"><span class="ico"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="7" y="14" width="18" height="13" rx="3"/><path d="M11 14v-3a5 5 0 0 1 10 0v3"/></svg></span>Read-only sign-in</div>
+<div class="gate-wire"></div>
+<div class="gate-node inbox"><span class="ico"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="8" width="22" height="16" rx="3"/><path d="M6 10l10 8 10-8"/></svg></span>Job-search inbox</div>
+<i class="packet" aria-hidden="true"></i>
+</div>
+<ul class="perms">
+<li class="ok" data-req="read"><b>Read</b><span>Allowed</span></li>
+<li data-req="send"><b>Send</b><span>Never</span></li>
+<li data-req="delete"><b>Delete</b><span>Never</span></li>
+<li data-req="change"><b>Change</b><span>Never</span></li>
+</ul>
+</figure>
+</div>
+</div></section>
+
+<section class="section white" id="action" aria-labelledby="action-title"><div class="wrap">
+<div class="split">
+<div class="reveal">
+<p class="kicker"><span class="no">02</span><span class="pill action">Action</span></p>
+<h2 id="action-title">Two AIs, each checking the other</h2>
+<p class="said">"Do you see any bugs in the app that you could help fix?"</p>
+<p class="prose">Nothing counted until the other AI reproduced it. It is the maker-checker control banks use for payments: the one who prepares a change never approves it.</p>
+</div>
+<figure class="loop reveal watch" style="--d:2">
+<div class="loop-track">
+<div class="loop-node">Codex</div>
+<div class="loop-wire" aria-hidden="true"><i></i><i></i></div>
+<div class="loop-node me">Me</div>
+<div class="loop-wire" aria-hidden="true"><i></i><i></i></div>
+<div class="loop-node claude">Claude</div>
+<i class="loop-dot" aria-hidden="true"></i>
+</div>
+<figcaption><b>I carried every round between them,</b> more than a dozen handoffs, until they fully agreed.</figcaption>
+</figure>
+</div>
+</div></section>
+
+<section class="section dark" aria-labelledby="caught-title"><div class="wrap">
+<p class="eyebrow">Why two AIs</p>
+<h2 id="caught-title">What the cross-review caught</h2>
+<p class="sub">In every case, the author's own tests passed. Each problem surfaced only when the other AI checked the work, and all five were fixed before anything went public.</p>
+<div class="rally watch" data-rally>
+<div class="court">
+<div class="court-groups"><span>The sign-in fix: three catches</span><span>Two more catches</span></div>
+<div class="court-lanes" aria-hidden="true"><span class="codex"><b>Codex <em>caught</em></b></span><span class="claude"><b>Claude <em>caught</em></b></span></div>
+<div class="court-field">
+<svg class="court-line wide" viewBox="0 0 500 264" preserveAspectRatio="none" aria-hidden="true"><polyline points="50,94 150,170 250,94" vector-effect="non-scaling-stroke"/></svg>
+<svg class="court-line narrow" viewBox="0 0 500 144" preserveAspectRatio="none" aria-hidden="true"><polyline points="50,36 150,108 250,36" vector-effect="non-scaling-stroke"/></svg>
+<ol class="court-nodes">
+<li class="codex" style="--i:1;grid-column:1"><a href="#catch-1"><span class="n"><span class="sr-only">Catch </span>1</span><span class="t"><span class="sr-only">Caught by Codex: </span>Every timeout was called an expired code</span></a></li>
+<li class="claude" style="--i:2;grid-column:2"><a href="#catch-2"><span class="n"><span class="sr-only">Catch </span>2</span><span class="t"><span class="sr-only">Caught by Claude: </span>The confusing error came back</span></a></li>
+<li class="codex" style="--i:3;grid-column:3"><a href="#catch-3"><span class="n"><span class="sr-only">Catch </span>3</span><span class="t"><span class="sr-only">Caught by Codex: </span>Browser sign-in lost its advice</span></a></li>
+<li class="claude" style="--i:4;grid-column:4"><a href="#catch-4"><span class="n"><span class="sr-only">Catch </span>4</span><span class="t"><span class="sr-only">Caught by Claude: </span>A predicted failure that did not happen</span></a></li>
+<li class="claude" style="--i:5;grid-column:5"><a href="#catch-5"><span class="n"><span class="sr-only">Catch </span>5</span><span class="t"><span class="sr-only">Caught by Claude: </span>Six test names described our process</span></a></li>
+</ol>
+<i class="ball" aria-hidden="true"></i>
+</div>
+</div>
+<div class="catches">
+<article class="catch codex" id="catch-1" tabindex="-1"><div class="who"><span class="l">Catch 1 | Caught by</span><b>Codex</b><em>with new tests</em></div><div><span class="l">The problem</span><p>Claude's first sign-in fix called every timeout an expired code, even when the time limit came from somewhere else.</p></div><div><span class="l">Resolution</span><p>Codex's refinement checks which timer actually fired.</p></div></article>
+<article class="catch claude" id="catch-2" tabindex="-1"><div class="who"><span class="l">Catch 2 | Caught by</span><b>Claude</b><em>by asking Microsoft for a sign-in code and checking its lifetime</em></div><div><span class="l">The problem</span><p>On its own, that refinement brought back the confusing error in the real sign-in command.</p></div><div><span class="l">Resolution</span><p>The command's 15-minute limit runs out before Microsoft's 15-minute code does, so the command now explains its own limit in plain words.</p></div></article>
+<article class="catch codex" id="catch-3" tabindex="-1"><div class="who"><span class="l">Catch 3 | Caught by</span><b>Codex</b><em>from the source and a test</em></div><div><span class="l">The problem</span><p>That plain message also replaced the browser sign-in's specific troubleshooting advice.</p></div><div><span class="l">Resolution</span><p>Browser sign-in keeps its original advice.</p></div></article>
+<article class="catch claude" id="catch-4" tabindex="-1"><div class="who"><span class="l">Catch 4 | Caught by</span><b>Claude</b><em>with a live test on my inbox</em></div><div><span class="l">The problem</span><p>Codex predicted that searches for unread mail would fail too.</p></div><div><span class="l">Resolution</span><p>They work on the real service; Codex's test server was stricter than Microsoft's. The pull request says so plainly.</p></div></article>
+<article class="catch claude" id="catch-5" tabindex="-1"><div class="who"><span class="l">Catch 5 | Caught by</span><b>Claude</b><em>in the pre-submission check</em></div><div><span class="l">The problem</span><p>Six test names described our review process instead of what the code does.</p></div><div><span class="l">Resolution</span><p>Renamed, with a file-by-file check that nothing else changed.</p></div></article>
+</div>
+</div>
+</div></section>
+
+<section class="section" aria-labelledby="rules-title"><div class="wrap">
+<p class="eyebrow">How I ran it</p>
+<h2 id="rules-title">Rules I set, in my words</h2>
+<div class="qcards">
+<div class="qcard reveal"><p class="d">Two AIs check each other</p><p class="said">"I'll have Codex review your finding."</p><p class="then">Nothing counted until the other AI reproduced it.</p></div>
+<div class="qcard reveal" style="--d:1"><p class="d">Check before publishing</p><p class="said">"Review everything at this site to be sure these issues have not already been submitted, and that we are submitting them in the appropriate way."</p><p class="then">128 past issues and pull requests checked.</p></div>
+<div class="qcard reveal"><p class="d">Write for the maintainer</p><p class="said">"Codex may be better at code, but you may be better at human understandable phrasing."</p><p class="then">I had both AIs' drafts laid out side by side on a webpage, and they converged on a combined version.</p></div>
+<div class="qcard go reveal" style="--d:1"><p class="d">I decide what goes public</p><p class="said">"ok, submit."</p><p class="then">Nothing was submitted until I said it.</p></div>
+</div>
+</div></section>
+
+<section class="section white" id="result" aria-labelledby="result-title"><div class="wrap">
+<p class="kicker"><span class="no">03</span><span class="pill result">Result</span></p>
+<h2 id="result-title">Merged in about 90 minutes</h2>
+<p class="sub">All three merged by the maintainer, with no changes requested.</p>
+<div class="merge watch">
+<p class="merge-head"><span>Three pull requests submitted</span><b>About 90 minutes</b><span>All three merged by the maintainer</span></p>
+<div class="merge-row" style="--i:0" aria-hidden="true"><em>#129</em><i class="line"><u></u></i><i class="dot"></i></div>
+<div class="merge-row" style="--i:1" aria-hidden="true"><em>#130</em><i class="line"><u></u></i><i class="dot"></i></div>
+<div class="merge-row" style="--i:2" aria-hidden="true"><em>#131</em><i class="line"><u></u></i><i class="dot"></i></div>
+</div>
+
+<p class="eyebrow gap">What we submitted</p>
+<h2 class="h-sub">The three fixes</h2>
+<div class="fixcards">
+<div class="fixcard reveal"><p class="num">Pull request 129<em>Merged</em></p><h3>Show reply-to addresses</h3><p>Reading a single message dropped its Reply-To address, the address a reply should go to. The list view showed it; the detail view lost it.</p><a href="https://github.com/rlrghb/olkcli/pull/129">See it on GitHub <span aria-hidden="true">&nbsp;&nearr;</span></a></div>
+<div class="fixcard reveal" style="--d:1"><p class="num">Pull request 130<em>Merged</em></p><h3>Make sender searches work</h3><p>Searching mail by sender failed with an InefficientFilter error every time we tried it on Outlook.com. The fix reorders the search to follow Microsoft's documented rule.</p><a href="https://github.com/rlrghb/olkcli/pull/130">See it on GitHub <span aria-hidden="true">&nbsp;&nearr;</span></a></div>
+<div class="fixcard reveal" style="--d:2"><p class="num">Pull request 131<em>Merged</em></p><h3>Explain sign-in timeouts</h3><p>A sign-in that timed out said only "context deadline exceeded." Now it says what happened and what to do, and browser sign-in keeps its existing advice.</p><a href="https://github.com/rlrghb/olkcli/pull/131">See it on GitHub <span aria-hidden="true">&nbsp;&nearr;</span></a></div>
+</div>
+<figure class="term reveal" data-term>
+<figcaption><b>Pull request 131.</b> One of them replaced an error nobody could act on. This is what a user sees when a sign-in times out.</figcaption>
+<div class="term-win">
+<div class="term-bar"><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i></div>
+<div class="term-body">
+<div class="term-row before"><span class="tag">Before the fix</span><code>Error: polling for token: context deadline exceeded</code><p>An error nobody could act on.</p></div>
+<div class="term-row after"><span class="tag">After the fix</span><code>sign-in was not completed within 15 minutes; run 'olk auth login' again</code><p>Now it says what happened and what to do.</p></div>
+</div>
+</div>
+</figure>
+</div></section>
+
+<section class="section" id="my-part" aria-labelledby="part-title"><div class="wrap">
+<p class="kicker"><span class="no">04</span><span class="pill">My part</span></p>
+<h2 id="part-title">What I did, and what the AIs did</h2>
+<p class="said big reveal">I did not write the code.</p>
+<p class="sub">My part was deciding what the AIs could touch, making them prove their work to each other, and deciding what was ready to publish under my name.</p>
+<div class="two">
+<div class="panel me reveal"><h3>What I did</h3><ul>
+<li>Chose the tool and limited it to read-only access on an account used only for my job search.</li>
+<li>Asked for a bug hunt, then set up the cross-review between two AI vendors.</li>
+<li>Carried every round between them, more than a dozen handoffs, until they fully agreed.</li>
+<li>Approved each live test on my real inbox.</li>
+<li>Required a duplicate check and a review of the project's contribution norms before publishing.</li>
+<li>Had both AIs' wording compared side by side for the maintainer, and signed off on the final text.</li>
+<li>Required credit for both models, and gave the final go-ahead.</li>
+</ul></div>
+<div class="panel ai reveal" style="--d:1"><h3>What the AIs did</h3><ul>
+<li>Read the code, found the three bugs, and wrote the fixes and tests.</li>
+<li>Reproduced each other's results and ran read-only live tests.</li>
+<li>Researched the project's history and how its maintainer accepts contributions.</li>
+<li>Drafted and revised the pull request descriptions.</li>
+<li>Codex submitted the pull requests and verified they matched the reviewed code, file for file.</li>
+</ul></div>
+</div>
+<p class="credit">Directed by Shawn Hanna. Built with Claude Code (Claude Opus 5.5) and Codex (GPT-6-Astra-xhigh). Every pull request ends: "The issue and fix were found and built in collaboration between GPT-6-Astra-xhigh and Claude Opus 5.5."</p>
+</div></section>
+
+<section class="more"><div class="wrap"><a class="next-case" href="ai-team.html"><span>Next case study</span><b>Running a Team of AI Tools</b></a><a class="all" href="../#work">All AI work</a></div></section>
+</main>
+<footer class="wrap"><div class="footer-inner"><span>Shawn Hanna | Program manager | San Francisco</span><nav aria-label="Footer navigation"><a href="https://www.linkedin.com/in/sghsf">LinkedIn</a><a href="../resume.html">Resume</a><a href="https://github.com/sghanna/ai">GitHub</a></nav></div></footer>
+
+<script>
+/* All content above is complete without this script. It only adds the
+   interactive controls and, when the reader's system allows motion, animation.
+   No network calls. */
+(function () {
+  var root = document.documentElement;
+  var motion = window.matchMedia('(prefers-reduced-motion: no-preference)').matches && 'IntersectionObserver' in window;
+  root.classList.add('js');
+  if (motion) root.classList.add('motion');
+  function $(s, c) { return (c || document).querySelector(s); }
+  function $$(s, c) { return [].slice.call((c || document).querySelectorAll(s)); }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function button(cls, text) { var b = el('button', cls, text); b.type = 'button'; return b; }
+  function onView(node, fn) {
+    if (!('IntersectionObserver' in window)) { fn(); return; }
+    var o = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { o.disconnect(); fn(); } }, { rootMargin: '0px 0px -12% 0px' });
+    o.observe(node);
+  }
+
+  /* Fade sections in as they are reached. */
+  if (motion) $$('.reveal, .watch').forEach(function (n) { onView(n, function () { n.classList.add('in'); }); });
+
+  /* Chapter bar: mark the current chapter, and show reading progress. */
+  var links = $$('.chapters a'), bar = $('.chapters .bar');
+  var targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+  function spy() {
+    var line = window.scrollY + 140, cur = -1;
+    targets.forEach(function (t, i) { if (t && t.getBoundingClientRect().top + window.scrollY <= line) cur = i; });
+    links.forEach(function (a, i) { if (i === cur) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); });
+    if (motion && bar) { var max = root.scrollHeight - window.innerHeight; bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, window.scrollY / max) : 0) + ')'; }
+  }
+  window.addEventListener('scroll', spy, { passive: true });
+  window.addEventListener('resize', spy);
+  spy();
+
+  /* Opening numbers count up once. */
+  if (motion) $$('[data-count]').forEach(function (n) {
+    var end = +n.getAttribute('data-count'), final = n.textContent, t0 = 0;
+    function tick(t) {
+      if (!t0) t0 = t;
+      var p = Math.min(1, (t - t0 - 700) / 1100);
+      if (p < 0) p = 0;
+      n.textContent = p < 1 ? Math.round(end * (1 - Math.pow(1 - p, 3))) : final;
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  });
+
+  /* 01: send a request through the read-only sign-in. */
+  var gate = $('[data-gate]');
+  if (gate) (function () {
+    var MSG = {
+      read: 'Allowed. The agent’s sign-in can read mail, and every live test was read-only.',
+      send: 'Never. The sign-in can read but not write, so the agent cannot send mail.',
+      'delete': 'Never. The sign-in can read but not write, so the agent cannot delete mail.',
+      change: 'Refused. We proved it: a harmless test change was refused twice, once by the tool and once by Microsoft.'
+    };
+    var track = $('.gate-track', gate), packet = $('.packet', gate), perms = $('.perms', gate), run = 0, anim = null;
+    var status = el('p', 'gate-status', 'Press a request to send it through the sign-in.');
+    status.setAttribute('role', 'status');
+    perms.classList.add('live');
+    var buttons = $$('li', perms).map(function (li) {
+      var b = button();
+      b.setAttribute('aria-pressed', 'false');
+      while (li.firstChild) b.appendChild(li.firstChild);
+      li.appendChild(b);
+      b.addEventListener('click', function () { send(li.getAttribute('data-req'), b); });
+      return b;
+    });
+    perms.insertAdjacentElement('afterend', status);
+    function mid(sel) { var r = $(sel, gate).getBoundingClientRect(); return r.left + r.width / 2 - track.getBoundingClientRect().left; }
+    function send(req, b) {
+      var ok = req === 'read', mine = ++run;
+      buttons.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      function land() {
+        if (mine !== run) return;
+        gate.setAttribute('data-state', ok ? 'ok' : 'no');
+        status.textContent = MSG[req];
+        if (motion) { gate.classList.remove('shake', 'pulse'); void gate.offsetWidth; gate.classList.add(ok ? 'pulse' : 'shake'); }
+      }
+      if (!motion || !packet.animate) { land(); return; }
+      if (anim) anim.cancel();
+      gate.removeAttribute('data-state');
+      status.textContent = 'Request to ' + req + ' mail\u2026';
+      var a = mid('.agent .ico'), g = mid('.lock .ico'), i = mid('.inbox .ico');
+      function at(x, o, off) { var f = { transform: 'translateX(' + x + 'px)', opacity: o }; if (off != null) f.offset = off; return f; }
+      if (ok) {
+        anim = packet.animate([at(a, 0), at(a, 1, .1), at(i, 1, .85), at(i, 0)], { duration: 1200, easing: 'ease-in-out' });
+        setTimeout(land, 1000);
+      } else {
+        anim = packet.animate([at(a, 0), at(a, 1, .1), at(g - 52, 1, .5), at(g - 70, 1, .62), at(a, 0)], { duration: 1400, easing: 'ease-in-out' });
+        setTimeout(land, 700);
+      }
+    }
+  })();
+
+  /* 02: step through the five catches, or see them all. */
+  var rally = $('[data-rally]');
+  if (rally) (function () {
+    var cards = $$('.catch', rally), field = $('.court-field', rally), ball = $('.ball', rally), cur = 0, step = false;
+    var nodes = $$('.court-nodes a', rally).map(function (a, k) {
+      var b = button();
+      b.setAttribute('aria-controls', cards[k].id);
+      while (a.firstChild) b.appendChild(a.firstChild);
+      a.parentNode.replaceChild(b, a);
+      b.addEventListener('click', function () { pick(k); });
+      b.addEventListener('keydown', function (e) {
+        var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (!d) return;
+        e.preventDefault();
+        var to = (k + d + nodes.length) % nodes.length;
+        nodes[to].focus();
+        if (step) show(to);
+      });
+      return b;
+    });
+    var controls = el('div', 'rally-controls');
+    var prev = button('btn ghost', '← Previous'), next = button('btn', ''), count = el('span', 'count'), all = button('all', '');
+    [prev, next, count, all].forEach(function (n) { controls.appendChild(n); });
+    $('.court', rally).insertAdjacentElement('afterend', controls);
+    $('.catches', rally).setAttribute('aria-live', 'polite');
+    function place() {
+      /* Offsets ignore the pop-in scale, so the ring lands on the true centre. */
+      var n = $('.n', nodes[cur]), x = n.offsetWidth / 2, y = n.offsetHeight / 2, e = n;
+      while (e && e !== field && field.contains(e)) { x += e.offsetLeft; y += e.offsetTop; e = e.offsetParent; }
+      ball.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+    }
+    function show(i) {
+      cur = (i + cards.length) % cards.length;
+      nodes.forEach(function (n, k) { if (k === cur) n.setAttribute('aria-current', 'true'); else n.removeAttribute('aria-current'); });
+      cards.forEach(function (c, k) {
+        c.classList.remove('on', 'from-left', 'from-right');
+        if (k === cur) { void c.offsetWidth; c.classList.add('on', c.classList.contains('claude') ? 'from-right' : 'from-left'); }
+      });
+      count.textContent = 'Catch ' + (cur + 1) + ' of ' + cards.length;
+      next.textContent = cur === cards.length - 1 ? 'Start again ↺' : 'Next catch →';
+      place();
+    }
+    function pick(k) {
+      if (step) { show(k); return; }
+      cards[k].scrollIntoView({ block: 'center', behavior: motion ? 'smooth' : 'auto' });
+      cards[k].focus({ preventScroll: true });
+    }
+    function mode(on) {
+      step = on;
+      rally.classList.toggle('step', on);
+      all.textContent = on ? 'Show all five' : 'Step through them';
+      prev.hidden = next.hidden = count.hidden = !on;
+      if (on) show(cur);
+      else { nodes.forEach(function (n) { n.removeAttribute('aria-current'); }); cards.forEach(function (c) { c.classList.remove('on', 'from-left', 'from-right'); }); }
+    }
+    prev.addEventListener('click', function () { show(cur - 1); });
+    next.addEventListener('click', function () { show(cur + 1); });
+    all.addEventListener('click', function () { mode(!step); });
+    window.addEventListener('resize', function () { if (step) place(); });
+    /* With motion allowed the catches open one at a time; otherwise all five start open. */
+    mode(motion);
+  })();
+
+  /* 03: the sign-in message, before and after the fix. Only when motion is allowed;
+     otherwise both messages stay on screen. */
+  var term = $('[data-term]');
+  if (term && motion) (function () {
+    var rows = { before: $('.term-row.before', term), after: $('.term-row.after', term) }, btns = {}, timer = 0, picked = false;
+    var sw = el('div', 'term-switch');
+    sw.setAttribute('role', 'group');
+    sw.setAttribute('aria-label', 'Show the message before or after the fix');
+    ['before', 'after'].forEach(function (k) {
+      var code = $('code', rows[k]), full = code.textContent;
+      code.setAttribute('data-full', full);
+      code.setAttribute('aria-hidden', 'true');
+      code.insertAdjacentElement('beforebegin', el('span', 'sr-only', (k === 'before' ? 'Before the fix: ' : 'After the fix: ') + full));
+      btns[k] = button('', k === 'before' ? 'Before the fix' : 'After the fix');
+      btns[k].addEventListener('click', function () { picked = true; set(k, true); });
+      sw.appendChild(btns[k]);
+    });
+    $('.term-bar', term).appendChild(sw);
+    term.classList.add('live');
+    function set(k, type) {
+      term.setAttribute('data-show', k);
+      for (var n in btns) btns[n].setAttribute('aria-pressed', n === k ? 'true' : 'false');
+      var code = $('code', rows[k]), full = code.getAttribute('data-full'), i = type ? 0 : full.length;
+      clearInterval(timer);
+      code.textContent = '';
+      var text = document.createTextNode(full.slice(0, i));
+      code.appendChild(text);
+      code.appendChild(el('span', 'caret'));
+      if (type) timer = setInterval(function () { i += 1; text.nodeValue = full.slice(0, i); if (i >= full.length) clearInterval(timer); }, 24);
+    }
+    set('before', false);
+    /* The first-view typing never overrides a choice the reader already made. */
+    onView(term, function () { if (!picked) set('before', true); });
+  })();
+})();
+</script>
+</body>
+</html>
