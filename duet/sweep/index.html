@@ -143,6 +143,7 @@ h2{font-size:1.75rem;line-height:1.12;letter-spacing:-.02em;margin:6px 0 8px;fon
 #map{width:100%;height:auto;display:block}
 #map .land{fill:var(--bg2);stroke:var(--line);stroke-width:1.2}
 #map .water{fill:url(#waterG)}
+#map .labels text{pointer-events:none;paint-order:stroke;stroke:var(--bg2);stroke-width:4px;stroke-linejoin:round}
 #map .lbl{font-size:16px;fill:var(--ink);font-weight:700}
 #map .lbl2{font-size:16px;fill:var(--muted);font-weight:600}
 #map .area{font-size:16px;fill:var(--faint);font-weight:800;letter-spacing:.08em;text-transform:uppercase}
@@ -695,7 +696,7 @@ html.w375 .filters{margin:0 -16px 12px}
   svg += '<path class="rail bart draw" d="M' + P.mission.join(" ") + ' L' + P.soma.join(" ") + ' L' + P.fidi.join(" ") + ' C230 70 270 84 ' + P.oakland.join(" ") + '"/>';
   svg += '<path class="rail" d="M' + P.twinpeaks.join(" ") + ' L' + P.mission.join(" ") + '" stroke="var(--faint)" stroke-width="1.5" stroke-dasharray="3 4" fill="none"/>';
   svg += '<path class="rail" d="M' + P.portola.join(" ") + ' L' + P.potrero.join(" ") + '" stroke="var(--faint)" stroke-width="1.5" stroke-dasharray="3 4" fill="none"/>';
-  var nodesSvg = "";
+  var nodesSvg = "", labelsSvg = "";
   var order = D.places.slice().sort(function(a,b){ return a.inlane - b.inlane; });
   order.forEach(function(p, i){
     var xy = P[p.id]; if (!xy) return;
@@ -720,11 +721,11 @@ html.w375 .filters{margin:0 -16px 12px}
       g += '<circle class="core" cx="' + xy[0] + '" cy="' + xy[1] + '" r="' + r + '"/>';
     }
     g += '</g>';
-    g += '<text class="' + (p.inlane ? "lbl" : "lbl2") + '" x="' + lx + '" y="' + ly + '" text-anchor="' + anchor + '">' + esc(nm) + '</text>';
+    labelsSvg += '<text class="' + (p.inlane ? "lbl" : "lbl2") + '" x="' + lx + '" y="' + ly + '" text-anchor="' + anchor + '" aria-hidden="true">' + esc(nm) + '</text>';
     g += '</g>';
     nodesSvg += g;
   });
-  map.innerHTML = svg + nodesSvg;
+  map.innerHTML = svg + nodesSvg + '<g class="labels">' + labelsSvg + '</g>';
   map.querySelectorAll(".rail.draw").forEach(function(pth){ var L = pth.getTotalLength ? pth.getTotalLength() : 600; pth.style.setProperty("--len", Math.ceil(L)); });
   map.querySelectorAll(".node").forEach(function(n){
     function go(){ setPlace(n.getAttribute("data-place")); document.getElementById("roles").scrollIntoView({ behavior: reduce ? "auto" : "smooth" }); }
