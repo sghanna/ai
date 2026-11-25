@@ -674,7 +674,7 @@ html.w375 .filters{margin:0 -16px 12px}
     brisbane: [224, 294], ssf: [206, 338], sanbruno: [186, 378], millbrae: [186, 416], burlingame: [206, 452], sanmateo: [234, 486], redwood: [288, 540],
     oakland: [318, 104]
   };
-  var labelSide = { fidi:"l", soma:"l", missionbay:"r", dogpatch:"r", potrero:"l", mission:"b", twinpeaks:"t", portola:"r", brisbane:"r", ssf:"l", sanbruno:"l", millbrae:"l", burlingame:"l", sanmateo:"l", redwood:"l", oakland:"b" };
+  var labelSide = { fidi:"l", soma:"l", missionbay:"r", dogpatch:"r", potrero:"l", mission:"b", twinpeaks:"bs", portola:"r", brisbane:"r", ssf:"l", sanbruno:"l", millbrae:"l", burlingame:"l", sanmateo:"l", redwood:"l", oakland:"b" };
   var shortName = { ssf: "South SF", twinpeaks: "Twin Peaks", oakland: "Oakland" };
   var svg = '<defs>' +
     '<linearGradient id="waterG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38bdf8" stop-opacity=".22"/><stop offset="1" stop-color="#6366f1" stop-opacity=".16"/></linearGradient>' +
@@ -689,7 +689,7 @@ html.w375 .filters{margin:0 -16px 12px}
     '<text class="area" x="14" y="46">San Francisco</text>' +
     '<text class="area" x="36" y="360">Peninsula</text>' +
     '<text class="area" x="352" y="40" text-anchor="end">East Bay</text>' +
-    '<text class="area" x="264" y="236" style="letter-spacing:.3em">Bay</text>';
+    '<text class="area" x="264" y="258" style="letter-spacing:.3em">Bay</text>';
   function line(pts){ return "M" + pts.map(function(k){ return P[k].join(" "); }).join(" L"); }
   svg += '<path class="rail ct draw" d="' + line(["missionbay","dogpatch","brisbane","ssf","sanbruno","millbrae","burlingame","sanmateo","redwood"]) + '"/>';
   svg += '<path class="rail bart draw" d="M' + P.mission.join(" ") + ' L' + P.soma.join(" ") + ' L' + P.fidi.join(" ") + ' C230 70 270 84 ' + P.oakland.join(" ") + '"/>';
@@ -706,6 +706,7 @@ html.w375 .filters{margin:0 -16px 12px}
     if (side === "r") { lx = xy[0] + r + 5; ly = xy[1] + 4; }
     else if (side === "l") { lx = xy[0] - r - 5; ly = xy[1] + 4; anchor = "end"; }
     else if (side === "t") { ly = xy[1] - r - 6; anchor = "middle"; }
+    else if (side === "bs") { lx = xy[0] - 4; ly = xy[1] + r + 15; }
     else { ly = xy[1] + r + 13; anchor = "middle"; }
     var g = '<g class="node' + (p.inlane ? "" : " empty") + '" data-place="' + p.id + '" tabindex="0" role="button" aria-label="' + esc(p.name) + ', ' + p.inlane + ' roles">';
     g += '<g class="pop" style="transition-delay:' + (600 + i * 70) + 'ms">';
