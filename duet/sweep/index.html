@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Bay Area Job Sweep | Shawn Hanna</title>
+<meta name="description" content="A live dashboard of open roles in AI enablement, learning and development, people technology and talent operations across San Francisco, the Peninsula and Oakland.">
+<link rel="icon" type="image/svg+xml" href="../../assets/home/icon.svg">
+<link rel="canonical" href="https://sghanna.github.io/ai/duet/sweep/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sghanna.github.io/ai/duet/sweep/">
+<meta property="og:title" content="Bay Area Job Sweep | Shawn Hanna">
+<meta property="og:description" content="Every open role in my lanes across 16 Bay Area places, on one page.">
+<meta property="og:image" content="https://sghanna.github.io/ai/assets/home/og-home-2.jpg?v=sweep">
+<style>
+:root{
+  --bg:#f4f6fb;--bg2:#eaeef7;--surface:#ffffff;--surface2:#f7f8fc;--ink:#0f1a2e;--muted:#56627a;--faint:#8a94a8;--line:#dfe4ee;
+  --ai:#7c3aed;--ld:#0d9488;--hr:#2563eb;--ta:#d97706;--pm:#db2777;
+  --new:#059669;--new-soft:#dcf7ec;--open:#475569;--open-soft:#eef1f6;--warn:#b45309;--warn-soft:#fdf0dc;--closed:#b91c1c;--closed-soft:#fde7e7;
+  --applied:#1d4ed8;--applied-soft:#e2eaff;
+  --shadow:0 1px 2px rgba(15,26,46,.06),0 10px 30px rgba(15,26,46,.08);
+  --radius:20px;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#070b14;--bg2:#0c1220;--surface:#111827;--surface2:#0e1522;--ink:#eef2f8;--muted:#a3aec2;--faint:#6e7a91;--line:#222c3d;
+    --ai:#a78bfa;--ld:#2dd4bf;--hr:#60a5fa;--ta:#fbbf24;--pm:#f472b6;
+    --new:#34d399;--new-soft:#0f2e24;--open:#cbd5e1;--open-soft:#1a2232;--warn:#fbbf24;--warn-soft:#33260c;--closed:#f87171;--closed-soft:#341414;
+    --applied:#93b4ff;--applied-soft:#17234a;
+    --shadow:0 1px 2px rgba(0,0,0,.5),0 12px 34px rgba(0,0,0,.45);
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Helvetica,Arial,sans-serif;overflow-x:hidden}
+a{color:inherit}
+.num{font-variant-numeric:tabular-nums}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+.skip{position:absolute;left:-999px;top:8px;background:#fff;color:#0f1a2e;padding:10px 14px;border-radius:10px;z-index:50}
+.skip:focus{left:8px}
+/* top bar */
+.topbar{position:sticky;top:0;z-index:30;background:rgba(7,11,20,.72);-webkit-backdrop-filter:saturate(160%) blur(14px);backdrop-filter:saturate(160%) blur(14px);color:#dbe4f3;font-size:.9rem;border-bottom:1px solid rgba(255,255,255,.06)}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:48px}
+.topbar a{text-decoration:none;color:#dbe4f3;padding:10px 4px}
+.topbar .brand{font-weight:750;color:#fff;letter-spacing:.01em}
+.topbar nav{display:flex;gap:12px}
+
+/* hero */
+.hero{position:relative;overflow:hidden;color:#fff;background:#060a14;padding:44px 0 34px;isolation:isolate}
+.aurora{position:absolute;inset:-30%;z-index:-2;filter:blur(60px);opacity:.9}
+.aurora span{position:absolute;width:55%;height:55%;border-radius:50%;mix-blend-mode:screen;animation:drift 18s ease-in-out infinite alternate}
+.aurora span:nth-child(1){background:radial-gradient(circle,#7c3aed 0%,transparent 65%);left:5%;top:5%}
+.aurora span:nth-child(2){background:radial-gradient(circle,#0ea5a4 0%,transparent 65%);right:0;top:15%;animation-duration:22s;animation-delay:-6s}
+.aurora span:nth-child(3){background:radial-gradient(circle,#f59e0b 0%,transparent 62%);left:25%;bottom:0;opacity:.55;animation-duration:26s;animation-delay:-12s}
+.aurora span:nth-child(4){background:radial-gradient(circle,#db2777 0%,transparent 62%);right:15%;bottom:5%;opacity:.5;animation-duration:20s;animation-delay:-3s}
+@keyframes drift{0%{transform:translate(0,0) scale(1)}50%{transform:translate(8%,6%) scale(1.15)}100%{transform:translate(-6%,-4%) scale(.95)}}
+.gridlines{position:absolute;inset:0;z-index:-1;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:32px 32px;-webkit-mask-image:radial-gradient(ellipse at 50% 30%,#000 30%,transparent 75%);mask-image:radial-gradient(ellipse at 50% 30%,#000 30%,transparent 75%)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;font-weight:650;letter-spacing:.12em;text-transform:uppercase;color:#c9d6ec;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);padding:7px 12px;border-radius:999px}
+.live{width:8px;height:8px;border-radius:50%;background:#34d399;box-shadow:0 0 0 0 rgba(52,211,153,.7);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(52,211,153,.7)}70%{box-shadow:0 0 0 10px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}
+.hero h1{font-size:2.35rem;line-height:1.04;letter-spacing:-.03em;margin:18px 0 12px;font-weight:800}
+.hero h1 .grad{background:linear-gradient(90deg,#c4b5fd,#5eead4 45%,#fcd34d 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lede{color:#c7d2e6;font-size:1.05rem;margin:0 0 26px;max-width:620px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:14px 14px 12px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.stat .v{font-size:2.3rem;font-weight:800;letter-spacing:-.03em;line-height:1}
+.stat .l{font-size:.82rem;color:#b9c6dc;margin-top:6px;line-height:1.3}
+.stat.big{grid-column:1 / -1;display:flex;align-items:center;gap:16px;background:linear-gradient(135deg,rgba(124,58,237,.35),rgba(13,148,136,.3));border-color:rgba(255,255,255,.2)}
+.stat.big .v{font-size:3.6rem;background:linear-gradient(180deg,#fff,#c7f9ee);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat.big .l{font-size:.98rem;color:#e6ecf7}
+.hero-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 18px;border-radius:14px;font-weight:700;text-decoration:none;border:0;cursor:pointer;font-size:1rem}
+.btn.primary{background:#fff;color:#0b1222}
+.btn.ghost{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2)}
+
+/* sections */
+section{padding:46px 0 10px}
+.sec-head{margin-bottom:18px}
+.kicker{font-size:.76rem;font-weight:750;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+h2{font-size:1.75rem;line-height:1.12;letter-spacing:-.02em;margin:6px 0 8px;font-weight:800}
+.sub{color:var(--muted);margin:0;max-width:680px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+
+/* status strip */
+.strip{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.sbox{padding:14px;border-radius:18px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow)}
+.sbox .t{font-size:.74rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.sbox .v{font-size:1.5rem;font-weight:800;letter-spacing:-.02em;margin-top:4px;line-height:1.1}
+.sbox .d{font-size:.84rem;color:var(--muted);margin-top:4px;line-height:1.35}
+.sbox.wide{grid-column:1 / -1}
+.delta{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:750;padding:5px 10px;border-radius:999px;white-space:nowrap}
+.pill.new{background:var(--new-soft);color:var(--new)}
+.pill.open{background:var(--open-soft);color:var(--open)}
+.pill.closed{background:var(--closed-soft);color:var(--closed)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)}
+.pill.applied{background:var(--applied-soft);color:var(--applied)}
+.dot{width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block}
+
+/* place tiles */
+.tiles{display:grid;grid-template-columns:1fr;gap:12px}
+.tile{position:relative;overflow:hidden;padding:16px;border-radius:20px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);text-align:left;color:inherit;font:inherit;cursor:pointer;width:100%;transition:transform .25s ease,border-color .25s ease}
+.tile:active{transform:scale(.985)}
+.tile::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:var(--rc,#64748b)}
+.tile .top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.tile .name{font-weight:800;font-size:1.12rem;letter-spacing:-.01em;line-height:1.2}
+.tile .region{font-size:.78rem;color:var(--muted);margin-top:2px}
+.ring{flex:0 0 auto;width:64px;height:64px;position:relative}
+.ring svg{width:64px;height:64px;transform:rotate(-90deg)}
+.ring .rv{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}
+.ring .rv b{font-size:1.35rem;font-weight:800}
+.ring .rv small{font-size:.56rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.tile .nums{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:12px}
+.tile .nums div{background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:8px 6px;text-align:center}
+.tile .nums b{display:block;font-size:1.02rem;font-weight:800;line-height:1.1}
+.tile .nums span{display:block;font-size:.66rem;color:var(--muted);margin-top:3px;letter-spacing:.02em}
+.tile .nums .g b{color:var(--new)}
+.tile .nums .r b{color:var(--closed)}
+.tile .foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px;font-size:.8rem;color:var(--muted)}
+.tile .foot .note{flex:1;min-width:0}
+.st{font-size:.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 8px;border-radius:8px;white-space:nowrap}
+.st.swept{background:var(--new-soft);color:var(--new)}
+.st.partial{background:var(--warn-soft);color:var(--warn)}
+.st.scouted{background:var(--applied-soft);color:var(--applied)}
+.tile.zero{opacity:.78}
+.zero-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.zchip{font:inherit;font-size:.86rem;color:var(--muted);background:var(--surface);border:1px dashed var(--line);border-radius:12px;padding:10px 12px}
+.zchip b{color:var(--ink)}
+
+/* map */
+.mapcard{padding:12px;overflow:hidden;background:radial-gradient(120% 80% at 80% 0%,rgba(13,148,136,.16),transparent 60%),radial-gradient(100% 70% at 0% 100%,rgba(124,58,237,.16),transparent 60%),var(--surface)}
+#map{width:100%;height:auto;display:block}
+#map .land{fill:var(--bg2);stroke:var(--line);stroke-width:1.2}
+#map .water{fill:url(#waterG)}
+#map .lbl{font-size:10.5px;fill:var(--ink);font-weight:700}
+#map .lbl2{font-size:9px;fill:var(--muted);font-weight:600}
+#map .area{font-size:9px;fill:var(--faint);font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+#map .rail{fill:none;stroke-width:3;stroke-linecap:round}
+#map .rail.ct{stroke:#ef4444}
+#map .rail.bart{stroke:#3b82f6}
+#map .rail.draw{stroke-dasharray:var(--len);stroke-dashoffset:var(--len);transition:stroke-dashoffset 2.2s ease}
+#map.in .rail.draw{stroke-dashoffset:0}
+#map .node{cursor:pointer}
+#map .node .core{stroke:#fff;stroke-width:1.5}
+#map .node .halo{transform-box:fill-box;transform-origin:center;animation:halo 3s ease-out infinite;opacity:0}
+#map .node .n{font-size:11px;font-weight:800;fill:#fff;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+#map .node.empty .core{fill:var(--surface);stroke:var(--faint);stroke-width:1.5}
+@keyframes halo{0%{transform:scale(1);opacity:.55}100%{transform:scale(2.4);opacity:0}}
+#map .pop{transform-box:fill-box;transform-origin:center;transform:scale(0);transition:transform .7s cubic-bezier(.2,1.4,.4,1)}
+#map.in .pop{transform:scale(1)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:10px;font-size:.8rem;color:var(--muted);padding:0 4px 4px}
+.legend i{display:inline-block;width:18px;height:3px;border-radius:3px;vertical-align:middle;margin-right:6px}
+
+/* dot field */
+.fieldcard{padding:16px;overflow:hidden;background:#060a14;color:#e7ecf6;border-color:#1b2436}
+.fieldcard .big{font-size:3rem;font-weight:800;letter-spacing:-.04em;line-height:1}
+.fieldcard .row{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:12px}
+.fieldcard .cap{color:#aab6cc;font-size:.92rem;line-height:1.35;max-width:420px}
+#field{width:100%;display:block;border-radius:12px}
+
+/* bars */
+.bars{padding:14px}
+.bhead,.brow{display:grid;grid-template-columns:96px 1fr 1fr 1fr;gap:8px;align-items:center}
+.bhead{font-size:.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);padding:0 0 8px;border-bottom:1px solid var(--line)}
+.brow{padding:9px 0;border-bottom:1px solid var(--line)}
+.brow:last-child{border-bottom:0}
+.brow .pn{font-size:.84rem;font-weight:700;line-height:1.15}
+.track{position:relative;height:22px;background:var(--surface2);border-radius:7px;overflow:hidden;border:1px solid var(--line)}
+.fill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:6px;transition:width 1.3s cubic-bezier(.2,.8,.2,1)}
+.fill.c{background:linear-gradient(90deg,#64748b,#94a3b8)}
+.fill.j{background:linear-gradient(90deg,#0ea5a4,#5eead4)}
+.fill.s{background:linear-gradient(90deg,#7c3aed,#db2777)}
+.track b{position:absolute;left:6px;top:50%;transform:translateY(-50%);font-size:.74rem;font-weight:800;color:var(--ink);text-shadow:0 0 6px var(--surface)}
+.bnote{font-size:.8rem;color:var(--muted);margin-top:10px}
+
+/* lanes */
+.lanes{display:grid;grid-template-columns:1fr;gap:14px;padding:16px;align-items:center}
+.donut{position:relative;width:220px;height:220px;margin:0 auto}
+.donut svg{width:220px;height:220px;transform:rotate(-90deg)}
+.donut .seg{fill:none;stroke-width:26;transition:stroke-dasharray 1.4s cubic-bezier(.2,.8,.2,1)}
+.donut .ctr{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.donut .ctr b{font-size:2.6rem;font-weight:800;letter-spacing:-.03em;line-height:1}
+.donut .ctr span{font-size:.78rem;color:var(--muted)}
+.lanelist{display:grid;gap:8px}
+.lane{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:14px;background:var(--surface2);border:1px solid var(--line);font:inherit;color:inherit;text-align:left;cursor:pointer;width:100%;min-height:52px}
+.lane .sw{width:14px;height:14px;border-radius:5px;flex:0 0 auto}
+.lane .ln{flex:1;font-weight:700;font-size:.95rem;line-height:1.2}
+.lane .ln small{display:block;font-weight:500;color:var(--muted);font-size:.78rem}
+.lane .lc{font-weight:800;font-size:1.2rem}
+
+/* roles */
+.filters{position:sticky;top:48px;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);padding:10px 0 8px;margin:0 -16px 12px;padding-left:16px;padding-right:16px;border-bottom:1px solid var(--line)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;font:inherit;font-size:.88rem;font-weight:700;min-height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.chip .c{font-size:.74rem;color:var(--muted);font-weight:700}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip[aria-pressed="true"] .c{color:inherit;opacity:.75}
+.chip .sw{width:10px;height:10px;border-radius:4px}
+.frow{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.search{flex:1;min-width:0;font:inherit;font-size:16px;min-height:44px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:0 12px}
+.toggle{flex:0 0 auto;font:inherit;font-size:.86rem;font-weight:750;min-height:44px;padding:0 12px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;white-space:nowrap}
+.toggle[aria-pressed="true"]{background:var(--new);border-color:var(--new);color:#fff}
+.toggle.ap[aria-pressed="true"]{background:var(--applied);border-color:var(--applied);color:#fff}
+.count{font-size:.86rem;color:var(--muted);margin:4px 0 12px}
+.roles{display:grid;grid-template-columns:1fr;gap:12px}
+.role{position:relative;padding:16px;border-radius:20px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden}
+.role::after{content:"";position:absolute;top:0;left:0;bottom:0;width:4px;background:var(--lc)}
+.role .hd{display:flex;gap:12px;align-items:flex-start}
+.av{flex:0 0 auto;width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;color:#fff;background:linear-gradient(135deg,var(--lc),color-mix(in srgb,var(--lc) 45%,#000))}
+.role .co{font-size:.84rem;font-weight:700;color:var(--muted)}
+.role h3{font-size:1.06rem;line-height:1.25;margin:2px 0 0;font-weight:800;letter-spacing:-.01em}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.meta{display:grid;gap:4px;margin-top:10px;font-size:.88rem;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:700}
+.role .go{margin-top:12px;display:flex;align-items:center;justify-content:center;gap:8px;min-height:46px;border-radius:13px;background:var(--surface2);border:1px solid var(--line);font-weight:750;text-decoration:none;color:var(--ink)}
+.role .go:active{background:var(--line)}
+.role .nolink{margin-top:12px;font-size:.84rem;color:var(--faint)}
+.empty{padding:28px;text-align:center;color:var(--muted)}
+
+/* watch list */
+.wgrid{display:grid;grid-template-columns:1fr;gap:12px}
+.wcard{padding:16px}
+.wcard h3{margin:0 0 10px;font-size:1.05rem;display:flex;align-items:center;gap:8px}
+.witem{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line);font-size:.9rem}
+.witem:first-of-type{border-top:0}
+.witem .wx{flex:0 0 auto;margin-top:3px}
+.witem .wt{font-weight:700;line-height:1.3}
+.witem .ws{color:var(--muted);font-size:.82rem;margin-top:2px}
+.witem.closed .wt{text-decoration:line-through;text-decoration-color:var(--closed);text-decoration-thickness:2px}
+.witem a{font-weight:700}
+
+/* method */
+.method{padding:18px}
+.method ul{margin:0;padding-left:18px}
+.method li{margin:0 0 10px;color:var(--muted)}
+.method li b{color:var(--ink)}
+footer{padding:40px 0 60px;color:var(--muted);font-size:.86rem;text-align:center}
+footer a{font-weight:700}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.hero .rise{opacity:0;transform:translateY(16px);animation:rise .9s cubic-bezier(.2,.8,.2,1) forwards}
+.hero .rise.d1{animation-delay:.1s}.hero .rise.d2{animation-delay:.22s}.hero .rise.d3{animation-delay:.34s}.hero .rise.d4{animation-delay:.46s}
+@keyframes rise{to{opacity:1;transform:none}}
+
+/* debug: preview the phone layout on a wider screen with ?w=375 */
+html.w375 body{max-width:375px;margin:0 auto;box-shadow:0 0 0 1px var(--line)}
+html.w375 .filters{margin:0 -16px 12px}
+
+@media (min-width:700px){
+  .wrap{padding:0 28px}
+  .hero{padding:72px 0 56px}
+  .hero h1{font-size:3.8rem}
+  .stats{grid-template-columns:2fr 1fr 1fr 1fr}
+  .stat.big{grid-column:auto;flex-direction:column;align-items:flex-start;gap:4px}
+  .stat .v{font-size:2.8rem}
+  .stat.big .v{font-size:4.2rem}
+  h2{font-size:2.3rem}
+  .strip{grid-template-columns:repeat(4,1fr)}
+  .sbox.wide{grid-column:span 2}
+  .tiles{grid-template-columns:repeat(2,1fr)}
+  .roles{grid-template-columns:repeat(2,1fr)}
+  .lanes{grid-template-columns:260px 1fr;padding:24px}
+  .wgrid{grid-template-columns:1fr 1fr}
+  .bhead,.brow{grid-template-columns:140px 1fr 1fr 1fr;gap:12px}
+  .filters{margin:0 -28px 12px;padding-left:28px;padding-right:28px}
+  .mapgrid{display:grid;grid-template-columns:1.25fr 1fr;gap:16px;align-items:start}
+}
+@media (min-width:1000px){
+  .tiles{grid-template-columns:repeat(3,1fr)}
+  .roles{grid-template-columns:repeat(3,1fr)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .reveal,.hero .rise{opacity:1!important;transform:none!important}
+  #map .pop{transform:none}
+  #map .rail.draw{stroke-dashoffset:0}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar"><div class="wrap">
+  <a class="brand" href="../../">Shawn Hanna</a>
+  <nav><a href="../">Case study</a><a href="#roles">Roles</a></nav>
+</div></div>
+
+<header class="hero">
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+  <div class="gridlines" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="eyebrow rise"><span class="live"></span><span id="heroDate">Job sweep</span></div>
+    <h1 class="rise d1">Every role in my lanes, <span class="grad">across the Bay.</span></h1>
+    <p class="lede rise d2">One sweep of company job boards in San Francisco, down the Peninsula on Caltrain and across the bay in Oakland. Thousands of open jobs, narrowed to the ones in AI enablement, learning, people technology and talent operations.</p>
+    <div class="stats rise d3">
+      <div class="stat big"><div class="v num" data-count="inlane">0</div><div class="l">roles in my lanes, each confirmed open on the employer's own site</div></div>
+      <div class="stat"><div class="v num" data-count="jobs" data-prefix="~" data-suffix="+">0</div><div class="l">open jobs read</div></div>
+      <div class="stat"><div class="v num" data-count="companies" data-prefix="~">0</div><div class="l">companies checked</div></div>
+      <div class="stat"><div class="v num" data-count="places">0</div><div class="l">places swept</div></div>
+    </div>
+    <div class="hero-cta rise d4">
+      <a class="btn primary" href="#roles">See the roles</a>
+      <a class="btn ghost" href="#board">Status board</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+<section id="board" class="wrap">
+  <div class="sec-head reveal">
+    <div class="kicker">Status board</div>
+    <h2>Where things stand</h2>
+    <p class="sub">The sweep at a glance, then a tile for every city and neighborhood. Tap a tile to see its roles.</p>
+  </div>
+  <div class="strip reveal" id="strip"></div>
+  <div class="tiles" id="tiles"></div>
+  <div class="zero-row reveal" id="zeros"></div>
+</section>
+
+<section id="map-sec" class="wrap">
+  <div class="sec-head reveal">
+    <div class="kicker">The map</div>
+    <h2>Where the roles are</h2>
+    <p class="sub">A transit-style map of the search area. Bigger, brighter circles hold more roles in my lanes. The red line is Caltrain, the blue line is BART.</p>
+  </div>
+  <div class="mapgrid">
+    <div class="card mapcard reveal">
+      <svg id="map" viewBox="0 0 360 560" role="img" aria-label="Map of the search area with role counts per place"></svg>
+      <div class="legend"><span><i style="background:#ef4444"></i>Caltrain</span><span><i style="background:#3b82f6"></i>BART</span><span>Number = roles in my lanes</span></div>
+    </div>
+    <div class="card fieldcard reveal" id="fieldcard">
+      <div class="row"><div class="big num" id="rate">0</div><div class="cap">Every dot is one open job read in this sweep. The glowing ones are the roles in my lanes, colored by lane.</div></div>
+      <canvas id="field" aria-label="Dot field of open jobs with in-lane roles highlighted" role="img"></canvas>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="sec-head reveal">
+    <div class="kicker">Side by side</div>
+    <h2>Companies, jobs and fits by place</h2>
+    <p class="sub">Each column is scaled to its own top place, so you can compare shapes: lots of jobs doesn't always mean lots of fits.</p>
+  </div>
+  <div class="card bars reveal" id="bars"></div>
+</section>
+
+<section class="wrap">
+  <div class="sec-head reveal">
+    <div class="kicker">Lanes</div>
+    <h2>What kind of work</h2>
+    <p class="sub">Every in-lane role sorted into one of five lanes. Tap a lane to filter the roles.</p>
+  </div>
+  <div class="card lanes reveal">
+    <div class="donut"><svg viewBox="0 0 220 220" id="donut"></svg><div class="ctr"><b class="num" id="donutN">0</b><span>roles</span></div></div>
+    <div class="lanelist" id="lanelist"></div>
+  </div>
+</section>
+
+<section id="roles" class="wrap">
+  <div class="sec-head reveal">
+    <div class="kicker">The roles</div>
+    <h2>Every role, with its posting</h2>
+    <p class="sub">Each card links to the job description on the employer's own careers site. Pay is as posted.</p>
+  </div>
+  <div class="filters" id="filters">
+    <div class="frow">
+      <input class="search" id="q" type="search" placeholder="Search company or title" aria-label="Search roles">
+      <button class="toggle" id="newOnly" aria-pressed="false">New only</button>
+      <button class="toggle ap" id="appliedOnly" aria-pressed="false">Applied</button>
+    </div>
+    <div class="chips" id="placeChips" aria-label="Filter by place"></div>
+    <div class="chips" id="laneChips" aria-label="Filter by lane"></div>
+  </div>
+  <div class="count" id="count"></div>
+  <div class="roles" id="roleList"></div>
+</section>
+
+<section id="watch" class="wrap">
+  <div class="sec-head reveal">
+    <div class="kicker">Watch list</div>
+    <h2>Closed, unconfirmed and applied</h2>
+    <p class="sub">Roles that came off the boards since the last sweep, roles that couldn't be confirmed, and applications in flight.</p>
+  </div>
+  <div class="wgrid">
+    <div class="card wcard reveal"><h3><span class="pill closed"><span class="dot"></span><span id="closedN">0</span></span> Closed since the last sweep</h3><div id="closedList"></div></div>
+    <div class="card wcard reveal"><h3><span class="pill warn"><span class="dot"></span><span id="unN">0</span></span> Couldn't confirm</h3><div id="unList"></div></div>
+    <div class="card wcard reveal"><h3><span class="pill applied"><span class="dot"></span><span id="apN">0</span></span> Applied</h3><div id="apList"></div></div>
+    <div class="card wcard reveal"><h3><span class="pill open"><span class="dot"></span><span id="ubN">0</span></span> Boards that couldn't be read</h3><div id="ubList"></div></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="sec-head reveal">
+    <div class="kicker">How it was done</div>
+    <h2>Method, in plain words</h2>
+  </div>
+  <div class="card method reveal"><ul id="method"></ul></div>
+</section>
+</main>
+
+<footer class="wrap">
+  <p>Built from public job postings by an AI agent I direct, with no sign-ins and no applications made by AI. <a href="../">Read how the system works</a>.</p>
+  <p id="foot"></p>
+</footer>
+
+<noscript><p style="padding:20px;text-align:center">This page needs JavaScript to draw the dashboard and role list.</p></noscript>
+
+<!-- Sweep data. Later sweeps update this block only. -->
+<script type="application/json" id="sweep-data">
+{
+  "sweep": {
+    "date": "2026-11-25",
+    "dateLabel": "Nov 25, 2026",
+    "window": "about 7:40 to 8:30 AM Pacific",
+    "previous": "Nov 24",
+    "next": null
+  },
+  "lanes": [
+    {"id": "ai", "name": "AI enablement", "desc": "Helping companies adopt AI", "color": "--ai"},
+    {"id": "ld", "name": "Learning & development", "desc": "L&D, onboarding, leadership and talent development", "color": "--ld"},
+    {"id": "hr", "name": "People tech & HR systems", "desc": "HRIS, Workday, people analytics and operations", "color": "--hr"},
+    {"id": "ta", "name": "Recruiting & talent ops", "desc": "Recruiting operations, systems and programs", "color": "--ta"},
+    {"id": "pm", "name": "People product & programs", "desc": "Product and program managers for internal tools", "color": "--pm"}
+  ],
+  "places": [
+    {"id": "potrero", "name": "Potrero Hill", "region": "San Francisco", "companies": 18, "jobs": 216, "jobsLabel": "~216", "status": "swept", "note": "Plus about 1,300 Google roles listing SF, not counted here"},
+    {"id": "dogpatch", "name": "Dogpatch", "region": "San Francisco", "companies": 24, "jobs": 500, "jobsLabel": "~500", "status": "swept", "note": "Includes Pier 70"},
+    {"id": "missionbay", "name": "Mission Bay", "region": "San Francisco", "companies": 23, "jobs": 900, "jobsLabel": "~900", "status": "partial", "note": "Five Workday employers and Uber not swept today"},
+    {"id": "fidi", "name": "FiDi", "region": "San Francisco", "companies": 23, "jobs": 495, "jobsLabel": "~495", "status": "partial", "note": "Five big boards couldn't be read"},
+    {"id": "mission", "name": "The Mission", "region": "San Francisco", "companies": 5, "jobs": 157, "jobsLabel": "~157", "status": "swept", "note": "No in-lane roles today"},
+    {"id": "soma", "name": "SoMa", "region": "San Francisco", "companies": 21, "jobs": 1140, "jobsLabel": "~1,140", "status": "swept", "note": "Densest cluster in the search"},
+    {"id": "brisbane", "name": "Brisbane", "region": "Peninsula", "companies": 0, "jobs": 0, "jobsLabel": "0", "status": "swept", "note": "Mostly biotech, skipped"},
+    {"id": "ssf", "name": "South San Francisco", "region": "Peninsula", "companies": 1, "jobs": 105, "jobsLabel": "~90–120", "status": "swept", "note": "Stripe only; the rest is biotech"},
+    {"id": "sanbruno", "name": "San Bruno", "region": "Peninsula", "companies": 2, "jobs": 300, "jobsLabel": "~300", "status": "partial", "note": "Gap not swept today"},
+    {"id": "millbrae", "name": "Millbrae", "region": "Peninsula", "companies": 0, "jobs": 0, "jobsLabel": "0", "status": "swept", "note": "No office employers"},
+    {"id": "burlingame", "name": "Burlingame", "region": "Peninsula", "companies": 4, "jobs": 5, "jobsLabel": "5+", "status": "swept", "note": "Meta's count unknown"},
+    {"id": "sanmateo", "name": "San Mateo", "region": "Peninsula", "companies": 10, "jobs": 300, "jobsLabel": "~300", "status": "swept", "note": ""},
+    {"id": "redwood", "name": "Redwood City", "region": "Peninsula", "companies": 5, "jobs": null, "jobsLabel": "—", "status": "scouted", "note": "Added to the area Nov 25; job totals not counted yet"},
+    {"id": "oakland", "name": "Downtown Oakland", "region": "East Bay", "companies": 6, "jobs": null, "jobsLabel": "—", "status": "scouted", "note": "Added to the area Nov 25; job totals not counted yet"},
+    {"id": "portola", "name": "Portola", "region": "San Francisco", "companies": 1, "jobs": 0, "jobsLabel": "0", "status": "swept", "note": "No open roles"},
+    {"id": "twinpeaks", "name": "Twin Peaks / Noe", "region": "San Francisco", "companies": 0, "jobs": 0, "jobsLabel": "0", "status": "swept", "note": "No office employers"}
+  ],
+  "roles": [
+    {"place": "potrero", "lane": "ta", "company": "Samsara", "title": "Sr. Manager, Recruiting Operations", "where": "Remote US", "pay": "$122–218K", "note": "", "status": "open", "url": "https://www.samsara.com/company/careers/roles/8353408"},
+    {"place": "potrero", "lane": "ai", "company": "Forbes", "title": "Director, Enterprise AI Operations", "where": "Remote US", "pay": "$180–195K", "note": "", "status": "open", "url": "https://job-boards.greenhouse.io/forbes/jobs/6099433004"},
+    {"place": "potrero", "lane": "ld", "company": "Google", "title": "Program Manager II, Learning and Technology Lead, Data Centers", "where": "SF and other cities", "pay": "$132–189K", "note": "LMS and learning tech for data-center teams", "status": "new", "url": "https://google.com/about/careers/applications/jobs/results/126646615808058054-program-manager-ii"},
+
+    {"place": "dogpatch", "lane": "hr", "company": "Gusto", "title": "People, Insights and Operations", "where": "SF hybrid", "pay": "$155–191K", "note": "", "status": "new", "url": "https://job-boards.greenhouse.io/gusto/jobs/8351963"},
+    {"place": "dogpatch", "lane": "ta", "company": "Gusto", "title": "Recruiting Operations and Transformation Lead", "where": "Denver, NY or SF hybrid", "pay": "SF $173–225K", "note": "", "status": "open", "url": "https://job-boards.greenhouse.io/gusto/jobs/8209666"},
+    {"place": "dogpatch", "lane": "ld", "company": "Gusto", "title": "Talent Development Leader, Foundational Talent Products", "where": "Denver or SF hybrid", "pay": "SF $142–175K", "note": "", "status": "open", "url": "https://job-boards.greenhouse.io/gusto/jobs/8231833"},
+    {"place": "dogpatch", "lane": "hr", "company": "Gusto", "title": "People Tech Business Systems Analyst", "where": "Denver, NY or SF hybrid", "pay": "SF $130–160K", "note": "", "status": "open", "applied": true, "url": "https://job-boards.greenhouse.io/gusto/jobs/8257482"},
+    {"place": "dogpatch", "lane": "ld", "company": "Gusto", "title": "Senior L&D Specialist", "where": "Several cities incl. SF hybrid", "pay": "", "note": "Customer-support facilitation, up to 50% travel", "status": "open", "url": "https://job-boards.greenhouse.io/gusto/jobs/8128422"},
+    {"place": "dogpatch", "lane": "hr", "company": "Gusto", "title": "Workday System Developer", "where": "Denver, NY or SF hybrid", "pay": "SF $154–193K", "note": "Workday analyst work", "status": "new", "url": "https://job-boards.greenhouse.io/gusto/jobs/8257486"},
+    {"place": "dogpatch", "lane": "ai", "company": "Astranis", "title": "AI Enablement & L&D Partner", "where": "SF on-site", "pay": "$105–175K", "note": "", "status": "open", "applied": true, "url": "https://job-boards.greenhouse.io/astranis/jobs/4731296006"},
+
+    {"place": "missionbay", "lane": "ta", "company": "OpenAI", "title": "Program Manager, M&A Recruiting", "where": "SF hybrid", "pay": "$216–240K", "note": "", "status": "open", "url": "https://jobs.ashbyhq.com/openai/8f2d7c1e-7a76-4145-9a9d-b71a12ef9ad4"},
+    {"place": "missionbay", "lane": "hr", "company": "OpenAI", "title": "Enterprise Systems Manager, Recruiting Systems", "where": "SF", "pay": "$177–196K", "note": "Owns the recruiting system's setup", "status": "new", "url": "https://openai.com/careers/enterprise-systems-manager-recruiting-systems-san-francisco/"},
+    {"place": "missionbay", "lane": "ta", "company": "OpenAI", "title": "Recruiting Optimization Manager", "where": "SF on-site", "pay": "$216–240K", "note": "Recruiting workflow automation", "status": "new", "url": "https://openai.com/careers/recruiting-optimization-manager-san-francisco/"},
+    {"place": "missionbay", "lane": "hr", "company": "OpenAI", "title": "Head of People Science and Operations", "where": "SF hybrid", "pay": "$347–385K", "note": "", "status": "new", "url": "https://openai.com/careers/head-of-people-science-and-operations-san-francisco/"},
+
+    {"place": "fidi", "lane": "ai", "company": "Chime", "title": "Sr Program Manager, AI Enablement", "where": "SF, NY or Chicago hybrid", "pay": "$138–190K", "note": "", "status": "open", "watch": "Gone from the board list; may be closing", "url": "https://job-boards.greenhouse.io/chime/jobs/8697509002"},
+    {"place": "fidi", "lane": "pm", "company": "Affirm", "title": "IT Product Manager", "where": "Remote US", "pay": "$130–180K", "note": "", "status": "open", "url": "https://job-boards.greenhouse.io/affirm/jobs/8075412003"},
+    {"place": "fidi", "lane": "ld", "company": "Affirm", "title": "Leadership Development Manager, Emerging and New Leaders", "where": "Remote US", "pay": "$145–205K", "note": "", "status": "new", "url": "https://job-boards.greenhouse.io/affirm/jobs/8043921003"},
+    {"place": "fidi", "lane": "ld", "company": "Mercury", "title": "Emerging Talent & Onboarding Program Manager", "where": "SF", "pay": "$121.7–152.1K", "note": "", "status": "open", "url": "https://job-boards.greenhouse.io/mercury/jobs/6249882004"},
+    {"place": "fidi", "lane": "ta", "company": "Mercury", "title": "Senior Recruiting Operations Partner", "where": "SF, NY, Portland or remote US", "pay": "$154–193K", "note": "ATS, Workday links, AI workflows", "status": "new", "url": "https://job-boards.greenhouse.io/mercury/jobs/6251795004"},
+    {"place": "fidi", "lane": "ld", "company": "AngelList", "title": "Talent Acceleration Lead", "where": "SF or NYC hybrid", "pay": "$180K+", "note": "", "status": "open", "url": "https://jobs.lever.co/angellist/70b3a39f-7fd9-4ab5-a5d7-32c4aefda02c"},
+    {"place": "fidi", "lane": "hr", "company": "Vercel", "title": "People Systems Manager, Workday", "where": "SF hybrid", "pay": "$167–204K", "note": "", "status": "open", "url": "https://job-boards.greenhouse.io/vercel/jobs/6221327004"},
+    {"place": "fidi", "lane": "hr", "company": "Prosper", "title": "People Operations Manager", "where": "SF Bay hybrid", "pay": "$129–160K", "note": "ADP and HR tech", "status": "open", "url": "https://jobs.lever.co/prosper/a68b2672-4cdd-442c-b92e-0c4eff4cd6e8"},
+    {"place": "fidi", "lane": "ta", "company": "Notion", "title": "Recruiting Program Manager", "where": "SF or NY hybrid", "pay": "~$140–195K (per job sites)", "note": "", "status": "new", "url": "https://jobs.ashbyhq.com/notion/6b9d5c16-450a-42e4-af2a-d492460ca811"},
+    {"place": "fidi", "lane": "ld", "company": "Notion", "title": "Talent Management", "where": "SF hybrid", "pay": "", "note": "Scope not confirmed", "status": "new", "url": "https://jobs.ashbyhq.com/notion/9a4b059a-f42b-438e-8098-9acda96825bf"},
+
+    {"place": "soma", "lane": "ld", "company": "Anthropic", "title": "Onboarding Program Manager", "where": "SF", "pay": "~$240K", "note": "", "status": "open", "url": "https://job-boards.greenhouse.io/anthropic/jobs/5443902008"},
+    {"place": "soma", "lane": "hr", "company": "Anthropic", "title": "Workday Business Systems Analyst, People Systems", "where": "SF", "pay": "~$270K", "note": "", "status": "open", "url": "https://job-boards.greenhouse.io/anthropic/jobs/5194810008"},
+    {"place": "soma", "lane": "ld", "company": "Anthropic", "title": "Learning & Education Specialist", "where": "SF or NYC", "pay": "$165–210K", "note": "", "status": "new", "url": "https://job-boards.greenhouse.io/anthropic/jobs/5462661008"},
+    {"place": "soma", "lane": "pm", "company": "Anthropic", "title": "Technical Program Manager, Recruiting Technology", "where": "SF or NYC", "pay": "$290–365K", "note": "Recruiting tools roadmap", "status": "new", "url": "https://job-boards.greenhouse.io/anthropic/jobs/5298359008"},
+    {"place": "soma", "lane": "pm", "company": "Amplitude", "title": "Principal PM, AI – People & Places", "where": "SF hybrid", "pay": "$200–301K", "note": "", "status": "open", "url": "https://job-boards.greenhouse.io/amplitude/jobs/8457963002"},
+    {"place": "soma", "lane": "hr", "company": "Harvey", "title": "Sr People Systems Analyst, Advanced Comp", "where": "SF", "pay": "", "note": "Posting details didn't load today", "status": "open", "url": "https://jobs.ashbyhq.com/harvey/8680cdfe-c725-485d-9309-c96d5d64a82f"},
+    {"place": "soma", "lane": "ta", "company": "Harvey", "title": "Senior Analyst, Recruiting Operations", "where": "SF", "pay": "", "note": "Posting details didn't load today", "status": "open", "url": "https://jobs.ashbyhq.com/harvey/e0d05322-1dd6-4271-bd15-825108273807"},
+    {"place": "soma", "lane": "hr", "company": "PagerDuty", "title": "Senior HRIS Analyst", "where": "SF", "pay": "$127–191K", "note": "", "status": "open", "url": "https://job-boards.greenhouse.io/pagerduty/jobs/6207154004"},
+    {"place": "soma", "lane": "hr", "company": "PagerDuty", "title": "Senior HRIS Analyst (second posting)", "where": "Atlanta or SF", "pay": "", "note": "Same role, posted twice", "status": "open", "url": "https://job-boards.greenhouse.io/pagerduty/jobs/6131137004"},
+    {"place": "soma", "lane": "pm", "company": "Adyen", "title": "Principal PM, Internal AI Products", "where": "SF", "pay": "$330–462K", "note": "", "status": "open", "url": "https://job-boards.greenhouse.io/adyen/jobs/8359357"},
+    {"place": "soma", "lane": "pm", "company": "DoorDash", "title": "Senior PM, People Product", "where": "Remote US", "pay": "$137.4–202K", "note": "", "status": "open", "url": "https://job-boards.greenhouse.io/doordashusa/jobs/8237757"},
+    {"place": "soma", "lane": "pm", "company": "DoorDash", "title": "Staff PM, People Product (HR Partner Products)", "where": "Remote US", "pay": "$193.8–285K", "note": "Internal HR tools", "status": "new", "url": "https://job-boards.greenhouse.io/doordashusa/jobs/8360552"},
+    {"place": "soma", "lane": "ai", "company": "Okta", "title": "Senior AI Analyst, People Digital Solutions", "where": "SF and 3 other cities", "pay": "$121–166K", "note": "Tests People Ops AI assistants", "status": "new", "url": "https://job-boards.greenhouse.io/okta/jobs/8257554"},
+    {"place": "soma", "lane": "hr", "company": "Figma", "title": "HRIS Analyst", "where": "SF, NY or remote US", "pay": "$140–202K", "note": "Workday", "status": "new", "url": "https://job-boards.greenhouse.io/figma/jobs/6201385004"},
+    {"place": "soma", "lane": "ld", "company": "Twilio", "title": "Principal, Product Learning & Development", "where": "Remote US", "pay": "$226.6–283.2K", "note": "PM training academy and AI tool adoption", "status": "new", "url": "https://job-boards.greenhouse.io/twilio/jobs/8373065"},
+    {"place": "soma", "lane": "ta", "company": "Planet", "title": "Senior Manager, Talent Operations", "where": "SF, 3 days in office", "pay": "$162.6–203.2K", "note": "Back on the board; heavy ATS admin", "status": "new", "url": "https://job-boards.greenhouse.io/planetlabs/jobs/7740653"},
+    {"place": "soma", "lane": "ld", "company": "SoFi", "title": "Senior Manager, Enterprise Learning & Development", "where": "SF", "pay": "$124.8–214.5K", "note": "", "status": "new", "url": "https://job-boards.greenhouse.io/sofi/jobs/7982474003"},
+    {"place": "soma", "lane": "ai", "company": "SoFi", "title": "Sr Director, Head of Enterprise Applied AI", "where": "SF", "pay": "$224–385K", "note": "Employee AI adoption", "status": "new", "url": "https://job-boards.greenhouse.io/sofi/jobs/7921209003"},
+    {"place": "soma", "lane": "hr", "company": "Plaid", "title": "People Operations Manager", "where": "SF HQ", "pay": "$163.2–220.8K", "note": "AI-first HR ops, Workday", "status": "new", "url": "https://plaid.com/careers/openings/people/san-francisco-hq/people-operations-manager/"},
+    {"place": "soma", "lane": "ta", "company": "Sierra", "title": "Recruiting Operations Specialist", "where": "SF or NY on-site", "pay": "", "note": "Owns the ATS (per job sites)", "status": "new", "url": "https://jobs.ashbyhq.com/Sierra/f673561e-aece-4df9-ae46-55779dc6a9d8"},
+    {"place": "soma", "lane": "hr", "company": "Sierra", "title": "People Operations", "where": "SF on-site", "pay": "~$190–245K (per job sites)", "note": "", "status": "new", "url": "https://jobs.ashbyhq.com/Sierra/48fb4d34-8622-45fc-9fca-f8f20b6d034a"},
+
+    {"place": "ssf", "lane": "ai", "company": "Stripe", "title": "AI Transformation Lead, Marketing", "where": "South SF HQ, 4 other cities or remote US", "pay": "$145.2–217.8K", "note": "Embeds with marketers; hands-on agent building", "status": "new", "url": "https://stripe.com/careers/listing/ai-transformation-lead-marketing/8287910"},
+
+    {"place": "sanmateo", "lane": "hr", "company": "Sony Interactive", "title": "Sr. Manager, People Technology and Services", "where": "San Mateo hybrid", "pay": "$242–285K", "note": "Workday HCM roadmap", "status": "new", "url": "https://job-boards.greenhouse.io/sonyinteractiveentertainmentglobal/jobs/6191200004"},
+    {"place": "sanmateo", "lane": "hr", "company": "Freshworks", "title": "Senior Director, People Analytics and Workforce Planning", "where": "San Mateo hybrid, Tue–Thu", "pay": "$250.8–309.8K", "note": "Analytics and AI adoption in HR", "status": "new", "url": "https://jobs.smartrecruiters.com/Freshworks/744000162313207-senior-director-people-analytics-and-workforce-planning"},
+
+    {"place": "redwood", "lane": "pm", "company": "Equinix", "title": "Senior Platform Product Manager, Core HCM", "where": "Redwood City hybrid", "pay": "$163–245K", "note": "", "status": "new", "url": "https://careers.equinix.com/jobs/senior-platform-product-manager-core-hcm-redwood-city-california-united-states-dallas-texas-toronto-ontario-canada"},
+
+    {"place": "oakland", "lane": "ld", "company": "Marqeta", "title": "People Development Senior Manager", "where": "Oakland or remote US", "pay": "$176.8–221K", "note": "", "status": "new", "url": "https://job-boards.greenhouse.io/mqreferrals/jobs/7816193"},
+    {"place": "oakland", "lane": "ld", "company": "Marqeta", "title": "Leadership Development and Talent Management Senior Manager", "where": "See posting", "pay": "$170.3–212.9K", "note": "", "status": "new", "url": "https://job-boards.greenhouse.io/mqreferrals/jobs/7118261"},
+    {"place": "oakland", "lane": "ld", "company": "Marqeta", "title": "Talent Management Senior Manager", "where": "See posting", "pay": "$176.8–221K", "note": "", "status": "new", "url": "https://job-boards.greenhouse.io/mqreferrals/jobs/7764510"},
+    {"place": "oakland", "lane": "ld", "company": "PG&E", "title": "Expert Leadership Development Business Specialist", "where": "Oakland hybrid", "pay": "$118–188K", "note": "", "status": "new", "url": "https://jobs.pge.com/job/oakland/expert-leadership-development-business-specialist/29673/82106809040"}
+  ],
+  "applied": [
+    {"company": "Gusto", "title": "People Tech Business Systems Analyst", "place": "dogpatch", "onPage": true},
+    {"company": "Astranis", "title": "AI Enablement & L&D Partner", "place": "dogpatch", "onPage": true},
+    {"company": "Lambda", "title": "Internal Tools & Data Product Analyst", "place": "dogpatch", "onPage": false},
+    {"company": "Socure", "title": "Lead Program Manager, AI & Work Transformation", "place": null, "onPage": false}
+  ],
+  "closed": [
+    {"place": "potrero", "company": "Samsara", "title": "Learning roles"},
+    {"place": "dogpatch", "company": "Gusto", "title": "People Process Transformation Lead"},
+    {"place": "missionbay", "company": "OpenAI", "title": "Org Design Lead"},
+    {"place": "missionbay", "company": "OpenAI", "title": "TPM, People Innovation Labs"},
+    {"place": "fidi", "company": "Gallup", "title": "Global LMS Administrator"},
+    {"place": "fidi", "company": "Prosper", "title": "Program Manager, People Programs"},
+    {"place": "mission", "company": "CoreWeave", "title": "Senior PM, People Technologies"},
+    {"place": "soma", "company": "Asana", "title": "Program Manager, L&D"},
+    {"place": "ssf", "company": "Stripe", "title": "Performance and Talent Planning PM"},
+    {"place": "ssf", "company": "Stripe", "title": "Recruiting Program Manager (two roles)"},
+    {"place": "sanmateo", "company": "Freshworks", "title": "HR Technology AI Architect"},
+    {"place": "sanmateo", "company": "GoPro", "title": "People Systems PM"},
+    {"place": "redwood", "company": "Electronic Arts", "title": "People Experience systems roles"}
+  ],
+  "unconfirmed": [
+    {"company": "OpenAI", "title": "Program Manager, People Innovation Labs", "why": "Posting page loads, but it's gone from OpenAI's job list"},
+    {"company": "OpenAI", "title": "Systems & Enablement Lead, Recruiting Ops", "why": "Posting page loads, but it's gone from OpenAI's job list"},
+    {"company": "OpenAI", "title": "Global Candidate Experience Manager", "why": "Posting page loads, but it's gone from OpenAI's job list"},
+    {"company": "Roblox", "title": "Learning Design Lead and Associate", "why": "Probably closed: still listed, but with no Apply link"},
+    {"company": "Physical Intelligence", "title": "Learning & Development Lead, Operations", "why": "Seen only on job sites; trains robot operators"},
+    {"company": "Walmart (San Bruno)", "title": "Senior Manager, Program Management", "why": "Seen only on job sites"},
+    {"company": "Rippling", "title": "Talent Management roles", "why": "Seen only on job sites"}
+  ],
+  "unreadable": [
+    {"names": "Gap, Visa, Cisco, PayPal, Synopsys", "count": 5, "why": "Workday sites that load one click at a time; Nov 24 counts used"},
+    {"names": "Uber", "count": 1, "why": "Careers site didn't load"},
+    {"names": "Salesforce, Bank of America, Autodesk, Levi's, Grammarly", "count": 5, "why": "Boards couldn't be read"},
+    {"names": "Harvey, Amplitude, Patreon, CoreWeave, Zendesk", "count": 5, "why": "Roles read, but job totals couldn't be counted"}
+  ],
+  "method": [
+    "<b>When:</b> one pass on Nov 25, 2026, about 7:40 to 8:30 AM Pacific. Changes are compared with the Nov 24 sweep.",
+    "<b>What counts as a job:</b> open roles that list that place's office (San Francisco for SF neighborhoods, the town for the Peninsula). Remote-only roles aren't in the jobs column. Big boards cut off when read, so most job totals are approximate.",
+    "<b>What counts as in-lane:</b> AI enablement, learning and development, people technology and HR systems, recruiting and talent operations, and product or program roles for internal people tools. Recruiters, HR business partners, comp, benefits, payroll, generalists, sales enablement and engineering roles are left out.",
+    "<b>Confirmed open:</b> each in-lane role was checked on the employer's own careers page or job board that morning. A company with offices in two places is counted once. In-lane roles can be in that place or remote in the US.",
+    "<b>Skipped on purpose:</b> hospitals, health systems, biotech, pharma, medical devices and health software.",
+    "<b>Oakland and Redwood City</b> were scouted and added to the area on Nov 25; their job totals haven't been counted yet. Menlo Park, Foster City and Pleasanton/Dublin were looked at and left out as too far.",
+    "<b>How:</b> public job boards and careers pages only, read by an AI agent with web fetches, search and a cloud browser. No sign-ins, no LinkedIn, no contact with anyone, and no applications made by AI.",
+    "<b>Estimates:</b> commute times used to pick places are rough door-to-door transit estimates, not checked against live schedules."
+  ]
+}
+</script>
+
+<script>
+(function(){
+  "use strict";
+  if (/[?&]w=375\b/.test(location.search)) document.documentElement.classList.add("w375");
+  var D = JSON.parse(document.getElementById("sweep-data").textContent);
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var css = getComputedStyle(document.documentElement);
+  function cv(name){ return (css.getPropertyValue(name) || "").trim() || "#888"; }
+  function $(id){ return document.getElementById(id); }
+  function el(tag, cls, html){ var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
+  function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]; }); }
+  function fmt(n){ return Math.round(n).toLocaleString("en-US"); }
+
+  var laneById = {}; D.lanes.forEach(function(l){ laneById[l.id] = l; });
+  var placeById = {}; D.places.forEach(function(p){ placeById[p.id] = p; p.inlane = 0; p.newN = 0; p.closedN = 0; p.appliedN = 0; });
+  D.roles.forEach(function(r){ var p = placeById[r.place]; p.inlane++; if (r.status === "new") p.newN++; if (r.applied) p.appliedN++; });
+  D.closed.forEach(function(c){ if (placeById[c.place]) placeById[c.place].closedN++; });
+  function laneColor(id){ return cv(laneById[id].color); }
+
+  var T = {
+    inlane: D.roles.length,
+    jobs: D.places.reduce(function(a,p){ return a + (p.jobs || 0); }, 0),
+    companies: D.places.reduce(function(a,p){ return a + p.companies; }, 0),
+    places: D.places.length,
+    newN: D.roles.filter(function(r){ return r.status === "new"; }).length,
+    closed: D.closed.length,
+    applied: D.applied.length,
+    unreadable: D.unreadable.reduce(function(a,u){ return a + u.count; }, 0)
+  };
+  var countTarget = { inlane: T.inlane, jobs: Math.floor(T.jobs / 100) * 100, companies: T.companies, places: T.places };
+
+  $("heroDate").textContent = "Job sweep · " + D.sweep.dateLabel;
+  $("foot").textContent = "Last swept " + D.sweep.dateLabel + ", " + D.sweep.window + ".";
+
+  /* count-up */
+  function countUp(node, to, dur, prefix, suffix){
+    prefix = prefix || ""; suffix = suffix || "";
+    if (reduce) { node.textContent = prefix + fmt(to) + suffix; return; }
+    var t0 = null;
+    function step(t){ if (!t0) t0 = t; var k = Math.min(1, (t - t0) / dur); var e = 1 - Math.pow(1 - k, 4); node.textContent = prefix + fmt(to * e) + suffix; if (k < 1) requestAnimationFrame(step); }
+    requestAnimationFrame(step);
+  }
+  setTimeout(function(){
+    document.querySelectorAll("[data-count]").forEach(function(n){ countUp(n, countTarget[n.getAttribute("data-count")], 1800, n.getAttribute("data-prefix"), n.getAttribute("data-suffix")); });
+  }, 350);
+
+  /* reveal on scroll */
+  var io = ("IntersectionObserver" in window) ? new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if (en.isIntersecting) { en.target.classList.add("in"); var f = en.target.__onIn; if (f) { en.target.__onIn = null; f(); } io.unobserve(en.target); } });
+  }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 }) : null;
+  function watch(node, onIn){ if (onIn) node.__onIn = onIn; if (io && !reduce) io.observe(node); else { node.classList.add("in"); if (onIn) onIn(); } }
+  document.querySelectorAll(".reveal").forEach(function(n){ watch(n); });
+
+  /* status strip */
+  var strip = $("strip");
+  strip.innerHTML =
+    '<div class="sbox wide"><div class="t">Last sweep</div><div class="v">' + esc(D.sweep.dateLabel) + '</div><div class="d">' + esc(D.sweep.window) + ' · next sweep: ' + esc(D.sweep.next || "not scheduled") + '</div></div>' +
+    '<div class="sbox wide"><div class="t">Since ' + esc(D.sweep.previous) + '</div><div class="delta"><span class="pill new"><span class="dot"></span>' + T.newN + ' new</span><span class="pill closed"><span class="dot"></span>' + T.closed + ' closed</span><span class="pill open"><span class="dot"></span>' + (T.inlane - T.newN) + ' still open</span></div></div>' +
+    '<div class="sbox"><div class="t">In my lanes</div><div class="v num">' + T.inlane + '</div><div class="d">confirmed open</div></div>' +
+    '<div class="sbox"><div class="t">Applied</div><div class="v num" style="color:var(--applied)">' + T.applied + '</div><div class="d">in flight, ' + D.applied.filter(function(a){return a.onPage;}).length + ' on this page</div></div>' +
+    '<div class="sbox"><div class="t">Couldn\'t confirm</div><div class="v num" style="color:var(--warn)">' + D.unconfirmed.length + '</div><div class="d">roles to recheck</div></div>' +
+    '<div class="sbox"><div class="t">Boards not read</div><div class="v num">' + T.unreadable + '</div><div class="d">older counts used where possible</div></div>';
+
+  /* tiles */
+  var regionColor = { "San Francisco": "#7c3aed", "Peninsula": "#ef4444", "East Bay": "#3b82f6" };
+  var tilesEl = $("tiles"), zerosEl = $("zeros");
+  var sorted = D.places.slice().sort(function(a,b){ return b.inlane - a.inlane || (b.jobs||0) - (a.jobs||0); });
+  var maxIn = sorted[0].inlane;
+  sorted.forEach(function(p, i){
+    if (p.inlane === 0 && p.closedN === 0 && p.companies <= 2 && !p.jobs) {
+      var z = el("div", "zchip", "<b>" + esc(p.name) + "</b> · " + p.companies + " companies · " + esc(p.note || "no roles"));
+      zerosEl.appendChild(z); return;
+    }
+    var b = el("button", "tile reveal" + (p.inlane === 0 ? " zero" : ""));
+    b.type = "button";
+    b.style.setProperty("--rc", regionColor[p.region]);
+    var C = 2 * Math.PI * 26, frac = maxIn ? p.inlane / maxIn : 0;
+    b.innerHTML =
+      '<div class="top"><div><div class="name">' + esc(p.name) + '</div><div class="region">' + esc(p.region) + '</div></div>' +
+      '<div class="ring"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="none" stroke="var(--line)" stroke-width="7"/>' +
+      '<circle class="rarc" cx="32" cy="32" r="26" fill="none" stroke="' + regionColor[p.region] + '" stroke-width="7" stroke-linecap="round" stroke-dasharray="0 ' + C + '" style="transition:stroke-dasharray 1.2s cubic-bezier(.2,.8,.2,1)"/></svg>' +
+      '<div class="rv"><b class="num">' + p.inlane + '</b><small>in lane</small></div></div></div>' +
+      '<div class="nums"><div><b class="num">' + p.companies + '</b><span>companies</span></div><div><b class="num">' + esc(p.jobsLabel) + '</b><span>open jobs</span></div><div class="g"><b class="num">' + p.newN + '</b><span>new</span></div><div class="r"><b class="num">' + p.closedN + '</b><span>closed</span></div></div>' +
+      '<div class="foot"><span class="note">' + esc(p.note) + (p.appliedN ? (p.note ? " · " : "") + p.appliedN + " applied" : "") + '</span><span class="st ' + p.status + '">' + p.status + '</span></div>';
+    b.addEventListener("click", function(){ setPlace(p.id); document.getElementById("roles").scrollIntoView({ behavior: reduce ? "auto" : "smooth" }); });
+    tilesEl.appendChild(b);
+    var arc = b.querySelector(".rarc");
+    var fill = function(){ arc.setAttribute("stroke-dasharray", (C * Math.max(frac, p.inlane ? 0.04 : 0)) + " " + C); };
+    if (reduce) fill(); else b.style.transitionDelay = (Math.min(i, 6) * 60) + "ms";
+    watch(b, function(){ setTimeout(fill, 150); });
+  });
+
+  /* map */
+  var map = $("map"), NS = "http://www.w3.org/2000/svg";
+  var P = {
+    fidi: [178, 70], soma: [152, 112], missionbay: [204, 140], dogpatch: [212, 196], potrero: [160, 178], mission: [104, 160], twinpeaks: [52, 132], portola: [112, 236],
+    brisbane: [214, 268], ssf: [196, 314], sanbruno: [176, 356], millbrae: [176, 396], burlingame: [196, 432], sanmateo: [226, 466], redwood: [282, 522],
+    oakland: [312, 92]
+  };
+  var labelSide = { fidi:"r", soma:"l", missionbay:"r", dogpatch:"r", potrero:"l", mission:"l", twinpeaks:"b", portola:"l", brisbane:"r", ssf:"l", sanbruno:"l", millbrae:"l", burlingame:"l", sanmateo:"l", redwood:"l", oakland:"b" };
+  var shortName = { ssf: "South SF", twinpeaks: "Twin Peaks", oakland: "Oakland" };
+  var svg = '<defs>' +
+    '<linearGradient id="waterG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38bdf8" stop-opacity=".22"/><stop offset="1" stop-color="#6366f1" stop-opacity=".16"/></linearGradient>' +
+    '<filter id="glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>' +
+    '<radialGradient id="ng" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/></radialGradient>' +
+    '</defs>' +
+    '<rect class="water" x="0" y="0" width="360" height="560" rx="14"/>' +
+    /* SF + peninsula landmass (stylized) */
+    '<path class="land" d="M14 60 C40 38 120 34 186 40 C204 44 214 58 218 76 L232 120 C240 150 238 210 236 250 C234 290 222 330 214 370 C212 400 222 430 244 460 C262 488 290 508 312 540 L312 560 L0 560 L0 70 Z"/>' +
+    /* East Bay landmass */
+    '<path class="land" d="M290 0 L360 0 L360 380 C340 360 320 300 300 250 C288 210 280 150 282 110 C284 70 286 30 290 0 Z"/>' +
+    '<text class="area" x="30" y="78">San Francisco</text>' +
+    '<text class="area" x="40" y="330">Peninsula</text>' +
+    '<text class="area" x="296" y="40">East Bay</text>' +
+    '<text class="area" x="250" y="220" style="letter-spacing:.3em">Bay</text>';
+  function line(pts){ return "M" + pts.map(function(k){ return P[k].join(" "); }).join(" L"); }
+  svg += '<path class="rail ct draw" d="' + line(["missionbay","dogpatch","brisbane","ssf","sanbruno","millbrae","burlingame","sanmateo","redwood"]) + '"/>';
+  svg += '<path class="rail bart draw" d="M' + P.mission.join(" ") + ' L' + P.soma.join(" ") + ' L' + P.fidi.join(" ") + ' C230 70 270 84 ' + P.oakland.join(" ") + '"/>';
+  svg += '<path class="rail" d="M' + P.twinpeaks.join(" ") + ' L' + P.mission.join(" ") + '" stroke="var(--faint)" stroke-width="1.5" stroke-dasharray="3 4" fill="none"/>';
+  svg += '<path class="rail" d="M' + P.portola.join(" ") + ' L' + P.potrero.join(" ") + '" stroke="var(--faint)" stroke-width="1.5" stroke-dasharray="3 4" fill="none"/>';
+  var nodesSvg = "";
+  var order = D.places.slice().sort(function(a,b){ return a.inlane - b.inlane; });
+  order.forEach(function(p, i){
+    var xy = P[p.id]; if (!xy) return;
+    var r = p.inlane ? 9 + Math.sqrt(p.inlane) * 3.6 : 4.5;
+    var col = regionColor[p.region];
+    var side = labelSide[p.id] || "r", nm = shortName[p.id] || p.name;
+    var lx = xy[0], ly = xy[1], anchor = "start";
+    if (side === "r") { lx = xy[0] + r + 5; ly = xy[1] + 4; }
+    else if (side === "l") { lx = xy[0] - r - 5; ly = xy[1] + 4; anchor = "end"; }
+    else { ly = xy[1] + r + 13; anchor = "middle"; }
+    var g = '<g class="node' + (p.inlane ? "" : " empty") + '" data-place="' + p.id + '" tabindex="0" role="button" aria-label="' + esc(p.name) + ', ' + p.inlane + ' roles">';
+    g += '<g class="pop" style="transition-delay:' + (600 + i * 70) + 'ms">';
+    if (p.inlane) {
+      g += '<circle class="halo" cx="' + xy[0] + '" cy="' + xy[1] + '" r="' + r + '" fill="' + col + '" style="animation-delay:' + (i * 0.2) + 's"/>';
+      g += '<circle cx="' + xy[0] + '" cy="' + xy[1] + '" r="' + r + '" fill="' + col + '" filter="url(#glow)" opacity=".85"/>';
+      g += '<circle class="core" cx="' + xy[0] + '" cy="' + xy[1] + '" r="' + r + '" fill="' + col + '"/>';
+      g += '<circle cx="' + xy[0] + '" cy="' + xy[1] + '" r="' + r + '" fill="url(#ng)" pointer-events="none"/>';
+      g += '<text class="n" x="' + xy[0] + '" y="' + xy[1] + '">' + p.inlane + '</text>';
+    } else {
+      g += '<circle class="core" cx="' + xy[0] + '" cy="' + xy[1] + '" r="' + r + '"/>';
+    }
+    g += '</g>';
+    g += '<text class="' + (p.inlane ? "lbl" : "lbl2") + '" x="' + lx + '" y="' + ly + '" text-anchor="' + anchor + '">' + esc(nm) + '</text>';
+    g += '</g>';
+    nodesSvg += g;
+  });
+  map.innerHTML = svg + nodesSvg;
+  map.querySelectorAll(".rail.draw").forEach(function(pth){ var L = pth.getTotalLength ? pth.getTotalLength() : 600; pth.style.setProperty("--len", Math.ceil(L)); });
+  map.querySelectorAll(".node").forEach(function(n){
+    function go(){ setPlace(n.getAttribute("data-place")); document.getElementById("roles").scrollIntoView({ behavior: reduce ? "auto" : "smooth" }); }
+    n.addEventListener("click", go);
+    n.addEventListener("keydown", function(e){ if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+  });
+  watch(map.parentNode, function(){ setTimeout(function(){ map.classList.add("in"); }, 100); });
+  if (reduce) map.classList.add("in");
+
+  /* dot field */
+  var canvas = $("field"), fieldStarted = false;
+  function drawField(animate){
+    var w = canvas.parentNode.clientWidth - 32; if (w < 200) w = 200;
+    var N = Math.floor(T.jobs / 1) ;
+    var gap = Math.max(4, Math.floor(Math.sqrt((w * w * 0.62) / N)));
+    var cols = Math.floor(w / gap), rows = Math.ceil(N / cols);
+    var h = rows * gap;
+    var dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.floor(w * dpr); canvas.height = Math.floor(h * dpr);
+    canvas.style.height = h + "px";
+    var ctx = canvas.getContext("2d"); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var seed = 7; function rnd(){ seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
+    var lit = {}, litList = [];
+    while (litList.length < T.inlane) { var k = Math.floor(rnd() * N); if (!lit[k]) { lit[k] = D.roles[litList.length]; litList.push(k); } }
+    var base = matchMedia("(prefers-color-scheme: dark)").matches ? "rgba(148,163,184,.28)" : "rgba(148,163,184,.30)";
+    var rad = Math.max(1, gap * 0.26);
+    function frame(prog){
+      ctx.clearRect(0, 0, w, h);
+      var shown = Math.floor(N * Math.min(1, prog * 1.6));
+      ctx.fillStyle = "rgba(148,163,184,.32)";
+      for (var i = 0; i < shown; i++) {
+        if (lit[i]) continue;
+        var x = (i % cols) * gap + gap / 2, y = Math.floor(i / cols) * gap + gap / 2;
+        ctx.beginPath(); ctx.arc(x, y, rad, 0, 6.2832); ctx.fill();
+      }
+      var lp = Math.max(0, (prog - 0.55) / 0.45);
+      litList.forEach(function(idx, j){
+        var t = Math.max(0, Math.min(1, lp * 1.5 - j / litList.length * 0.5)); if (t <= 0) return;
+        var x = (idx % cols) * gap + gap / 2, y = Math.floor(idx / cols) * gap + gap / 2;
+        var c = laneColor(lit[idx].lane);
+        var R = rad * (1.6 + 2.4 * t);
+        var grd = ctx.createRadialGradient(x, y, 0, x, y, R * 3.2);
+        grd.addColorStop(0, c); grd.addColorStop(1, "rgba(0,0,0,0)");
+        ctx.globalAlpha = 0.55 * t; ctx.fillStyle = grd; ctx.beginPath(); ctx.arc(x, y, R * 3.2, 0, 6.2832); ctx.fill();
+        ctx.globalAlpha = t; ctx.fillStyle = c; ctx.beginPath(); ctx.arc(x, y, R * 0.75, 0, 6.2832); ctx.fill();
+        ctx.fillStyle = "#fff"; ctx.globalAlpha = t * 0.9; ctx.beginPath(); ctx.arc(x, y, R * 0.3, 0, 6.2832); ctx.fill();
+        ctx.globalAlpha = 1;
+      });
+    }
+    if (!animate || reduce) { frame(1); return; }
+    var t0 = null;
+    function step(t){ if (!t0) t0 = t; var k = Math.min(1, (t - t0) / 2600); frame(1 - Math.pow(1 - k, 2)); if (k < 1) requestAnimationFrame(step); }
+    requestAnimationFrame(step);
+  }
+  var rateNode = $("rate");
+  rateNode.textContent = "1 in " + Math.round(T.jobs / T.inlane);
+  watch($("fieldcard"), function(){ fieldStarted = true; drawField(true); });
+  var rz; window.addEventListener("resize", function(){ clearTimeout(rz); rz = setTimeout(function(){ if (fieldStarted) drawField(false); }, 200); });
+  if (!io || reduce) { fieldStarted = true; drawField(false); }
+
+  /* bars */
+  var bars = $("bars");
+  var bp = D.places.filter(function(p){ return p.companies > 0 || p.inlane > 0; }).sort(function(a,b){ return b.inlane - a.inlane || (b.jobs||0) - (a.jobs||0); });
+  var mC = Math.max.apply(null, bp.map(function(p){ return p.companies; }));
+  var mJ = Math.max.apply(null, bp.map(function(p){ return p.jobs || 0; }));
+  var mS = Math.max.apply(null, bp.map(function(p){ return p.inlane; }));
+  var bh = '<div class="bhead"><span>Place</span><span>Companies</span><span>Open jobs</span><span>In lane</span></div>';
+  bp.forEach(function(p){
+    bh += '<div class="brow"><span class="pn">' + esc(shortName[p.id] || p.name) + '</span>' +
+      '<div class="track"><div class="fill c" data-w="' + (p.companies / mC * 100) + '"></div><b class="num">' + p.companies + '</b></div>' +
+      '<div class="track"><div class="fill j" data-w="' + ((p.jobs || 0) / mJ * 100) + '"></div><b class="num">' + esc(p.jobs == null ? "n/a" : p.jobsLabel) + '</b></div>' +
+      '<div class="track"><div class="fill s" data-w="' + (p.inlane / mS * 100) + '"></div><b class="num">' + p.inlane + '</b></div></div>';
+  });
+  bars.innerHTML = bh + '<div class="bnote">Oakland and Redwood City show n/a for open jobs because their totals haven\'t been counted yet.</div>';
+  watch(bars, function(){ bars.querySelectorAll(".fill").forEach(function(f, i){ setTimeout(function(){ f.style.width = f.getAttribute("data-w") + "%"; }, reduce ? 0 : 80 + i * 18); }); });
+
+  /* donut */
+  var laneCounts = D.lanes.map(function(l){ return { l: l, n: D.roles.filter(function(r){ return r.lane === l.id; }).length }; }).sort(function(a,b){ return b.n - a.n; });
+  var donut = $("donut"), R2 = 84, C2 = 2 * Math.PI * R2, acc = 0, dh = '<circle cx="110" cy="110" r="' + R2 + '" fill="none" stroke="var(--line)" stroke-width="26"/>';
+  laneCounts.forEach(function(x){
+    var len = x.n / T.inlane * C2;
+    dh += '<circle class="seg" cx="110" cy="110" r="' + R2 + '" stroke="' + laneColor(x.l.id) + '" stroke-dasharray="0 ' + C2 + '" stroke-dashoffset="' + (-acc) + '" data-len="' + Math.max(0, len - 2) + '"/>';
+    acc += len;
+  });
+  donut.innerHTML = dh;
+  var ll = $("lanelist");
+  laneCounts.forEach(function(x){
+    var b = el("button", "lane", '<span class="sw" style="background:' + laneColor(x.l.id) + '"></span><span class="ln">' + esc(x.l.name) + '<small>' + esc(x.l.desc) + '</small></span><span class="lc num">' + x.n + '</span>');
+    b.type = "button";
+    b.addEventListener("click", function(){ setLane(x.l.id); document.getElementById("roles").scrollIntoView({ behavior: reduce ? "auto" : "smooth" }); });
+    ll.appendChild(b);
+  });
+  watch(donut.parentNode.parentNode, function(){
+    countUp($("donutN"), T.inlane, 1400);
+    donut.querySelectorAll(".seg").forEach(function(s, i){ setTimeout(function(){ s.setAttribute("stroke-dasharray", s.getAttribute("data-len") + " " + C2); }, reduce ? 0 : 150 + i * 160); });
+  });
+
+  /* roles + filters */
+  var state = { place: "all", lane: "all", newOnly: false, appliedOnly: false, q: "" };
+  var pc = $("placeChips"), lc = $("laneChips");
+  function chip(container, label, count, val, kind, swatch){
+    var b = el("button", "chip", (swatch ? '<span class="sw" style="background:' + swatch + '"></span>' : "") + esc(label) + ' <span class="c num">' + count + '</span>');
+    b.type = "button"; b.setAttribute("data-val", val); b.setAttribute("aria-pressed", "false");
+    b.addEventListener("click", function(){ if (kind === "place") setPlace(state.place === val && val !== "all" ? "all" : val); else setLane(state.lane === val && val !== "all" ? "all" : val); });
+    container.appendChild(b);
+  }
+  chip(pc, "All places", T.inlane, "all", "place");
+  D.places.filter(function(p){ return p.inlane; }).sort(function(a,b){ return b.inlane - a.inlane; }).forEach(function(p){ chip(pc, shortName[p.id] || p.name, p.inlane, p.id, "place"); });
+  chip(lc, "All lanes", T.inlane, "all", "lane");
+  laneCounts.forEach(function(x){ chip(lc, x.l.name, x.n, x.l.id, "lane", laneColor(x.l.id)); });
+
+  function syncChips(){
+    pc.querySelectorAll(".chip").forEach(function(c){ c.setAttribute("aria-pressed", c.getAttribute("data-val") === state.place ? "true" : "false"); });
+    lc.querySelectorAll(".chip").forEach(function(c){ c.setAttribute("aria-pressed", c.getAttribute("data-val") === state.lane ? "true" : "false"); });
+    var on = pc.querySelector('[aria-pressed="true"]'); if (on && on.scrollIntoView && state.place !== "all") { pc.scrollLeft = on.offsetLeft - 16; }
+    var onl = lc.querySelector('[aria-pressed="true"]'); if (onl && state.lane !== "all") { lc.scrollLeft = onl.offsetLeft - 16; }
+  }
+  function setPlace(v){ state.place = v; render(); }
+  function setLane(v){ state.lane = v; render(); }
+  $("newOnly").addEventListener("click", function(){ state.newOnly = !state.newOnly; this.setAttribute("aria-pressed", state.newOnly); render(); });
+  $("appliedOnly").addEventListener("click", function(){ state.appliedOnly = !state.appliedOnly; this.setAttribute("aria-pressed", state.appliedOnly); render(); });
+  $("q").addEventListener("input", function(){ state.q = this.value.trim().toLowerCase(); render(); });
+
+  var list = $("roleList");
+  var placeOrder = {}; sorted.forEach(function(p, i){ placeOrder[p.id] = i; });
+  function render(){
+    syncChips();
+    var rs = D.roles.filter(function(r){
+      if (state.place !== "all" && r.place !== state.place) return false;
+      if (state.lane !== "all" && r.lane !== state.lane) return false;
+      if (state.newOnly && r.status !== "new") return false;
+      if (state.appliedOnly && !r.applied) return false;
+      if (state.q && (r.company + " " + r.title).toLowerCase().indexOf(state.q) < 0) return false;
+      return true;
+    }).sort(function(a,b){ return (placeOrder[a.place] - placeOrder[b.place]) || (a.status === "new" ? -1 : 0) - (b.status === "new" ? -1 : 0); });
+    $("count").textContent = "Showing " + rs.length + " of " + T.inlane + " roles";
+    list.innerHTML = "";
+    if (!rs.length) { list.appendChild(el("div", "card empty", "No roles match these filters.")); return; }
+    rs.forEach(function(r, i){
+      var p = placeById[r.place], lane = laneById[r.lane];
+      var c = el("article", "role");
+      c.style.setProperty("--lc", laneColor(r.lane));
+      var badges = '';
+      badges += r.status === "new" ? '<span class="pill new"><span class="dot"></span>New</span>' : '<span class="pill open"><span class="dot"></span>Open</span>';
+      if (r.applied) badges += '<span class="pill applied"><span class="dot"></span>Applied</span>';
+      if (r.watch) badges += '<span class="pill warn"><span class="dot"></span>May close</span>';
+      badges += '<span class="pill open" style="background:transparent;border:1px solid var(--line)">' + esc(lane.name) + '</span>';
+      var meta = '<div><b>' + esc(shortName[p.id] || p.name) + '</b> · ' + esc(r.where) + '</div>';
+      if (r.pay) meta += '<div><b>Pay</b> ' + esc(r.pay) + '</div>';
+      var notes = [r.note, r.watch].filter(Boolean).join(". ");
+      if (notes) meta += '<div>' + esc(notes) + '</div>';
+      c.innerHTML = '<div class="hd"><div class="av">' + esc(r.company.charAt(0)) + '</div><div><div class="co">' + esc(r.company) + '</div><h3>' + esc(r.title) + '</h3></div></div>' +
+        '<div class="badges">' + badges + '</div><div class="meta">' + meta + '</div>' +
+        (r.url ? '<a class="go" href="' + esc(r.url) + '" target="_blank" rel="noopener noreferrer">Read the job description <span aria-hidden="true">↗</span></a>' : '<div class="nolink">No verified posting link</div>');
+      list.appendChild(c);
+      if (!reduce && i < 12) { c.classList.add("reveal"); c.style.transitionDelay = (i * 40) + "ms"; requestAnimationFrame(function(){ requestAnimationFrame(function(){ c.classList.add("in"); }); }); }
+    });
+  }
+  render();
+
+  /* watch list */
+  function wi(cls, title, sub, mark){ return '<div class="witem ' + cls + '"><span class="wx">' + mark + '</span><div><div class="wt">' + title + '</div><div class="ws">' + sub + '</div></div></div>'; }
+  $("closedN").textContent = T.closed;
+  $("closedList").innerHTML = D.closed.map(function(c){ return wi("closed", esc(c.company) + " · " + esc(c.title), esc(placeById[c.place] ? placeById[c.place].name : ""), '<span class="pill closed" style="padding:3px 7px">✕</span>'); }).join("");
+  $("unN").textContent = D.unconfirmed.length;
+  $("unList").innerHTML = D.unconfirmed.map(function(u){ return wi("", esc(u.company) + " · " + esc(u.title), esc(u.why), '<span class="pill warn" style="padding:3px 7px">?</span>'); }).join("");
+  $("apN").textContent = T.applied;
+  $("apList").innerHTML = D.applied.map(function(a){
+    var role = a.onPage ? D.roles.filter(function(r){ return r.applied && r.company === a.company; })[0] : null;
+    var t = esc(a.company) + " · " + (role && role.url ? '<a href="' + esc(role.url) + '" target="_blank" rel="noopener noreferrer">' + esc(a.title) + ' ↗</a>' : esc(a.title));
+    var s = a.onPage ? "Still open · " + esc(placeById[a.place].name) : (a.place ? esc(placeById[a.place].name) + " · not in this sweep's in-lane list" : "Not part of this sweep");
+    return wi("", t, s, '<span class="pill applied" style="padding:3px 7px">✓</span>');
+  }).join("");
+  $("ubN").textContent = T.unreadable;
+  $("ubList").innerHTML = D.unreadable.map(function(u){ return wi("", esc(u.names), esc(u.why), '<span class="pill open" style="padding:3px 7px">' + u.count + '</span>'); }).join("");
+
+  /* method */
+  $("method").innerHTML = D.method.map(function(m){ return "<li>" + m + "</li>"; }).join("");
+})();
+</script>
+</body>
+</html>
