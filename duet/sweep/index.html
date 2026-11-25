@@ -75,7 +75,7 @@ a{color:inherit}
 .btn.ghost{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2)}
 
 /* sections */
-section{padding:46px 0 10px}
+section{padding:46px 0 10px;scroll-margin-top:52px}
 .sec-head{margin-bottom:18px}
 .kicker{font-size:.76rem;font-weight:750;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
 h2{font-size:1.75rem;line-height:1.12;letter-spacing:-.02em;margin:6px 0 8px;font-weight:800}
@@ -106,11 +106,11 @@ h2{font-size:1.75rem;line-height:1.12;letter-spacing:-.02em;margin:6px 0 8px;fon
 .tile .top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
 .tile .name{font-weight:800;font-size:1.12rem;letter-spacing:-.01em;line-height:1.2}
 .tile .region{font-size:.78rem;color:var(--muted);margin-top:2px}
-.ring{flex:0 0 auto;width:64px;height:64px;position:relative}
-.ring svg{width:64px;height:64px;transform:rotate(-90deg)}
+.ring{flex:0 0 auto;width:74px;height:74px;position:relative}
+.ring svg{width:74px;height:74px;transform:rotate(-90deg)}
 .ring .rv{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}
 .ring .rv b{font-size:1.35rem;font-weight:800}
-.ring .rv small{font-size:.56rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.ring .rv small{font-size:.5rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:2px}
 .tile .nums{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:12px}
 .tile .nums div{background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:8px 6px;text-align:center}
 .tile .nums b{display:block;font-size:1.02rem;font-weight:800;line-height:1.1}
@@ -254,7 +254,7 @@ html.w375 .filters{margin:0 -16px 12px}
   .wrap{padding:0 28px}
   .hero{padding:72px 0 56px}
   .hero h1{font-size:3.8rem}
-  .stats{grid-template-columns:2fr 1fr 1fr 1fr}
+  .stats{grid-template-columns:1.6fr 1fr 1fr 1fr 1fr}
   .stat.big{grid-column:auto;flex-direction:column;align-items:flex-start;gap:4px}
   .stat .v{font-size:2.8rem}
   .stat.big .v{font-size:4.2rem}
@@ -300,6 +300,7 @@ html.w375 .filters{margin:0 -16px 12px}
       <div class="stat"><div class="v num" data-count="jobs" data-prefix="~" data-suffix="+">0</div><div class="l">open jobs read</div></div>
       <div class="stat"><div class="v num" data-count="companies" data-prefix="~">0</div><div class="l">companies checked</div></div>
       <div class="stat"><div class="v num" data-count="places">0</div><div class="l">places swept</div></div>
+      <div class="stat"><div class="v num" data-count="newN" data-prefix="+">0</div><div class="l">new since the last sweep</div></div>
     </div>
     <div class="hero-cta rise d4">
       <a class="btn primary" href="#roles">See the roles</a>
@@ -367,7 +368,7 @@ html.w375 .filters{margin:0 -16px 12px}
   </div>
   <div class="filters" id="filters">
     <div class="frow">
-      <input class="search" id="q" type="search" placeholder="Search company or title" aria-label="Search roles">
+      <input class="search" id="q" type="search" placeholder="Search" aria-label="Search roles">
       <button class="toggle" id="newOnly" aria-pressed="false">New only</button>
       <button class="toggle ap" id="appliedOnly" aria-pressed="false">Applied</button>
     </div>
@@ -584,7 +585,7 @@ html.w375 .filters{margin:0 -16px 12px}
     applied: D.applied.length,
     unreadable: D.unreadable.reduce(function(a,u){ return a + u.count; }, 0)
   };
-  var countTarget = { inlane: T.inlane, jobs: Math.floor(T.jobs / 100) * 100, companies: T.companies, places: T.places };
+  var countTarget = { newN: T.newN, inlane: T.inlane, jobs: Math.floor(T.jobs / 100) * 100, companies: T.companies, places: T.places };
 
   $("heroDate").textContent = "Job sweep · " + D.sweep.dateLabel;
   $("foot").textContent = "Last swept " + D.sweep.dateLabel + ", " + D.sweep.window + ".";
@@ -631,11 +632,11 @@ html.w375 .filters{margin:0 -16px 12px}
     var b = el("button", "tile reveal" + (p.inlane === 0 ? " zero" : ""));
     b.type = "button";
     b.style.setProperty("--rc", regionColor[p.region]);
-    var C = 2 * Math.PI * 26, frac = maxIn ? p.inlane / maxIn : 0;
+    var C = 2 * Math.PI * 30, frac = maxIn ? p.inlane / maxIn : 0;
     b.innerHTML =
       '<div class="top"><div><div class="name">' + esc(p.name) + '</div><div class="region">' + esc(p.region) + '</div></div>' +
-      '<div class="ring"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="none" stroke="var(--line)" stroke-width="7"/>' +
-      '<circle class="rarc" cx="32" cy="32" r="26" fill="none" stroke="' + regionColor[p.region] + '" stroke-width="7" stroke-linecap="round" stroke-dasharray="0 ' + C + '" style="transition:stroke-dasharray 1.2s cubic-bezier(.2,.8,.2,1)"/></svg>' +
+      '<div class="ring"><svg viewBox="0 0 74 74"><circle cx="37" cy="37" r="30" fill="none" stroke="var(--line)" stroke-width="6"/>' +
+      '<circle class="rarc" cx="37" cy="37" r="30" fill="none" stroke="' + regionColor[p.region] + '" stroke-width="6" stroke-linecap="round" stroke-dasharray="0 ' + C + '" style="transition:stroke-dasharray 1.2s cubic-bezier(.2,.8,.2,1)"/></svg>' +
       '<div class="rv"><b class="num">' + p.inlane + '</b><small>in lane</small></div></div></div>' +
       '<div class="nums"><div><b class="num">' + p.companies + '</b><span>companies</span></div><div><b class="num">' + esc(p.jobsLabel) + '</b><span>open jobs</span></div><div class="g"><b class="num">' + p.newN + '</b><span>new</span></div><div class="r"><b class="num">' + p.closedN + '</b><span>closed</span></div></div>' +
       '<div class="foot"><span class="note">' + esc(p.note) + (p.appliedN ? (p.note ? " · " : "") + p.appliedN + " applied" : "") + '</span><span class="st ' + p.status + '">' + p.status + '</span></div>';
@@ -650,11 +651,11 @@ html.w375 .filters{margin:0 -16px 12px}
   /* map */
   var map = $("map"), NS = "http://www.w3.org/2000/svg";
   var P = {
-    fidi: [178, 70], soma: [152, 112], missionbay: [204, 140], dogpatch: [212, 196], potrero: [160, 178], mission: [104, 160], twinpeaks: [52, 132], portola: [112, 236],
-    brisbane: [214, 268], ssf: [196, 314], sanbruno: [176, 356], millbrae: [176, 396], burlingame: [196, 432], sanmateo: [226, 466], redwood: [282, 522],
-    oakland: [312, 92]
+    fidi: [196, 74], soma: [134, 120], missionbay: [218, 142], dogpatch: [222, 216], potrero: [144, 200], mission: [64, 168], twinpeaks: [30, 124], portola: [100, 262],
+    brisbane: [224, 294], ssf: [206, 338], sanbruno: [186, 378], millbrae: [186, 416], burlingame: [206, 452], sanmateo: [234, 486], redwood: [288, 540],
+    oakland: [318, 104]
   };
-  var labelSide = { fidi:"r", soma:"l", missionbay:"r", dogpatch:"r", potrero:"l", mission:"l", twinpeaks:"b", portola:"l", brisbane:"r", ssf:"l", sanbruno:"l", millbrae:"l", burlingame:"l", sanmateo:"l", redwood:"l", oakland:"b" };
+  var labelSide = { fidi:"l", soma:"l", missionbay:"r", dogpatch:"r", potrero:"l", mission:"b", twinpeaks:"b", portola:"r", brisbane:"r", ssf:"l", sanbruno:"l", millbrae:"l", burlingame:"l", sanmateo:"l", redwood:"l", oakland:"b" };
   var shortName = { ssf: "South SF", twinpeaks: "Twin Peaks", oakland: "Oakland" };
   var svg = '<defs>' +
     '<linearGradient id="waterG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38bdf8" stop-opacity=".22"/><stop offset="1" stop-color="#6366f1" stop-opacity=".16"/></linearGradient>' +
@@ -663,13 +664,13 @@ html.w375 .filters{margin:0 -16px 12px}
     '</defs>' +
     '<rect class="water" x="0" y="0" width="360" height="560" rx="14"/>' +
     /* SF + peninsula landmass (stylized) */
-    '<path class="land" d="M14 60 C40 38 120 34 186 40 C204 44 214 58 218 76 L232 120 C240 150 238 210 236 250 C234 290 222 330 214 370 C212 400 222 430 244 460 C262 488 290 508 312 540 L312 560 L0 560 L0 70 Z"/>' +
+    '<path class="land" d="M0 28 C60 16 150 14 212 26 C238 36 246 66 250 100 L256 160 C260 205 258 250 252 292 C246 334 230 372 226 404 C226 434 242 462 264 490 C284 514 306 532 322 560 L0 560 Z"/>' +
     /* East Bay landmass */
-    '<path class="land" d="M290 0 L360 0 L360 380 C340 360 320 300 300 250 C288 210 280 150 282 110 C284 70 286 30 290 0 Z"/>' +
-    '<text class="area" x="30" y="78">San Francisco</text>' +
-    '<text class="area" x="40" y="330">Peninsula</text>' +
+    '<path class="land" d="M288 0 L360 0 L360 400 C344 380 326 322 312 262 C300 212 290 152 290 112 C290 72 290 32 288 0 Z"/>' +
+    '<text class="area" x="14" y="46">San Francisco</text>' +
+    '<text class="area" x="36" y="360">Peninsula</text>' +
     '<text class="area" x="296" y="40">East Bay</text>' +
-    '<text class="area" x="250" y="220" style="letter-spacing:.3em">Bay</text>';
+    '<text class="area" x="266" y="300" style="letter-spacing:.3em">Bay</text>';
   function line(pts){ return "M" + pts.map(function(k){ return P[k].join(" "); }).join(" L"); }
   svg += '<path class="rail ct draw" d="' + line(["missionbay","dogpatch","brisbane","ssf","sanbruno","millbrae","burlingame","sanmateo","redwood"]) + '"/>';
   svg += '<path class="rail bart draw" d="M' + P.mission.join(" ") + ' L' + P.soma.join(" ") + ' L' + P.fidi.join(" ") + ' C230 70 270 84 ' + P.oakland.join(" ") + '"/>';
@@ -732,7 +733,7 @@ html.w375 .filters{margin:0 -16px 12px}
     function frame(prog){
       ctx.clearRect(0, 0, w, h);
       var shown = Math.floor(N * Math.min(1, prog * 1.6));
-      ctx.fillStyle = "rgba(148,163,184,.32)";
+      ctx.fillStyle = "rgba(148,163,184,.42)";
       for (var i = 0; i < shown; i++) {
         if (lit[i]) continue;
         var x = (i % cols) * gap + gap / 2, y = Math.floor(i / cols) * gap + gap / 2;
