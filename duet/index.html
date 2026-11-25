@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Running a Job Search Like a Product | Shawn Hanna</title>
+<meta name="description" content="How Shawn Hanna specified, governed and quality-checked a three-agent AI system that runs his job search, with a human approval gate.">
+<link rel="icon" type="image/svg+xml" href="../assets/home/icon.svg">
+<link rel="canonical" href="https://sghanna.github.io/ai/duet/">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://sghanna.github.io/ai/duet/">
+<meta property="og:title" content="Running a Job Search Like a Product | Shawn Hanna">
+<meta property="og:image" content="https://sghanna.github.io/ai/assets/home/og-home-2.jpg?v=duet">
+<meta property="og:description" content="Three AI agents find, score and draft. One human approves. A case study in specification, orchestration, governance and quality control.">
+<style>
+  :root {
+    --bg: #f6f7fb; --surface: #ffffff; --ink: #142033; --muted: #5a6577; --line: #e2e6ee;
+    --navy: #1F3A5F; --accent: #0e8c7f; --accent-soft: #e3f4f1;
+    --amber: #b45309; --amber-soft: #fdf1e2;
+    --duet: #2563eb; --duet-soft: #e6eeff;
+    --claude: #c2410c; --claude-soft: #fdece4;
+    --codex: #7c3aed; --codex-soft: #f0e9ff;
+    --human: #15803d; --human-soft: #e4f5ea;
+    --shadow: 0 1px 2px rgba(20,32,51,.06), 0 6px 18px rgba(20,32,51,.07);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d1117; --surface: #161c25; --ink: #e7ecf3; --muted: #a2adbd; --line: #2a3340;
+      --navy: #a9c7ee; --accent: #4fd1bf; --accent-soft: #12302c;
+      --amber: #f2b35c; --amber-soft: #33240f;
+      --duet: #7aa7ff; --duet-soft: #18264a;
+      --claude: #ff9a6b; --claude-soft: #3a2017;
+      --codex: #b89bff; --codex-soft: #2a1f47;
+      --human: #6ee29a; --human-soft: #13301f;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 6px 18px rgba(0,0,0,.35);
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+  a { color: var(--accent); }
+  b, strong { font-weight: 650; }
+
+  /* Top bar */
+  .topbar { background: #0f2240; color: #dbe6f5; font-size: .88rem; }
+  .topbar-in { max-width: 760px; margin: 0 auto; padding: 10px 16px; display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+  .topbar a { color: #dbe6f5; text-decoration: none; }
+  .topbar .brand { font-weight: 750; color: #fff; }
+  .topbar nav a { margin-left: 14px; }
+  .skip { position: absolute; left: -999px; top: 8px; background: #fff; color: #0f2240; padding: 8px 12px; border-radius: 8px; z-index: 10; }
+  .skip:focus { left: 8px; }
+
+  /* Hero */
+  .hero {
+    color: #fff; position: relative; overflow: hidden;
+    background:
+      radial-gradient(120% 80% at 100% 0%, rgba(79,209,191,.35) 0%, rgba(79,209,191,0) 60%),
+      radial-gradient(90% 70% at 0% 100%, rgba(124,58,237,.35) 0%, rgba(124,58,237,0) 60%),
+      linear-gradient(160deg, #13294a 0%, #1F3A5F 55%, #16324f 100%);
+    padding: 28px 18px 30px;
+  }
+  .hero::after {
+    content: ""; position: absolute; inset: -40%; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(127,227,212,.18), rgba(127,227,212,0));
+    width: 60%; height: 60%; left: 40%; top: -10%;
+  }
+  .hero-in { max-width: 760px; margin: 0 auto; position: relative; z-index: 1; }
+  .kicker { display: inline-block; text-transform: uppercase; letter-spacing: .12em; font-size: .72rem; font-weight: 700; color: #bfe9e3; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18); padding: 3px 10px; border-radius: 999px; }
+  .hero h1 { font-size: 1.85rem; line-height: 1.15; margin: 14px 0 10px; letter-spacing: -.01em; }
+  .hero h1 em { font-style: normal; color: #7fe3d4; }
+  .byline { color: #cfdaea; font-size: .95rem; }
+  .updated { display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; font-size: .78rem; color: #e1e9f5; background: rgba(0,0,0,.18); border-radius: 999px; padding: 3px 10px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #4fd1bf; box-shadow: 0 0 0 3px rgba(79,209,191,.25); }
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0 4px; }
+  .stat { background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.16); border-radius: 14px; padding: 14px 12px 12px; }
+  .stat b { display: block; font-size: 2.1rem; line-height: 1; font-weight: 800; letter-spacing: -.02em; color: #fff; font-variant-numeric: tabular-nums; }
+  .stat span { display: block; margin-top: 6px; font-size: .8rem; line-height: 1.3; color: #d3deec; }
+  .stat.hl { background: rgba(79,209,191,.18); border-color: rgba(127,227,212,.45); }
+  .stat.hl b { color: #9ff0e4; }
+
+  main { max-width: 760px; margin: 0 auto; padding: 0 14px 40px; }
+
+  .tldr { background: var(--surface); border-radius: 16px; box-shadow: var(--shadow); padding: 16px 16px 10px; margin: -8px 0 8px; position: relative; }
+  .tldr h2 { margin: 0 0 6px; font-size: .78rem; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); }
+  .tldr ul { list-style: none; padding: 0; margin: 0; }
+  .tldr li { position: relative; padding: 0 0 10px 26px; }
+  .tldr li::before { content: ""; position: absolute; left: 0; top: 6px; width: 14px; height: 14px; border-radius: 4px; background: var(--accent-soft); border: 2px solid var(--accent); }
+
+  section { margin-top: 38px; }
+  .eyebrow { display: block; font-size: .72rem; font-weight: 800; letter-spacing: .14em; color: var(--accent); text-transform: uppercase; }
+  h2 { font-size: 1.45rem; line-height: 1.2; margin: 4px 0 10px; letter-spacing: -.01em; }
+  h3 { font-size: 1.05rem; margin: 0 0 4px; }
+  p { margin: 8px 0; }
+  .lead { font-size: 1.05rem; }
+  .muted { color: var(--muted); }
+  .panel { background: var(--surface); border-radius: 16px; box-shadow: var(--shadow); padding: 16px; }
+
+  .risks { display: grid; gap: 10px; margin-top: 12px; }
+  .risk { display: flex; gap: 12px; align-items: flex-start; background: var(--surface); border-radius: 14px; padding: 12px 14px; box-shadow: var(--shadow); }
+  .risk .ico { flex: 0 0 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: var(--amber-soft); color: var(--amber); font-weight: 800; }
+  .risk p { margin: 0; }
+
+  figure { margin: 14px 0 0; }
+  figcaption { font-size: .85rem; color: var(--muted); margin-top: 10px; }
+  svg { width: 100%; height: auto; display: block; }
+  svg text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+  .n-title { font-weight: 750; font-size: 14.5px; fill: var(--ink); }
+  .n-sub { font-size: 11.5px; fill: var(--muted); }
+  .n-tag { font-size: 9.5px; font-weight: 800; letter-spacing: .1em; }
+  .flow { stroke: var(--muted); stroke-width: 1.8; fill: none; stroke-dasharray: 4 4; }
+  .flow-strong { stroke: var(--human); stroke-width: 2.4; fill: none; stroke-dasharray: 6 4; }
+  .lock-bg { fill: var(--human-soft); stroke: var(--human); stroke-width: 1.5; }
+  .human-node { fill: var(--human-soft); stroke: var(--human); stroke-width: 2.4; }
+  .duet-node { fill: var(--duet-soft); stroke: var(--duet); stroke-width: 2; }
+  .claude-node { fill: var(--claude-soft); stroke: var(--claude); stroke-width: 2; }
+  .codex-node { fill: var(--codex-soft); stroke: var(--codex); stroke-width: 2; }
+  .folder-node { fill: var(--surface); stroke: var(--line); stroke-width: 2; }
+  .world-node { fill: var(--surface); stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 3 3; }
+  .c-human { fill: var(--human); } .c-duet { fill: var(--duet); } .c-claude { fill: var(--claude); } .c-codex { fill: var(--codex); } .c-accent { fill: var(--accent); } .c-muted { fill: var(--muted); }
+  .file-chip { fill: var(--bg); stroke: var(--line); stroke-width: 1; }
+  .chip-text { font-size: 10.5px; fill: var(--ink); font-weight: 600; }
+  .packet { opacity: 0; }
+
+  .agents { display: grid; gap: 10px; margin-top: 14px; }
+  .agent { background: var(--surface); border-radius: 14px; box-shadow: var(--shadow); padding: 14px; border-top: 4px solid var(--c); }
+  .agent .role { display: inline-block; font-size: .68rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--c); background: var(--cs); padding: 2px 8px; border-radius: 999px; margin-bottom: 6px; }
+  .agent p { margin: 4px 0 0; font-size: .95rem; }
+  .a-duet { --c: var(--duet); --cs: var(--duet-soft); }
+  .a-claude { --c: var(--claude); --cs: var(--claude-soft); }
+  .a-codex { --c: var(--codex); --cs: var(--codex-soft); }
+  .a-human { --c: var(--human); --cs: var(--human-soft); }
+
+  .rules { display: grid; gap: 10px; margin-top: 12px; }
+  .rule { display: flex; gap: 12px; align-items: flex-start; background: var(--surface); border-radius: 14px; padding: 12px 14px; box-shadow: var(--shadow); }
+  .rule .num { flex: 0 0 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; color: var(--accent); background: var(--accent-soft); }
+  .rule p { margin: 2px 0 0; font-size: .95rem; }
+  .spec { border-left: 4px solid var(--accent); }
+
+  .scale-cap { font-size: 10.5px; font-weight: 700; fill: var(--ink); }
+  .seg-low { fill: var(--line); } .seg-mid { fill: var(--amber); } .seg-hi { fill: var(--human); }
+  .seg-num { font-size: 11px; font-weight: 700; fill: var(--ink); }
+  .seg-num-inv { font-size: 11px; font-weight: 700; fill: #fff; }
+  .tick { stroke: var(--ink); stroke-width: 1.5; }
+
+  .gates { list-style: none; padding: 0; margin: 14px 0 0; position: relative; }
+  .gates::before { content: ""; position: absolute; left: 21px; top: 20px; bottom: 20px; width: 3px; border-radius: 3px; background: linear-gradient(#2563eb, #7c3aed, #0e8c7f, #15803d); opacity: .55; transform-origin: top; }
+  .gate { position: relative; display: flex; gap: 12px; align-items: flex-start; margin-bottom: 10px; }
+  .gate .g { position: relative; z-index: 1; flex: 0 0 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 1.05rem; background: var(--gc); box-shadow: var(--shadow); }
+  .gate .body { flex: 1; background: var(--surface); border-radius: 14px; padding: 12px 14px; box-shadow: var(--shadow); }
+  .gate .body p { margin: 4px 0 0; font-size: .95rem; }
+  .gate:nth-child(1) { --gc: #2563eb; } .gate:nth-child(2) { --gc: #7c3aed; } .gate:nth-child(3) { --gc: #c2410c; } .gate:nth-child(4) { --gc: #0e8c7f; } .gate:nth-child(5) { --gc: #15803d; }
+  .gate.final .body { border: 2px solid var(--human); }
+
+  .context { display: flex; gap: 8px; flex-wrap: wrap; margin: 6px 0 12px; }
+  .pill { font-size: .78rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); color: var(--muted); }
+  .tl { list-style: none; margin: 0; padding: 0; position: relative; }
+  .tl::before { content: ""; position: absolute; left: 15px; top: 8px; bottom: 8px; width: 2px; background: var(--line); }
+  .tl li { position: relative; padding: 0 0 14px 44px; }
+  .tl li::before { content: ""; position: absolute; left: 8px; top: 5px; width: 16px; height: 16px; border-radius: 50%; background: var(--surface); border: 3px solid var(--tc, var(--accent)); }
+  .tl li.done::before { background: var(--human); border-color: var(--human); }
+  .tl .when { display: block; font-size: .74rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .tl .card { background: var(--surface); border-radius: 12px; padding: 10px 12px; box-shadow: var(--shadow); margin-top: 4px; font-size: .95rem; }
+  .score { display: inline-block; font-weight: 800; font-size: .8rem; padding: 1px 8px; border-radius: 6px; margin-right: 4px; }
+  .s7 { background: var(--amber-soft); color: var(--amber); }
+  .s8 { background: var(--human-soft); color: var(--human); }
+  .hours { margin-top: 6px; background: var(--surface); border-radius: 14px; padding: 12px 14px; box-shadow: var(--shadow); }
+  .bar { height: 12px; border-radius: 999px; background: var(--line); overflow: hidden; margin: 8px 0 6px; }
+  .bar i { display: block; height: 100%; width: 100%; border-radius: 999px; background: linear-gradient(90deg, #2563eb, #7c3aed, #0e8c7f, #15803d); }
+  .bar-labels { display: flex; justify-content: space-between; font-size: .75rem; color: var(--muted); font-weight: 600; }
+
+  .fixes { display: grid; gap: 10px; margin-top: 12px; }
+  .fix { background: var(--surface); border-radius: 14px; box-shadow: var(--shadow); overflow: hidden; }
+  .fix h3 { padding: 12px 14px 0; }
+  .fix .cf { display: grid; grid-template-columns: 1fr 1fr; margin-top: 8px; font-size: .9rem; }
+  .fix .cf div { padding: 8px 14px 12px; }
+  .fix .cf .c { background: var(--amber-soft); }
+  .fix .cf .f { background: var(--accent-soft); }
+  .fix .cf span { display: block; font-size: .66rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 2px; }
+  .fix .cf .c span { color: var(--amber); }
+  .fix .cf .f span { color: var(--accent); }
+
+  .results { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+  .res { background: var(--surface); border-radius: 14px; box-shadow: var(--shadow); padding: 12px; }
+  .res b { display: block; font-size: 1.6rem; line-height: 1.05; font-weight: 800; color: var(--navy); letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+  .res span { display: block; font-size: .82rem; color: var(--muted); margin-top: 4px; line-height: 1.3; }
+  .res.good b { color: var(--human); }
+  .res.wide { grid-column: 1 / -1; }
+  .log { list-style: none; padding: 0; margin: 12px 0 0; }
+  .log li { background: var(--surface); border-radius: 12px; box-shadow: var(--shadow); padding: 10px 12px; margin-bottom: 8px; font-size: .95rem; border-left: 4px solid var(--accent); }
+  .log time { display: block; font-size: .74rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+
+  .skills { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+  .skill { background: var(--surface); border-radius: 14px; box-shadow: var(--shadow); padding: 12px; }
+  .skill svg { width: 30px; height: 30px; margin-bottom: 6px; }
+  .skill p { margin: 4px 0 0; font-size: .88rem; color: var(--muted); }
+  .ico-stroke { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  .bg-list { list-style: none; padding: 0; margin: 12px 0 0; }
+  .bg-list li { position: relative; padding: 10px 12px 10px 44px; background: var(--surface); border-radius: 12px; box-shadow: var(--shadow); margin-bottom: 8px; font-size: .95rem; }
+  .bg-list li::before { content: ""; position: absolute; left: 14px; top: 13px; width: 18px; height: 18px; border-radius: 50%; background: var(--accent-soft); border: 2px solid var(--accent); }
+  .bg-list li::after { content: ""; position: absolute; left: 20px; top: 17px; width: 5px; height: 9px; border: solid var(--accent); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+
+  footer { max-width: 760px; margin: 0 auto; padding: 18px 14px 40px; font-size: .85rem; color: var(--muted); border-top: 1px solid var(--line); }
+
+  @media (min-width: 600px) {
+    .hero { padding: 44px 24px 44px; }
+    .hero h1 { font-size: 2.5rem; }
+    .stats { grid-template-columns: repeat(4, 1fr); }
+    .agents, .fixes { grid-template-columns: 1fr 1fr; }
+    .results { grid-template-columns: repeat(3, 1fr); }
+    .skills { grid-template-columns: repeat(4, 1fr); }
+    main, footer { padding-left: 20px; padding-right: 20px; }
+  }
+
+  /* ---------- Motion (only when the reader hasn't asked for less) ---------- */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero::after { animation: drift 14s ease-in-out infinite alternate; }
+    @keyframes drift { from { transform: translate(0,0); } to { transform: translate(-35%, 30%); } }
+    .dot { animation: pulse 2.2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { box-shadow: 0 0 0 3px rgba(79,209,191,.25); } 50% { box-shadow: 0 0 0 7px rgba(79,209,191,0); } }
+    .hero .kicker, .hero h1, .hero .byline, .hero .updated, .hero .stat { animation: rise .7s cubic-bezier(.2,.7,.2,1) both; }
+    .hero h1 { animation-delay: .08s; } .hero .byline { animation-delay: .16s; } .hero .updated { animation-delay: .22s; }
+    .hero .stat:nth-child(1) { animation-delay: .3s; } .hero .stat:nth-child(2) { animation-delay: .38s; } .hero .stat:nth-child(3) { animation-delay: .46s; } .hero .stat:nth-child(4) { animation-delay: .54s; }
+    @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+    /* Flowing connections in the system diagram */
+    .flow { animation: dash 1.1s linear infinite; }
+    .flow-strong { animation: dash 0.9s linear infinite; }
+    @keyframes dash { to { stroke-dashoffset: -16; } }
+    .packet { opacity: 1; }
+    .p1 { animation: p-down-1 3.2s ease-in-out infinite; }
+    .p2 { animation: p-down-2 3.2s ease-in-out infinite .4s; }
+    .p3 { animation: p-left 3.2s ease-in-out infinite .8s; }
+    .p4 { animation: p-right 3.2s ease-in-out infinite 1.2s; }
+    .p5 { animation: p-out 3.2s ease-in-out infinite 1.6s; }
+    @keyframes p-down-1 { 0% { transform: translateY(0); opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { transform: translateY(32px); opacity: 0; } }
+    @keyframes p-down-2 { 0% { transform: translateY(0); opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { transform: translateY(32px); opacity: 0; } }
+    @keyframes p-left { 0% { transform: translateY(0); opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { transform: translateY(32px); opacity: 0; } }
+    @keyframes p-right { 0% { transform: translateY(32px); opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { transform: translateY(0); opacity: 0; } }
+    @keyframes p-out { 0% { transform: translateX(0); opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { transform: translateX(18px); opacity: 0; } }
+    .approve-ring { transform-box: fill-box; transform-origin: center; animation: ring 2.4s ease-out infinite; }
+    @keyframes ring { 0% { transform: scale(1); opacity: .55; } 100% { transform: scale(1.9); opacity: 0; } }
+
+    /* Scroll reveals: only active once the script confirms it can run */
+    .anim .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0s); }
+    .anim .reveal.in { opacity: 1; transform: none; }
+    .anim .agents > *:nth-child(2), .anim .rules > *:nth-child(2), .anim .fixes > *:nth-child(2), .anim .skills > *:nth-child(2) { --d: .08s; }
+    .anim .agents > *:nth-child(3), .anim .rules > *:nth-child(3), .anim .fixes > *:nth-child(3), .anim .skills > *:nth-child(3) { --d: .16s; }
+    .anim .agents > *:nth-child(4), .anim .rules > *:nth-child(4), .anim .fixes > *:nth-child(4), .anim .skills > *:nth-child(4) { --d: .24s; }
+
+    /* Score scale fills segment by segment */
+    .anim .scale-fig .seg { transform-box: fill-box; transform-origin: bottom; transform: scaleY(0); transition: transform .45s cubic-bezier(.2,.7,.2,1); }
+    .anim .scale-fig.in .seg { transform: scaleY(1); }
+    .anim .scale-fig .seg:nth-of-type(2) { transition-delay: .05s; } .anim .scale-fig .seg:nth-of-type(3) { transition-delay: .1s; }
+    .anim .scale-fig .seg:nth-of-type(4) { transition-delay: .15s; } .anim .scale-fig .seg:nth-of-type(5) { transition-delay: .2s; }
+    .anim .scale-fig .seg:nth-of-type(6) { transition-delay: .3s; } .anim .scale-fig .seg:nth-of-type(7) { transition-delay: .35s; }
+    .anim .scale-fig .seg:nth-of-type(8) { transition-delay: .5s; } .anim .scale-fig .seg:nth-of-type(9) { transition-delay: .55s; } .anim .scale-fig .seg:nth-of-type(10) { transition-delay: .6s; }
+    .anim .scale-fig .caps { opacity: 0; transition: opacity .5s ease .75s; }
+    .anim .scale-fig.in .caps { opacity: 1; }
+
+    /* Gate rail draws down; gates pop in */
+    .anim .gates::before { transform: scaleY(0); transition: transform 1.2s ease; }
+    .anim .gates.in::before { transform: scaleY(1); }
+    .anim .gate .g { transition: transform .5s cubic-bezier(.3,1.6,.5,1); transform: scale(.6); }
+    .anim .gate.in .g { transform: scale(1); }
+
+    /* Timeline progress bar fills */
+    .anim .hours .bar i { width: 0; transition: width 1.8s cubic-bezier(.4,0,.2,1) .2s; }
+    .anim .hours.in .bar i { width: 100%; }
+    .anim .tl li.done.in::before { animation: done-pop .6s ease .2s both; }
+    @keyframes done-pop { 0% { transform: scale(.4); } 70% { transform: scale(1.25); } 100% { transform: scale(1); } }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar"><div class="topbar-in"><a class="brand" href="../">Shawn Hanna</a><nav aria-label="Main"><a href="../#work">AI work</a><a href="../resume.html">Resume</a></nav></div></div>
+
+<header class="hero">
+  <div class="hero-in">
+    <span class="kicker">Portfolio case study</span>
+    <h1>Running a job search like a product: <em>three AI agents, one human approver</em></h1>
+    <div class="byline">Shawn Hanna &middot; program manager and internal-tools product owner</div>
+        <div class="updated"><span class="dot"></span>Last updated November 25, 2026 &middot; live project, refreshed daily</div>
+    
+        <div class="stats" role="list" aria-label="Results so far">
+      <div class="stat" role="listitem"><b class="count">~60</b><span>company job boards swept in one overnight pass</span></div>
+      <div class="stat" role="listitem"><b class="count">5</b><span>requirement-by-requirement role reviews</span></div>
+      <div class="stat hl" role="listitem"><b class="count">8+8</b><span>two independent scores on the best match</span></div>
+      <div class="stat" role="listitem"><b>0</b><span>applications or messages sent by an AI</span></div>
+    </div>
+      </div>
+</header>
+
+<main id="main">
+
+<div class="tldr reveal" aria-label="Summary">
+  <h2>In short</h2>
+  <ul>
+    <li>I designed a job-search system in which three AI agents find roles, score them, and draft applications, and I approve every step that matters.</li>
+    <li>My work was the part AI can't do on its own: writing the specification, setting the rules, deciding where human judgment sits, and checking the output.</li>
+    <li>In its first day of full operation it swept about 60 company job boards, wrote 5 requirement-by-requirement reviews, and took one strong match from first sighting to a fact-checked application package in under 12 hours.</li>
+    <li>No AI submitted an application or sent a message in my name. Every claim about my career traces to a fact I approved.</li>
+  </ul>
+</div>
+
+<section>
+  <span class="eyebrow">01 &middot; The problem</span>
+  <h2>A job search is a program, not a to-do list</h2>
+  <p class="lead">Dozens of employers, postings that open and close daily, a tracker that has to stay accurate, and tailored materials that must never overstate what I've done.</p>
+  <p>AI can do a lot of that legwork. I treated the search as an internal tool I own: define the users and the rules first, then let the automation work inside them. That meant designing against two risks any hiring manager would recognize from a rollout.</p>
+  <div class="risks">
+    <div class="risk reveal"><div class="ico">!</div><p><b>Drift from the facts.</b> An eager tool will stretch a real accomplishment into one I can't defend in an interview.</p></div>
+    <div class="risk reveal" style="--d:.1s"><div class="ico">!</div><p><b>Tools colliding.</b> Several agents working at once can overwrite or contradict each other.</p></div>
+  </div>
+</section>
+
+<section>
+  <span class="eyebrow">02 &middot; The system</span>
+  <h2>Three agents, one shared folder, one approver</h2>
+  <p>Each agent has a defined job, and each writes only its own files. The only path to the outside world runs through me.</p>
+
+  <figure class="panel reveal">
+  <svg viewBox="0 0 340 500" role="img" aria-labelledby="dgTitle dgDesc">
+    <title id="dgTitle">How the system fits together</title>
+    <desc id="dgDesc">Shawn sits at the top and is the only one who submits to employers. Duet, the lead agent in the cloud, posts requests to a shared folder that holds the ReadMe, approved facts, rules and message files. Claude Code and Codex on Shawn's laptop answer in their own files in the same folder.</desc>
+    <defs>
+      <marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-muted"/></marker>
+      <marker id="ahg" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-human"/></marker>
+    </defs>
+
+    <rect class="human-node" x="10" y="10" width="190" height="78" rx="14"/>
+    <circle class="approve-ring c-human" cx="38" cy="49" r="15"/>
+    <circle cx="38" cy="49" r="15" class="c-human"/>
+    <path d="M31 49 l5 5 l10 -11" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <text class="n-tag c-human" x="62" y="32">APPROVER</text>
+    <text class="n-title" x="62" y="51">Shawn (human)</text>
+    <text class="n-sub" x="62" y="69">Rules, facts, final yes</text>
+
+    <rect class="world-node" x="226" y="22" width="104" height="54" rx="12"/>
+    <text class="n-title" x="278" y="46" text-anchor="middle">Employers</text>
+    <text class="n-sub" x="278" y="63" text-anchor="middle">outside world</text>
+    <path class="flow-strong" d="M202 49 L222 49" marker-end="url(#ahg)"/>
+    <circle class="packet p5 c-human" cx="203" cy="49" r="3.5"/>
+    <rect class="lock-bg" x="196" y="92" width="140" height="22" rx="11"/>
+    <text class="n-sub" x="266" y="107" text-anchor="middle" style="fill:var(--human);font-weight:700">Only Shawn submits</text>
+
+    <path class="flow" d="M105 90 L105 126" marker-end="url(#ah)" marker-start="url(#ah)"/>
+    <circle class="packet p1 c-duet" cx="105" cy="93" r="3.5"/>
+    <rect class="duet-node" x="10" y="128" width="320" height="70" rx="14"/>
+    <circle cx="38" cy="163" r="15" class="c-duet"/>
+    <text x="38" y="168" text-anchor="middle" style="fill:#fff;font-weight:800;font-size:13px">D</text>
+    <text class="n-tag c-duet" x="62" y="150">LEAD &#183; CLOUD</text>
+    <text class="n-title" x="62" y="169">Duet</text>
+    <text class="n-sub" x="62" y="186">Mailbox watch, sweeps, scores, drafts</text>
+
+    <path class="flow" d="M170 200 L170 232" marker-end="url(#ah)" marker-start="url(#ah)"/>
+    <circle class="packet p2 c-duet" cx="170" cy="200" r="3.5"/>
+    <rect class="folder-node" x="10" y="234" width="320" height="130" rx="14"/>
+    <path d="M26 252 h22 l5 6 h26 v20 h-53 z" class="c-accent" opacity=".9"/>
+    <text class="n-tag c-accent" x="90" y="262">SHARED FOLDER</text>
+    <text class="n-title" x="90" y="280">The single source of truth</text>
+    <rect class="file-chip" x="26" y="294" width="92" height="26" rx="8"/><text class="chip-text" x="72" y="311" text-anchor="middle">ReadMe spec</text>
+    <rect class="file-chip" x="124" y="294" width="96" height="26" rx="8"/><text class="chip-text" x="172" y="311" text-anchor="middle">Approved facts</text>
+    <rect class="file-chip" x="226" y="294" width="88" height="26" rx="8"/><text class="chip-text" x="270" y="311" text-anchor="middle">Usage rules</text>
+    <rect class="file-chip" x="26" y="326" width="120" height="26" rx="8"/><text class="chip-text" x="86" y="343" text-anchor="middle">Ask / answer files</text>
+    <rect class="file-chip" x="152" y="326" width="162" height="26" rx="8"/><text class="chip-text" x="233" y="343" text-anchor="middle">Reviews, drafts, trackers</text>
+
+    <path class="flow" d="M90 366 L90 398" marker-end="url(#ah)" marker-start="url(#ah)"/>
+    <path class="flow" d="M250 366 L250 398" marker-end="url(#ah)" marker-start="url(#ah)"/>
+    <circle class="packet p3 c-claude" cx="90" cy="366" r="3.5"/>
+    <circle class="packet p4 c-codex" cx="250" cy="366" r="3.5"/>
+    <rect class="claude-node" x="10" y="400" width="155" height="90" rx="14"/>
+    <text class="n-tag c-claude" x="24" y="422">RECORD KEEPER</text>
+    <text class="n-title" x="24" y="442">Claude Code</text>
+    <text class="n-sub" x="24" y="460">Facts, tracker,</text>
+    <text class="n-sub" x="24" y="476">Word builds, checker</text>
+    <rect class="codex-node" x="175" y="400" width="155" height="90" rx="14"/>
+    <text class="n-tag c-codex" x="189" y="422">SECOND OPINION</text>
+    <text class="n-title" x="189" y="442">Codex</text>
+    <text class="n-sub" x="189" y="460">Independent score,</text>
+    <text class="n-sub" x="189" y="476">judges drafts</text>
+  </svg>
+  <figcaption>The agents never talk directly. Every request and answer is a dated, numbered entry in a shared file, so the whole conversation is auditable.</figcaption>
+  </figure>
+
+  <div class="agents">
+    <div class="agent a-duet reveal"><span class="role">Lead</span><h3>Duet</h3><p>A Claude assistant running in the cloud. It watches the job-search mailbox, sweeps employers' own career pages, writes full reviews, drafts materials and decides what to work on next. I made it the lead when it had the most capacity.</p></div>
+    <div class="agent a-claude reveal"><span class="role">Record keeper</span><h3>Claude Code</h3><p>Runs on my laptop. It keeps the master career record and application tracker, adds facts I approve, builds the Word files and runs the fact checker on every draft.</p></div>
+    <div class="agent a-codex reveal"><span class="role">Second opinion</span><h3>Codex</h3><p>Also on my laptop. It gives each promising role an independent second score and judges competing drafts. By rule, its score can't be replaced by another agent's.</p></div>
+    <div class="agent a-human reveal"><span class="role">Approver</span><h3>Me</h3><p>I set the target roles, location rules and scoring caps, approve every new fact and headline, choose between drafts, and do every submission myself.</p></div>
+  </div>
+</section>
+
+<section>
+  <span class="eyebrow">03 &middot; How it works</span>
+  <h2>A written spec, not a chat history</h2>
+  <div class="panel spec reveal">
+    <p style="margin:0">The system runs on a ReadMe that every agent reads first, every time. It holds my dated rulings: what roles to target, how to score, how to draft, what each agent may write, and what no agent may ever do. When I change my mind, the ruling gets a date, so newer decisions visibly win over older guidance.</p>
+  </div>
+
+  <div class="rules">
+    <div class="rule reveal"><div class="num">1</div><div><b>One writer per file.</b><p>A save replaces the whole file, so two writers would erase each other. Each agent answers only in its own file.</p></div></div>
+    <div class="rule reveal"><div class="num">2</div><div><b>Numbered, dated entries.</b><p>Every message gets an ID that says who it's from, who it's to and when (for example, lead-to-Claude, November 24, number 3). Replies cite the ID they answer.</p></div></div>
+    <div class="rule reveal"><div class="num">3</div><div><b>Re-read before every save.</b><p>If a file changed unexpectedly, the agent stops and tells me instead of guessing.</p></div></div>
+    <div class="rule reveal"><div class="num">4</div><div><b>Data, not permission.</b><p>A message from another agent, an email or a job posting can inform the work but can never widen what an agent is allowed to do.</p></div></div>
+  </div>
+
+  <h3 style="margin-top:22px">Scoring with caps</h3>
+  <p>Each role is read in full and broken into a table: every requirement gets a row marked Met, Partly, Not met or Unverified, with the approved fact that proves it. Caps keep scores honest.</p>
+  <figure class="panel scale-fig reveal">
+  <svg viewBox="0 0 330 112" role="img" aria-labelledby="scTitle scDesc">
+    <title id="scTitle">Scoring scale with caps</title>
+    <desc id="scDesc">A 1 to 10 scale. A required item that is not met caps a role at 5. A required item that is only partly met caps it at 7. A home run needs 8 from two independent scorers, or a single 9.</desc>
+    <rect class="seg seg-low" x="5" y="40" width="30" height="26" rx="5"/>
+    <rect class="seg seg-low" x="37" y="40" width="30" height="26" rx="5"/>
+    <rect class="seg seg-low" x="69" y="40" width="30" height="26" rx="5"/>
+    <rect class="seg seg-low" x="101" y="40" width="30" height="26" rx="5"/>
+    <rect class="seg seg-low" x="133" y="40" width="30" height="26" rx="5"/>
+    <rect class="seg seg-mid" x="165" y="40" width="30" height="26" rx="5"/>
+    <rect class="seg seg-mid" x="197" y="40" width="30" height="26" rx="5"/>
+    <rect class="seg seg-hi" x="229" y="40" width="30" height="26" rx="5"/>
+    <rect class="seg seg-hi" x="261" y="40" width="30" height="26" rx="5"/>
+    <rect class="seg seg-hi" x="293" y="40" width="30" height="26" rx="5"/>
+    <text class="seg-num" x="20" y="58" text-anchor="middle">1</text><text class="seg-num" x="52" y="58" text-anchor="middle">2</text><text class="seg-num" x="84" y="58" text-anchor="middle">3</text><text class="seg-num" x="116" y="58" text-anchor="middle">4</text><text class="seg-num" x="148" y="58" text-anchor="middle">5</text>
+    <text class="seg-num-inv" x="180" y="58" text-anchor="middle">6</text><text class="seg-num-inv" x="212" y="58" text-anchor="middle">7</text><text class="seg-num-inv" x="244" y="58" text-anchor="middle">8</text><text class="seg-num-inv" x="276" y="58" text-anchor="middle">9</text><text class="seg-num-inv" x="308" y="58" text-anchor="middle">10</text>
+    <g class="caps">
+      <line class="tick" x1="148" y1="30" x2="148" y2="38"/><text class="scale-cap" x="148" y="24" text-anchor="middle">Not met: max 5</text>
+      <line class="tick" x1="212" y1="68" x2="212" y2="76"/><text class="scale-cap" x="212" y="90" text-anchor="middle">Partly met: max 7</text>
+      <line class="tick" x1="276" y1="30" x2="276" y2="38"/><text class="scale-cap" x="276" y="24" text-anchor="middle" style="fill:var(--human)">Home run: 8 + 8</text>
+      <text class="n-sub" x="165" y="108" text-anchor="middle">Location is checked first; "build from scratch" language is flagged.</text>
+    </g>
+  </svg>
+  </figure>
+  <p class="muted" style="font-size:.92rem">Why flag "build from scratch"? Because I do my best work improving systems that already exist.</p>
+</section>
+
+<section>
+  <span class="eyebrow">04 &middot; Quality control</span>
+  <h2>Five gates between an AI and my name</h2>
+  <ol class="gates reveal">
+    <li class="gate reveal"><div class="g">1</div><div class="body"><h3>Facts only</h3><p>Every claim about my career comes from a library of 530+ facts I approved one by one. A gap stays a gap: an agent may not stretch a fact to cover it. When a role needs evidence that isn't in the library, the agent asks me, and nothing becomes a fact until I approve it.</p></div></li>
+    <li class="gate reveal"><div class="g">2</div><div class="body"><h3>Two independent scores</h3><p>A role counts as a "home run" only with an 8 from Codex plus an 8 from Claude or Duet, or a single 9. Scores are findings for me to rule on, not verdicts.</p></div></li>
+    <li class="gate reveal"><div class="g">3</div><div class="body"><h3>Competing drafts, judged by a third agent</h3><p>For the strongest role, Duet and Claude each built a resume without seeing the other's, and Codex compared them against the posting and the fact library.</p></div></li>
+    <li class="gate reveal"><div class="g">4</div><div class="body"><h3>Automated tag check</h3><p>Every line of a draft carries hidden tags naming the facts it rests on. A checker confirms each tag points to an approved fact before I see the draft.</p></div></li>
+    <li class="gate final reveal"><div class="g">5</div><div class="body"><h3>Human approval</h3><p>Nothing is submitted, sent or posted by an agent. I approve each headline, each new fact and each final document, and I submit applications myself.</p></div></li>
+  </ol>
+</section>
+
+<section>
+  <span class="eyebrow">05 &middot; One role, end to end</span>
+  <h2>From first sighting to a checked application in under 12 hours</h2>
+  <div class="context">
+    <span class="pill">People operations</span><span class="pill">Bay Area tech company</span><span class="pill">Posted the same day</span>
+  </div>
+  <p class="muted" style="font-size:.9rem;margin-top:0">Employer withheld while the application is in progress.</p>
+  <ol class="tl">
+    <li class="reveal" style="--tc: var(--duet)"><span class="when">Evening, day 1</span><div class="card"><span class="score s7">7/10</span>Duet's overnight sweep finds the posting on the employer's own job board and writes a full requirement review, held back by one partly met requirement.</div></li>
+    <li class="reveal" style="--tc: var(--codex)"><span class="when">Same evening</span><div class="card"><span class="score s7">7/10</span>Duet sends it to Claude and Codex. Each checks its own tracker to confirm the role is genuinely new, and Codex scores it 7, naming a different gap.</div></li>
+    <li class="reveal" style="--tc: var(--human)"><span class="when">Same evening</span><div class="card"><span class="score s8">8 + 8</span>I answer the agents' questions. I approve seven new facts about work I'd done but never written down. Both agents re-score: a home run.</div></li>
+    <li class="reveal" style="--tc: var(--codex)"><span class="when">Late evening</span><div class="card">I ask for two independent resumes. Codex recommends Duet's and catches one line that stretched a fact further than its wording supports. The line is narrowed.</div></li>
+    <li class="reveal" style="--tc: var(--human)"><span class="when">Early morning, day 2</span><div class="card">I correct one line in my own words; that correction becomes approved fact number eight.</div></li>
+    <li class="done reveal"><span class="when">Morning, day 2</span><div class="card">Claude's checker passes both documents (107 approved facts cited in the resume, 41 in the letter) and finds layout issues in the PDFs, which are fixed. Resume and letter sit in Word, PDF and plain text, ready for my review.</div></li>
+  </ol>
+  <div class="hours reveal">
+    <b>Elapsed: under 12 hours</b>
+    <div class="bar"><i></i></div>
+    <div class="bar-labels"><span>Found</span><span>Scored</span><span>Drafted</span><span>Checked</span></div>
+  </div>
+</section>
+
+<section>
+  <span class="eyebrow">06 &middot; Lessons</span>
+  <h2>What the gates caught, and what changed</h2>
+  <p>The point of quality gates is that they catch things. These are the real catches so far.</p>
+  <div class="fixes">
+    <div class="fix reveal"><h3>A resume line overreached</h3><div class="cf"><div class="c"><span>Caught</span>One line applied a job title to more work than the approved fact covered.</div><div class="f"><span>Fixed</span>The judging agent flagged it; the line now says exactly what the fact says.</div></div></div>
+    <div class="fix reveal"><h3>Notes broke the checker</h3><div class="cf"><div class="c"><span>Caught</span>An agent put explanatory notes inside fact tags, and the checker read them as unknown facts.</div><div class="f"><span>Fixed</span>The convention is now written down: tags hold fact IDs only; notes go elsewhere.</div></div></div>
+    <div class="fix reveal"><h3>Formatting drifted between file types</h3><div class="cf"><div class="c"><span>Caught</span>The cloud agent couldn't upload large files, so it built small PDFs in a different font. The record keeper found missing bold and two wrapped date lines.</div><div class="f"><span>Fixed</span>I ruled on the font; the agent fixed the rest.</div></div></div>
+    <div class="fix reveal"><h3>Clocks disagreed</h3><div class="cf"><div class="c"><span>Caught</span>The cloud agent's timestamps ran ahead of my laptop's.</div><div class="f"><span>Fixed</span>The rule now: take times from my messages or the file's saved time.</div></div></div>
+  </div>
+</section>
+
+<section>
+  <span class="eyebrow">07 &middot; Results to date</span>
+  <h2>Where things stand</h2>
+    <div class="results">
+    <div class="res reveal"><b class="count">3</b><span>neighborhoods swept in the planned search area</span></div>
+    <div class="res reveal"><b class="count">~60</b><span>employer job boards checked (healthcare skipped by rule)</span></div>
+    <div class="res reveal"><b class="count">5</b><span>full requirement reviews</span></div>
+    <div class="res reveal"><b class="count">3</b><span>roles scored 7+ and sent for a second score</span></div>
+    <div class="res good reveal"><b class="count">1</b><span>home run, application package ready for my review</span></div>
+    <div class="res reveal"><b class="count">1</b><span>role dropped after a second look (posting closed; second score 6)</span></div>
+    <div class="res reveal"><b class="count">8</b><span>new career facts approved by me</span></div>
+    <div class="res reveal"><b class="count">42</b><span>logged messages between agents</span></div>
+    <div class="res good reveal"><b>Pass</b><span>fact check on final drafts, every claim tied to an approved fact</span></div>
+    <div class="res good wide reveal"><b>0</b><span>applications or messages sent by an AI</span></div>
+  </div>
+  
+  <h3 style="margin-top:20px">Progress log</h3>
+    <ul class="log">
+    <li class="reveal"><time datetime="2026-11-25">November 25, 2026</time>Overnight sweeps of three San Francisco neighborhoods. First home-run role taken from first sighting to a fact-checked resume and cover letter in under 12 hours. Two competing resumes judged; one overreach caught and fixed.</li>
+    <li class="reveal"><time datetime="2026-11-24">November 24, 2026</time>Shared folder and ReadMe set up. Message channel tested with each laptop agent. I made the cloud agent the lead and widened the search area.</li>
+  </ul>
+  </section>
+
+<section>
+  <span class="eyebrow">08 &middot; What this shows</span>
+  <h2>How I work</h2>
+  <div class="skills">
+    <div class="skill reveal">
+      <svg viewBox="0 0 30 30" aria-hidden="true"><rect class="ico-stroke" x="6" y="3" width="18" height="24" rx="3"/><path class="ico-stroke" d="M10 10h10M10 15h10M10 20h6"/></svg>
+      <h3>Specification</h3><p>I turned an open-ended goal into written rules precise enough for three different agents to follow the same way.</p>
+    </div>
+    <div class="skill reveal">
+      <svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ico-stroke" cx="15" cy="7" r="4"/><circle class="ico-stroke" cx="7" cy="23" r="4"/><circle class="ico-stroke" cx="23" cy="23" r="4"/><path class="ico-stroke" d="M13 10.5l-4 9M17 10.5l4 9M11 23h8"/></svg>
+      <h3>Orchestration</h3><p>I split the work by each tool's strengths and capacity, and moved the lead role when the capacity changed.</p>
+    </div>
+    <div class="skill reveal">
+      <svg viewBox="0 0 30 30" aria-hidden="true"><path class="ico-stroke" d="M15 3l10 4v7c0 6-4.5 10.5-10 13C9.5 24.5 5 20 5 14V7z"/><path class="ico-stroke" d="M10.5 15l3 3 6-6"/></svg>
+      <h3>Governance</h3><p>I decided up front where human judgment sits: facts, headlines, final documents and every submission.</p>
+    </div>
+    <div class="skill reveal">
+      <svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ico-stroke" cx="13" cy="13" r="8"/><path class="ico-stroke" d="M19 19l7 7M9.5 13l2.5 2.5 4.5-4.5"/></svg>
+      <h3>Quality control</h3><p>Independent scoring, competing drafts, automated checks and a written fix for every failure, the same habits I used owning internal tools.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <span class="eyebrow">09 &middot; Background</span>
+  <h2>The experience behind it</h2>
+  <ul class="bg-list">
+    <li class="reveal">25+ years of career experience at Bank of America and Wells Fargo, including 17+ years of program management and 11+ years as a product owner of internal tools.</li>
+    <li class="reveal">At Wells Fargo, scaled an analyst tracking tool from 20 to 1,700+ users and raised its adoption from 24% to 89% using Design Thinking.</li>
+    <li class="reveal">At Wells Fargo, facilitated 100+ sessions of the Chief Learning Officer's weekly priorities meeting, covering 1,000+ learning programs.</li>
+    <li class="reveal">Since spring 2026, I have directed AI coding agents in the terminal, including directing Claude and Codex to build custom AI skills: I define the workflow, supply the context and constraints, and review the results.</li>
+    <li class="reveal">I created a two-AI process in which Claude reviews Codex's work and Codex reviews Claude's. In September 2026 an outside open-source project merged all three pull requests I directed the two AIs to find, fix and cross-check, with no changes requested.</li>
+  </ul>
+</section>
+
+</main>
+
+<footer>
+  <p>This page describes a live project and is refreshed daily. Employer names for roles in progress, and the names of people involved, are withheld on purpose.</p>
+  <p>More of my work: <a href="../">sghanna.github.io/ai</a></p>
+</footer>
+
+<script>
+(function () {
+  var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  if ((mq && mq.matches) || !('IntersectionObserver' in window) || !window.requestAnimationFrame) return;
+  document.documentElement.classList.add('anim');
+
+  function countUp(el) {
+    var text = el.textContent;
+    if (!/\d/.test(text)) return;
+    var start = null, dur = 1200;
+    function frame(ts) {
+      if (start === null) start = ts;
+      var p = Math.min((ts - start) / dur, 1), e = 1 - Math.pow(1 - p, 3);
+      el.textContent = text.replace(/\d+/g, function (m) { return String(Math.round(Number(m) * e)); });
+      if (p < 1) requestAnimationFrame(frame); else el.textContent = text;
+    }
+    requestAnimationFrame(frame);
+  }
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      en.target.classList.add('in');
+      io.unobserve(en.target);
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -5% 0px' });
+  document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+
+  var counter = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      countUp(en.target);
+      counter.unobserve(en.target);
+    });
+  }, { threshold: 0.6 });
+  document.querySelectorAll('.count').forEach(function (el) { counter.observe(el); });
+})();
+</script>
+</body>
+</html>
