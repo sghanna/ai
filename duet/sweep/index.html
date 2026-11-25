@@ -428,7 +428,7 @@ html.w375 .filters{margin:0 -16px 12px}
   "sweep": {
     "date": "2026-11-25",
     "dateLabel": "Nov 25, 2026",
-    "window": "about 7:40 to 8:30 AM Pacific",
+    "window": "about 7:40 to 11:30 AM Pacific",
     "previous": "Nov 24",
     "next": null
   },
@@ -455,7 +455,11 @@ html.w375 .filters{margin:0 -16px 12px}
     {"id": "redwood", "name": "Redwood City", "region": "Peninsula", "companies": 5, "jobs": null, "jobsLabel": "—", "status": "scouted", "note": "Added to the area Nov 25; job totals not counted yet"},
     {"id": "oakland", "name": "Downtown Oakland", "region": "East Bay", "companies": 6, "jobs": null, "jobsLabel": "—", "status": "scouted", "note": "Added to the area Nov 25; job totals not counted yet"},
     {"id": "portola", "name": "Portola", "region": "San Francisco", "companies": 1, "jobs": 0, "jobsLabel": "0", "status": "swept", "note": "No open roles"},
-    {"id": "twinpeaks", "name": "Twin Peaks / Noe", "region": "San Francisco", "companies": 0, "jobs": 0, "jobsLabel": "0", "status": "swept", "note": "No office employers"}
+    {"id": "twinpeaks", "name": "Twin Peaks / Noe", "region": "San Francisco", "companies": 0, "jobs": 0, "jobsLabel": "0", "status": "swept", "note": "No office employers"},
+    {"id": "glenpark", "name": "Glen Park", "region": "San Francisco", "companies": 0, "jobs": 0, "jobsLabel": "0", "status": "swept", "note": "No office employers"},
+    {"id": "presidio", "name": "The Presidio", "region": "San Francisco", "companies": 10, "jobs": 16, "jobsLabel": "~16", "status": "swept", "note": "Lucasfilm and ILM show no SF roles today"},
+    {"id": "belmont", "name": "Belmont", "region": "Peninsula", "companies": 2, "jobs": 11, "jobsLabel": "11", "status": "swept", "note": "RingCentral HQ; about 55–70 min, at the edge of the limit"},
+    {"id": "sancarlos", "name": "San Carlos", "region": "Peninsula", "companies": 3, "jobs": 0, "jobsLabel": "0", "status": "swept", "note": "Mostly biotech, skipped; no confirmed San Carlos roles"}
   ],
   "roles": [
     {"place": "potrero", "lane": "ta", "company": "Samsara", "title": "Sr. Manager, Recruiting Operations", "where": "Remote US", "pay": "$122–218K", "note": "", "status": "open", "url": "https://www.samsara.com/company/careers/roles/8353408"},
@@ -514,6 +518,8 @@ html.w375 .filters{margin:0 -16px 12px}
     {"place": "sanmateo", "lane": "hr", "company": "Freshworks", "title": "Senior Director, People Analytics and Workforce Planning", "where": "San Mateo hybrid, Tue–Thu", "pay": "$250.8–309.8K", "note": "Analytics and AI adoption in HR", "status": "new", "url": "https://jobs.smartrecruiters.com/Freshworks/744000162313207-senior-director-people-analytics-and-workforce-planning"},
 
     {"place": "redwood", "lane": "pm", "company": "Equinix", "title": "Senior Platform Product Manager, Core HCM", "where": "Redwood City hybrid", "pay": "$163–245K", "note": "", "status": "new", "url": "https://careers.equinix.com/jobs/senior-platform-product-manager-core-hcm-redwood-city-california-united-states-dallas-texas-toronto-ontario-canada"},
+    {"place": "belmont", "lane": "ai", "company": "RingCentral", "title": "Principal, AI Automation & HR Transformation", "where": "Belmont", "pay": "$168.9–206K", "note": "Builds AI agents and automation for People Ops", "status": "new", "url": "https://ringcentral.wd1.myworkdayjobs.com/en-US/RingCentral_Careers/job/Belmont-California/Principal--AI-Automation---HR-Transformation_R078819"},
+    {"place": "belmont", "lane": "hr", "company": "RingCentral", "title": "HCM Program Manager", "where": "Belmont", "pay": "$122–148.8K", "note": "HCM module rollouts and go-lives", "status": "new", "url": "https://ringcentral.wd1.myworkdayjobs.com/en-US/RingCentral_Careers/job/Belmont-California/HCM-Program-Manager_R078794"},
 
     {"place": "oakland", "lane": "ld", "company": "Marqeta", "title": "People Development Senior Manager", "where": "Oakland or remote US", "pay": "$176.8–221K", "note": "", "status": "new", "url": "https://job-boards.greenhouse.io/mqreferrals/jobs/7816193"},
     {"place": "oakland", "lane": "ld", "company": "Marqeta", "title": "Leadership Development and Talent Management Senior Manager", "where": "See posting", "pay": "$170.3–212.9K", "note": "", "status": "new", "url": "https://job-boards.greenhouse.io/mqreferrals/jobs/7118261"},
@@ -557,13 +563,13 @@ html.w375 .filters{margin:0 -16px 12px}
     {"names": "Harvey, Amplitude, Patreon, CoreWeave, Zendesk", "count": 5, "why": "Roles read, but job totals couldn't be counted"}
   ],
   "method": [
-    "<b>When:</b> one pass on Nov 25, 2026, about 7:40 to 8:30 AM Pacific. Changes are compared with the Nov 24 sweep.",
+    "<b>When:</b> Nov 25, 2026, about 7:40 to 8:30 AM Pacific, with four more places swept from about 10:45 to 11:30 AM. Changes are compared with the Nov 24 sweep.",
     "<b>What counts as a job:</b> open roles that list that place's office (San Francisco for SF neighborhoods, the town for the Peninsula). Remote-only roles aren't in the jobs column. Big boards cut off when read, so most job totals are approximate.",
     "<b>What counts as in-lane:</b> AI enablement, learning and development, people technology and HR systems, recruiting and talent operations, and product or program roles for internal people tools. Recruiters, HR business partners, comp, benefits, payroll, generalists, sales enablement and engineering roles are left out.",
     "<b>Home runs:</b> roles rated a top fit when I checked each posting's requirements against my own record. The ratings themselves stay private.",
     "<b>Confirmed open:</b> each in-lane role was checked on the employer's own careers page or job board that morning. A company with offices in two places is counted once. In-lane roles can be in that place or remote in the US.",
     "<b>Skipped on purpose:</b> hospitals, health systems, biotech, pharma, medical devices and health software.",
-    "<b>Oakland and Redwood City</b> were scouted and added to the area on Nov 25; their job totals haven't been counted yet. Menlo Park, Foster City and Pleasanton/Dublin were looked at and left out as too far.",
+    "<b>Oakland and Redwood City</b> were scouted and added to the area on Nov 25; their job totals haven't been counted yet. <b>Glen Park, the Presidio, Belmont and San Carlos</b> were swept later that morning. Belmont's RingCentral office is about a 25-minute walk from the Caltrain stop, so it sits right at my 60-minute commute limit. Menlo Park, Foster City and Pleasanton/Dublin were looked at and left out as too far.",
     "<b>How:</b> public job boards and careers pages only, read by an AI agent with web fetches, search and a cloud browser. No sign-ins, no LinkedIn, no contact with anyone, and no applications made by AI.",
     "<b>Estimates:</b> commute times used to pick places are rough door-to-door transit estimates, not checked against live schedules."
   ]
@@ -672,11 +678,12 @@ html.w375 .filters{margin:0 -16px 12px}
   var map = $("map"), NS = "http://www.w3.org/2000/svg";
   var P = {
     fidi: [196, 74], soma: [134, 120], missionbay: [218, 142], dogpatch: [222, 216], potrero: [144, 200], mission: [64, 168], twinpeaks: [30, 124], portola: [100, 262],
-    brisbane: [224, 294], ssf: [206, 338], sanbruno: [186, 378], millbrae: [186, 416], burlingame: [206, 452], sanmateo: [234, 486], redwood: [288, 540],
+    brisbane: [224, 294], ssf: [206, 338], sanbruno: [186, 378], millbrae: [186, 416], burlingame: [206, 452], sanmateo: [228, 474], belmont: [250, 498], sancarlos: [268, 518], redwood: [288, 540],
+    glenpark: [56, 230], presidio: [34, 78],
     oakland: [318, 104]
   };
-  var labelSide = { fidi:"l", soma:"l", missionbay:"r", dogpatch:"r", potrero:"l", mission:"b", twinpeaks:"bs", portola:"r", brisbane:"r", ssf:"l", sanbruno:"l", millbrae:"l", burlingame:"l", sanmateo:"l", redwood:"l", oakland:"b" };
-  var shortName = { ssf: "South SF", twinpeaks: "Twin Peaks", oakland: "Oakland" };
+  var labelSide = { fidi:"l", soma:"l", missionbay:"r", dogpatch:"r", potrero:"l", mission:"r", twinpeaks:"bs", portola:"r", brisbane:"r", ssf:"l", sanbruno:"l", millbrae:"l", burlingame:"l", sanmateo:"l", redwood:"l", oakland:"b", belmont:"l", sancarlos:"l", glenpark:"b", presidio:"r" };
+  var shortName = { ssf: "South SF", twinpeaks: "Twin Peaks", oakland: "Oakland", presidio: "Presidio" };
   var svg = '<defs>' +
     '<linearGradient id="waterG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38bdf8" stop-opacity=".22"/><stop offset="1" stop-color="#6366f1" stop-opacity=".16"/></linearGradient>' +
     '<filter id="glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>' +
@@ -692,8 +699,8 @@ html.w375 .filters{margin:0 -16px 12px}
     '<text class="area" x="352" y="40" text-anchor="end">East Bay</text>' +
     '<text class="area" x="264" y="258" style="letter-spacing:.3em">Bay</text>';
   function line(pts){ return "M" + pts.map(function(k){ return P[k].join(" "); }).join(" L"); }
-  svg += '<path class="rail ct draw" d="' + line(["missionbay","dogpatch","brisbane","ssf","sanbruno","millbrae","burlingame","sanmateo","redwood"]) + '"/>';
-  svg += '<path class="rail bart draw" d="M' + P.mission.join(" ") + ' L' + P.soma.join(" ") + ' L' + P.fidi.join(" ") + ' C230 70 270 84 ' + P.oakland.join(" ") + '"/>';
+  svg += '<path class="rail ct draw" d="' + line(["missionbay","dogpatch","brisbane","ssf","sanbruno","millbrae","burlingame","sanmateo","belmont","sancarlos","redwood"]) + '"/>';
+  svg += '<path class="rail bart draw" d="M' + P.glenpark.join(" ") + ' L' + P.mission.join(" ") + ' L' + P.soma.join(" ") + ' L' + P.fidi.join(" ") + ' C230 70 270 84 ' + P.oakland.join(" ") + '"/>';
   svg += '<path class="rail" d="M' + P.twinpeaks.join(" ") + ' L' + P.mission.join(" ") + '" stroke="var(--faint)" stroke-width="1.5" stroke-dasharray="3 4" fill="none"/>';
   svg += '<path class="rail" d="M' + P.portola.join(" ") + ' L' + P.potrero.join(" ") + '" stroke="var(--faint)" stroke-width="1.5" stroke-dasharray="3 4" fill="none"/>';
   var nodesSvg = "", labelsSvg = "";
