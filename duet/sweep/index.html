@@ -466,7 +466,7 @@ html.w375 .filters{margin:0 -16px 12px}
     {"place": "potrero", "lane": "ai", "company": "Forbes", "title": "Director, Enterprise AI Operations", "where": "Remote US", "pay": "$180–195K", "note": "", "status": "open", "url": "https://job-boards.greenhouse.io/forbes/jobs/6099433004"},
     {"place": "potrero", "lane": "ld", "company": "Google", "title": "Program Manager II, Learning and Technology Lead, Data Centers", "where": "SF and other cities", "pay": "$132–189K", "note": "LMS and learning tech for data-center teams", "status": "new", "url": "https://google.com/about/careers/applications/jobs/results/126646615808058054-program-manager-ii"},
 
-    {"place": "dogpatch", "lane": "hr", "company": "Gusto", "title": "People, Insights and Operations", "where": "SF hybrid", "pay": "$155–191K", "note": "", "status": "new", "homerun": true, "url": "https://job-boards.greenhouse.io/gusto/jobs/8351963"},
+    {"place": "dogpatch", "lane": "hr", "company": "Gusto", "title": "People, Insights and Operations", "where": "SF hybrid", "pay": "$155–191K", "note": "", "status": "new", "applied": true, "homerun": true, "url": "https://job-boards.greenhouse.io/gusto/jobs/8351963"},
     {"place": "dogpatch", "lane": "ta", "company": "Gusto", "title": "Recruiting Operations and Transformation Lead", "where": "Denver, NY or SF hybrid", "pay": "SF $173–225K", "note": "", "status": "open", "url": "https://job-boards.greenhouse.io/gusto/jobs/8209666"},
     {"place": "dogpatch", "lane": "ld", "company": "Gusto", "title": "Talent Development Leader, Foundational Talent Products", "where": "Denver or SF hybrid", "pay": "SF $142–175K", "note": "", "status": "open", "url": "https://job-boards.greenhouse.io/gusto/jobs/8231833"},
     {"place": "dogpatch", "lane": "hr", "company": "Gusto", "title": "People Tech Business Systems Analyst", "where": "Denver, NY or SF hybrid", "pay": "SF $130–160K", "note": "", "status": "open", "applied": true, "homerun": true, "url": "https://job-boards.greenhouse.io/gusto/jobs/8257482"},
@@ -527,6 +527,7 @@ html.w375 .filters{margin:0 -16px 12px}
     {"place": "oakland", "lane": "ld", "company": "PG&E", "title": "Expert Leadership Development Business Specialist", "where": "Oakland hybrid", "pay": "$118–188K", "note": "", "status": "new", "url": "https://jobs.pge.com/job/oakland/expert-leadership-development-business-specialist/29673/82106809040"}
   ],
   "applied": [
+    {"company": "Gusto", "title": "People, Insights and Operations", "place": "dogpatch", "onPage": true},
     {"company": "Gusto", "title": "People Tech Business Systems Analyst", "place": "dogpatch", "onPage": true},
     {"company": "Astranis", "title": "AI Enablement & L&D Partner", "place": "dogpatch", "onPage": true},
     {"company": "Lambda", "title": "Internal Tools & Data Product Analyst", "place": "dogpatch", "onPage": false},
@@ -910,7 +911,7 @@ html.w375 .filters{margin:0 -16px 12px}
   $("unList").innerHTML = D.unconfirmed.map(function(u){ return wi("", esc(u.company) + " · " + esc(u.title), esc(u.why), '<span class="pill warn" style="padding:3px 7px">?</span>'); }).join("");
   $("apN").textContent = T.applied;
   $("apList").innerHTML = D.applied.map(function(a){
-    var role = a.onPage ? D.roles.filter(function(r){ return r.applied && r.company === a.company; })[0] : null;
+    var role = a.onPage ? D.roles.filter(function(r){ return r.applied && r.company === a.company && r.title === a.title; })[0] : null;
     var t = esc(a.company) + " · " + (role && role.url ? '<a href="' + esc(role.url) + '" target="_blank" rel="noopener noreferrer">' + esc(a.title) + ' ↗</a>' : esc(a.title));
     var s = a.onPage ? "Still open · " + esc(placeById[a.place].name) : (a.place ? esc(placeById[a.place].name) + " · not in this sweep's in-lane list" : "Not part of this sweep");
     return wi("", t, s, '<span class="pill applied" style="padding:3px 7px">✓</span>');
