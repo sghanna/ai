@@ -14,11 +14,11 @@
 
 Commercial mobile card games are fundamentally hostile to low-vision seniors. They pack screens with aggressive full-screen video ads, deceptive close buttons, tiny corner indices designed for 20/20 vision, and cluttered toolbars that cause accidental touches.
 
-When my 78-year-old mother—who has vision in only one eye with floaters—struggled with commercial solitaire apps, I led the end-to-end design and delivery of **Agy-Solitaire**: an ad-free, high-legibility Klondike Solitaire web app designed around her specific sensory, motor, and cultural needs.
+When my 78-year-old mother—who has vision in only one eye with floaters—struggled with commercial solitaire apps, I led the end-to-end design and delivery of **Agy-Solitaire**: an ad-free, high-legibility Klondike Solitaire web app designed around her specific sensory and motor needs.
 
 Watching her play the first card game I built for her, I saw her struggle to tap and hold a card on the screen, and her finger drifted while she held it. Watching her play is how I refined the design and game play.
 
-By serving as Product Owner and directing an ensemble of AI coding agents, I established strict design constraints, caught critical accessibility bugs that automated tools and naive AI defaults overlooked, and refined the product from initial card typography through to cultural theming, spatial UI ergonomics, and error-prevention architecture.
+By serving as Product Owner and directing an ensemble of AI coding agents, I established strict design constraints, caught critical accessibility bugs that automated tools and naive AI defaults overlooked, and refined the product from initial card typography through to card-back design, spatial UI ergonomics, and error-prevention architecture.
 
 ---
 
@@ -30,7 +30,6 @@ By serving as Product Owner and directing an ensemble of AI coding agents, I est
 | **Mobile Portrait Form Factor** | iPhone 16e (390pt width), held upright one-handed. | 7 Klondike tableau columns must span 390px, capping card widths at ~50px. Sizing has to be checked at true device width. |
 | **Stacked Card Exposure** | In cascading tableau stacks, only the top strip of covered cards is visible. | The top peek strip must show rank, suit, and color clearly. |
 | **Motor Imprecision & Tap Latency** | Slower tap cadence, trouble tapping and holding a card, finger drift while holding a card. | 44px+ minimum hitboxes, 650ms double-tap window, two-tap manual or single-tap auto-move, and strict isolation of destructive controls. |
-| **Cultural Resonance** | Hong Kong / Cantonese heritage. | Playing card symbology must be culturally authentic, avoiding inappropriate traditional motifs while celebrating auspicious heritage. |
 
 ---
 
@@ -52,10 +51,10 @@ AI coding models default to "textbook" design patterns that can miss real-world 
 - **The Human Insight**: In Didone-style serif typography, the Queen's distinguishing feature is its downward diagonal tail. At a 28px vertical cascade, the overlapping card beneath covered the tail, causing the Queen (`Q`) to read identically to an `O` for someone with floaters.
 - **The Design Override**: Adjusted the vertical cascade step to a minimum of **32px**, which keeps the Queen's tail visible across all 7 tableau columns.
 
-### C. Cultural Authenticity vs. Presumed Symbology (The Imperial Dragon Pivot)
+### C. The Card Back (The Imperial Dragon Pivot)
 - **The AI Default**: Reused the Double Happiness (`囍`) Chinese character as a lucky card back.
-- **The Human Insight**: When testing with native Cantonese speakers, my Chinese wife flagged that Double Happiness is exclusively a wedding/marriage motif in Hong Kong tradition and is incongruous on playing cards.
-- **The Design Override**: I halted production and opened a design exploration of 6 traditional Hong Kong card motifs (Dragon, Phoenix, Bat/Prosperity, Shou/Longevity, Coin/Wealth, Endless Knot). I selected the **Imperial Golden Dragon (金龍)**—the ultimate symbol of luck and strength. I then directed scaling the medallion to an **85% card-back seal (Option D2)** with 36 sunburst notches and a central flaming ruby pearl, and unified this motif across the card backs, victory screens, confirmation dialogs, and floating sky lanterns.
+- **The Human Insight**: My wife flagged that Double Happiness is a wedding motif and out of place on playing cards.
+- **The Design Override**: I halted production and opened a design exploration of 6 other card-back motifs (Dragon, Phoenix, Bat/Prosperity, Shou/Longevity, Coin/Wealth, Endless Knot). I selected the **Imperial Golden Dragon (金龍)**—a symbol of luck and strength. I then directed scaling the medallion to an **85% card-back seal (Option D2)** with 36 sunburst notches and a central flaming ruby pearl, and unified this motif across the card backs, victory screens, confirmation dialogs, and floating sky lanterns.
 
 ### D. Cognitive De-cluttering & Telemetry Separation (Top vs. Bottom HUD)
 - **The AI Default**: Clustered Sound, Moves, Score, Timer, and Game Controls into one dense top navigation bar.
@@ -67,7 +66,7 @@ AI coding models default to "textbook" design patterns that can miss real-world 
 
 ### E. Bespoke Vector Craftsmanship vs. System Emojis
 - **The AI Default**: Used standard Unicode emojis (`🎯`, `🃏`, `📦`, `💡`, `🔊`) in instructions and menus.
-- **The Human Insight**: System emojis render with cartoonish inconsistency across iOS, Android, and desktop, breaking the game's vintage Hong Kong aesthetic.
+- **The Human Insight**: System emojis render with cartoonish inconsistency across iOS, Android, and desktop, clashing with the game's vintage look.
 - **The Design Override**: Designed bespoke inline vector SVGs matching the game's exact palette (imperial gold filigree, ruby jewels, high-contrast Didone linework) for the How to Play guide:
   - *Goal*: Crowned Foundation Ace with gold rim and jewel.
   - *Moving Cards*: Cascading alternating Red 8 & Gold 7 with cascade arc.
@@ -82,7 +81,7 @@ AI coding models default to "textbook" design patterns that can miss real-world 
 - **The Problem**: For a monocular player with vitreal floaters, static notifications anchored at the extreme perimeter of the screen (e.g. an "Auto-Finish" button popping up at the bottom) are easy to miss during active play.
 - **The Human Insight**: When testing with Mom, I noticed she didn't see the auto-win button at the bottom of the screen, because her eyes were on the tableau. My reasoning: slow movement across the area she is already watching is harder to miss than a static button at the edge.
 - **The Design Override**:
-  - Replaced generic celebratory emojis (`🎉`) with an authentic Hong Kong salon starburst emblem (crimson ruby jewel center, imperial starburst filigree, and four gold accent orbs).
+  - Replaced generic celebratory emojis (`🎉`) with a starburst emblem (crimson ruby jewel center, imperial starburst filigree, and four gold accent orbs).
   - Designed an unhurried, slow **3.4-second vertical transit** where the banner physically descends from the very top of the screen all the way down across the tableau before softly settling at the bottom with a 10px gravitational bounce and radiant pulse.
   - Made the **entire banner one touch target**, so she has a much larger area to tap.
 - **The Technical Achievement**: Early CSS keyframe prototypes animating `box-shadow` (40px blur) and `border-color` suffered severe CPU main-thread thrashing (choppy ~20fps) and subpixel vector snapping. In a collaborative CLI session with Claude and Codex, we re-architected the motion using the **Web Animations API (`translate3d`)** paired with a **zero-repaint GPU compositor pseudo-element (`::after` opacity-only pulse)**, which removed the choppy motion of the CSS version and allowed on-demand replay.
@@ -178,7 +177,7 @@ flowchart TD
 ## 6. Takeaways for Product & Design Leadership
 
 1. **Accessibility is not a checklist; it is an empathy engine.** Designing for an individual user with severe sensory constraints pushed out clutter: larger targets, clearer cards, and fewer distractions.
-2. **AI needs human direction, not just prompts.** AI can write thousands of lines of syntax in seconds, but it cannot feel when an Undo button is too close to New, or know that a Chinese wedding character is wrong for a card game. Product judgment, taste, and user advocacy remain uniquely human superpowers.
+2. **AI needs human direction, not just prompts.** AI can write thousands of lines of syntax in seconds, but it cannot feel when an Undo button is too close to New, or know that a wedding symbol is wrong for a card game. Product judgment, taste, and user advocacy remain uniquely human superpowers.
 3. **True ergonomics happen at the physical edge.** When software interacts with the physical world—a thumb holding a phone, an eye reading under floaters, a tablet resting on a lap—the smallest details (4px of waste fan overlap, 4mm of button separation, 61px vs 28px cascade step) dictate whether a product is loved or abandoned.
 
 ---
