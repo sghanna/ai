@@ -282,12 +282,12 @@
     <span class="kicker">Portfolio case study</span>
     <h1>Running a job search like a product: <em>three AI agents, one human approver</em></h1>
     <div class="byline">Shawn Hanna &middot; program manager and internal-tools product owner</div>
-        <div class="updated"><span class="dot"></span>Last updated November 25, 2026 &middot; live project, refreshed daily</div>
+        <div class="updated"><span class="dot"></span>Last updated November 26, 2026 &middot; live project, refreshed daily</div>
     
         <div class="stats" role="list" aria-label="Results so far">
-      <div class="stat" role="listitem"><b class="count">~60</b><span>company job boards swept in one overnight pass</span></div>
-      <div class="stat" role="listitem"><b class="count">5</b><span>requirement-by-requirement role reviews</span></div>
-      <div class="stat hl" role="listitem"><b class="count">8+8</b><span>two independent scores on the best match</span></div>
+      <div class="stat" role="listitem"><b class="count">~150</b><span>employers checked across 20 places in the search area</span></div>
+      <div class="stat" role="listitem"><b class="count">74</b><span>roles scored against their requirements</span></div>
+      <div class="stat hl" role="listitem"><b class="count">8+8</b><span>two independent scores on the three best matches</span></div>
       <div class="stat" role="listitem"><b>0</b><span>applications or messages sent by an AI</span></div>
     </div>
       </div>
@@ -441,7 +441,7 @@
   <h2>Five gates between an AI and my name</h2>
   <ol class="gates reveal">
     <li class="gate reveal"><div class="g">1</div><div class="body"><h3>Facts only</h3><p>Every claim about my career comes from a library of 530+ facts I approved one by one. A gap stays a gap: an agent may not stretch a fact to cover it. When a role needs evidence that isn't in the library, the agent asks me, and nothing becomes a fact until I approve it.</p></div></li>
-    <li class="gate reveal"><div class="g">2</div><div class="body"><h3>Two independent scores</h3><p>A role counts as a "home run" only with an 8 from Codex plus an 8 from Claude or Duet, or a single 9. Scores are findings for me to rule on, not verdicts.</p></div></li>
+    <li class="gate reveal"><div class="g">2</div><div class="body"><h3>Two independent scores</h3><p>A role counts as a "home run" only with an 8 from Codex plus an 8 from Claude or Duet, or a single 9. The second scorer locks its scores before it sees the first's, so agreement means something. Scores are findings for me to rule on, not verdicts.</p></div></li>
     <li class="gate reveal"><div class="g">3</div><div class="body"><h3>Competing drafts, judged by a third agent</h3><p>For the strongest role, Duet and Claude each built a resume without seeing the other's, and Codex compared them against the posting and the fact library.</p></div></li>
     <li class="gate reveal"><div class="g">4</div><div class="body"><h3>Automated tag check</h3><p>Every line of a draft carries hidden tags naming the facts it rests on. A checker confirms each tag points to an approved fact before I see the draft.</p></div></li>
     <li class="gate final reveal"><div class="g">5</div><div class="body"><h3>Human approval</h3><p>Nothing is submitted, sent or posted by an agent. I approve each headline, each new fact and each final document, and I submit applications myself.</p></div></li>
@@ -452,9 +452,9 @@
   <span class="eyebrow">05 &middot; One role, end to end</span>
   <h2>From first sighting to a checked application in under 12 hours</h2>
   <div class="context">
-    <span class="pill">People operations</span><span class="pill">Bay Area tech company</span><span class="pill">Posted the same day</span>
+    <span class="pill">People operations</span><span class="pill">Gusto, San Francisco</span><span class="pill">Posted the same day</span>
   </div>
-  <p class="muted" style="font-size:.9rem;margin-top:0">Employer withheld while the application is in progress.</p>
+  <p class="muted" style="font-size:.9rem;margin-top:0">I submitted this application myself on November 25.</p>
   <ol class="tl">
     <li class="reveal" style="--tc: var(--duet)"><span class="when">Evening, day 1</span><div class="card"><span class="score s7">7/10</span>Duet's overnight sweep finds the posting on the employer's own job board and writes a full requirement review, held back by one partly met requirement.</div></li>
     <li class="reveal" style="--tc: var(--codex)"><span class="when">Same evening</span><div class="card"><span class="score s7">7/10</span>Duet sends it to Claude and Codex. Each checks its own tracker to confirm the role is genuinely new, and Codex scores it 7, naming a different gap.</div></li>
@@ -486,21 +486,29 @@
   <span class="eyebrow">07 &middot; Results to date</span>
   <h2>Where things stand</h2>
     <div class="results">
-    <div class="res reveal"><b class="count">3</b><span>neighborhoods swept in the planned search area</span></div>
-    <div class="res reveal"><b class="count">~60</b><span>employer job boards checked (healthcare skipped by rule)</span></div>
-    <div class="res reveal"><b class="count">5</b><span>full requirement reviews</span></div>
-    <div class="res reveal"><b class="count">3</b><span>roles scored 7+ and sent for a second score</span></div>
-    <div class="res good reveal"><b class="count">1</b><span>home run, application package ready for my review</span></div>
+    <div class="res reveal"><b class="count">20</b><span>places swept in the search area, each within my 60-minute commute limit</span></div>
+    <div class="res reveal"><b class="count">~150</b><span>employers checked (medical companies skipped by rule)</span></div>
+    <div class="res reveal"><b class="count">55</b><span>open roles in my lanes, each confirmed on the employer's own board</span></div>
+    <div class="res reveal"><b class="count">~105</b><span>remote postings checked in a separate remote pass</span></div>
+    <div class="res reveal"><b class="count">74</b><span>roles scored against their requirements (60 local, 14 remote)</span></div>
+    <div class="res good reveal"><b class="count">3</b><span>roles rated 8 or higher; 2 confirmed by a second, independent 8</span></div>
+    <div class="res reveal"><b class="count">39</b><span>roles scored blind by two agents: 14 identical scores, 36 within one point</span></div>
+    <div class="res reveal"><b class="count">1</b><span>more role (Affirm) reached two 8s after the scorers compared reasons; I applied the next morning</span></div>
+    <div class="res good reveal"><b class="count">3</b><span>tailored application packages built from approved facts only</span></div>
+    <div class="res good reveal"><b class="count">3</b><span>applications submitted this week from those packages, by me: Gusto, DoorDash and Affirm</span></div>
     <div class="res reveal"><b class="count">1</b><span>role dropped after a second look (posting closed; second score 6)</span></div>
     <div class="res reveal"><b class="count">8</b><span>new career facts approved by me</span></div>
-    <div class="res reveal"><b class="count">42</b><span>logged messages between agents</span></div>
+    <div class="res reveal"><b class="count">45</b><span>logged messages between agents</span></div>
     <div class="res good reveal"><b>Pass</b><span>fact check on final drafts, every claim tied to an approved fact</span></div>
     <div class="res good wide reveal"><b>0</b><span>applications or messages sent by an AI</span></div>
   </div>
   
   <h3 style="margin-top:20px">Progress log</h3>
     <ul class="log">
-    <li class="reveal"><time datetime="2026-11-25">November 25, 2026</time>Overnight sweeps of three San Francisco neighborhoods. First home-run role taken from first sighting to a fact-checked resume and cover letter in under 12 hours. Two competing resumes judged; one overreach caught and fixed.</li>
+    <li class="reveal"><time datetime="2026-11-26">November 26, 2026</time>I approved the tailored package for the Affirm role that reached two 8s overnight and submitted the application myself; the employer confirmed it the same morning. That makes three applications this week, each built from approved facts and each sent by me, not an agent.</li>
+    <li class="reveal"><time datetime="2026-11-25">November 25, 2026 &middot; late evening</time>The second-opinion agent finished its blind pass, and every one of the 74 roles now has a recorded outcome. It locked its own scores before opening the lead agent's. On the 39 roles both had scored blind, 14 scores matched exactly, 36 were within one point and 3 were two points apart. The agents then compared reasons on each difference: one role rose to two 8s, and no disagreement was left for me to settle.</li>
+    <li class="reveal"><time datetime="2026-11-25">November 25, 2026 &middot; afternoon and evening</time>The sweep grew to 20 places, with a 60-minute commute limit I set, and found 55 open roles in my lanes, now shown on a public, score-free dashboard. A separate remote lane started with its own triage order: still open, truly remote, open to San Francisco, then time zones and gate requirements. About 105 remote postings were checked; none scored above 7. Lesson: confirm a posting is open in a live browser, because fetched copies can be stale. A second tailored package was built for an 8-rated DoorDash role, and I submitted both applications, to Gusto and DoorDash, myself. The lead agent also drafted a plan for the second-opinion agent to score all 74 roles blind.</li>
+    <li class="reveal"><time datetime="2026-11-25">November 25, 2026</time>Overnight sweeps of three San Francisco neighborhoods. First home-run role, at Gusto, taken from first sighting to a fact-checked resume and cover letter in under 12 hours. Two competing resumes judged; one overreach caught and fixed.</li>
     <li class="reveal"><time datetime="2026-11-24">November 24, 2026</time>Shared folder and ReadMe set up. Message channel tested with each laptop agent. I made the cloud agent the lead and widened the search area.</li>
   </ul>
   </section>
@@ -543,7 +551,7 @@
 </main>
 
 <footer>
-  <p>This page describes a live project and is refreshed daily. Employer names for roles in progress, and the names of people involved, are withheld on purpose.</p>
+  <p>This page describes a live project and is refreshed daily. Employers are named only for roles I have applied to, and the names of people involved are withheld on purpose.</p>
   <p>More of my work: <a href="../">sghanna.github.io/ai</a></p>
 </footer>
 
