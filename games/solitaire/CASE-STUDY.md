@@ -79,7 +79,7 @@ AI coding models default to "textbook" design patterns that frequently fail real
 - **The Design Override**: Integrated a solver check that verifies **Deal #1 can be won**, so her first game can be won. Added a toggle in Settings allowing players to switch between "Guaranteed Winnable" and "Random" deals.
 
 ### G. Motion Over Edge Alerts: The Descending Auto-Win Banner
-- **The Problem**: For a monocular player with vitreal floaters, static notifications anchored at the extreme perimeter of the screen (e.g. an "Auto-Finish" button popping up at the bottom) go completely unnoticed during active play.
+- **The Problem**: For a monocular player with vitreal floaters, static notifications anchored at the extreme perimeter of the screen (e.g. an "Auto-Finish" button popping up at the bottom) are easy to miss during active play.
 - **The Human Insight**: When testing with Mom, I noticed she didn't see the auto-win button because her focal vision was locked onto the tableau. Low-vision players detect broad motion across their field of view far more reliably than static color changes at the edge.
 - **The Design Override**:
   - Replaced generic celebratory emojis (`🎉`) with an authentic Hong Kong salon starburst emblem (crimson ruby jewel center, imperial starburst filigree, and four gold accent orbs).
