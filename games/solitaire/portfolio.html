@@ -584,7 +584,7 @@
         <div class="label-badge">Product Owner &amp; Design Lead Portfolio</div>
         <h1>Solitaire for Low Vision</h1>
         <p class="lede">
-          An ad-free, zero-friction Klondike Solitaire engineered from the sub-millimeter up for a 78-year-old player with monocular vision. Responsively scaled across iPhone 16e and iPad.
+          An ad-free Klondike Solitaire designed around one 78-year-old player with monocular vision: cards she can read in a stack, controls spaced apart so a quick Undo doesn't land on New Game, and a quiet table. Scaled for iPhone 16e and iPad.
         </p>
 
         <div class="hero-actions">
@@ -644,6 +644,9 @@
         <p>
           When my mother attempted to play standard App Store solitaire games on her phone, she encountered repeated friction that led to frustration and abandonment. Commercial games optimize for ad monetization and microtransactions, neglecting accessibility fundamentals.
         </p>
+        <p>
+          Watching her play the first card game I built for her, I saw her struggle to tap and hold a card on the screen, and her finger drifted while she held it. Watching her play is how I refined the design and game play.
+        </p>
       </div>
 
       <div class="problem-grid">
@@ -691,8 +694,8 @@
           </div>
           <div class="pillar-evidence">
             <strong>Design Principle</strong>
-            <blockquote>"Physical distance is superior to confirmation modals. If a destructive button is impossible to touch by accident, the player never suffers anxiety."</blockquote>
-            <span>Result: Zero accidental game resets across hundreds of test games.</span>
+            <blockquote>"Physical distance beats a confirmation pop-up. Keeping New Game far from Undo makes an accidental restart much less likely, without interrupting play."</blockquote>
+            <span>Decision: New Game and Undo sit at opposite ends of the bar, with Menu and Help between them.</span>
           </div>
         </article>
 
@@ -710,8 +713,8 @@
           </div>
           <div class="pillar-evidence">
             <strong>Geometric Proof</strong>
-            <blockquote>"Typography cannot be judged in isolation. When cards stack, the exposed sliver must carry 100% of the card's semantic identity unambiguously."</blockquote>
-            <span>Result: Queens and Tens remain instantly legible across 7-column cascades.</span>
+            <blockquote>"Typography cannot be judged in isolation. When cards stack, the exposed sliver still has to show which card it is."</blockquote>
+            <span>Decision: a cascade step of at least 32px keeps the Queen's tail visible, so a Q is not misread as an O.</span>
           </div>
         </article>
 
@@ -730,7 +733,7 @@
           <div class="pillar-evidence">
             <strong>Cultural Resonance</strong>
             <blockquote>"Accessibility includes dignity and cultural resonance. Generative AI will happily generate stereotypes unless guided by lived cultural critique."</blockquote>
-            <span>Result: Deep emotional connection and family pride during play.</span>
+            <span>Decision: the Imperial Golden Dragon replaced a wedding motif on the card backs.</span>
           </div>
         </article>
 
@@ -738,18 +741,18 @@
         <article class="pillar-card">
           <div class="pillar-num">04</div>
           <div class="pillar-main">
-            <h3>Peripheral Field Capture (3.4s WAAPI Descent &amp; GPU Glow)</h3>
+            <h3>Movement Over Edge Alerts (3.4s Descending Banner)</h3>
             <p>
               For a player with monocular vision and vitreal floaters, static notifications anchored at screen edges (like an "Auto-Win" button at the bottom) go completely unnoticed during active play.
             </p>
             <p>
-              <strong>The Override:</strong> Engineered a dramatic, slow <strong>3.4-second vertical transit</strong> where the solved auto-finish banner physically descends from the very top of the display down across the tableau. Replaced choppy CSS keyframes with native <strong>Web Animations API (WAAPI)</strong> and a zero-repaint GPU compositor layer, running at 60fps/120fps.
+              <strong>The Override:</strong> Designed a slow <strong>3.4-second descent</strong> where the auto-finish banner moves from the top of the display down across the tableau. Replaced choppy CSS keyframes with the native <strong>Web Animations API (WAAPI)</strong> and a GPU compositor layer for the glow.
             </p>
           </div>
           <div class="pillar-evidence">
             <strong>Visual Perception</strong>
             <blockquote>"Low-vision eyes detect broad movement across the focal field far better than static color shifts at the perimeter."</blockquote>
-            <span>Result: 100% capture of player attention without jarring auditory alarms.</span>
+            <span>Decision: a slow, moving banner across the middle of the screen instead of a static button at the edge, with no sound alarm.</span>
           </div>
         </article>
 
@@ -762,13 +765,13 @@
               Scaling from a 390pt mobile phone to a 768pt/1024pt iPad screen required more than naive CSS zoom. Tablet displays demand larger physical touch targets, deeper column scrolling, and rotation protection.
             </p>
             <p>
-              <strong>The Override:</strong> Partnered with Codex to implement 600px and 900px breakpoints, 48px tablet buttons, Deal-3 waste fanning (44px tablet step), momentum-scrolling deep tableau stacks with temporary card flight overlays, and debounced rotation safety. Verified with 12 automated unit tests.
+              <strong>The Override:</strong> Partnered with Codex to implement 600px and 900px breakpoints, 48px tablet buttons, Deal-3 waste fanning (44px tablet step), momentum-scrolling deep tableau stacks with temporary card flight overlays, and debounced rotation safety. Covered by 12 automated unit tests.
             </p>
           </div>
           <div class="pillar-evidence">
             <strong>Engineering Rigor</strong>
             <blockquote>"Responsive design for seniors is not just scaling CSS pixels; it is scaling physical touch ergonomics and protecting active cognitive state."</blockquote>
-            <span>Result: Flawless experience on iPhone 16e, iPad mini 5, iPad Air 2, and 11-inch iPad Pro.</span>
+            <span>Decision: larger touch targets and scrolling deep stacks on tablet, with the phone layout unchanged. Layouts checked for iPhone 16e, iPad mini 5, iPad Air 2, and 11-inch iPad Pro.</span>
           </div>
         </article>
       </div>
@@ -912,7 +915,10 @@
         <div class="label-badge">Workflow Leadership</div>
         <h2>Multi-AI orchestration: The division of labor</h2>
         <p>
-          Rather than relying on a single AI model, I operated as strategic conductor, orchestrating three specialized AI agents to maximize quality and delivery speed.
+          Rather than relying on a single AI model, I gave each of three AI agents the work it did best, then checked their work on real screens before anything shipped.
+        </p>
+        <p>
+          I later applied the same approach of specialized agents and a human decision to my job search. <a href="https://sghanna.github.io/ai/duet/">Read the job-search case study</a>.
         </p>
       </div>
 
@@ -944,7 +950,7 @@
           <ul>
             <li>Traced Didone typography &amp; French Curve suit SVGs</li>
             <li>Designed 85% Imperial Dragon medallion &amp; sky lanterns</li>
-            <li>Architected 3.4s WAAPI descent &amp; zero-repaint GPU glow</li>
+            <li>Built the 3.4s descending banner &amp; GPU glow layer</li>
             <li>Engineered guaranteed-winnable first deal algorithmic solver</li>
             <li>Synthesized procedural Web Audio card rustles and chords</li>
           </ul>
@@ -956,21 +962,21 @@
     <section class="section-wrap">
       <div class="section-header">
         <div class="label-badge">Technical Excellence</div>
-        <h2>Production deliverables &amp; performance metrics</h2>
+        <h2>Production deliverables</h2>
       </div>
 
       <div class="problem-grid">
         <div class="problem-card" style="border-top-color: var(--felt-ink);">
-          <h3 class="problem-title">Zero External Dependencies</h3>
-          <p class="problem-desc">Vanilla ES6, HTML5 Canvas, and modern CSS Grid. Zero frameworks, 0 analytics trackers, 0 third-party ad SDKs. Sub-millisecond execution.</p>
+          <h3 class="problem-title">No External Dependencies</h3>
+          <p class="problem-desc">Vanilla ES6, HTML5 Canvas, and modern CSS Grid. No frameworks, no analytics trackers, no third-party ad SDKs.</p>
         </div>
         <div class="problem-card" style="border-top-color: var(--felt-ink);">
-          <h3 class="problem-title">100% Offline-First PWA</h3>
-          <p class="problem-desc">Service Worker cache-first architecture (<code>agy-solitaire-v23</code>) with Apple mobile web tags, full-bleed squircle app icon, and immediate Home Screen launch.</p>
+          <h3 class="problem-title">Offline-First PWA</h3>
+          <p class="problem-desc">Service Worker cache-first architecture (<code>agy-solitaire-v23</code>) with Apple mobile web tags, a full-bleed squircle app icon, and Home Screen launch.</p>
         </div>
         <div class="problem-card" style="border-top-color: var(--felt-ink);">
           <h3 class="problem-title">12 Passing Unit Tests</h3>
-          <p class="problem-desc">Comprehensive Node.js test harness covering cascade math, waste fanning, rotation safety, halo preservation, and Queen SVG bounds.</p>
+          <p class="problem-desc">Node.js test harness covering cascade math, waste fanning, rotation safety, halo preservation, and Queen SVG bounds.</p>
         </div>
         <div class="problem-card" style="border-top-color: var(--felt-ink);">
           <h3 class="problem-title">Synthesized Web Audio</h3>

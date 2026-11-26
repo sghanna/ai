@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
-<meta name="description" content="Two AI coding agents checked each other, and an outside maintainer merged all three fixes about 90 minutes after submission, with no changes requested.">
+<meta name="description" content="I set a read-only boundary, had two AI coding agents reproduce each other's findings, checked a claim on the real service, and decided when to submit. The maintainer merged all three fixes, unchanged.">
 <link rel="icon" type="image/svg+xml" href="../assets/home/icon.svg">
 <link rel="canonical" href="https://sghanna.github.io/ai/case/olkcli.html">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://sghanna.github.io/ai/case/olkcli.html">
 <meta property="og:title" content="Three Fixes for olkcli | Shawn Hanna">
-<meta property="og:description" content="Two AI coding agents checked each other, and an outside maintainer merged all three fixes about 90 minutes after submission, with no changes requested.">
+<meta property="og:description" content="I set a read-only boundary, had two AI coding agents reproduce each other's findings, checked a claim on the real service, and decided when to submit. The maintainer merged all three fixes, unchanged.">
 <meta property="og:image" content="https://sghanna.github.io/ai/assets/home/og-home-2.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <title>Three Fixes for olkcli | Shawn Hanna</title>
@@ -26,15 +26,15 @@
 <div class="hero-copy">
 <p class="eyebrow" style="--d:0">Case study | Open-source contribution | Sept 27, 2026</p>
 <h1 style="--d:1">Three Fixes for olkcli <span>All three merged, unchanged.</span></h1>
-<p class="lede" style="--d:2">I asked two AI coding agents from different companies to look for bugs and to check each other's work. Three fixes came out of it. I submitted them as my first open-source pull requests, and the maintainer merged all three about 90 minutes later.</p>
+<p class="lede" style="--d:2">I set the boundary first: the agents could read my job-search inbox but never change it. Then Claude Code and Codex hunted for bugs, and nothing counted until the other agent reproduced it. A live check on the real service narrowed one of Codex's claims, and the pull request said so. I decided when the three fixes were ready. They were my first open-source pull requests, and the maintainer merged all three about 90 minutes later, unchanged.</p>
 </div>
 <figure class="proof" style="--d:3"><div class="winbar" aria-hidden="true"><i></i><i></i><i></i></div><img src="../assets/home/olkcli-merged-prs.png" width="1000" height="400" alt="GitHub list of three merged pull requests by sghanna, each merged September 27, 2026: #131 explain device-code expiry and login timeouts, #130 prevent errors with mail list --from, #129 show reply-to addresses"><figcaption>Merged September 27, 2026. See each one on GitHub:<span class="links"><a href="https://github.com/rlrghb/olkcli/pull/129">Pull request 129 <span aria-hidden="true">&nearr;</span></a><a href="https://github.com/rlrghb/olkcli/pull/130">Pull request 130 <span aria-hidden="true">&nearr;</span></a><a href="https://github.com/rlrghb/olkcli/pull/131">Pull request 131 <span aria-hidden="true">&nearr;</span></a></span></figcaption></figure>
 </div>
 <div class="stats">
-<div class="stat" style="--d:4"><strong><span data-count="3">3</span> of 3</strong><p>Pull requests merged by the maintainer, with no changes requested.</p></div>
+<div class="stat" style="--d:4"><strong>0</strong><p>Changes to my mailbox. Every live test was read-only, and Microsoft refused a test write.</p></div>
 <div class="stat" style="--d:5"><strong data-count="5">5</strong><p>Problems the two AIs caught in each other's work before anything went public.</p></div>
 <div class="stat" style="--d:6"><strong data-count="128">128</strong><p>Past issues and pull requests checked so we did not duplicate anyone's work.</p></div>
-<div class="stat" style="--d:7"><strong>0</strong><p>Changes to my mailbox. Every live test was read-only, and Microsoft refused a test write.</p></div>
+<div class="stat" style="--d:7"><strong><span data-count="3">3</span> of 3</strong><p>Pull requests merged by the maintainer, with no changes requested.</p></div>
 </div>
 </div></section>
 
@@ -112,11 +112,11 @@
 </div>
 </div>
 <div class="catches">
-<article class="catch codex" id="catch-1" tabindex="-1"><div class="who"><span class="l">Catch 1 | Caught by</span><b>Codex</b><em>with new tests</em></div><div><span class="l">The problem</span><p>Claude's first sign-in fix called every timeout an expired code, even when the time limit came from somewhere else.</p></div><div><span class="l">Resolution</span><p>Codex's refinement checks which timer actually fired.</p></div></article>
-<article class="catch claude" id="catch-2" tabindex="-1"><div class="who"><span class="l">Catch 2 | Caught by</span><b>Claude</b><em>by asking Microsoft for a sign-in code and checking its lifetime</em></div><div><span class="l">The problem</span><p>On its own, that refinement brought back the confusing error in the real sign-in command.</p></div><div><span class="l">Resolution</span><p>The command's 15-minute limit runs out before Microsoft's 15-minute code does, so the command now explains its own limit in plain words.</p></div></article>
-<article class="catch codex" id="catch-3" tabindex="-1"><div class="who"><span class="l">Catch 3 | Caught by</span><b>Codex</b><em>from the source and a test</em></div><div><span class="l">The problem</span><p>That plain message also replaced the browser sign-in's specific troubleshooting advice.</p></div><div><span class="l">Resolution</span><p>Browser sign-in keeps its original advice.</p></div></article>
-<article class="catch claude" id="catch-4" tabindex="-1"><div class="who"><span class="l">Catch 4 | Caught by</span><b>Claude</b><em>with a live test on my inbox</em></div><div><span class="l">The problem</span><p>Codex predicted that searches for unread mail would fail too.</p></div><div><span class="l">Resolution</span><p>They work on the real service; Codex's test server was stricter than Microsoft's. The pull request says so plainly.</p></div></article>
-<article class="catch claude" id="catch-5" tabindex="-1"><div class="who"><span class="l">Catch 5 | Caught by</span><b>Claude</b><em>in the pre-submission check</em></div><div><span class="l">The problem</span><p>Six test names described our review process instead of what the code does.</p></div><div><span class="l">Resolution</span><p>Renamed, with a file-by-file check that nothing else changed.</p></div></article>
+<article class="catch codex" id="catch-1" tabindex="-1"><div class="who"><span class="l">Catch 1 | Caught by</span><b>Codex</b><em>with new tests</em></div><div><span class="l">The problem | Wrong cause</span><p>Claude's first sign-in fix called every timeout an expired code, even when the time limit came from somewhere else.</p></div><div><span class="l">Resolution</span><p>Codex's refinement checks which timer actually fired.</p></div></article>
+<article class="catch claude" id="catch-2" tabindex="-1"><div class="who"><span class="l">Catch 2 | Caught by</span><b>Claude</b><em>by asking Microsoft for a sign-in code and checking its lifetime</em></div><div><span class="l">The problem | Regression</span><p>On its own, that refinement brought back the confusing error in the real sign-in command.</p></div><div><span class="l">Resolution</span><p>The command's 15-minute limit runs out before Microsoft's 15-minute code does, so the command now explains its own limit in plain words.</p></div></article>
+<article class="catch codex" id="catch-3" tabindex="-1"><div class="who"><span class="l">Catch 3 | Caught by</span><b>Codex</b><em>from the source and a test</em></div><div><span class="l">The problem | Side effect</span><p>That plain message also replaced the browser sign-in's specific troubleshooting advice.</p></div><div><span class="l">Resolution</span><p>Browser sign-in keeps its original advice.</p></div></article>
+<article class="catch claude" id="catch-4" tabindex="-1"><div class="who"><span class="l">Catch 4 | Caught by</span><b>Claude</b><em>with a live test on my inbox</em></div><div><span class="l">The problem | Overclaim</span><p>Codex predicted that searches for unread mail would fail too.</p></div><div><span class="l">Resolution</span><p>They work on the real service; Codex's test server was stricter than Microsoft's. The pull request says so plainly.</p></div></article>
+<article class="catch claude" id="catch-5" tabindex="-1"><div class="who"><span class="l">Catch 5 | Caught by</span><b>Claude</b><em>in the pre-submission check</em></div><div><span class="l">The problem | Misleading names</span><p>Six test names described our review process instead of what the code does.</p></div><div><span class="l">Resolution</span><p>Renamed, with a file-by-file check that nothing else changed.</p></div></article>
 </div>
 </div>
 </div></section>

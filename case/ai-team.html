@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
-<meta name="description" content="How I split work across Claude Code, Codex, and Antigravity by strength and cost, scored one tool before trusting it, and had two reviewers reach one decision.">
+<meta name="description" content="How I handled an AI capacity problem in September 2026: a split of work across Claude Code, Codex and Antigravity by strength and cost, a budget rule, a weekly review, and a second AI checking the first.">
 <link rel="icon" type="image/svg+xml" href="../assets/home/icon.svg">
 <link rel="canonical" href="https://sghanna.github.io/ai/case/ai-team.html">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://sghanna.github.io/ai/case/ai-team.html">
 <meta property="og:title" content="Running a Team of AI Tools | Shawn Hanna">
-<meta property="og:description" content="How I split work across Claude Code, Codex, and Antigravity by strength and cost, scored one tool before trusting it, and had two reviewers reach one decision.">
+<meta property="og:description" content="How I handled an AI capacity problem in September 2026: a split of work across Claude Code, Codex and Antigravity by strength and cost, a budget rule, a weekly review, and a second AI checking the first.">
 <meta property="og:image" content="https://sghanna.github.io/ai/assets/home/og-home-2.jpg?v=team">
 <meta name="twitter:card" content="summary_large_image">
 <title>Running a Team of AI Tools | Shawn Hanna</title>
@@ -26,7 +26,7 @@
 <div class="hero-copy">
 <p class="eyebrow" style="--d:0">Case study | AI operations | Sept 28, 2026</p>
 <h1 style="--d:1">Running a Team of AI Tools <span>I make the final call.</span></h1>
-<p class="lede" style="--d:2">I use three AI tools from three companies: Claude Code, Codex, and Antigravity. Early on I used whichever one was open. Then my Claude usage ran out halfway through a day of work, and I started treating the three of them like a small team with different strengths, a shared budget, and rules for checking each other.</p>
+<p class="lede" style="--d:2">In September 2026 my Claude usage ran out halfway through a day of work, while Codex had most of its week left and Antigravity sat idle. That was a capacity problem, not a quality problem. Within a day I decided how to split the work across the three tools by strength and cost, set a budget rule, and started a weekly review. A second AI checks the first, and I make the final call.</p>
 </div>
 <figure class="handoff" style="--d:3"><figcaption>Each tool gets the work it does best, a second AI checks the first, and I make the final call.</figcaption><ol>
 <li style="--i:0"><span class="time">Research</span><div class="task"><strong>Antigravity</strong>Web research, first-pass bug hunting, and simple drafts.</div></li>
@@ -36,9 +36,9 @@
 </ol></figure>
 </div>
 <div class="stats three">
-<div class="stat" style="--d:4"><strong>4.2 vs 6.5</strong><p>Best of two tries each: Antigravity on Gemini Pro against Gemini Flash, scored by Codex with a five-part rubric I could read and question.</p></div>
-<div class="stat" style="--d:5"><strong>3 of 3</strong><p>Evidence-backed objections Codex raised to Claude's design. Claude accepted all three before both signed one answer.</p></div>
-<div class="stat" style="--d:6"><strong>1 day</strong><p>From "use whatever is open" to a written split of the work, a budget rule, and a weekly review.</p></div>
+<div class="stat" style="--d:4"><strong>1 day</strong><p>From "use whatever is open" to a written split of the work, a budget rule, and a weekly review.</p></div>
+<div class="stat" style="--d:5"><strong>3 roles</strong><p>Build, check, and research: each tool's job set by what it does best and what its usage costs.</p></div>
+<div class="stat" style="--d:6"><strong>3 of 3</strong><p>Evidence-backed objections Codex raised to Claude's design. Claude accepted all three before both signed one answer.</p></div>
 </div>
 </div></section>
 
@@ -60,6 +60,7 @@
 <section class="section dark" id="split" aria-labelledby="split-title"><div class="wrap">
 <p class="kicker"><span class="no">02</span><span class="pill action">Action</span></p>
 <h2 id="split-title">The split</h2>
+<p class="sub">This is the setup I wrote down in September 2026.</p>
 <p class="said big">I stopped asking which AI is best and started asking which AI is best for this job, at what cost.</p>
 <div class="roles" data-roles>
 <div class="role reveal" data-role="Codex"><span class="t">Builds and fixes</span><h3>Codex</h3><p>It does the long, heavy work: code, browser tasks, first reviews.</p><p class="said">"When you hand things off to Codex, don't NERF Codex. Let it use all tools and abilities at its disposal."</p><ul class="tags" aria-label="Codex's jobs"><li data-order="1" data-why="It does the long, heavy work.">Code</li><li data-order="4" data-why="It does the long, heavy work.">Browser tasks</li><li data-order="9" data-why="It does the long, heavy work.">First reviews</li></ul></div>
@@ -67,14 +68,14 @@
 <div class="role reveal" style="--d:2" data-role="Antigravity"><span class="t">Researches and drafts</span><h3>Antigravity</h3><p>It does web research, first-pass bug hunting, and simple pages. Codex verifies its research before anyone relies on it.</p><ul class="tags" aria-label="Antigravity's jobs"><li data-order="2" data-why="Codex verifies its research before anyone relies on it.">Web research</li><li data-order="6" data-why="Its findings always get a second check.">First-pass bug hunting</li><li data-order="8" data-why="It researches and drafts.">Simple pages</li></ul></div>
 <div class="role me reveal" style="--d:3" data-role="Me"><span class="t">Decides</span><h3>Me</h3><p>The tools propose, check, and argue. I decide what ships.</p><ul class="tags" aria-label="My job"><li data-order="10" data-why="The tools propose, check, and argue. I decide what ships.">What ships</li></ul></div>
 </div>
-<p class="note"><b>Every handoff is a file.</b> Everything is handed off as a written brief in a file, never a pasted prompt, so each step can be checked later. Codex also pauses itself when its weekly usage reaches 95%, instead of failing halfway through a job.</p>
+<p class="note"><b>Every handoff was a file.</b> In the September setup, everything was handed off as a written brief in a file, never a pasted prompt, so each step could be checked later. Codex also paused itself when its weekly usage reached 95%, instead of failing halfway through a job.</p>
 </div></section>
 
 <section class="section white" id="test" aria-labelledby="test-title"><div class="wrap">
 <p class="kicker"><span class="no">03</span><span class="pill action">A scored test</span></p>
 <h2 id="test-title">Testing a tool before trusting it</h2>
 <p class="said big">"it isn't perfect, but it did find unique bugs."</p>
-<p class="prose">That was my doubt about Antigravity. So Codex scored Antigravity's code reviews against the same brief the other two tools had, with a five-part rubric.</p>
+<p class="prose">That was my doubt about Antigravity. Before giving it a role in the split, I had Codex score Antigravity's code reviews against the same brief the other two tools had, with a five-part rubric. Best of two tries each, Gemini Pro scored 4.2 and Gemini Flash scored 6.5.</p>
 <div class="rubric watch" role="img" aria-label="Rubric weights: accuracy 30%, evidence 20%, coverage 20%, usefulness of the proposed action 20%, confidence matched to evidence 10%"><div style="--w:30;--i:0;background:#172c43">30%</div><div style="--w:20;--i:1;background:#2855b5">20%</div><div style="--w:20;--i:2;background:#3c69c9">20%</div><div style="--w:20;--i:3;background:#536278">20%</div><div style="--w:10;--i:4;background:#748ca7">10%</div></div>
 <ul class="rubric-key" aria-hidden="true"><li><i style="background:#172c43"></i>Accuracy 30%</li><li><i style="background:#2855b5"></i>Evidence 20%</li><li><i style="background:#3c69c9"></i>Coverage 20%</li><li><i style="background:#536278"></i>Usefulness of the proposed action 20%</li><li><i style="background:#748ca7"></i>Confidence matched to evidence 10%</li></ul>
 <figure class="scores" data-scores>
@@ -103,7 +104,7 @@
 <div class="cv-link plain watch"><svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M25 0L50 100M75 0L50 100" vector-effect="non-scaling-stroke"/></svg></div>
 <div class="cv-final reveal"><span>Both signed the same answer</span><b>Borrow a few small pieces from each, install neither.</b></div>
 </div>
-<p class="note"><b>My rule for giving back:</b> fix what we use, look for security holes that a compromised AI could exploit, send no more than three pull requests to any one project a week, and check again right before sending that nobody else has already fixed it.</p>
+<p class="note"><b>My September rule for giving back:</b> fix what we use, look for security holes that a compromised AI could exploit, send no more than three pull requests to any one project a week, and check again right before sending that nobody else has already fixed it.</p>
 </div></section>
 
 <section class="section white" id="result" aria-labelledby="result-title"><div class="wrap">
@@ -114,7 +115,7 @@
 <li class="reveal"><strong>Budget is a design constraint.</strong> Once I could see where the usage went, the split of work followed.</li>
 <li class="reveal" style="--d:1"><strong>Measure a tool before trusting it.</strong> A rubric turned "I'm doubtful" into a score and a clear role.</li>
 <li class="reveal" style="--d:2"><strong>Two reviewers beat one</strong> only if each has to answer the other with evidence.</li>
-<li class="reveal"><strong>Every handoff is a file.</strong> That makes the work checkable, and it makes this write-up possible.</li>
+<li class="reveal"><strong>Every handoff was a file.</strong> That made the work checkable, and it made this write-up possible.</li>
 <li class="reveal" style="--d:1"><strong>I make the final call.</strong> The tools propose, check, and argue; I decide what ships.</li>
 </ul>
 <p class="credit">Written with Claude from my session notes and the files the three tools produced. Scores are from Codex's review of Antigravity's delivered reports, September 28, 2026.</p>

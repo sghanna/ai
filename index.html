@@ -134,6 +134,7 @@ h1 span { display: block; color: var(--sky); margin-top: 10px; }
 .outcomes { display: flex; gap: 34px; padding-top: 24px; margin-top: 24px; border-top: 1px solid var(--line); }
 .outcomes p { flex: 1; margin: 0; font-size: 16px; line-height: 1.45; }
 .outcomes strong { display: block; font-size: 36px; font-weight: 620; line-height: 1.1; color: var(--blue); letter-spacing: -1.2px; margin-bottom: 6px; white-space: nowrap; }
+.story .case-link { margin-top: 28px; }
 .outcomes .arr { margin-inline: .12em; color: var(--bright); }
 
 /* Step-through figures: the recruiting relay and the AI-team handoff. */
@@ -180,6 +181,7 @@ h1 span { display: block; color: var(--sky); margin-top: 10px; }
 /* AI work */
 .feature-copy h3 { font-size: 36px; letter-spacing: -1.2px; }
 .feature-copy .btn { margin-top: 26px; }
+.also-link { margin: 18px 0 0; font-size: 17px; font-weight: 600; }
 .proof { --ring: #ffb9a3; background: var(--ink-2); border: 1px solid var(--ink-3); border-radius: 6px; padding: 0 18px 18px; box-shadow: 0 34px 60px -34px rgba(23, 44, 67, .75); }
 .winbar { display: flex; gap: 8px; padding: 14px 0; }
 .winbar i { width: 12px; height: 12px; border-radius: 50%; background: #4a6788; }
@@ -447,7 +449,9 @@ footer a { display: inline-block; padding-block: 4px; }
 <div class="outcomes">
 <p><strong>24%<span class="arr" aria-hidden="true">&rarr;</span><span class="sr-only">to </span>89%</strong>Adoption of the tool</p>
 <p><strong>23%<span class="arr" aria-hidden="true">&rarr;</span><span class="sr-only">to </span>87%</strong>Analyst on-time completion in the credit training programs it supported</p>
+<p><strong>90%</strong>Less manual reporting time for regional program managers</p>
 </div>
+<a class="btn case-link" href="case/watt.html">Read the full case study <span aria-hidden="true">&rarr;</span></a>
 </div>
 <figure class="steps reveal" style="--d:2" data-steps>
 <figcaption>From what users said to what they used: how I ran the tool's releases.</figcaption>
@@ -462,9 +466,9 @@ footer a { display: inline-block; padding-block: 4px; }
 <div class="story-grid">
 <article class="story card reveal">
 <p class="eyebrow">Wells Fargo</p>
-<h3>A prioritization tool that shaped the bank's PMO system</h3>
+<h3>Prioritizing the HR PMO portfolio: a month down to a week</h3>
 <p>The Chief Learning Officer volunteered me to the HR PMO to rebuild its prioritization process. I built the online tool and refined it through 900+ updates over two years. I taught the HR PMO team to use the tool with standard operating procedures, online how-to guides and videos.</p>
-<p>Prioritizing the PMO's portfolio used to take a month; with the tool it took a week, because stakeholders could have faster conversations. Over two years more than 200 large initiatives went through the tool, $100M in annual initiatives. The tool then helped IT define the requirements for the bank's enterprise PMO system.</p>
+<p>Prioritizing the PMO's portfolio used to take a month; with the tool it took a week, because stakeholders could have faster conversations. Over two years more than 200 large initiatives went through the tool, $100M in annual initiatives. Later, the tool helped IT define requirements for the bank's enterprise PMO system.</p>
 <div class="shrink watch" aria-hidden="true"><div class="row"><span>Before</span><i style="--w:100%"></i><b>A month</b></div><div class="row after"><span>With the tool</span><i style="--w:23%"></i><b>A week</b></div></div>
 </article>
 <article class="story card reveal" style="--d:1">
@@ -512,7 +516,7 @@ footer a { display: inline-block; padding-block: 4px; }
 <div class="feature-copy reveal">
 <p class="eyebrow">01 / Open-source fixes</p>
 <h3>An outside maintainer merged all three fixes, unchanged</h3>
-<p>olkcli reads Outlook email from the command line, and I use it myself. I directed Claude Code and Codex to find and fix three real bugs, with each checking the other's work against a live mailbox. I decided what was ready.</p>
+<p>olkcli reads Outlook email from the command line, and I use it myself. I set the boundary first: the agents could read my job-search inbox but never change it. Claude Code and Codex found three real bugs, and nothing counted until the other agent reproduced it. A live check on the real service narrowed one claim before anything went public, and I decided when the fixes were ready.</p>
 <p>The maintainer merged all three pull requests about 90 minutes after I submitted them, with no changes requested.</p>
 <a class="btn" href="case/olkcli.html">Read the case study <span aria-hidden="true">&rarr;</span></a>
 </div>
@@ -527,9 +531,10 @@ footer a { display: inline-block; padding-block: 4px; }
 <div class="feature-copy reveal">
 <p class="eyebrow">02 / AI operations</p>
 <h3>Three AI tools, run as one team</h3>
-<p>My usage on one AI tool ran out halfway through a day of work while two others sat idle. I stopped asking which AI is best and started asking which is best for this job, at what cost.</p>
-<p>Within a day I had a written split of the work, a budget rule, and a weekly review. Every handoff is a written brief in a file, so each step can be checked later.</p>
+<p>In September 2026 my usage on one AI tool ran out halfway through a day of work while two others sat idle. It was a capacity problem, not a quality problem, so I decided to split the work by what each tool does best and what its usage costs.</p>
+<p>Within a day I had a written split of the work, a budget rule, and a weekly review. In that September setup, every handoff was a written brief in a file, so each step could be checked later.</p>
 <a class="btn" href="case/ai-team.html">Read the case study <span aria-hidden="true">&rarr;</span></a>
+<p class="also-link"><a href="duet/">See the three-agent system that runs my job search <span aria-hidden="true">&rarr;</span></a></p>
 </div>
 <figure class="steps reveal" style="--d:2" data-steps>
 <figcaption>Each tool gets the work it does best, a second AI checks the first, and I make the final call.</figcaption>
@@ -547,7 +552,7 @@ footer a { display: inline-block; padding-block: 4px; }
 <p class="eyebrow">03 / Games</p>
 <h3>Three games, three AI builders</h3>
 <p>I wanted card and word games my mother could actually play. I built them for her and others like her who live with vision loss and limited fine motor control. I gave Claude, Codex, and Antigravity the same kind of brief, compared their work at real screen sizes, and kept the strongest.</p>
-<p>When I watched her play and her finger drifted off a card, slow presses and drift support became a requirement for every game that followed.</p>
+<p>When I watched her play the first card game I built for her, her finger drifted while she held a card. Slow presses and drift support became a requirement for every game that followed.</p>
 </div>
 <figure class="player reveal" style="--d:2">
 <img src="assets/home/mother-first-player.jpg" width="900" height="1200" loading="lazy" alt="Shawn's mother smiling at a cafe table over a bowl of soup">
