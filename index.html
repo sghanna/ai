@@ -131,8 +131,8 @@ h1 span { display: block; color: var(--sky); margin-top: 10px; }
 .story .eyebrow, .feature-copy .eyebrow { margin-bottom: 15px; font-size: 15px; color: var(--blue); }
 .feature-row { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
 .feature-row > * { min-width: 0; }
-.outcomes { display: flex; gap: 34px; padding-top: 24px; margin-top: 24px; border-top: 1px solid var(--line); }
-.outcomes p { flex: 1; margin: 0; font-size: 16px; line-height: 1.45; }
+.outcomes { display: flex; flex-wrap: wrap; gap: 22px 34px; padding-top: 24px; margin-top: 24px; border-top: 1px solid var(--line); }
+.outcomes p { flex: 1 1 140px; min-width: 0; margin: 0; font-size: 16px; line-height: 1.45; }
 .outcomes strong { display: block; font-size: 36px; font-weight: 620; line-height: 1.1; color: var(--blue); letter-spacing: -1.2px; margin-bottom: 6px; white-space: nowrap; }
 .story .case-link { margin-top: 28px; }
 .outcomes .arr { margin-inline: .12em; color: var(--bright); }
@@ -298,7 +298,7 @@ footer a { display: inline-block; padding-block: 4px; }
   h2 { font-size: 35px; letter-spacing: -1.1px; }
   h3 { font-size: 28px; }
   .feature-copy h3 { font-size: 31px; letter-spacing: -.8px; }
-  .outcomes { gap: 22px; }
+  .outcomes { gap: 20px 22px; }
   .outcomes strong { font-size: 29px; letter-spacing: -.9px; }
   .steps { padding: 20px 18px; }
   .steps li, .steps .step-btn { grid-template-columns: 84px 1fr; gap: 14px; }

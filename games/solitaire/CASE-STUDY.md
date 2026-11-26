@@ -36,7 +36,7 @@ By serving as Product Owner and directing an ensemble of AI coding agents, I est
 
 ## 3. Key Design Leadership Decisions (Overriding Naive AI Defaults)
 
-AI coding models default to "textbook" design patterns that frequently fail real-world accessibility edge cases. Throughout this project, my role was to challenge defaults, inspect real renders on actual hardware, and enforce rigorous user-centered principles:
+AI coding models default to "textbook" design patterns that can miss real-world accessibility needs. Throughout this project, my role was to challenge defaults, inspect real renders on actual hardware, and enforce rigorous user-centered principles:
 
 ### A. Physical Affordance & Error Prevention (The "New Game" Isolation Rule)
 - **The AI Default**: AI assistants consistently placed `[＋ New]` immediately adjacent to `[↶ Undo]` in a 2+2 symmetrical cluster or connected segmented console.
@@ -74,17 +74,17 @@ AI coding models default to "textbook" design patterns that frequently fail real
   - *Stock & Waste*: Dragon stock deck dealing into waste fan with recycle loop.
   - *Tips for Mom*: Glowing auspicious sky lantern with tassels and wisdom sparks.
 
-### F. Psychological Safety & Guaranteed Initial Success
-- **The Problem**: Classic Klondike Solitaire deals have roughly a 18–20% rate of mathematically unwinnable configurations. Presenting an unwinnable hand on game one is demoralizing and risks product abandonment.
-- **The Design Override**: Integrated a solver check that verifies **Deal #1 can be won**, so her first game can be won. Added a toggle in Settings allowing players to switch between "Guaranteed Winnable" and "Random" deals.
+### F. A Winnable First Deal
+- **The Problem**: Classic Klondike Solitaire deals have roughly a 18–20% rate of mathematically unwinnable configurations. An unwinnable hand on game one would be a discouraging start.
+- **The Design Override**: Integrated a solver check that verifies **Deal #1 is solvable**: a winning sequence of moves exists. That makes the first deal winnable; whether she wins still depends on her play. Added a Settings toggle between "Winnable" and "Random" deals.
 
 ### G. Motion Over Edge Alerts: The Descending Auto-Win Banner
 - **The Problem**: For a monocular player with vitreal floaters, static notifications anchored at the extreme perimeter of the screen (e.g. an "Auto-Finish" button popping up at the bottom) are easy to miss during active play.
-- **The Human Insight**: When testing with Mom, I noticed she didn't see the auto-win button because her focal vision was locked onto the tableau. Low-vision players detect broad motion across their field of view far more reliably than static color changes at the edge.
+- **The Human Insight**: When testing with Mom, I noticed she didn't see the auto-win button at the bottom of the screen, because her eyes were on the tableau. My reasoning: slow movement across the area she is already watching is harder to miss than a static button at the edge.
 - **The Design Override**:
   - Replaced generic celebratory emojis (`🎉`) with an authentic Hong Kong salon starburst emblem (crimson ruby jewel center, imperial starburst filigree, and four gold accent orbs).
   - Designed an unhurried, slow **3.4-second vertical transit** where the banner physically descends from the very top of the screen all the way down across the tableau before softly settling at the bottom with a 10px gravitational bounce and radiant pulse.
-  - Made the **entire banner a unified touch hitbox**, eliminating precision targeting stress.
+  - Made the **entire banner one touch target**, so she has a much larger area to tap.
 - **The Technical Achievement**: Early CSS keyframe prototypes animating `box-shadow` (40px blur) and `border-color` suffered severe CPU main-thread thrashing (choppy ~20fps) and subpixel vector snapping. In a collaborative CLI session with Claude and Codex, we re-architected the motion using the **Web Animations API (`translate3d`)** paired with a **zero-repaint GPU compositor pseudo-element (`::after` opacity-only pulse)**, which removed the choppy motion of the CSS version and allowed on-demand replay.
 
 ### H. Narrow-Screen Ergonomics & Touch Clearance (The iPhone 13 mini Borderless Telemetry Rule)
@@ -116,19 +116,19 @@ AI coding models default to "textbook" design patterns that frequently fail real
 
 ### M. Trick-Taking Rules Integrity & Automated Simulation (The Mandatory 2♣ Lead)
 - **The Problem**: Early AI implementations permitted the dealer or human to lead arbitrary cards on the opening trick, violating official Hearts rules.
-- **The Design Override**: I enforced rigorous compliance with official rules: the player holding the **2 of Clubs (2♣)** must lead trick 1, and no penalty cards ("blood") may be played on the first trick. To ensure bulletproof reliability before user testing, we verified the rules engine across **52,000+ automated simulated tricks**, ensuring flawless Moon Shot detection (+26 to all opponents) and trick resolution.
+- **The Design Override**: I required the official rules: the player holding the **2 of Clubs (2♣)** must lead trick 1, and no penalty cards ("blood") may be played on the first trick. Before user testing, we ran the rules engine through **52,000+ automated simulated tricks**, checking the 2♣ lead, the first-trick penalty rule, Moon Shot scoring (+26 to all opponents) and trick resolution.
 
 ### N. Multi-Device Responsive Scaling & The Mathematical Q-Tail Scaling Proof (The iPad Release with Codex)
 - **The Problem**: When scaling from iPhone (390pt width) up to iPad (768pt portrait, 1024pt landscape, 834pt/1194pt Pro), naive CSS scaling either left vast empty margins or compressed cascades until card indices became illegible. Furthermore, Codex initially proposed a formula `0.48 * columnWidth` with a 28px compression floor.
 - **The Human Insight & Geometric Proof**: In our bespoke 52×78 SVG vector cards, the Queen's Didone tail extends downward past `y=32` and terminates at `y=33`. Compressing face-up spacing to 28px or using a naive ratio clips the tail, making the Queen look identical to an `O` for my mother's floaters.
 - **The Design Override**:
-  - Mandated a mathematically proven clearance floor: `minUpStep = Math.max(32, Math.ceil(columnWidth * (33 / 52)))`.
+  - Set a clearance floor derived from the card geometry: `minUpStep = Math.max(32, Math.ceil(columnWidth * (33 / 52)))`.
   - On iPhone 16e (390×844), column width is 49.1px, producing the locked 32px step.
   - On iPad portrait (768×1024), column width expands to 96.1px, and the step automatically expands to **61px**.
   - On iPad landscape (1024×768), column width expands to 129.1px, and the step expands to **82px**.
   - On iPad 11" Pro (1194×834), column width reaches 137.1px with an **88px** step.
   - Upgraded HUD controls on tablet: stand-alone pill buttons expand to 48px height with 17px font weight. Deal 3 waste fanning expands to 44px.
-  - Implemented **momentum-scrolling deep tableau stacks** with a temporary flight overlay element ensuring cards flying into a scrolled stack never get clipped at overflow boundaries.
+  - Implemented **momentum-scrolling deep tableau stacks** with a temporary flight overlay, so a card flying into a scrolled stack is not cut off at the scroll edge (covered by a regression test).
   - Added **debounced rotation safety**: device orientation changes wait for active card flights to complete before recalculating layouts and resizing celebrations.
   - Created a 12-test automated regression suite (`solitaire/tests/responsive-layout.test.cjs`) verifying cascade math, rotation debouncing, selection retention, and Queen SVG bounds.
 

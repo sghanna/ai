@@ -70,7 +70,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 16px;
+      flex-wrap: wrap;
+      gap: 10px 16px;
     }
     .nav-brand {
       display: flex;
@@ -93,8 +94,9 @@
     }
     .nav-links {
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
-      gap: 14px;
+      gap: 8px 14px;
       list-style: none;
     }
     .nav-link {
@@ -545,6 +547,9 @@
     @media (max-width: 600px) {
       .meta-cards { grid-template-columns: 1fr; }
       .page-wrap { padding-inline: 16px; }
+      .top-nav { padding: 12px 16px; }
+      .nav-links { gap: 6px 8px; }
+      .nav-link { font-size: 14px; padding: 6px 8px; }
     }
   </style>
 </head>
@@ -660,7 +665,7 @@
         </div>
         <div class="problem-card">
           <h3 class="problem-title">Accidental Restart Traps</h3>
-          <p class="problem-desc">Toolbars placed <code>[New Game]</code> right next to <code>[Undo]</code>. A fast undo tap frequently mis-tapped New Game, destroying an active winning game.</p>
+          <p class="problem-desc">Toolbars placed <code>[New Game]</code> right next to <code>[Undo]</code>. A fast Undo tap could land on New Game and end a game in progress.</p>
         </div>
         <div class="problem-card">
           <h3 class="problem-title">Cognitive Overload</h3>
@@ -689,7 +694,7 @@
               AI models clustered <code>[＋ New]</code> and <code>[↶ Undo]</code> side-by-side in a 2+2 layout. Because Solitaire players spam Undo when exploring moves, proximity invites miss-taps.
             </p>
             <p>
-              <strong>The Override:</strong> Mandated absolute physical separation. <code>[＋ New]</code> is locked to the far left; <code>[↶ Undo]</code> is locked to the far right. Utility buttons (Menu and Help) are centered with a <strong>~38px physical buffer zone</strong> on mobile and 48px standalone oval pills on tablet.
+              <strong>The Override:</strong> Separated the two buttons. <code>[＋ New]</code> is locked to the far left; <code>[↶ Undo]</code> is locked to the far right. Utility buttons (Menu and Help) are centered with a <strong>~38px physical buffer zone</strong> on mobile and 48px standalone oval pills on tablet.
             </p>
           </div>
           <div class="pillar-evidence">
@@ -708,7 +713,7 @@
               AI assistants squeezed tableau cascade steps to 28px or proposed arbitrary <code>0.48 * colWidth</code> ratios. In Didone typography, the Queen's sole distinguishing mark is its downward diagonal tail.
             </p>
             <p>
-              <strong>The Override:</strong> In our 52×78 SVG vector card, the Queen extends to <code>y=33</code>. I enforced a strict mathematical floor: <code>minUpStep = Math.max(32, Math.ceil(colWidth * 33 / 52))</code>. At phone width (49px), the step is 32px. At iPad width (96px/129px), the step automatically expands to 61px/82px, guaranteeing the tail is never clipped.
+              <strong>The Override:</strong> In our 52×78 SVG vector card, the Queen extends to <code>y=33</code>. I enforced a strict mathematical floor: <code>minUpStep = Math.max(32, Math.ceil(colWidth * 33 / 52))</code>. At phone width (49px), the step is 32px. At iPad width (96px/129px), the step automatically expands to 61px/82px, so at each of these widths the step clears the Queen's tail, which ends 33 units down the 78-unit card.
             </p>
           </div>
           <div class="pillar-evidence">
@@ -743,7 +748,7 @@
           <div class="pillar-main">
             <h3>Movement Over Edge Alerts (3.4s Descending Banner)</h3>
             <p>
-              For a player with monocular vision and vitreal floaters, static notifications anchored at screen edges (like an "Auto-Win" button at the bottom) are easy to miss during active play.
+              When I tested with my mother, she didn't see the auto-win button at the bottom of the screen, because her eyes were on the tableau.
             </p>
             <p>
               <strong>The Override:</strong> Designed a slow <strong>3.4-second descent</strong> where the auto-finish banner moves from the top of the display down across the tableau. Replaced choppy CSS keyframes with the native <strong>Web Animations API (WAAPI)</strong> and a GPU compositor layer for the glow.
@@ -751,7 +756,7 @@
           </div>
           <div class="pillar-evidence">
             <strong>Visual Perception</strong>
-            <blockquote>"Low-vision eyes detect broad movement across the focal field far better than static color shifts at the perimeter."</blockquote>
+            <blockquote>"Put the signal where she is already looking. Slow movement across the tableau is harder to miss than a static button at the edge."</blockquote>
             <span>Decision: a slow, moving banner across the middle of the screen instead of a static button at the edge, with no sound alarm.</span>
           </div>
         </article>
@@ -781,9 +786,9 @@
     <section class="section-wrap">
       <div class="section-header">
         <div class="label-badge">Multi-Device Specifications</div>
-        <h2>Verified cross-device geometry matrix</h2>
+        <h2>Cross-device geometry matrix</h2>
         <p>
-          Every dimension is mathematically checked across viewports to preserve card readability, touch clearance, and Queen-tail visibility.
+          These values come from the layout code. The 12 automated tests check the cascade and waste-fan values at all five viewports below.
         </p>
       </div>
 
@@ -893,7 +898,7 @@
           </div>
           <div class="showcase-desc">
             <span class="showcase-tag">Accessible Settings Modal</span>
-            <p>Trilingual language switch (EN/ES/VI), Deal 1/3, guaranteed winnable deals, and synthesized sound toggles.</p>
+            <p>Trilingual language switch (EN/ES/VI), Deal 1/3, winnable or random deals, and synthesized sound toggles.</p>
           </div>
         </div>
 
@@ -951,7 +956,7 @@
             <li>Traced Didone typography &amp; French Curve suit SVGs</li>
             <li>Designed 85% Imperial Dragon medallion &amp; sky lanterns</li>
             <li>Built the 3.4s descending banner &amp; GPU glow layer</li>
-            <li>Engineered guaranteed-winnable first deal algorithmic solver</li>
+            <li>Built the solver-verified winnable first deal</li>
             <li>Synthesized procedural Web Audio card rustles and chords</li>
           </ul>
         </div>
